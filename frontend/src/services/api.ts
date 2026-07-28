@@ -1,7 +1,12 @@
-export const API_BASE_URL = (
+const configuredApiBaseUrl =
   (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ||
   (typeof process !== "undefined" && process.env && process.env.VITE_API_URL) ||
-  ""
+  "";
+
+const productionApiBaseUrl = "https://backend-production-a4f63.up.railway.app";
+
+export const API_BASE_URL = (
+  configuredApiBaseUrl || (import.meta.env.PROD ? productionApiBaseUrl : "")
 ).replace(/\/$/, "");
 
 export const resolveImageUrl = (url: string) => {

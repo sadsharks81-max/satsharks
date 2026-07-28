@@ -10,6 +10,10 @@ const morgan_1 = __importDefault(require("morgan"));
 const env_1 = require("./config/env");
 const db_1 = require("./config/db");
 const app = (0, express_1.default)();
+const productionFrontendOrigins = new Set([
+    env_1.env.frontendUrl,
+    "https://satsharks-frontend.vercel.app",
+].map((origin) => origin.replace(/\/$/, "")));
 // Stripe webhook must come BEFORE express.json() because it needs the raw body
 const payment_controller_1 = require("./controllers/payment.controller");
 app.post("/api/payment/webhook/stripe", express_1.default.raw({ type: "application/json" }), payment_controller_1.stripeWebhook);
@@ -22,9 +26,8 @@ app.use((0, cors_1.default)({
         if (env_1.env.nodeEnv !== "production") {
             return callback(null, true);
         }
-        // In production, only allow configured frontend URL
-        const allowed = [env_1.env.frontendUrl];
-        if (!origin || allowed.includes(origin)) {
+        // In production, allow the configured site and the canonical Vercel domain.
+        if (!origin || productionFrontendOrigins.has(origin.replace(/\/$/, ""))) {
             return callback(null, true);
         }
         return callback(new Error("Not allowed by CORS"));
