@@ -5,7 +5,6 @@ import { Footer } from "../components/layout/Footer";
 import { useAuth } from "../hooks/useAuth";
 import { Modal } from "../components/ui/Modal";
 import { Icon } from "../components/common/Icon";
-import { ContactForm } from "../components/common/ContactForm";
 import { getBackendUrl } from "../services/api";
 
 export const Route = createFileRoute("/sat")({
@@ -58,7 +57,7 @@ const groupFeatures = [
   {
     heading: "Intensive Weekly Schedule",
     bullets: [
-      "6 live online sessions every week — 3 English, 3 Math",
+      "6 live online sessions every week, 3 English, 3 Math",
       "23 sessions per month with 7 dedicated practice tests",
       "Consistent structure that builds momentum week after week",
     ],
@@ -67,14 +66,14 @@ const groupFeatures = [
     heading: "Real SAT Practice, Not Random Questions",
     bullets: [
       "Weekly full-length tests using actual past SAT papers",
-      "You practice under real conditions — no surprises on test day",
+      "You practice under real conditions, no surprises on test day",
       "Detailed score analysis after every test to track your growth",
     ],
   },
   {
     heading: "Desmos, Shortcuts & Strategy",
     bullets: [
-      "Dedicated time mastering Desmos — the graphing calculator allowed in SAT Math",
+      "Dedicated time mastering Desmos, the graphing calculator allowed in SAT Math",
       "English shortcuts and tricks that save critical minutes per section",
       "Math strategies that turn hard problems into quick wins",
     ],
@@ -82,8 +81,8 @@ const groupFeatures = [
   {
     heading: "Full Support, Nothing Extra to Buy",
     bullets: [
-      "All study materials provided — books, past papers, question banks",
-      "Your instructor's number is yours — ask questions anytime after class",
+      "All study materials provided, books, past papers, question banks",
+      "Your instructor's number is yours, ask questions anytime after class",
       "After your first month, you get a personal 1-on-1 session with your instructor",
     ],
   },
@@ -95,13 +94,13 @@ const oneOnOneFeatures = [
     bullets: [
       "Every session is built around your specific strengths and weaknesses",
       "Diagnostic test on day one to build a custom study roadmap",
-      "Flexible scheduling — sessions happen when they work for you",
+      "Flexible scheduling, sessions happen when they work for you",
     ],
   },
   {
     heading: "The Same Proven Curriculum, Personalized",
     bullets: [
-      "Same 6-session weekly intensity — 3 English, 3 Math",
+      "Same 6-session weekly intensity, 3 English, 3 Math",
       "Full-length SAT past papers every week under timed conditions",
       "Individual score breakdowns with targeted action plans after each test",
     ],
@@ -117,8 +116,8 @@ const oneOnOneFeatures = [
   {
     heading: "Always-On Access & Materials",
     bullets: [
-      "All books, past papers, and resources included — nothing extra to buy",
-      "Direct WhatsApp access to your tutor — not a group chat, just you",
+      "All books, past papers, and resources included, nothing extra to buy",
+      "Direct WhatsApp access to your tutor, not a group chat, just you",
       "Continuous progress tracking and strategy adjustments between sessions",
     ],
   },
@@ -257,36 +256,6 @@ function SATPrepPage() {
     }
   };
 
-  const handleCardPayment = async () => {
-    if (!selectedPlan) return;
-    setIsUploading(true);
-    setUploadError("");
-    try {
-      const token = localStorage.getItem("accessToken");
-      const res = await fetch(`${getBackendUrl()}/api/payment/create-checkout`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({
-          planId: selectedPlan.id,
-          region: region === "pk" ? "LOCAL" : "INTERNATIONAL",
-        }),
-      });
-      const data = await res.json();
-      if (data.success && data.url) {
-        window.location.href = data.url;
-      } else {
-        setUploadError(data.error || "Failed to create checkout session.");
-      }
-    } catch (err) {
-      setUploadError("Failed to initiate card payment. Server connection error.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -303,7 +272,7 @@ function SATPrepPage() {
                 <span className="text-[#5BA3F5]">Start Scoring.</span>
               </h1>
               <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                6 live sessions a week. Actual past papers every week. Desmos mastery. Shortcuts that save minutes. Everything you need — nothing you don't.
+                6 live sessions a week. Actual past papers every week. Desmos mastery. Shortcuts that save minutes. Everything you need, nothing you don't.
               </p>
             </div>
           </div>
@@ -432,7 +401,7 @@ function SATPrepPage() {
                   <h3 className="font-body font-bold text-xl text-on-surface">1-on-1 Sessions</h3>
                 </div>
                 <p className="text-sm text-on-surface-variant leading-relaxed mb-4 pl-12">
-                  Every session is built around you — your weaknesses, your pace, your target score.
+                  Every session is built around you, your weaknesses, your pace, your target score.
                 </p>
                 <div className="pl-12 mb-6 flex flex-wrap items-center gap-3">
                   {prices ? (
@@ -475,38 +444,12 @@ function SATPrepPage() {
             {/* CTA */}
             <div className="text-center py-12 pb-16">
               <p className="text-sm md:text-base text-on-surface-variant mb-6 max-w-md mx-auto leading-relaxed">
-                Not sure which format is right for you? We'll help you decide — no pressure.
+                Not sure which format is right for you? We'll help you decide, no pressure.
               </p>
-              <a
-                href="https://wa.me/923164514334?text=Hi%20I%20would%20like%20to%20get%20more%20info%20about%20SAT%20prep."
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "#25D366",
-                  color: "#FFFFFF",
-                  fontSize: "15px",
-                  fontWeight: 600,
-                  padding: "14px 32px",
-                  borderRadius: "12px",
-                  textDecoration: "none",
-                  transition: "all 0.2s ease",
-                  boxShadow: "0 4px 16px rgba(37,211,102,0.2)",
-                }}
-                className="hover:scale-[1.02] transition-transform"
-              >
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.982L2 22l5.233-1.371a9.936 9.936 0 004.779 1.22h.004c5.505 0 9.989-4.478 9.99-9.985A9.983 9.983 0 0012.012 2zm4.957 14.215c-.273.767-1.561 1.481-2.148 1.54-.58.06-1.169.311-3.709-.738-3.252-1.344-5.344-4.657-5.507-4.877-.162-.22-1.302-1.733-1.302-3.31 0-1.579.825-2.353 1.116-2.65.29-.297.77-.381 1.008-.381.238 0 .476.002.68.01.209.009.49-.078.766.587.283.682.966 2.356 1.05 2.528.083.172.138.373.023.602-.114.23-.172.373-.341.57-.169.196-.355.439-.508.587-.168.163-.344.341-.148.68.196.34 0 .34.872 1.121 1.125.998 2.08 1.307 2.375 1.454.296.147.47.127.646-.076.177-.203.766-.89.972-1.192.206-.303.411-.254.694-.148.283.106 1.796.848 2.106 1.002.311.155.518.23.593.36.074.13.074.754-.2 1.521z" />
-                </svg>
-                GET MORE INFO ON WHATSAPP
-              </a>
             </div>
           </div>
 
           {/* Contact form block */}
-          <ContactForm />
         </div>
       </main>
       <Footer />
@@ -576,21 +519,10 @@ function SATPrepPage() {
             <div className="p-4 bg-surface-container-low border border-outline-variant/30 rounded-xl mb-6 text-left">
               <h4 className="font-bold text-xs uppercase tracking-wider text-primary mb-1">Tips for Faster Approval</h4>
               <p className="text-xs text-on-surface-variant leading-relaxed">
-                Click the button below to send your proof screenshot directly on WhatsApp. This allows our support team to verify and activate your dashboard instantly.
+                Your proof is already in the review queue. If you need help, use the WhatsApp icon at the bottom right.
               </p>
             </div>
             <div className="flex flex-col gap-3">
-              <a
-                href={`https://wa.me/923164514334?text=Hi%20SAT%20Sharks!%20I%20have%20uploaded%20my%20payment%20proof%20for%20the%20${encodeURIComponent(selectedPlan?.name || "")}%20plan.%2520My%252520registered%252520email%252520is%252520${encodeURIComponent(user.email)}.%2520Please%2520approve%2520my%2520subscription.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm shadow-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
-              >
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.982L2 22l5.233-1.371a9.936 9.936 0 004.779 1.22h.004c5.505 0 9.989-4.478 9.99-9.985A9.983 9.983 0 0012.012 2zm4.957 14.215c-.273.767-1.561 1.481-2.148 1.54-.58.06-1.169.311-3.709-.738-3.252-1.344-5.344-4.657-5.507-4.877-.162-.22-1.302-1.733-1.302-3.31 0-1.579.825-2.353 1.116-2.65.29-.297.77-.381 1.008-.381.238 0 .476.002.68.01.209.009.49-.078.766.587.283.682.966 2.356 1.05 2.528.083.172.138.373.023.602-.114.23-.172.373-.341.57-.169.196-.355.439-.508.587-.168.163-.344.341-.148.68.196.34 0 .34.872 1.121 1.125.998 2.08 1.307 2.375 1.454.296.147.47.127.646-.076.177-.203.766-.89.972-1.192.206-.303.411-.254.694-.148.283.106 1.796.848 2.106 1.002.311.155.518.23.593.36.074.13.074.754-.2 1.521z" />
-                </svg>
-                Send Proof to WhatsApp
-              </a>
               <button
                 type="button"
                 onClick={() => setSelectedPlan(null)}
@@ -772,20 +704,23 @@ function SATPrepPage() {
 
               {activeTab === "card" && (
                 <div className="space-y-4 py-4 text-center">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-accent">
+                    <Icon name="construction" className="text-base" />
+                    Payment option under development
+                  </span>
                   <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-2">
                     <Icon name="credit_card" className="text-2xl" />
                   </div>
-                  <h4 className="font-bold text-sm">Pay Securely via Card / Stripe</h4>
+                  <h4 className="font-bold text-sm">Card Payment Coming Soon</h4>
                   <p className="text-xs text-on-surface-variant leading-relaxed max-w-sm mx-auto">
-                    Complete your enrollment immediately using any debit or credit card. Payments are processed securely.
+                    Online card payments are not fully available yet. Please use Bank Transfer or Mobile Wallet for now.
                   </p>
                   <button
                     type="button"
-                    onClick={handleCardPayment}
-                    disabled={isUploading}
-                    className="w-full max-w-xs py-3 rounded-xl bg-primary hover:bg-accent text-on-primary font-bold text-sm transition-all disabled:opacity-50 cursor-pointer shadow-sm mx-auto"
+                    disabled
+                    className="w-full max-w-xs py-3 rounded-xl bg-primary text-on-primary font-bold text-sm opacity-50 cursor-not-allowed shadow-sm mx-auto"
                   >
-                    {isUploading ? "Redirecting to checkout..." : "Proceed to Card Payment"}
+                    Card Payment Unavailable
                   </button>
                 </div>
               )}
@@ -854,17 +789,9 @@ function SATPrepPage() {
                   </button>
                 </div>
 
-                <div className="text-center pt-2">
-                  <span className="text-xs text-on-surface-variant/70">Or, want instant activation? </span>
-                  <a
-                    href={`https://wa.me/923164514334?text=Hi%20SAT%20Sharks!%20I%20have%2520made%20the%20payment%20for%20the%20${encodeURIComponent(selectedPlan?.name || "")}%20plan.%20My%20registered%20email%20is%20${encodeURIComponent(user.email)}. Please activate my subscription.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-[#25D366] hover:underline font-bold inline-flex items-center gap-1"
-                  >
-                    Send receipt via WhatsApp
-                  </a>
-                </div>
+                <p className="pt-2 text-center text-xs text-on-surface-variant/70">
+                  Need help? Use the WhatsApp icon at the bottom right.
+                </p>
               </form>
             )}
           </div>

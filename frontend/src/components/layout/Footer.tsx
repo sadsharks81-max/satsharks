@@ -62,7 +62,7 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/counseling-abroad" className="hover:text-accent transition-colors duration-300">
-                  Counseling Abroad
+                  Admission Counseling
                 </Link>
               </li>
               <li>

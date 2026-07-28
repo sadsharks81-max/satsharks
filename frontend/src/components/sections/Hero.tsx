@@ -98,7 +98,7 @@ export function Hero() {
         <div className="absolute -top-40 -right-20 h-[36rem] w-[36rem] rounded-full bg-accent/10 blur-3xl opacity-40" />
       </div>
 
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-16 px-6 lg:grid-cols-12">
+      <div className="mx-auto grid max-w-[1560px] grid-cols-1 items-center gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:px-10 xl:px-12">
         {/* Left Side: Elite Admissions Copy */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -311,7 +311,7 @@ function TeacherClasses() {
             />
             {form.meetLink && isValidHttpsUrl(form.meetLink) && !looksLikeGoogleMeetLink(form.meetLink) && (
               <p className="mt-1.5 text-xs text-accent">
-                This doesn't look like a Google Meet link — double check before saving.
+                This doesn't look like a Google Meet link, double check before saving.
               </p>
             )}
           </div>
@@ -348,7 +348,7 @@ function TeacherClasses() {
           />
           {linkModalValue && isValidHttpsUrl(linkModalValue) && !looksLikeGoogleMeetLink(linkModalValue) && (
             <p className="text-xs text-accent">
-              This doesn't look like a Google Meet link — double check before saving.
+              This doesn't look like a Google Meet link, double check before saving.
             </p>
           )}
           <div className="flex justify-end gap-3 mt-6">

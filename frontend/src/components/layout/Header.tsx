@@ -41,7 +41,7 @@ export function Header() {
         : "bg-transparent border-transparent"
         }`}
     >
-      <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6">
+      <div className="mx-auto flex max-w-[1560px] items-center justify-between px-5 sm:px-8 lg:px-10 xl:px-12">
         <Link to="/" className="flex items-center gap-2 group transition-transform duration-300 hover:scale-[1.02]">
           <img src={logoImg} alt="SAT Sharks" className="h-12 md:h-16 w-auto relative -top-1 md:-top-1.5 mix-blend-multiply" />
         </Link>

@@ -15,6 +15,7 @@ import appCss from "../styles.css?url";
 import faviconUrl from "../assets/favicon.svg?url";
 import { reportAppError } from "../lib/error-reporting";
 import { Toaster } from "../components/ui/sonner";
+import { FloatingWhatsApp } from "../components/common/FloatingWhatsApp";
 
 function NotFoundComponent() {
   return (
@@ -142,6 +143,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Outlet />
+        <FloatingWhatsApp />
       </AuthProvider>
     </QueryClientProvider>
   );

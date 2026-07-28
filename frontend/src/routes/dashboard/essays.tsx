@@ -136,6 +136,7 @@ function SubmitEssayModal({ onClose, onSuccess }: { onClose: () => void, onSucce
   const [type, setType] = useState("COMMON_APP");
   const [targetUniversity, setTargetUniversity] = useState("");
   const [essayText, setEssayText] = useState("");
+  const [commonAppQuestion, setCommonAppQuestion] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -148,7 +149,10 @@ function SubmitEssayModal({ onClose, onSuccess }: { onClose: () => void, onSucce
       const res = await api.post("/api/essays/submit", {
         type,
         targetUniversity: type === "COMMON_APP" ? "Common App" : targetUniversity,
-        essayText
+        essayText:
+          type === "COMMON_APP" && commonAppQuestion.trim()
+            ? `Question for the reviewer:\n${commonAppQuestion.trim()}\n\nEssay:\n${essayText}`
+            : essayText
       });
 
       if (res.success) {
@@ -206,6 +210,21 @@ function SubmitEssayModal({ onClose, onSuccess }: { onClose: () => void, onSucce
               />
             )}
           </div>
+
+          {type === "COMMON_APP" && (
+            <div>
+              <label className="mb-1.5 block font-mono text-[12px] uppercase tracking-[0.08em] text-on-surface-variant">
+                Questions for the Reviewer
+              </label>
+              <textarea
+                value={commonAppQuestion}
+                onChange={(e) => setCommonAppQuestion(e.target.value)}
+                rows={4}
+                placeholder="If you have any questions, add them in this box."
+                className="w-full resize-none rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+          )}
 
           <div>
             <label className="mb-1.5 block font-mono text-[12px] uppercase tracking-[0.08em] text-on-surface-variant">

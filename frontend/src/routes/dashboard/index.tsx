@@ -68,17 +68,6 @@ function DashboardHome() {
                   Your payment screenshot has been uploaded and is in review. We will upgrade your account as soon as the transfer is verified.
                 </p>
               </div>
-              <a
-                href="https://wa.me/923164514334"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 w-fit"
-              >
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                  <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.982L2 22l5.233-1.371a9.936 9.936 0 004.779 1.22h.004c5.505 0 9.989-4.478 9.99-9.985A9.983 9.983 0 0012.012 2zm4.957 14.215c-.273.767-1.561 1.481-2.148 1.54-.58.06-1.169.311-3.709-.738-3.252-1.344-5.344-4.657-5.507-4.877-.162-.22-1.302-1.733-1.302-3.31 0-1.579.825-2.353 1.116-2.65.29-.297.77-.381 1.008-.381.238 0 .476.002.68.01.209.009.49-.078.766.587.283.682.966 2.356 1.05 2.528.083.172.138.373.023.602-.114.23-.172.373-.341.57-.169.196-.355.439-.508.587-.168.163-.344.341-.148.68.196.34 0 .34.872 1.121 1.125.998 2.08 1.307 2.375 1.454.296.147.47.127.646-.076.177-.203.766-.89.972-1.192.206-.303.411-.254.694-.148.283.106 1.796.848 2.106 1.002.311.155.518.23.593.36.074.13.074.754-.2 1.521z" />
-                </svg>
-                WhatsApp Support
-              </a>
             </div>
           ) : (
             <div className="p-5 bg-gradient-to-r from-surface-container-high via-surface-container-low to-transparent border border-outline-variant/35 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in shadow-xs">
