@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const success_stories_controller_1 = require("../controllers/success-stories.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const role_middleware_1 = require("../middleware/role.middleware");
+const router = (0, express_1.Router)();
+router.get("/", success_stories_controller_1.getSuccessStories);
+router.get("/featured", success_stories_controller_1.getHeroFeature);
+router.put("/featured", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), success_stories_controller_1.updateHeroFeature);
+router.post("/", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), success_stories_controller_1.createSuccessStory);
+router.put("/:id", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), success_stories_controller_1.updateSuccessStory);
+router.delete("/:id", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), success_stories_controller_1.deleteSuccessStory);
+exports.default = router;

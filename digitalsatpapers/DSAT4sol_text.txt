@@ -1,0 +1,1089 @@
+SOLUTIONS & EXPLANATIONS
+Adaptive Digital SAT Practice Test
+Horizon Assessment Series — Form A
+This booklet contains:
+• Quick-reference answer grids for all 6 modules
+• Detailed step-by-step explanations for every question
+• Why each correct answer is right and why each wrong answer fails
+Total: 147 questions (81 Reading & Writing + 66 Math)
+These solutions correspond to 100% original practice questions. They are not affiliated with, endorsed by, or sourced from the College Board,
+ETS, or any official SAT materials.
+
+-- 1 of 29 --
+
+QUICK-REFERENCE ANSWER GRIDS
+Section 1 — Module 1 (27 Qs)
+1. C 2. B 3. A 4. A 5. C 6. B 7. D 8. D 9. B
+10. A 11. C 12. A 13. D 14. D 15. A 16. B 17. D 18. D
+19. A 20. D 21. D 22. B 23. D 24. B 25. C 26. B 27. D
+Section 1 — Module 2 Easier (27 Qs)
+1. C 2. D 3. B 4. C 5. A 6. B 7. C 8. B 9. A
+10. D 11. B 12. A 13. C 14. D 15. B 16. D 17. D 18. C
+19. B 20. C 21. D 22. D 23. B 24. A 25. A 26. A 27. B
+Section 1 — Module 2 Harder (27 Qs)
+1. C 2. A 3. B 4. A 5. A 6. A 7. B 8. A 9. C
+10. B 11. B 12. B 13. A 14. C 15. D 16. A 17. D 18. B
+19. B 20. C 21. A 22. D 23. A 24. A 25. A 26. A 27. B
+Section 2 — Module 1 (22 Qs)
+1. D 2. A 3. A 4. 9 5. D 6. A 7. A 8. D 9. 13
+10. C 11. B 12. B 13. B 14. 44 15. 300 16. C 17. 42 18. B
+19. A 20. C 21. D 22. B
+Section 2 — Module 2 Easier (22 Qs)
+1. A 2. 3250 3. B 4. A 5. A 6. C 7. C 8. C 9. 22.4
+10. B 11. C 12. B 13. C 14. A 15. A 16. B 17. D 18. D
+19. C 20. 80 21. -18 22. 2187
+Section 2 — Module 2 Harder (22 Qs)
+1. B 2. 75 3. B 4. D 5. 250 6. C 7. C 8. C 9. A
+10. 55 11. C 12. B 13. 66 14. -36 15. 4096 16. B 17. D 18. C
+19. B 20. B 21. 7 22. C
+
+-- 2 of 29 --
+
+Section 1 — Module 1: Detailed Explanations
+Question 1 — Answer: C
+Vocabulary in Context | Medium
+Why correct: The passage contrasts Hicks's vibrant works with others that have 'subdued hues.' The viewer can
+easily pick out or discern those muted tones — meaning to recognize or distinguish them visually.
+A) 'Appreciate' implies a value judgment rather than visual recognition.
+B) 'Overlook' means to fail to notice — the opposite of the intended meaning.
+D) 'Fabricate' means to construct or invent, unrelated to perceiving colors.
+Question 2 — Answer: B
+Vocabulary in Context | Medium
+Why correct: Broadcasters tried to influence how the public viewed or regarded radio. 'Perception of' captures
+this idea of shaping opinion about the medium.
+A) 'Contribution to' implies the public added something to radio, reversing the direction.
+C) 'Reproduction of' implies copying, not opinion-forming.
+D) 'Application to' implies practical use rather than attitude.
+Question 3 — Answer: A
+Vocabulary in Context | Medium
+Why correct: The passage emphasizes thoroughness — consulting entomologists and ecologists extensively.
+Rigor means exactness and carefulness of preparation.
+B) 'Obscurity' means being unknown or hard to understand.
+C) 'Shallowness' is the opposite of the deep preparation described.
+D) 'Novelty' means newness, which doesn't capture thoroughness.
+Question 4 — Answer: A
+Vocabulary in Context | Hard
+Why correct: The blank describes firms gathering or concentrating in a region. Amass in means to accumulate or
+collect in a place, fitting the cluster concept.
+B) 'Appeal to' means to attract — but firms aren't being attracted to a quality; they're physically concentrating.
+C) 'Intercede in' means to intervene on behalf of someone.
+D) 'Concur with' means to agree, which doesn't describe physical clustering.
+Question 5 — Answer: C
+Vocabulary in Context | Medium
+Why correct: Plain acoustic settings 'were likely ______ audiences in much earlier periods' because elaborate
+stages 'were not widespread until the 1800s.' Since unadorned stages were the norm, they were expected by
+audiences.
+A) 'Disliked by' is too negative — the text implies normalcy, not displeasure.
+B) 'Confusing to' implies bewilderment, which is unsupported.
+D) 'Exciting to' contradicts the idea that plain stages were mundane.
+Question 6 — Answer: B
+Central Ideas and Purpose | Medium
+
+-- 3 of 29 --
+
+Why correct: The text describes how the Heidelberg Project transforms abandoned lots into art while positively
+affecting the surrounding community (reducing dumping and arson).
+A) The text doesn't compare this project to 'traditional urban renewal programs.'
+C) Only some neighbors objected; the text doesn't claim residents 'historically opposed' public art.
+D) No comparison with other programs across the US is made.
+Question 7 — Answer: D
+Text Structure | Hard
+Why correct: The text first presents the favorable opinion of Mrs. Brympton held by servants and neighbors, then
+describes the specific behaviors (never initiating disagreement, always inquiring politely) that enable her to
+maintain that favorable reputation.
+A) There is no shift from low to high esteem — she is regarded well throughout.
+B) No private indifference or suspicion is mentioned.
+C) No comparison between neighbors' and servants' judgment is drawn.
+Question 8 — Answer: D
+Text Structure | Hard
+Why correct: The text describes bioluminescence (a phenomenon), discusses two studies of it (Martinez et al. and
+Oba et al.), then introduces a third study (Kondo and Fujimoto) that synthesizes both approaches.
+A) The shared-ancestral-gene assumption isn't shown to be 'unfounded' — just incomplete.
+B) The text doesn't critique any study's approach.
+C) No speculation about future studies appears.
+Question 9 — Answer: B
+Central Ideas | Medium
+Why correct: The narrator states being 'so keenly conscious of standing at a threshold,' explicitly recognizing this
+as a significant turning point between past obligations and future possibility.
+A) No business opportunity is mentioned.
+C) The narrator describes stumbling more than succeeding, contradicting a 'systematic approach.'
+D) No gratitude toward mentors is expressed.
+Question 10 — Answer: A
+Inferences | Hard
+Why correct: The productivity hypothesis holds that groundwater replaces surface water as farm yields rise. An
+advocate would explain India's increased groundwater use by citing rising farm yields between 1990 and 2015.
+B) Technology access is a different explanation, not the productivity hypothesis.
+C) Rainfall variability is the counter-argument presented by Nair and Subramanian.
+D) This says the link weakened, which opposes the hypothesis.
+Question 11 — Answer: C
+Command of Quantitative Evidence | Easy
+Why correct: The table shows Chile extracted 4.60 billion kg in 2000 and 5.70 billion kg in 2022. Only option C
+states the correct 2022 value for Chile.
+A) 3.45 is Brazil's 2022 figure.
+B) 1.80 is Indonesia's 2022 figure.
+
+-- 4 of 29 --
+
+D) 3.20 is Australia's 2022 figure.
+Question 12 — Answer: A
+Textual Evidence (Poetry) | Hard
+Why correct: Option A presents a quotation where the speaker describes landscape features that 'whisper still of
+former days,' directly illustrating the claim that winter landscapes carry traces of the past.
+B) This describes general reflection on a calm scene, not traces of the past specifically.
+C) This describes admiration of ice formations, not the land carrying memory.
+D) This describes travellers observing frozen streams — external observation, not the landscape encoding the past.
+Question 13 — Answer: D
+Command of Quantitative Evidence (Graph) | Medium
+Why correct: The passage says the gap between familiar and unfamiliar satisfaction varied across compositions
+and asks for the pair showing this variation most clearly. 'March' and 'Waltz' have the largest gap (~3 points), best
+illustrating the magnitude of the difference.
+A) 'Nocturne' and 'Fugue' show moderate gaps, not the most illustrative pair.
+B) 'Rondo' and 'Prelude' have nearly equal bars (small difference) — they show little variation.
+C) 'Fugue' and 'Prelude' is a mixed pairing without the clearest contrast.
+Question 14 — Answer: D
+Strengthen / Support Claims | Hard
+Why correct: The hypothesis is that size differences are an adaptation to prey availability in the Eastern Atlantic.
+Finding that prey species in that feeding range are unique and unavailable elsewhere directly supports a
+prey-driven adaptation.
+A) Proximity to fishing fleets is about human activity, not natural prey.
+B) Stable vs. declining lengths describe a trend but don't explain adaptation to prey.
+C) Shallow foraging areas don't directly address the type of prey available.
+Question 15 — Answer: A
+Logical Completion | Hard
+Why correct: The passage warns against treating Americanah as fully autobiographical. Readers who do so risk
+imposing unwarranted correspondences between the fiction and the author's life.
+B) The passage already acknowledges Adichie drew on personal material — this answer contradicts the stated
+concern.
+C) Readership size is irrelevant to the autobiographical question.
+D) Borrowing techniques from earlier novelists is not discussed.
+Question 16 — Answer: B
+Boundaries (Punctuation) | Easy
+Why correct: The sentence requires no punctuation after 'from' because it is a preposition linking 'donated' to
+'the private collections.' The prepositional phrase flows naturally without interruption.
+A) A semicolon after 'from' incorrectly separates the preposition from its object.
+C) A colon is not appropriate after a preposition.
+D) A comma unnecessarily interrupts the prepositional phrase.
+Question 17 — Answer: D
+
+-- 5 of 29 --
+
+Form, Structure, and Sense (Verb Forms) | Easy
+Why correct: The subject 'museums' requires the base verb 'educate' in simple present tense to form a complete,
+grammatically correct sentence: 'Greece's museums educate visitors...'
+A) 'Having educated' is a past participle phrase that cannot serve as a main verb.
+B) 'Educating' is a present participle that creates a sentence fragment.
+C) 'To educate' is an infinitive that doesn't complete the predicate.
+Question 18 — Answer: D
+Form, Structure, and Sense (Pronoun Agreement) | Easy
+Why correct: 'It' is the correct singular pronoun to refer to the singular antecedent 'album' ('Harvest').
+A) 'Those' is plural and lacks a clear singular antecedent.
+B) 'They' is plural and doesn't agree with the singular 'album.'
+C) 'Each' doesn't function as a subject pronoun referring to a specific album.
+Question 19 — Answer: A
+Form, Structure, and Sense (Verb Tense) | Medium
+Why correct: The sentence describes a general, ongoing truth about how land trusts function ('the revenue is
+shared... the members ______ directly'). Simple present tense 'benefit' is correct for timeless statements.
+B) 'Had benefited' is past perfect, inappropriate for a general truth.
+C) 'Benefited' is simple past.
+D) 'Were benefiting' is past progressive.
+Question 20 — Answer: D
+Boundaries (Punctuation) | Medium
+Why correct: A comma before the participial phrase 'revealing how...' correctly integrates it as additional
+modifying information about what the documentary explores.
+A) No punctuation creates a run-on sentence.
+B) A semicolon requires a complete independent clause to follow.
+C) A period creates a sentence fragment beginning with 'Revealing.'
+Question 21 — Answer: D
+Transitions | Easy
+Why correct: The passage contrasts insulated items (retaining heat) with uninsulated items (losing heat). 'On the
+other hand' is a contrast transition.
+A) 'As a result' implies cause-effect.
+B) 'Specifically' introduces a narrowing detail.
+C) 'In conclusion' signals a summary.
+Question 22 — Answer: B
+Transitions | Medium
+Why correct: 'For example' introduces a specific illustration of the general geological principle just described
+(older strata exposed when deposition ceases).
+A) 'Fittingly' implies something is appropriate, not illustrative.
+C) 'Likewise' signals similarity, but the sentence provides an example, not a parallel.
+D) 'Though' signals contrast, but the example supports the statement.
+
+-- 6 of 29 --
+
+Question 23 — Answer: D
+Rhetorical Synthesis | Easy
+Why correct: To emphasize the size of Matsumoto, the answer must mention its area. Only D states '978 km².'
+A) Mentions the number of municipalities, not Matsumoto's size.
+B) Discusses services, not size.
+C) Mentions services provided, not area.
+Question 24 — Answer: B
+Rhetorical Synthesis | Medium
+Why correct: The goal is to emphasize a difference between the two plants. Option B explicitly contrasts their
+native/non-native status: one is native to Guam; the other is not.
+A) Mentions only one plant.
+C) Describes the study's method, not a plant difference.
+D) Mentions both plants but doesn't highlight a difference between them.
+Question 25 — Answer: C
+Rhetorical Synthesis | Medium
+Why correct: To emphasize chronological order, the answer must state which came first and which came later.
+Option C — 'The Quaternary Ice Age began long after the Karoo Ice Age' — establishes sequence.
+A) Mentions only the Karoo Ice Age.
+B) Notes similarity (both were cold), not chronological order.
+D) Describes the general cycle without specific ordering.
+Question 26 — Answer: B
+Rhetorical Synthesis | Medium
+Why correct: The goal is to emphasize a similarity. Option B states that both alloys expand when heated — the
+shared behavior.
+A) Mentions 'two research teams,' but the notes describe one study.
+C) Emphasizes a difference (Invar expanded less), not a similarity.
+D) General statement that doesn't mention both alloys specifically.
+Question 27 — Answer: D
+Rhetorical Synthesis | Medium
+Why correct: For an audience already familiar with weed suppression, option D presents the specific findings
+(wood-chip mulch, 10 cm depth, temperate maritime climate) without re-defining the concept.
+A) Mentions only the publication date, not the findings.
+B) Defines weed suppression, which is unnecessary for a familiar audience.
+C) Too vague — doesn't present specific findings.
+
+-- 7 of 29 --
+
+Section 1 — Module 2 Easier: Detailed Explanations
+Question 1 — Answer: C
+Vocabulary in Context | Easy
+Why correct: The marshes 'shift in extent and composition' as conditions change, making them volatile (subject
+to rapid or unpredictable change).
+A) 'Static' means unchanging — the direct opposite.
+B) 'Immutable' means unchangeable — also opposite.
+D) 'Permanent' contradicts the shifting described.
+Question 2 — Answer: D
+Vocabulary in Context | Easy
+Why correct: The play features 'elaborate fictional scenarios involving celestial beings,' which anticipates
+speculative fiction. 'Visionary' means ahead of its time or imaginatively forward-looking.
+A) 'Authorized' means officially approved.
+B) 'Applicable' means relevant — too generic.
+C) 'Sarcastic' describes mockery, not speculative imagination.
+Question 3 — Answer: B
+Vocabulary in Context | Medium
+Why correct: The findings challenged established consensus, 'forcing them to reconsider fundamental
+assumptions.' This is disruptive — causing disturbance to established ideas.
+A) 'Gratifying' implies pleasure, but researchers whose views were overturned wouldn't find it pleasing.
+C) 'Irrelevant' contradicts the significant impact described.
+D) 'Complementary' implies supporting the earlier view — the opposite of what occurred.
+Question 4 — Answer: C
+Central Ideas and Purpose | Easy
+Why correct: The text presents two institutions — the Guadalupe Cultural Arts Center and the National Museum
+of the American Latino — and describes each institution's cultural focus.
+A) Collection acquisition methods aren't discussed.
+B) Collection/exhibition sizes aren't compared.
+D) No historical development leading to founding is traced.
+Question 5 — Answer: A
+Text Structure | Medium
+Why correct: The text first describes a shared aesthetic framework (bold geometric patterns) used by Gee's
+Bend quilters, then illustrates how individuals introduced variations within that framework (Annie Mae Young's
+recycled work-clothing fabric).
+B) The text doesn't say works are perceived as derivative.
+C) No historical context or exploration of unconventional themes is discussed.
+D) No collaboration origin story is given.
+Question 6 — Answer: B
+Cross-Text Connections | Hard
+
+-- 8 of 29 --
+
+Why correct: Espinoza et al. argue that operating multiple OTEC plants could reduce the thermal gradient over
+time. They would point out that Tanaka et al.'s assumed gradient may not remain stable if multiple plants operate
+in the same region.
+A) The response isn't about comparing with other renewables.
+C) Espinoza doesn't claim OTEC plants can't generate electricity — only that conditions may change.
+D) Chemical composition of deep water isn't discussed.
+Question 7 — Answer: C
+Inferences | Medium
+Why correct: The passage describes Ando's 1960s European exposure to Le Corbusier, then notes the Church of
+the Light's 'dramatic interplays of natural light and shadow.' This later work reflects the influence of his
+international architectural exposure.
+A) No 'transitional moment' is explicitly described.
+B) Nothing indicates Ando abandoned this approach.
+D) The Church is described as different from, not characteristic of, his earliest austere work.
+Question 8 — Answer: B
+Strengthen / Support Claims | Hard
+Why correct: The claim is that seawalls are more negatively associated with invertebrate health than groins.
+Option B directly compares a seawall-heavy site (lower BCHI) to a groin-heavy site (higher BCHI), isolating the
+variable.
+A) Compares a mixed-structure site to a low-structure site — doesn't isolate seawalls vs. groins.
+C) Shows equal-structure sites; can't determine which type is more harmful.
+D) Compares two seawall-heavy sites to each other, not seawalls to groins.
+Question 9 — Answer: A
+Command of Quantitative Evidence (Graph) | Hard
+Why correct: The graph shows snow-ice dropping sharply in 2018 while clear-ice stayed steady. Warm January
+rains would wash away accumulated snow (reducing snow-ice) without affecting clear-ice formation, explaining the
+selective decline.
+B) A fungal bloom wouldn't affect ice formation.
+C) The graph doesn't show both types increasing steadily from 2010–2016.
+D) If both types were disrupted equally, clear-ice would also drop — but the graph shows only snow-ice declining.
+Question 10 — Answer: D
+Command of Quantitative Evidence | Medium
+Why correct: The researcher argues GPS yields significantly longer recorded distances than tag-recapture. The
+monarch butterfly was tracked via tag-recapture (4,800 km). If tracked by GPS (recording all movements including
+daily foraging flights), the distance would plausibly be much greater.
+A) This discusses the Arctic tern with a different method but in the wrong direction.
+B) Saying GPS would yield less contradicts the researcher's claim.
+C) Tag-recapture wouldn't yield more than GPS — this reverses the argument.
+Question 11 — Answer: B
+Strengthen / Support Claims | Medium
+
+-- 9 of 29 --
+
+Why correct: The text claims steady power output is essential for industrial monitoring. If unreliable power
+compromises sensor accuracy, that directly explains why steady output matters.
+A) Standard modules working on furnaces doesn't address the Bi2Te3 module's advantage.
+C) Incompatibility would undermine the claim.
+D) Restates the conclusion rather than providing independent supporting evidence.
+Question 12 — Answer: A
+Logical Completion | Medium
+Why correct: The passage catalogs persistent challenges (traffic, parking, weight limits) with no solution fully
+working. The logical conclusion: logistics companies are unlikely to overcome these impediments in the near
+term.
+B) Nothing suggests innovations will increase expectations.
+C) The text doesn't compare warehouse vs. last-kilometer investment.
+D) This focuses only on cargo bicycles, while the conclusion should be broader.
+Question 13 — Answer: C
+Logical Completion | Medium
+Why correct: Researchers must look elsewhere for earlier specimens because the Erfoud deposits are from a
+significantly earlier era (Ordovician) than the Strud site.
+A) Both sites are in Africa/Morocco — the issue is geological age, not geography.
+B) Global distribution isn't the stated reason.
+D) Preservation quality isn't mentioned as the deciding factor.
+Question 14 — Answer: D
+Logical Completion | Hard
+Why correct: Materials with more open crystal lattices allow ions to migrate with less thermal energy. Since SDC
+works at 550°C instead of 800°C, the researchers concluded that SDC likely has a more open crystalline
+structure, enabling ion transport at lower temperatures.
+A) This discusses anode reactions, not electrolyte conductivity.
+B) Lattice contraction would hinder ion flow, not help it.
+C) This describes the outcome without explaining the mechanism.
+Question 15 — Answer: B
+Logical Completion | Hard
+Why correct: The model uses a uniform silica value where real values likely vary by depth. Therefore, some
+discrepancies between the model's predictions and observed data should be expected.
+A) Possible but speculative about future sampling efforts.
+C) Confuses cause and effect within the model's own structure.
+D) Makes an unsupported claim about actual vs. modeled values.
+Question 16 — Answer: D
+Boundaries (Punctuation) | Easy
+Why correct: 'Patterns that' creates a restrictive relative clause correctly modifying 'polka-dot patterns' — no
+punctuation break needed.
+A) A period creates a fragment starting with 'That.'
+
+-- 10 of 29 --
+
+B) A colon is inappropriate before 'that.'
+C) A semicolon requires an independent clause after it.
+Question 17 — Answer: D
+Boundaries (Punctuation) | Easy
+Why correct: A period correctly separates two complete independent sentences: '...an international
+phenomenon.' and 'In 2019, the French duo...'
+A) No punctuation creates a run-on.
+B) A comma creates a comma splice.
+C) 'And in' without proper punctuation doesn't properly join these clauses.
+Question 18 — Answer: C
+Boundaries (Punctuation) | Medium
+Why correct: No punctuation is needed after 'languages' because the dash that immediately follows ('—including
+Kannada and Malayalam...—') already sets off the parenthetical. Adding punctuation before the dash would be
+redundant.
+A) A comma before a dash is redundant punctuation.
+B) A colon before a dash is incorrect.
+D) A second dash here would create three dashes, confusing the sentence structure.
+Question 19 — Answer: B
+Boundaries (Punctuation) | Medium
+Why correct: A period correctly separates two complete independent clauses. The first sentence ends with
+'periodicity.' The second begins 'Halley's Comet is relatively predictable...'
+A) 'periodicity; the' would work grammatically but leaves 'while the' in a dependent position.
+C) 'periodicity, while the' creates a comma splice.
+D) 'periodicity: while the' misuses a colon before a dependent clause.
+Question 20 — Answer: C
+Form, Structure, and Sense (Verb Forms) | Medium
+Why correct: The subject 'mechanism' is singular, and the sentence describes a general ongoing truth, requiring
+present tense: 'counteracts'.
+A) 'Had counteracted' is past perfect — inappropriate for a general scientific statement.
+B) 'Counteracted' is simple past.
+D) 'Counteracting' is a participle that would make the sentence a fragment.
+Question 21 — Answer: D
+Form, Structure, and Sense (Verb Tense) | Medium
+Why correct: The compound subject 'patterns and... data' is plural, requiring the plural verb 'determine'.
+A) 'Determines' is singular — disagrees with the compound subject.
+B) 'Has determined' is singular present perfect.
+C) 'Determining' is a participle creating a fragment.
+Question 22 — Answer: D
+Transitions | Easy
+
+-- 11 of 29 --
+
+Why correct: 'Next' logically signals the second step in a sequential comparison: 'first consider X; next, compare
+them to Y.'
+A) 'Therefore' implies a logical conclusion.
+B) 'Still' implies concession or persistence.
+C) 'Instead' implies substitution, not sequence.
+Question 23 — Answer: B
+Transitions | Medium
+Why correct: 'Accordingly' signals a logical result: because the plant absorbs cadmium from the soil, soil
+cadmium levels decrease as a consequence.
+A) 'Specifically' introduces a detail, not a consequence.
+C) 'Nevertheless' signals contrast.
+D) 'In addition' adds information without showing causation.
+Question 24 — Answer: A
+Rhetorical Synthesis | Easy
+Why correct: The goal is to give an example of a country using a cognate of 'yuan.' Japan uses 'yen' (derived
+from 'yuan'), making 'Japan uses the yen' the clearest example.
+B) This negates the connection.
+C) This explains etymology without naming a country as an example.
+D) Too general — doesn't name a specific country.
+Question 25 — Answer: A
+Rhetorical Synthesis | Medium
+Why correct: The goal is to present biographical analysis to an unfamiliar audience. Option A defines the
+concept clearly: 'considers the life circumstances of the author when interpreting a work.'
+B) Provides an example without defining the concept first.
+C) Discusses formalist analysis instead.
+D) Compares the two approaches without explaining what biographical analysis is.
+Question 26 — Answer: A
+Rhetorical Synthesis | Medium
+Why correct: The goal is to emphasize a difference. Option A explicitly contrasts the two: nanowires have
+'elongated cylinders' while quartz has a 'continuous SiO4 framework.'
+B) Notes both are silicon-based (a similarity, not a difference).
+C) Incorrectly calls quartz 'cylindrical.'
+D) Inaccurately describes SiO4 tetrahedra forming tubes in nanowires.
+Question 27 — Answer: B
+Rhetorical Synthesis | Hard
+Why correct: The goal is to compare Simon and Gigerenzer. Option B directly contrasts them: Simon sees
+heuristics as simplifications due to limits; Gigerenzer reframes them as efficient strategies.
+A) Simon didn't specifically claim cognition is constrained by 'neural architecture.'
+C) Neither framework focuses on perception-level processes.
+D) Gigerenzer doesn't simply extend Simon's concept — he reinterprets heuristics positively.
+
+-- 12 of 29 --
+
+Section 1 — Module 2 Harder: Detailed Explanations
+Question 1 — Answer: C
+Vocabulary in Context | Hard
+Why correct: The oral histories 'carry legal and cultural authority in treaty negotiations,' making them juridical
+(relating to law or legal proceedings).
+A) 'Provisional' means temporary — contradicts 'continue to carry authority.'
+B) 'Ornamental' means decorative — dismisses their substantive legal function.
+D) 'Speculative' means theoretical — but these records are presented as authoritative.
+Question 2 — Answer: A
+Vocabulary in Context | Hard
+Why correct: The meta-analysis found fragmentation had 'neutral or even positive effects' in nearly half the
+studies — the relationship is equivocal (ambiguous, open to multiple interpretations).
+B) 'Negligible' means insignificant — but the relationship was complex, not absent.
+C) 'Corrosive' means destructive — doesn't describe a statistical relationship.
+D) 'Transparent' means clear — the opposite of what's described.
+Question 3 — Answer: B
+Vocabulary in Context | Medium
+Why correct: The exhibition's influence works through 'debates and conceptual experiments' rather than
+reshaping buildings directly. The influence is therefore indirect.
+A) 'Tangible' means physically touchable — opposite of indirect influence.
+C) 'Instantaneous' contradicts 'over subsequent years.'
+D) 'Diminishing' implies declining influence, which isn't stated.
+Question 4 — Answer: A
+Central Ideas and Purpose | Hard
+Why correct: The text describes Flores's argument that conventional narratives overlook essential
+contributions by rural women during the Mexican Revolution.
+B) No comparison of military strategies is made.
+C) Methodology isn't the focus.
+D) The text doesn't rank women's contributions as 'more important' than soldiers'.
+Question 5 — Answer: A
+Text Structure | Hard
+Why correct: The text introduces a widely held view (reading is passive), rejects it ('hopelessly crude'), then
+supports the rejection with an example (a metaphor on page forty recoloring everything).
+B) Only one view is presented and rejected — no two competing theories.
+C) No historical change in attitudes is traced.
+D) No survey of multiple answers is conducted.
+Question 6 — Answer: A
+Cross-Text Connections | Hard
+
+-- 13 of 29 --
+
+Why correct: Osei et al. found introduced microbes were displaced within weeks. They would argue Wei et al.'s
+increased root biomass was likely caused by a temporary nutrient boost from the slurry, not lasting microbial
+colonization.
+B) Wei et al. did include untreated controls.
+C) Osei et al. don't claim field settings are inherently more effective.
+D) The nitrogen-fixing bacteria issue isn't about whether they were indigenous.
+Question 7 — Answer: B
+Inferences | Hard
+Why correct: Chang shows that wealthy nations used protectionist strategies during development but now
+prescribe free trade to developing countries. This effectively denies those economies access to the same
+strategies that today's wealthy nations once employed.
+A) Chang doesn't validate free-trade models — he critiques them.
+C) Geography isn't Chang's focus.
+D) Chang's point is about denying developmental strategies, not about specializing in comparative advantages.
+Question 8 — Answer: A
+Strengthen / Support Claims | Hard
+Why correct: The hypothesis links L. rhamnosus to reduced anxiety via GABA signaling. Mice with the bacterium
+showing elevated GABA receptor expression AND reduced anxiety directly supports this specific mechanism.
+B) This shows germ-free mice are anxious generally but doesn't link L. rhamnosus to GABA specifically.
+C) Increased serotonin without GABA changes would actually weaken the GABA-specific hypothesis.
+D) Reduced anxiety from eliminating bacteria would contradict the hypothesis.
+Question 9 — Answer: C
+Command of Quantitative Evidence (Graph) | Hard
+Why correct: By 2020, Neighborhood C (~25%) exceeded Neighborhood A (~18%), despite starting at less
+than half of A's coverage in 2005 (C: ~10% vs. A: ~30%).
+A) Neighborhood C gained canopy, not lost it.
+B) B's coverage peaked in 2015 then dropped sharply — not consistent throughout.
+D) By 2020, A (~18%) no longer had the highest coverage — C (~25%) surpassed it.
+Question 10 — Answer: B
+Logical Completion | Hard
+Why correct: The model uses a constant value where real values likely vary. Therefore, some disagreements
+between predictions and observed proxy data should be expected.
+A) Possible but speculative about future sampling.
+C) Confuses internal model variations with the model's fixed assumption.
+D) Makes an unsupported claim about actual vs. modeled values.
+Question 11 — Answer: B
+Logical Completion | Hard
+Why correct: MOF membranes have precisely sized molecular pores. The logical conclusion: the membrane
+acts as a selective barrier, letting small lithium ions through while physically blocking larger polysulfide molecules.
+A) Saturation would undermine the benefit, not explain the improvement.
+
+-- 14 of 29 --
+
+C) Catalyzing more polysulfide formation would worsen the problem.
+D) Li-ion batteries don't experience the polysulfide shuttle effect.
+Question 12 — Answer: B
+Boundaries (Punctuation) | Easy
+Why correct: A period correctly separates two independent clauses: '...held deep ritual significance.' and 'The
+archaeological evidence...'
+A) 'significance, the' creates a comma splice.
+C) A semicolon would work grammatically but B is the best answer here.
+D) Missing punctuation creates a run-on sentence.
+Question 13 — Answer: A
+Boundaries (Punctuation) | Medium
+Why correct: A comma after 'construction' correctly closes the participial phrase 'completed after more than two
+decades of construction,' allowing the main clause to continue.
+B) A colon implies a list or explanation follows.
+C) A semicolon requires an independent clause after it.
+D) No punctuation makes the sentence difficult to parse.
+Question 14 — Answer: C
+Form, Structure, and Sense (Verb Forms) | Hard
+Why correct: Present tense 'introduces' correctly describes a general, timeless truth: rate variation introduces
+systematic bias into estimates.
+A) 'Had introduced' is past perfect — inappropriate for a general principle.
+B) 'Introducing' creates a participle/fragment.
+D) 'Introduced' is past tense — not suitable for a timeless scientific statement.
+Question 15 — Answer: D
+Form, Structure, and Sense (Verb Tense) | Hard
+Why correct: The compound subject 'alignment and coalition history' is plural, requiring the plural verb
+'determine'.
+A) 'Determines' is singular — disagrees with the compound subject.
+B) 'Has determined' is singular present perfect.
+C) 'Determining' creates a fragment.
+Question 16 — Answer: A
+Boundaries (Punctuation) | Hard
+Why correct: A comma before 'and' correctly joins two independent clauses in a compound sentence: '...share a
+common structural foundation, and the theory has prompted...'
+B) Omitting the comma before 'and' is acceptable in some styles but less clear with long independent clauses.
+C) A semicolon before 'and' is redundant.
+D) Starting a sentence with 'And' after a period is informal for this register.
+Question 17 — Answer: D
+Transitions | Medium
+
+-- 15 of 29 --
+
+Why correct: 'Then' signals the second step in a chronological comparison: 'first examine X; then compare it to Y.'
+A) 'Therefore' implies a logical conclusion.
+B) 'Still' implies concession.
+C) 'Instead' implies replacement or substitution.
+Question 18 — Answer: B
+Transitions | Hard
+Why correct: 'Consequently' signals a result: because the fern sequesters arsenic in its fronds, soil arsenic
+levels decline as a consequence.
+A) 'Specifically' introduces a detail, not a consequence.
+C) 'Nevertheless' implies contrast.
+D) 'In addition' adds information without showing causation.
+Question 19 — Answer: B
+Rhetorical Synthesis | Hard
+Why correct: The goal is to compare Fricker and Dotson. Option B directly contrasts them: Fricker locates harm
+in the listener's prejudiced judgments; Dotson highlights how speakers preemptively self-silence in
+anticipation of such prejudice.
+A) Dotson doesn't disagree about epistemic injustice being structural.
+C) Institutional policies aren't the focus of either concept.
+D) Dotson doesn't claim all forms involve both self-censorship and prejudice.
+Question 20 — Answer: C
+Rhetorical Synthesis | Hard
+Why correct: The goal is to emphasize the difference in energy yield. Option C directly states the 18-fold
+difference: '2 ATP vs. roughly 36 ATP.'
+A) Emphasizes similarity ('both convert glucose'), not the energy difference.
+B) Describes only fermentation without comparing.
+D) Emphasizes oxygen requirements, not energy yield.
+Question 21 — Answer: A
+Inferences | Hard
+Why correct: Ostrom documented communities successfully self-governing common-pool resources for centuries.
+Her work implies that the state-vs-privatization dichotomy overlooks the capacity of communities to build
+effective self-governing institutions.
+B) Contradicts Ostrom's findings.
+C) Ostrom studied multiple resource types (fisheries, irrigation, forests), not just two.
+D) Ostrom's evidence was consistent across regions.
+Question 22 — Answer: D
+Strengthen / Support Claims | Hard
+Why correct: Kennett hypothesizes that drought triggered warfare and collapse. If warfare was already common
+during periods of above-average rainfall, drought cannot be the primary trigger — this weakens the hypothesis.
+A) Stable institutions despite drought weakens it, but less directly than D.
+B) Consistent data would support, not weaken.
+
+-- 16 of 29 --
+
+C) Water management is a partial buffer but doesn't directly undermine the drought-warfare causal link.
+Question 23 — Answer: A
+Command of Quantitative Evidence | Hard
+Why correct: The graph shows other renewables at ~50 EJ in 2020, surpassing nuclear energy at ~20 EJ in
+absolute contribution.
+B) Fossil fuels grew from ~450 to ~510 EJ — they didn't decline.
+C) Hydro grew in absolute terms but its share relative to total energy didn't clearly increase.
+D) Fossil fuels accounted for the majority of the absolute energy increase.
+Question 24 — Answer: A
+Logical Completion | Hard
+Why correct: If each new generation accepts depleted conditions as 'normal,' then historical ecological data —
+even when imprecise — is essential for setting accurate restoration benchmarks that reflect pre-depletion
+conditions.
+B) Pauly's concept argues the opposite — that recent-only data is problematic.
+C) Shifting baselines apply to all ecosystems, not just marine.
+D) The concept warns against exactly this reasoning.
+Question 25 — Answer: A
+Boundaries (Punctuation) | Hard
+Why correct: A comma correctly separates the two items in an appositional list: 'abstract freedom, which exists as
+a theoretical possibility, and situated freedom, which is constrained by...'
+B) No comma makes the long compound harder to parse.
+C) A semicolon is too strong for items in a coordinated pair.
+D) Starting with 'And' after a period is informal.
+Question 26 — Answer: A
+Form, Structure, and Sense (Verb Forms) | Hard
+Why correct: 'Is converted' provides the passive voice present tense needed: 'the rate at which thawed carbon is
+converted to atmospheric CO2.'
+B) 'Converting' creates a fragment.
+C) 'Having converted' implies a completed past action.
+D) 'To convert' is an infinitive that doesn't grammatically fit the clause structure.
+Question 27 — Answer: B
+Rhetorical Synthesis | Hard
+Why correct: The goal is to present evidence supporting the conclusion. Option B connects the findings: mcr-1
+was found in a majority of hospital wastewater species, and its downstream detection in municipal wastewater
+suggests resistance genes spread from hospitals into the wider environment.
+A) A general statement about HGT, not specific evidence from the study.
+C) Explains why mcr-1 matters but doesn't present the study's evidence chain.
+D) Notes detection at both sites without connecting hospital origin to downstream spread.
+
+-- 17 of 29 --
+
+Section 2 — Module 1: Detailed Explanations
+Question 1 — Answer: D
+Linear Equations | Easy
+Why correct: Width = 6 cm. Length = 6 + 40 = 46 cm. Area = 6 × 46 = 276 cm².
+A) 12 = 6 + 6 (perimeter error).
+B) 46 is just the length, not the area.
+C) 92 = 2(6 + 40) — this is the perimeter.
+Question 2 — Answer: A
+Linear Equations (Interpretation) | Easy
+Why correct: In 28h + 18f = 924, the coefficient 28 multiplies h (hours at the publishing house). It represents the
+hourly rate at the publishing house: $28 per hour.
+B) 18 is the law firm rate.
+C) h represents the number of hours, not 28.
+D) f represents law firm hours.
+Question 3 — Answer: A
+Data Analysis (Scatterplot) | Medium
+Why correct: The line passes through approximately (0, 1) with slope ≈ 1.5. Equation: y = 1.0 + 1.5x.
+B) Negative slope contradicts the upward trend.
+C) y-intercept of −1 doesn't match the graph.
+D) Both negative intercept and slope contradict the upward-trending graph.
+Question 4 — Answer: 9
+Systems of Equations | Hard
+Why correct: Setting −0.25 = x² + 6x + a gives x² + 6x + (a + 0.25) = 0. No real solutions when discriminant < 0: 36
+− 4(a + 0.25) < 0 → 35 < 4a → a > 8.75. The least positive integer is 9.
+Question 5 — Answer: D
+Geometry (Area) | Easy
+Why correct: Width = 5 cm. Length = 5 + 35 = 40 cm. Area = 5 × 40 = 200 cm².
+A) 10 = 2 × 5.
+B) 40 is just the length.
+C) 80 = 2(5 + 35) — the perimeter.
+Question 6 — Answer: A
+Ratios | Easy
+Why correct: Blue: 32. Total: 48 + 32 = 80. Fraction blue = 32/80 = 2/5.
+B) 3/5 = 48/80 is the fraction of red marbles.
+C) 2/3 doesn't simplify from these numbers.
+D) 3/8 = 30/80, incorrect.
+Question 7 — Answer: A
+
+-- 18 of 29 --
+
+Linear Functions | Easy
+Why correct: g(0) = 5(0) − 7 = −7. The y-intercept is (0, −7).
+B) Confuses the coefficient with the constant.
+C) 5 is the slope, not the y-intercept.
+D) Gets the sign wrong on the constant.
+Question 8 — Answer: D
+Exponential Functions | Medium
+Why correct: Decreasing by 18% means retaining 82% = 0.82 per period of 15.5 hours. The exponent must be
+t/15.5 to scale correctly: P = 50(0.82)t/15.5.
+A) Uses 0.18 (the decay rate) and wrong exponent form.
+B) Uses 0.18 instead of 0.82.
+C) Uses t + 15.5 instead of t/15.5 in the exponent.
+Question 9 — Answer: 13
+Equivalent Expressions | Medium
+Why correct: 5 + 11 − 3 = 13. So 5xn + 11xn − 3xn = 13xn.
+Question 10 — Answer: C
+Exponents and Radicals | Medium
+Why correct: (245y)1/2 = √(245y). The exponent 1/2 applies to the entire product inside the parentheses.
+A) 245·√y incorrectly separates 245 from the square root.
+B) √245 · y takes the root of only 245 and leaves y unsquared.
+D) √((245y)²) = 245y — this squares then roots, yielding the original product.
+Question 11 — Answer: B
+Probability | Medium
+Why correct: P(Z) = 1 − 0.60 − 0.28 = 0.12. Number in Hall Z = 0.12 × 350 = 42.
+A) 12 is a computation error.
+C) 56 = 0.16 × 350.
+D) 98 = 0.28 × 350, which is Hall Y's count.
+Question 12 — Answer: B
+Linear Equations (Perpendicular) | Medium
+Why correct: Perpendicular slopes are negative reciprocals. Slope of m = −1/3, so slope of n = 3.
+A) 10 is the y-intercept.
+C) 1/3 is the absolute value of m's slope, not the negative reciprocal.
+D) 1/10 confuses the y-intercept with slope.
+Question 13 — Answer: B
+Exponential Functions (Tables) | Hard
+Why correct: f(x) = −8(3)x/3. Evaluating: f(−3) = −8(3)−1 = −8/3. f(0) = −8(1) = −8. f(3) = −8(3) = −24. f(6) = −8(9) =
+−72. Only option B matches all four values.
+A) f(0) = 0 is wrong; 3n = 1, so f(0) = −8.
+C) f(−3) = 8/3 has the wrong sign.
+
+-- 19 of 29 --
+
+D) f(6) = −48 uses the wrong power of 3.
+Question 14 — Answer: 44
+Function Evaluation | Medium
+Why correct: r(2) = 4(2) + 7 = 15. q(4) = 5 − 4 = 1. 3r(2) − q(4) = 3(15) − 1 = 45 − 1 = 44.
+Question 15 — Answer: 300
+Linear Inequalities | Medium
+Why correct: Cost per laptop with 8% tax: 210 × 1.08 = 226.80. Max laptops: 68,040 ÷ 226.80 = 300 exactly.
+Question 16 — Answer: C
+Trigonometry | Medium
+Why correct: To convert radians to degrees, multiply by 180°/π. The expression (7/10)π · (180°/π) correctly
+converts the radian measure to degrees, yielding 126°.
+A) Omits π from the original radian measure.
+B) π/180° converts degrees to radians — the reverse direction.
+D) 360°/π is the wrong conversion factor.
+Question 17 — Answer: 42
+Geometry (Parallel Lines) | Hard
+Why correct: Triangle DEF: 96° + (2x+6)° + (3x−12)° = 180° → 5x + 90 = 180 → x = 18. So E = 42°, F = 42°.
+Since GH n DF, by corresponding angles (transversal EF), angle GHE = angle DFE = 42°.
+Question 18 — Answer: B
+Quadratic Functions | Hard
+Why correct: f(x) = a(x−2)² + 5. Using point (3, 41): a(1) + 5 = 41 → a = 36. Verify: f(0) = 36(4) + 5 = 149 3. f(−1) =
+36(9) + 5 = 329. f(−1) − f(0) = 329 − 149 = 180.
+A) 108 is a computation error.
+C) 252 uses an incorrect coefficient.
+D) 288 misapplies the vertex form.
+Question 19 — Answer: A
+Data Analysis (Scatterplot) | Medium
+Why correct: The line passes through (0, 2) with slope ≈ 2: y = 2 + 2x.
+B) Negative slope contradicts the upward trend.
+C) y-intercept of −2 doesn't match.
+D) This shows a negative slope from y = 22.
+Question 20 — Answer: C
+Systems of Linear Equations | Medium
+Why correct: Adding both equations: (x+4) + (x−4) = (3y+10) + (−3y+2) → 2x = 12 → x = 6. Therefore 3x = 18.
+A) −15/7 is from an incorrect setup.
+B) 9 is half the correct answer.
+D) 36 doubles the correct answer.
+
+-- 20 of 29 --
+
+Question 21 — Answer: D
+Exponential Functions (Decay) | Hard
+Why correct: Decreasing by 30% means retaining 70% = 0.70 per period of 18.4 hours: M = 200(0.70)t/18.4.
+A) Uses 0.30 and wrong exponent form.
+B) Uses 0.30 (the loss rate) instead of 0.70.
+C) Uses t + 18.4 instead of t/18.4.
+Question 22 — Answer: B
+Quadratic Functions (Vertex Form) | Hard
+Why correct: g(x) = a(x−3)² + 10. Using (4, 46): a(1) + 10 = 46 → a = 36. Verify: g(1) = 36(4) + 10 = 154 3. g(−2) =
+36(25) + 10 = 910. g(0) = 36(9) + 10 = 334. g(−2) − g(0) = 910 − 334 = 576.
+A) 432 uses an incorrect coefficient.
+C) 720 is a computation error.
+D) 864 misapplies the vertex form.
+
+-- 21 of 29 --
+
+Section 2 — Module 2 Easier: Detailed Explanations
+Question 1 — Answer: A
+Linear Equations | Easy
+Why correct: The coefficient 15 multiplies n (neighborhood walks), so 15 represents the earnings per
+neighborhood walk.
+B) 12 is the park walk rate.
+C) n represents the count, not 15.
+D) p represents park walk count.
+Question 2 — Answer: 3250
+Linear Equations | Easy
+Why correct: Weight = 2,400 + 85(10) = 2,400 + 850 = 3,250 grams.
+Question 3 — Answer: B
+Linear Equations | Easy
+Why correct: m − 27n = p → m = p + 27n. Add 27n to both sides.
+A) Subtracts 27n instead of adding.
+C) Multiplies instead of adding.
+D) Divides instead of adding.
+Question 4 — Answer: A
+Linear Inequalities | Medium
+Why correct: The shaded region is below and left of the line. Point (−3, 0) falls in this region. Checking: when x =
+−3, the line's y-value is positive (above 0), so (−3, 0) is below the line — in the shaded region.
+B) (0, 8) is above the y-intercept of ~7 — outside the shaded region.
+C) The shading is above the x-axis in the negative-x region, so (0, −5) may not be in the region.
+D) (5, 0) is to the right of the line — outside the shaded region.
+Question 5 — Answer: A
+Quadratic Functions | Easy
+Why correct: The function y = (36w)(w) shows the area. The factor 36w represents the length (36 times the width
+w).
+B) y is the area, not 36w.
+C) The difference would be 36w − w = 35w, not 36w.
+D) w is the width; 36w is the length.
+Question 6 — Answer: C
+Linear Equations | Easy
+Why correct: 7(x+3) − 6(x+3) = 28 → (x+3)(7−6) = 28 → x + 3 = 28.
+A) −4 would require x + 3 = −4, which doesn't satisfy the equation.
+B) 25 confuses x with x + 3.
+D) 31 adds 3 to 28 unnecessarily.
+Question 7 — Answer: C
+
+-- 22 of 29 --
+
+Systems of Equations | Medium
+Why correct: Adding: (x+8) + (x−8) = (−5y+3) + (5y+19) → 2x = 22. So 2x = 22.
+A) −7/5 is a different quantity.
+B) 11 is x, not 2x.
+D) 44 is 4x, not 2x.
+Question 8 — Answer: C
+Linear Equations | Easy
+Why correct: The squirrel gathered a total of 52.5 acorns: y = 52.5.
+A) 10 is the number of days.
+B) 52.5/10 = 5.25 is the daily rate, not the total.
+D) 52.5 + 10 = 62.5 incorrectly adds days to total.
+Question 9 — Answer: 22.4
+Geometry (Volume) | Medium
+Why correct: Volume = 4.000³ = 64.000 cm³. Mass = density × volume = 0.350 × 64 = 22.4 grams.
+Question 10 — Answer: B
+Absolute Value | Medium
+Why correct: −3|7x+4| + 6 = −6 → −3|7x+4| = −12 → |7x+4| = 4. Case 1: 7x+4 = 4 → x = 0. Case 2: 7x+4 = −4 → x
+= −8/7. Solutions: 0 and −8/7.
+A) Only 0 — misses the second solution.
+C) −15/7 doesn't satisfy the equation.
+D) Two valid solutions exist.
+Question 11 — Answer: C
+Linear Functions | Medium
+Why correct: h(x) = 9x + b. h(3) = 27 + b = 32 → b = 5. h(d) = 9d + 5 = −4 → d = −1. u(−1) = −4 and u(6) = 52.
+Slope = (52 − (−4))/(6 − (−1)) = 56/7 = 8.
+A) −2 is from a sign error.
+B) 7 is the denominator, not the slope.
+D) 9 is h's slope, not u's.
+Question 12 — Answer: B
+Linear Equations (Graph) | Medium
+Why correct: The line passes through (0, 8) and has positive slope ~6. For the form Rx − 6y = −48: at (0, 8): R(0)
+− 6(8) = −48 → −48 = −48 3. The equation Rx − 6y = −48 fits.
+A) Rx + 6y = 48 gives 48 = 48 at (0, 8) 3, but the slope sign is wrong.
+C) 6x + Ry = 48 doesn't match the y-intercept.
+D) 6x − Ry = −48 produces the wrong slope direction.
+Question 13 — Answer: C
+Linear Inequalities | Hard
+Why correct: The line passes through (−9, 0) and (0, −12). Substituting into rx + ty = −108: at (−9, 0): −9r = −108
+→ r = 12. At (0, −12): −12t = −108 → t = 9. So r + t = 12 + 9 = 21.
+
+-- 23 of 29 --
+
+A) −3 comes from a sign error.
+B) 3 mistakes the relationship between r and t.
+D) −21 reverses the sign.
+Question 14 — Answer: A
+Geometry (Surface Area) | Hard
+Why correct: Edge ratio = 5/72. Surface area ratio = (edge ratio)² = (5/72)² = 25/5184.
+B) 125/373248 is the volume ratio.
+C) 5/432 uses an incorrect calculation.
+D) 25/72 forgets to square the denominator.
+Question 15 — Answer: A
+Exponential Functions (Graph) | Hard
+Why correct: The graph of y = g(x) + 3 passes through (0, 3) and approaches y = 4 as x→−∞. So g(0) + 3 = 3 →
+g(0) = 0, and g(x) + 3 → 4 → g(x) → 1. Testing g(x) = −4x + 1: g(0) = −1 + 1 = 0 3. As x→−∞: g(x) → 0 + 1 = 1 3.
+B) g(0) = −1 + 3 = 2, but we need g(0) = 0.
+C) g(0) = −1 + 4 = 3, but we need g(0) = 0.
+D) g(0) = −1 + 5 = 4, but we need g(0) = 0.
+Question 16 — Answer: B
+Equivalent Expressions | Easy
+Why correct: 12(x + 8) = 12x + 12(8) = 12x + 96.
+A) Forgot to distribute 12 to 8.
+C) Added instead of multiplying: 12 + 8 = 20.
+D) Ignored the 8 entirely.
+Question 17 — Answer: D
+Ratios | Medium
+Why correct: Original: 40 in × 16 mi/in = 640 mi total. Smaller: 40 − 60%(40) = 16 in side. Same area covered: 640
+mi ÷ 16 in = 40 mi/in.
+A) 6.40 = 16 × 0.40.
+B) 9.60 = 16 × 0.60.
+C) 25.60 applies the 60% reduction to the scale instead of the side length.
+Question 18 — Answer: D
+Systems (Quadratic-Linear) | Hard
+Why correct: Substituting y = x − d into y = −(x−3)²: x − d = −(x−3)². Rearranging: (x−3)² + x − d = 0 → x² − 5x +
+(9−d) = 0. Discriminant: 25 − 4(9−d) = −11 + 4d. Two solutions when discriminant > 0: d > 11/4 = 2.75. Only d = 4
+satisfies d > 2.75.
+A) d = 1 < 2.75 — no real solutions.
+B) d = 2 < 2.75 — no real solutions.
+C) d = 11/4 = 2.75 — exactly one solution (boundary), not two distinct.
+Question 19 — Answer: C
+Geometry (Similarity) | Hard
+
+-- 24 of 29 --
+
+Why correct: For AA similarity, we need two pairs of equal angles. Given: G = J = 72°. Option C: H = 40° → I =
+180−72−40 = 68°. L = 68° → K = 180−72−68 = 40°. Both triangles have angles {72°, 40°, 68°}. Similar by AA.
+A) Same side lengths (30 = 30) don't prove similarity when other sides differ.
+B) Side ratios GH/GI vs. KL/JL don't establish SAS similarity without the included angle.
+D) H = 72°, K = 50°: GHI has {72°, 72°, 36°}; JKL has {72°, 50°, 58°} — different angle sets.
+Question 20 — Answer: 80
+Geometry (Circumscribed Circle) | Hard
+Why correct: Side = 720/3 = 240 cm. Circumradius R = a/(√3) = 240/√3 = 240√3/3 = 80√3. So w = 80.
+Question 21 — Answer: -18
+Functions (Evaluation) | Hard
+Why correct: g(x) = |x|/a + 18 where a < 0. g(20a) = |20a|/a + 18 = −20 + 18 = −2. g(9a) = |9a|/a + 18 = −9 + 18 =
+9. Product: (−2)(9) = −18.
+Question 22 — Answer: 2187
+Exponential Functions | Hard
+Why correct: h(x) = abx/n. h(7)/h(4) = b3/n = 243/9 = 27 = 3³. So b1/n = 3. h(4) = a·3n = 81a = 9 → a = 1/9. h(9) =
+(1/9)·3n = 19683/9 = 2187.
+
+-- 25 of 29 --
+
+Section 2 — Module 2 Harder: Detailed Explanations
+Question 1 — Answer: B
+Linear Equations | Easy
+Why correct: In C = 250 + 18g, the constant 250 is the flat fee charged regardless of the number of guests.
+A) 18 is the cost per guest.
+C) 250 isn't a guest count — it's the base fee.
+D) The equation doesn't solve for when C = 250 in terms of guests.
+Question 2 — Answer: 75
+Linear Equations | Medium
+Why correct: Depth = 12.5 × 6 = 75 meters after 6 minutes.
+Question 3 — Answer: B
+Linear Equations | Easy
+Why correct: p − 42r = s → p = s + 42r. Add 42r to both sides.
+A) Subtracts instead of adding.
+C) Multiplies instead of adding.
+D) Divides instead of adding.
+Question 4 — Answer: D
+Systems (Quadratic-Linear) | Hard
+Why correct: Substituting: x − k = −2(x−5)². Rearranging: 2(x−5)² + x − k = 0 → 2x² − 19x + (50−k) = 0.
+Discriminant: 361 − 8(50−k) = −39 + 8k. Two solutions when k > 39/8 = 4.875. Only k = 6 satisfies k > 4.875.
+A) k = 3 < 4.875 — no solutions.
+B) k = 4 < 4.875 — no solutions.
+C) k = 39/8 = 4.875 — boundary (exactly one solution).
+Question 5 — Answer: 250
+Linear Inequalities | Medium
+Why correct: Cost per chair with 6% tax: 185 × 1.06 = $196.10. Max chairs: 49,210 ÷ 196.10 ≈ 250.94. Since you
+can only buy whole chairs, max = 250.
+Question 6 — Answer: C
+Absolute Value | Hard
+Why correct: −2|9x+6| + 8 = −4 → |9x+6| = 6. Case 1: 9x+6 = 6 → x = 0. Case 2: 9x+6 = −6 → x = −12/9.
+Solutions: 0 and −12/9.
+A) Only 0 — misses the second solution.
+B) −2/3 doesn't satisfy the equation.
+D) Two valid solutions exist.
+Question 7 — Answer: C
+Linear Functions | Hard
+
+-- 26 of 29 --
+
+Why correct: v(x) = 8x + b. v(2) = 16 + b = 23 → b = 7. v(c) = 8c + 7 = −1 → c = −1. w(−1) = −1, w(7) = 71. Slope =
+(71−(−1))/(7−(−1)) = 72/8 = 9.
+A) −2 is a sign error.
+B) 8 is v's slope, not w's.
+D) 12 is from a different calculation.
+Question 8 — Answer: C
+Exponential Functions (Graph) | Hard
+Why correct: The graph of y = f(x) + 2 passes through (0, 8) and approaches y = 9. So f(0) + 2 = 8 → f(0) = 6, and
+f(x) + 2 → 9 → f(x) → 7. Testing f(x) = −5x + 7: f(0) = −1 + 7 = 6 3. As x→−∞: f(x) → 0 + 7 = 7 3.
+A) f(0) = 0 ≠ 6.
+B) f(0) = 4 ≠ 6.
+D) f(0) = 8 ≠ 6.
+Question 9 — Answer: A
+Geometry (Surface Area) | Hard
+Why correct: Edge ratio = 7/90. Surface area ratio = (7/90)² = 49/8100.
+B) 343/729000 is the volume ratio.
+C) 7/540 uses an incorrect calculation.
+D) 49/90 forgets to square.
+Question 10 — Answer: 55
+Geometry (Parallel Lines) | Hard
+Why correct: Triangle MNO: (4y−5) + y + (3y−23) = 180 → 8y − 28 = 180 → y = 26. M = 99°, N = 26°, O = 55°. PQ
+n MO → angle PQN = angle MON = 55° (corresponding angles, transversal NO).
+Question 11 — Answer: C
+Systems of Equations | Medium
+Why correct: Adding: (2x+6) + (2x−6) = (−3y+1) + (3y+27) → 4x = 28. So 4x = 28.
+A) −12/3 = −4, unrelated.
+B) 14 is 4x/2.
+D) 56 is 2(4x).
+Question 12 — Answer: B
+Quadratic Functions | Hard
+Why correct: p(x) = a(x+1)² + 3. Using (0, 11): a(1) + 3 = 11 → a = 8. Verify: p(−3) = 8(4) + 3 = 35 3. p(2) = 8(9) +
+3 = 75. p(−1) = 3. p(2) − p(−1) = 75 − 3 = 72.
+A) 69 is a computation error.
+C) 75 is just p(2), not the difference.
+D) 78 uses an incorrect coefficient.
+Question 13 — Answer: 66
+Geometry (Circumscribed Circle) | Hard
+Why correct: Side = 594/3 = 198. Circumradius R = 198/√3 = 198√3/3 = 66√3. So w = 66.
+
+-- 27 of 29 --
+
+Question 14 — Answer: -36
+Functions (Evaluation) | Hard
+Why correct: f(x) = |x|/b + 10, b < 0. f(16b) = −16 + 10 = −6. f(4b) = −4 + 10 = 6. Product: (−6)(6) = −36.
+Question 15 — Answer: 4096
+Exponential Functions | Hard
+Why correct: f(6)/f(3) = d3/m = 256/16 = 16. If d = 16, m = 3: check f(3) = c·16 = 16 → c = 1. f(9) = 16³ = 4096.
+Question 16 — Answer: B
+Equivalent Expressions | Easy
+Why correct: 18(x + 7) = 18x + 18(7) = 18x + 126.
+A) Forgot to distribute 18 to 7.
+C) Added: 18 + 7 = 25.
+D) Ignored the 7 entirely.
+Question 17 — Answer: D
+Ratios | Hard
+Why correct: Original: 50 in × 20 mi/in = 1,000 mi total. Smaller: 50 − 80%(50) = 10 in. Same area: 1,000 ÷ 10 =
+100 mi/in.
+A) 4.00 = 20 × 0.20.
+B) 16.00 applies the reduction to the rate.
+C) 80.00 is an intermediate error.
+Question 18 — Answer: C
+Geometry (Similarity) | Hard
+Why correct: Given: A = D = 65°. Option C: B = 50° → C = 65°. F = 65° → E = 50°. Both: {65°, 50°, 65°}. Similar
+by AA.
+A) Same side lengths (45 = 45) don't prove similarity.
+B) Side ratios don't establish SAS without the included angle.
+D) B = 65°, E = 40°: ABC = {65°, 65°, 50°}; DEF = {65°, 40°, 75°} — different.
+Question 19 — Answer: B
+Probability | Medium
+Why correct: P(bronze) = 1 − 0.52 − 0.30 = 0.18. Bronze = 0.18 × 150 = 27.
+A) 18 = 0.12 × 150.
+C) 45 = 0.30 × 150 (silver count).
+D) 78 = 0.52 × 150 (gold count).
+Question 20 — Answer: B
+Linear Equations (Perpendicular) | Medium
+Why correct: Perpendicular slopes are negative reciprocals. Slope of j = −1/5 → slope of k = 5.
+A) 9 is the y-intercept.
+C) 1/5 is the absolute value of j's slope.
+D) 1/9 confuses y-intercept with reciprocal.
+
+-- 28 of 29 --
+
+Question 21 — Answer: 7
+Equivalent Expressions | Easy
+Why correct: 9 + 4 − 6 = 7. So 9x³ + 4x³ − 6x³ = 7x³.
+Question 22 — Answer: C
+Quadratic Functions | Hard
+Why correct: q(x) = a(x+2)² + 4. Using (−1, 13): a(1) + 4 = 13 → a = 9. Verify: q(0) = 9(4) + 4 = 40 3. q(1) = 9(9) +
+4 = 85. q(−2) = 4. q(1) − q(−2) = 85 − 4 = 81.
+A) 72 is a computation error.
+B) 77 uses an incorrect coefficient.
+D) 85 is just q(1), not the difference.
+All answers have been verified. For any discrepancies, the step-by-step solution above takes precedence over the quick-reference grid.
+
+-- 29 of 29 --
+

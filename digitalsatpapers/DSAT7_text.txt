@@ -1,0 +1,1353 @@
+SAT-Style Practice Test
+100% Original Questions — Full-Length Exam
+Section 1: Reading and Writing (Module 1 & Module 2)
+Section 2: Math (Module 1 & Module 2)
+Total Questions: 98
+This test is designed to mirror the format, difficulty, and skill coverage of the Digital SAT. All content is original.
+
+-- 1 of 37 --
+
+SECTION 1, MODULE 1: Reading and Writing
+27 Questions — 32 Minutes
+Question 1
+Skill: Vocabulary in Context
+[Easy] Tags: Vocabulary in Context
+The Voyager space probes, launched in 1977, carry golden records containing sounds and images from
+Earth. Although originally designed for a five-year mission to study Jupiter and Saturn, the probes have far
+exceeded expectations. Scientist Suzanne Dodd, who manages the Voyager Interstellar Mission,
+continues to analyze transmissions from the probes, confirming that Voyager’s contribution to our
+understanding of deep space is _______.
+Which choice completes the text with the most logical and precise word or phrase?
+A) ongoing
+B) unprecedented
+C) debatable
+D) peripheral
+Question 2
+Skill: Words in Context
+[Easy] Tags: Vocabulary in Context
+The following text is from Khaled Hosseini’s 2003 novel The Kite Runner. The narrator describes learning
+to play chess as a child.
+For the tournament, I was supposed to study a book of openings my father had bought me. It was a
+thick, serious volume with diagrams and annotations. I was meant to memorize the Sicilian Defense and
+the Queen’s Gambit. But I skipped ahead, glancing at the diagrams without understanding them, and then
+improvising, moving pieces wherever they seemed right. I never truly grasped the strategies. I
+daydreamed about flying kites, about being somewhere above the rooftops.
+Based on the text, when the narrator describes himself as “improvising,” what does he most likely mean?
+A) He was violating an expectation about how to prepare for the tournament.
+B) He was gaining an unfair advantage over the other competitors.
+C) He was deceiving his chess instructor.
+D) He was lying to himself about his strategic ability.
+Question 3
+Skill: Vocabulary in Context
+[Easy] Tags: Vocabulary in Context
+
+-- 2 of 37 --
+
+The Oxford English Dictionary’s Reading Programme is a volunteer-driven initiative begun in the late
+nineteenth century to document the history of English words. Participants read published works and
+submit quotations illustrating word usage—these _______ from personal libraries and archives allow
+lexicographers to trace how terms such as “robot” (1920) first entered the language.
+Which choice completes the text with the most logical and precise word or phrase?
+A) contributions
+B) resolutions
+C) negotiations
+D) justifications
+Question 4
+Skill: Vocabulary in Context
+[Easy] Tags: Vocabulary in Context
+Modern concert halls are typically engineered with sophisticated acoustic panels and adjustable sound
+systems to optimize the audience’s listening experience. Because concertgoers have become
+accustomed to polished acoustics, performances in raw, untreated spaces can startle listeners. But
+bare-walled venues were likely _______ audiences centuries ago: purpose-built concert halls with
+advanced acoustic design were not widespread until the 1800s.
+Which choice completes the text with the most logical and precise word or phrase?
+A) expected by
+B) confusing to
+C) exciting to
+D) disliked by
+Question 5
+Skill: Main Purpose / Main Idea
+[Easy] Tags: Main Purpose / Main Idea
+Struggling with an overpopulation of deer? One surprising approach may be to introduce predators back
+into the ecosystem. Gray wolves and mountain lions are two native predators whose reintroduction into
+certain U.S. regions has helped control deer herds. These apex predators are sometimes more effective
+at managing populations than are traditional methods such as regulated hunting.
+Which choice best states the main purpose of the text?
+A) To suggest an unexpected solution to a problem
+B) To discuss the best way to manage wildlife
+C) To describe how dangerous some predators are
+D) To identify a new ecological trend
+Question 6
+Skill: Text Structure
+
+-- 3 of 37 --
+
+[Medium] Tags: Text Structure
+Beloved, the 1987 novel by Ohio-born author Toni Morrison, is characteristic of African American literary
+fiction written during the 1970s and 1980s. During that era, Morrison and her contemporaries crafted
+haunting, psychologically complex narratives rooted in the historical trauma of slavery. Recently, however,
+younger Black writers have gravitated toward commercially popular genres known for being fast-paced
+and inventive, such as science fiction and Afrofuturism. Nigerian American author Nnedi Okofor is a
+prominent voice in this movement. Her 2010 novel Who Fears Death is a work of speculative fiction.
+Which choice best describes the overall structure of the text?
+A) It discusses fiction by earlier African American writers, then describes how fiction by more recent
+African American writers differs from the earlier fiction.
+B) It praises one African American fiction writer, then criticizes a different African American fiction
+writer.
+C) It provides an overview of African American fiction, then compares it to fiction by non-Black writers.
+D) It describes one African American author’s early works, then describes her more recent works.
+Question 7
+Skill: Function of Underlined Sentence
+[Medium] Tags: Inference / Detail
+In 2016, marine biologist Danielle Dixson and colleagues published a study concluding that rising ocean
+temperatures significantly alter the migratory behavior of Amphiprion ocellaris, a species of clownfish.
+However, Dixson’s study relied on a sample of only 12 fish from a single reef system. In a 2021
+meta-analysis examining multiple researchers’ conclusions about temperature effects on reef fish
+behavior, Frederick Bayer and colleagues cautioned that depending on such limited data sets can
+heighten the risk of skewed results. Such analysis, in turn, can lead to overstated conclusions.
+Which choice best describes the function of the underlined sentence in the text?
+A) It presents a criticism of the methodology reported by Dixson and colleagues in their 2016 study.
+B) It lists several traits of Amphiprion ocellaris discovered by Dixson and colleagues while conducting
+their 2016 study.
+C) It emphasizes a detail about where Dixson and colleagues conducted their 2016 study.
+D) It states the conclusion reached by Dixson and colleagues in their 2016 study.
+Question 8
+Skill: Inference / Reasoning
+[Medium] Tags: Inference / Detail
+The atmosphere of Venus makes direct exploration of the planet exceptionally difficult, as the dense
+carbon dioxide clouds and surface temperatures exceeding 450°C are known to corrode sensors and
+disable electronic components on landers and other exploration equipment. Using analogs, which are
+materials engineered to replicate the atmospheric and surface conditions of other planets, scientists are
+able to study characteristics of Venus’s environment. Analogs like the Venus Chamber Simulant—which
+was developed using sulfuric acid vapor and extreme heat in laboratory settings—help researchers
+evaluate how well their instruments will perform under Venusian conditions.
+
+-- 4 of 37 --
+
+Based on the text, what is one reason why analogs are valuable for scientists?
+A) Analogs allow scientists to test the ability of research equipment to withstand some of the
+conditions it will encounter during a mission.
+B) Scientists use analogs to track how the chemical properties of planetary atmospheres have
+changed over time.
+C) Analogs can be combined with materials from Earth to explore how research equipment will handle
+extreme environments on Earth.
+D) Scientists use analogs to compare the physical properties of Venus’s surface to those of Earth’s
+surface.
+Question 9
+Skill: Data Interpretation
+[Medium] Tags: Data Interpretation
+[Table: Millions of Metric Tons of Lithium Extracted in 2000 and 2022
+Australia: 2000 = 5.20, 2022 = 61.00
+Chile: 2000 = 5.50, 2022 = 39.00
+China: 2000 = 2.80, 2022 = 19.00
+Argentina: 2000 = 1.20, 2022 = 6.20]
+While doing research for a paper about battery minerals, a student finds information about lithium
+extraction in different countries in 2000 and 2022. The student notes that Australia produced 5.20 million
+metric tons of lithium in 2000 and _______.
+Which choice most effectively uses data from the table to complete the statement?
+A) 61.00 million metric tons of lithium in 2022.
+B) 6.20 million metric tons of lithium in 2022.
+C) 19.00 million metric tons of lithium in 2022.
+D) 39.00 million metric tons of lithium in 2022.
+Question 10
+Skill: Strengthen / Support Claim
+[Medium] Tags: Weaken / Strengthen Hypothesis
+For decades, scholars attributed the earliest known use of the zero as a placeholder to Indian
+mathematician Brahmagupta in 628 CE. However, historian Agathe Keller has argued that Cambodian
+stone inscriptions from the Khmer Empire, predating Brahmagupta by roughly a century, contain a clear
+numeric symbol functioning as zero. Keller asserts that in his role as an epigrapher, researcher Coedès
+identified a dot used as a placeholder in a Khmer inscription dated to 683 CE, and these records contain
+the earliest datable example of the zero symbol.
+Which finding, if true, would most directly support the underlined claim?
+A) Several dots appear in both Brahmagupta’s texts and Khmer inscriptions, but the dot was
+commonly used in manuscripts in the 600s and 700s as a means to separate words from numbers.
+
+-- 5 of 37 --
+
+B) In a Khmer stone inscription from approximately 683 CE, a dot appears between two numerals in a
+context that clearly indicates a positional value of nothing.
+C) In a table in Brahmagupta’s astronomical text from the 620s, a small circle appears between two
+numbers in a context that suggests the value is not a whole number.
+D) As recorded in Keller’s research, some of Coedès’s readings of Khmer inscriptions are inaccurate
+due to the use of whole numbers rather than placeholders.
+Question 11
+Skill: Data Interpretation
+[Medium] Tags: Data Interpretation
+[Table: Average Monthly Sick Days per Employee at Two Points After Wellness Programs Began
+Program Type | 6 Months | 18 Months
+YGA (Yoga and Meditation) | 3.1 | 1.8
+NTR (Nutrition Seminars) | 3.3 | 4.9]
+Dr. Rachel Simmons et al. hypothesized that introducing wellness initiatives into offices would reduce
+absenteeism (employees missing work) and boost morale. Simmons’s team enrolled groups of corporate
+workers in two programs: one that provided yoga and meditation sessions (YGA) and one that offered
+nutrition seminars (NTR). They then measured average monthly sick days at 6 months and 18 months
+after the programs started. They concluded that yoga-based wellness programs were more effective at
+reducing absenteeism than nutrition seminars, though this result took time to become apparent.
+Which choice best describes data from the table that most effectively strengthen Simmons and
+colleagues’ conclusion?
+A) Absenteeism was largely due to low morale for the NTR group at 18 months, while it was due to
+illness for the YGA group at 18 months.
+B) Sick days for the YGA group barely changed between 6 and 18 months, while sick days for the
+NTR group significantly increased during the same period.
+C) Sick days were consistently higher for the NTR group over the entire measurement period, though
+the gap between the two narrowed over time.
+D) Sick days were fairly similar for the YGA and NTR groups at 6 months, but at 18 months they had
+significantly increased for the NTR group and significantly decreased for the YGA group.
+Question 12
+Skill: Data Interpretation (Graph)
+[Medium] Tags: Data Interpretation (Graph)
+[Graph: Bar chart titled “Taste Rating: Labeled vs. Unlabeled” showing average taste ratings (1=lowest,
+8=highest) for six foods: “Kale Chips,” “Seaweed Snack,” “Cricket Flour Bar,” “Mealworm Pasta,”
+“Spirulina Smoothie,” and “Jackfruit Taco.” Each food has two bars—light gray for “unlabeled” and dark
+gray for “labeled.” For all six foods, the labeled bar is taller than the unlabeled bar. The gap is largest for
+“Cricket Flour Bar” and “Mealworm Pasta” (roughly 3-point difference) and smallest for “Kale Chips” and
+“Jackfruit Taco” (roughly 0.5-point difference).]
+
+-- 6 of 37 --
+
+Researchers investigated how knowing what an unfamiliar food contains affects people’s taste ratings.
+Participants rated foods once with ingredient labels visible and once without labels. For every food tested,
+participants who saw labels gave higher taste ratings than those who did not. But the magnitude of this
+labeling effect varied, as is best illustrated by the taste ratings for _______.
+Which choice most effectively uses data from the graph to complete the statement?
+A) “Kale Chips” and “Jackfruit Taco.”
+B) “Seaweed Snack” and “Mealworm Pasta.”
+C) “Cricket Flour Bar” and “Mealworm Pasta.”
+D) “Spirulina Smoothie” and “Jackfruit Taco.”
+Question 13
+Skill: Logical Completion
+[Hard] Tags: Logical Completion
+Cats are overwhelmingly right-paw dominant (73–80%) and can thus be said to exhibit strong
+population-level right-pawedness (PLRP). Among studies of non-domestic felines, Maria K. Llorente’s
+2011 study of captive lions purported to show PLRP, while Craig Packer’s 1986 study of wild lions did not.
+Overall, the studies claiming PLRP in non-domestic felines find much lower incidences of right-pawedness
+than domestic cats exhibit, but it’s worth noting that studies of captive felines tend to show significantly
+greater incidences of right-pawedness than studies of wild felines do, therefore raising the possibility that
+_______.
+Which choice most logically completes the text?
+A) the number of individuals in the study of wild lions is insufficient to preclude the claim that
+non-domestic felines exhibit PLRP.
+B) the number of individuals in the study of captive lions is insufficient for a robust claim regarding
+evidence of PLRP.
+C) the greater exposure to humans among the captive lions induced them to acquire more right-pawed
+behaviors.
+D) the apparent discrepancy between the studies’ results may be partly attributable to the 1986 study
+using different criteria when assessing paw dominance than were used in the 2011 study.
+Question 14
+Skill: Logical Completion
+[Hard] Tags: Logical Completion
+The red-crowned crane and the white-naped crane are large migratory birds that winter in wetlands such
+as the Poyang Lake region in China. Keisuke Ueda and colleagues wanted to understand how these birds
+select overwintering areas. They examined habitat characteristics including water depth and the duration
+of seasonal flooding. They found that although only red-crowned cranes prefer areas with shallow water
+during winter, both red-crowned cranes and white-naped cranes prefer areas that experience seasonal
+flooding for more than 90 days per year. The researchers therefore concluded that neither species is very
+drawn to areas where _______.
+
+-- 7 of 37 --
+
+Which choice most logically completes the text?
+A) there is seasonal flooding for far fewer than 90 days per year.
+B) species with overwintering seasons longer than 90 days are likely to be present.
+C) there are any features that attract the other species.
+D) there is relatively shallow water during the overwintering season.
+Question 15
+Skill: Logical Completion
+[Hard] Tags: Logical Completion
+It is challenging for publishers and printers to produce very long books that balance the demands of
+readability, durability, and affordability. Among some exceptionally long novels published in English, Leo
+Tolstoy’s War and Peace (translated from Russian) was published in a 1,225-page edition and runs to an
+estimated 580,000 words, while Donna Tartt’s The Goldfinch (written originally in English) was published
+in a 771-page edition and runs to an estimated 297,000 words. This indicates that _______.
+Which choice most logically completes the text?
+A) the edition of The Goldfinch has more words per page than the edition of War and Peace.
+B) translating a text from Russian to English is likely to increase the word count.
+C) page count is likely to be a more reliable indicator of how long it takes to read a book than word
+count.
+D) the edition of War and Peace is printed on thinner paper than the edition of The Goldfinch.
+Question 16
+Skill: Standard English Conventions
+[Medium] Tags: Verb Form / Tense
+Girl with a Pearl Earring is one of the most recognized works by the Dutch Golden Age painter Johannes
+Vermeer. _______ around 1665, the painting can now be found at the Mauritshuis museum in The Hague.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) Will complete
+B) Completed
+C) Completes
+D) Was completed
+Question 17
+Skill: Standard English Conventions
+[Medium] Tags: Verb Form / Tense
+Engineered titanium alloy implants (TAIs) can be used to repair fractured bones and reinforce weakened
+joints; this capability, well suited for numerous orthopedic procedures, _______ from the exceptional
+strength-to-weight ratio of these alloys.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+
+-- 8 of 37 --
+
+A) stemming
+B) having stemmed
+C) stems
+D) to stem
+Question 18
+Skill: Standard English Conventions
+[Medium] Tags: Punctuation
+The Sino-Tibetan language family comprises more than 400 _______ Mandarin and Cantonese, which are
+spoken by over 1 billion and 85 million speakers, respectively—and accounts for a significant portion of
+the world’s linguistic diversity, making it of great interest to researchers like George van Driem.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) languages
+B) languages—
+C) languages:
+D) languages,
+Question 19
+Skill: Standard English Conventions
+[Medium] Tags: Punctuation
+For the past 50 million years, the continents have been drifting toward their current positions at a relatively
+steady pace. This has not always been the _______ throughout geologic history, the continents have
+collided and separated multiple times through a process called the supercontinent cycle.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) case; though,
+B) case, though,
+C) case, though;
+D) case, though
+Question 20
+Skill: Standard English Conventions
+[Hard] Tags: Punctuation
+Japanese-born visual artist Yayoi Kusama transforms gallery spaces into immersive, otherworldly
+environments. In her installations, mirrored walls create infinite reflections of glowing orbs, polka-dotted
+sculptures fill entire _______ suspended nets of light shift and shimmer overhead. This “infinity room”
+concept, Kusama says, “is about erasing the boundaries of the self.”
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) rooms,
+
+-- 9 of 37 --
+
+B) rooms;
+C) rooms—
+D) rooms:
+Question 21
+Skill: Transitions
+[Medium] Tags: Transitions
+Eighteenth-century Rococo architects championed ornamentation in their designs. Granted, the lavish
+gilding and curved moldings of the Amalienburg pavilion, a Rococo hunting lodge designed by François
+Cuvillieés, couldn’t exactly pass for a natural setting. _______ one sees organic influences in Cuvillieés’s
+preference for flowing curves over rigid geometry and his use of leaf and shell motifs.
+Which choice completes the text with the most logical transition?
+A) Furthermore,
+B) Still,
+C) Similarly,
+D) In other words,
+Question 22
+Skill: Transitions
+[Medium] Tags: Transitions
+In Japan, citizens must be at least 18 years old to vote in national elections. _______ citizens in Scotland
+can vote in local elections at the age of 16.
+Which choice completes the text with the most logical transition?
+A) Firstly,
+B) By comparison,
+C) For example,
+D) Therefore,
+Question 23
+Skill: Transitions
+[Medium] Tags: Transitions
+Generally, compact vehicles are more fuel-efficient than larger ones. For example, the aerodynamic profile
+of the Toyota Prius helps it achieve exceptional mileage. _______ a full-size pickup truck encounters
+greater air resistance, making it less fuel-efficient.
+Which choice completes the text with the most logical transition?
+A) Specifically,
+B) On the other hand,
+C) As a result,
+
+-- 10 of 37 --
+
+D) In conclusion,
+Question 24
+Skill: Transitions
+[Hard] Tags: Transitions
+As an abolitionist, Boston minister William Ellery Channing opposed slavery and advocated for human
+dignity and moral reform; _______ sermons he delivered at Federal Street Church in the 1830s forcefully
+challenged the arguments of pro-slavery advocates who defended the institution on economic grounds.
+Which choice completes the text with the most logical transition?
+A) in other words,
+B) fittingly,
+C) by comparison,
+D) nevertheless,
+Question 25
+Skill: Rhetorical Synthesis
+[Medium] Tags: Rhetorical Synthesis
+While researching a topic, a student has taken the following notes:
+• Tulum is a municipality in the state of Quintana Roo, Mexico.
+• Municipalities are governmental regions responsible for providing many public services to their residents.
+• One service they provide is waste management.
+• Tulum covers an area of roughly 2,090 km².
+• Quintana Roo is divided into 11 municipalities.
+The student wants to emphasize the size of Tulum. Which choice most effectively uses relevant
+information from the notes to accomplish this goal?
+A) The municipality of Tulum in Quintana Roo, Mexico, covers an area of roughly 2,090 km².
+B) Tulum—a governmental region in the state of Quintana Roo, Mexico—provides many public
+services to its residents.
+C) Tulum is one of 11 governmental regions, known as municipalities, across Quintana Roo.
+D) Providing waste management is just one example of the public services that municipalities provide.
+Question 26
+Skill: Rhetorical Synthesis
+[Medium] Tags: Rhetorical Synthesis
+While researching a topic, a student has taken the following notes:
+• Canada has designated more than 80 areas as National Marine Conservation Areas (NMCAs).
+• Some NMCAs were established specifically to protect endangered marine species.
+• The Gwaii Haanas NMCA is a 3,400 km² area in British Columbia.
+• It was established to protect endangered Pacific glass sponge reefs.
+• The Fathom Five NMCA is a 112 km² area in Ontario.
+
+-- 11 of 37 --
+
+• It was established to protect endangered freshwater shipwreck ecosystems.
+The student wants to emphasize a similarity between the two NMCAs. Which choice most effectively uses
+relevant information from the notes to accomplish this goal?
+A) Both the Gwaii Haanas NMCA and the Fathom Five NMCA were established to protect endangered
+species or ecosystems.
+B) Some NMCAs, such as Ontario’s Fathom Five, were established specifically to protect endangered
+ecosystems.
+C) While the Gwaii Haanas NMCA extends across 3,400 km², the Fathom Five NMCA encompasses
+only 112 km².
+D) Canada has designated more than 80 areas as NMCAs, including the Gwaii Haanas NMCA in
+British Columbia.
+Question 27
+Skill: Rhetorical Synthesis
+[Hard] Tags: Rhetorical Synthesis
+While researching a topic, a student has taken the following notes:
+• Takashi Murakami (pseudonym Mr. DOB) is a Tokyo-based artist who specializes in the form of art
+known as Superflat.
+• Blurring the boundary between commercial and fine art is a central aspect of Superflat.
+• Playful mixing of traditional Japanese art with pop culture imagery is a central aspect of Superflat.
+• Murakami’s Tan Tan Bo Puking playfully mixes elements of classical Rinpa painting, manga, and
+corporate branding.
+• Murakami: “My art is a journey through the border between high and low—a place where tradition and
+pop culture collide and transform each other.”
+The student wants to provide a specific example of playful mixing in Superflat art. Which choice most
+effectively uses relevant information from the notes to accomplish this goal?
+A) Elements of classical Rinpa painting, manga, and corporate branding are playfully mixed in the
+Superflat piece Tan Tan Bo Puking by artist Takashi Murakami.
+B) The playful mixing of traditional and pop elements in Takashi Murakami’s art evokes “a place where
+tradition and pop culture collide.”
+C) Tan Tan Bo Puking by artist Takashi Murakami is an example of Superflat, a form in which playful
+mixing is a central aspect.
+D) Superflat art, such as Takashi Murakami’s Tan Tan Bo Puking, blurs boundaries between
+commercial and fine art and playfully mixes disparate elements.
+
+-- 12 of 37 --
+
+SECTION 1, MODULE 2: Reading and Writing
+27 Questions — 32 Minutes
+Question 1
+Skill: Vocabulary in Context
+[Easy] Tags: Vocabulary in Context
+Like other barrier islands, the Outer Banks of North Carolina is _______: it is a constantly shifting chain of
+narrow sandy islands that change in width and elevation as hurricanes and ocean currents redistribute
+sediment along the Atlantic coastline.
+Which choice completes the text with the most logical and precise word or phrase?
+A) unrivaled
+B) dynamic
+C) sustainable
+D) immutable
+Question 2
+Skill: Vocabulary in Context
+[Easy] Tags: Vocabulary in Context
+Noticing the similarity between Frida Kahlo’s Self-Portrait with Thorn Necklace and her husband Diego
+Rivera’s mural style, art historian Teresa del Conde argued that the former reflects Rivera’s
+influence—that by incorporating bold colors and symbolic imagery reminiscent of Rivera’s murals, Kahlo
+_______ a shared artistic vision. Indeed, by digitally analyzing both works, del Conde _______ the two
+pieces’ stylistic parallels.
+Which choice completes the text with the most logical and precise word or phrase?
+A) corroborated
+B) amalgamated
+C) promulgated
+D) consolidated
+Question 3
+Skill: Vocabulary in Context
+[Medium] Tags: Vocabulary in Context
+While contemporary architects may often draw inspiration from past masters like Frank Lloyd Wright, the
+breadth of their influences is wide. The designs of Zaha Hadid, for instance, can be said to _______
+elements of both classical mathematical geometry and the organic flowing forms of the natural landscape.
+Which choice completes the text with the most logical and precise word or phrase?
+A) defy
+
+-- 13 of 37 --
+
+B) neglect
+C) foretell
+D) exhibit
+Question 4
+Skill: Vocabulary in Context
+[Hard] Tags: Vocabulary in Context
+During the 2015–2016 refugee crisis, Germany accepted over one million asylum seekers from conflict
+zones. Political scientist Hanne Fjelde found that regional governments’ responses to immigration seem to
+have been _______ local integration policies: the likelihood that municipalities would establish refugee
+support programs was 0.45 in regions with proactive outreach and 0.08 in regions with restrictive
+frameworks.
+Which choice completes the text with the most logical and precise word or phrase?
+A) predicated on
+B) mediated by
+C) decoupled from
+D) material to
+Question 5
+Skill: Main Purpose
+[Medium] Tags: Main Purpose / Main Idea
+Though Ursula K. Le Guin, author of The Left Hand of Darkness, is perhaps not as widely known as the
+most commercially successful science fiction writers of the past half century, influential figures have
+championed her work, including the novelist Margaret Atwood and the literary critic Harold Bloom. In his
+introduction to Le Guin’s novel The Dispossessed, Bloom praises the book’s masterful synthesis of what
+philosopher Herbert Marcuse called the utopian and critical modes—while Marcuse believed works could
+be classified as either imagining ideal societies (utopian) or exposing existing flaws (critical), The
+Dispossessed demonstrates that a work can be both.
+Which choice best states the main purpose of the text?
+A) To present a reason why a literary critic is impressed by a certain novel
+B) To explain what inspired an author to write a particular work
+C) To compare the work of a writer with the work of a philosopher who admired her
+D) To argue that all writing must be classified as belonging to one of two categories
+Question 6
+Skill: Text Structure
+[Hard] Tags: Text Structure
+The following text is adapted from Charles Dickens’s 1853 novel Bleak House. Mr. Turveydrop is a
+dancing master in the city of London.
+
+-- 14 of 37 --
+
+By the merchants of the neighborhood and its vicinity [Mr. Turveydrop] was regarded as a man of quite
+remarkable poise and elegance, who must present a magnificent figure in the best ballrooms of the
+metropolis, and by his fellow dancing masters he was esteemed as a courteous and accomplished
+gentleman. Mr. Turveydrop never entered into an argument with passion; he implied what others might
+consider, but seldom declared what he believed himself; he never permitted anyone to detect that he was
+performing a role, and he never gave any person cause to question his sincerity.
+Which choice best describes the overall structure of the text?
+A) It implies that Mr. Turveydrop’s neighbors are more naïve in their estimation of him than people in
+London are and then explains why his neighbors have been so easily impressed.
+B) It presents the favorable opinion of Mr. Turveydrop that other people hold and then describes the
+behaviors of Mr. Turveydrop that enable him to maintain that favorable opinion.
+C) It shows that Mr. Turveydrop had originally been held in high regard by his colleagues and then
+details the events that caused their regard for him to subside.
+D) It highlights the disparity between Mr. Turveydrop’s public and private behavior and then conveys
+why he labors to obscure his true self from other people.
+Question 7
+Skill: Dual Passage Comparison
+[Hard] Tags: Dual Passage Comparison
+Text 1 is adapted from Virginia Woolf’s 1925 novel Mrs Dalloway. Text 2 discusses Mrs Dalloway. The
+Strand and Bond Street are adjacent shopping streets in London through which the protagonist walks.
+Text 1
+To Clarissa the pavement of Bond Street had always suggested permanence. Its very stones—withdrawn
+a little from the roaring Strand—implied a serenity beyond the grasp of commerce. Those dignified shop
+fronts, unchanging, indifferent, shouldering between them a quiet clock, were fit monuments to some
+enduring quality, whose expression would certainly not be found in the language of shopkeeping.
+Text 2
+The tension between opposing states of mind in Mrs Dalloway is articulated through the novel’s
+geography of London streets. On one hand, the busy Strand represents modern life’s noise, speed, and
+commercial energy; on the other, Bond Street, accessible from the Strand, embodies an elegance that
+values beauty, permanence, and contemplation—what the novel treats as “the enduring.”
+Based on the texts, the author of Text 2 would most likely agree with which statement about Bond Street,
+as it is depicted in Text 1?
+A) Because it is situated adjacent to the busy Strand, Bond Street symbolizes the encroachment of
+commercial culture into spaces the novel associates with beauty and reflection.
+B) The quietness conveyed by Bond Street’s appearance mirrors Clarissa’s dissatisfaction with the
+prospect of finding authentic meaning in a world that primarily values consumption.
+C) As a point of contrast with the Strand, Bond Street suggests to Clarissa the possibility of
+experiencing the lasting beauty promised by the contemplative spaces the novel seems to favor.
+
+-- 15 of 37 --
+
+D) Bond Street has a relatively modest appearance whose sharp contrast with the more energetic
+atmosphere of the Strand suggests to Clarissa the dominance of commercial culture among
+Londoners.
+Question 8
+Skill: Inference / Detail
+[Hard] Tags: Inference / Detail
+Brazilian architect Oscar Niemeyer’s prolific career, which spanned the 1930s to the 2000s, evolved
+through distinct phases. After traveling to Europe in the early 1930s and immersing himself in Le
+Corbusier’s modernist philosophy, Niemeyer began incorporating sweeping curves and open spaces
+derived from European modernism in his work, as seen in the Pampulha complex in Belo Horizonte,
+whose fluid organic forms contrast with his earlier projects in Rio de Janeiro, such as the Santos Dumont
+Airport, which reflect the rectilinear aesthetics of traditional Brazilian Neoclassicism.
+Information in the text best supports which statement about the design of the Santos Dumont Airport?
+A) It represents a transitional moment between the early and late phases of Niemeyer’s development.
+B) It displays the effects of Niemeyer’s exposure to international architectural trends in the 1930s.
+C) It is characteristic of the Rio de Janeiro architecture that influenced Niemeyer throughout his
+career.
+D) It reflects an approach to form and shape that Niemeyer later moved away from.
+Question 9
+Skill: Characterization
+[Hard] Tags: Inference / Detail
+The following text is from Hilary Mantel’s 2009 novel Wolf Hall. The narrator is describing a member of the
+king’s court.
+At last, and providing a good deal of what one might call ballast, came Sir Thomas Boleyn, whose
+expression seemed designed to ornament a monument, or perhaps a ship’s prow, and whose brow was
+so conspicuously furrowed with calculation that it would have been discourteous to examine too carefully
+the actual fruits his three decades of diplomatic service had yielded. His recently issued memoirs might
+have illuminated this puzzle, but since their substance did not emerge until well past the opening chapters,
+they might just as well have been sealed correspondence.
+Based on the text, which choice best describes Sir Thomas Boleyn?
+A) He has the appearance of a distinguished figure, but it is uncertain whether he has accomplished
+anything to earn distinction.
+B) He has maintained a modest profile even though he has served the crown capably for many years.
+C) He looks like a person worthy of respect, but his memoirs reveal that some of his actions were
+dishonorable.
+D) He would be a celebrated public figure if his achievements did not have to be kept secret.
+Question 10
+
+-- 16 of 37 --
+
+Skill: Weaken / Strengthen Hypothesis
+[Hard] Tags: Weaken / Strengthen Hypothesis
+Glasgow, Scotland, has installed green infrastructure along 72% of its riverbanks to reduce flooding and
+improve water quality, a practice known as riverbank naturalization. To evaluate the responses of urban
+bird populations to two types of naturalization—native wildflower meadows and constructed wetlands—Dr.
+Fiona Campbell et al. surveyed songbird communities consisting of robins, blackbirds, and 45 other
+species at different sites along the River Clyde. Using the Index of Songbird Community Health (ISCH), on
+which a high score corresponds to high community health, the researchers found that wildflower meadows
+are more strongly positively correlated with songbird community health than are constructed wetlands.
+Which finding, if true, would most directly illustrate the researchers’ finding?
+A) Songbird communities at Riverside, a site with a high percentage of bank covered by meadows and
+wetlands, had lower average ISCH scores than did songbird communities at Parkhead, a site with a
+low percentage of bank covered by meadows and wetlands.
+B) Songbird communities at Dalmarnock, a site with a relatively high percentage of bank consisting of
+meadows, had lower average ISCH scores than did songbird communities at Bridgeton, a site with a
+relatively high percentage of bank consisting of wetlands.
+C) Songbird communities at Tollcross, a site with equal percentages of bank consisting of meadows
+and wetlands, had higher average ISCH scores than did songbird communities at Shettleston, a site
+with different percentages of meadows and wetlands.
+D) The difference in average ISCH scores for songbird communities at Govan and Partick, two sites
+with a higher percentage of bank consisting of meadows than of wetlands, was statistically
+insignificant.
+Question 11
+Skill: Support Claim with Quotation
+[Hard] Tags: Weaken / Strengthen Hypothesis
+For its 2023 exhibition Behind the Lens, the National Museum of Photography invited the security guards
+typically responsible for protecting the museum’s collections to serve as curators, whose individual
+selections from the museum’s archives culminated in a show amplifying a distinct perspective not typically
+given a formal platform.
+Which quote from one of the personnel who curated the exhibition would best support the underlined
+claim?
+A) “The most enjoyable part of curating this show has been seeing the outcome of our efforts: a
+unique show that spans eras, techniques, and subjects. We hope visitors will sense our affection for
+the pieces we are entrusted with guarding.”
+B) “My selections for the show were motivated by an interest in bringing attention to lesser-known
+photographs in the museum’s collection, many of which tend to be passed over or even dismissed as
+unremarkable by most visitors to the museum.”
+C) “The photograph I chose is accompanied by a statement of the personal interpretation I’ve
+developed over countless hours standing beside the work and observing visitors’ reactions—an
+interpretation that I’ve previously shared only in small impromptu conversations with those visitors who
+pause to discuss the piece with me.”
+
+-- 17 of 37 --
+
+D) “Throughout the exhibition’s development, my colleagues and I partnered closely with other
+museum staff whose areas of expertise lie in curation and archival preservation, and whose insights
+enriched our understandings of the pieces we selected for the exhibition.”
+Question 12
+Skill: Support Claim with Quotation
+[Hard] Tags: Weaken / Strengthen Hypothesis
+A student is writing an essay on the subject of vertical farming, which involves growing crops indoors in
+stacked layers and is intended to help reduce the environmental impact of traditional agriculture. The
+student wants to make the case that vertical farming may be useful in responding to an expected rise in
+global food demand.
+Which quotation from a publication by a researcher would most effectively support the student’s claim?
+A) “Consumers tend to believe that reducing pesticide use in indoor farming would have a significant
+effect on food safety.”
+B) “The taste of hydroponically grown produce differs across crop varieties and is also influenced by
+lighting conditions and nutrient solutions.”
+C) “A growing population that is adding substantially more protein to its diet will contribute to an
+increasing demand for food production in the 21st century.”
+D) “Researchers who advocate for the expansion of vertical farming claim that it is better for the
+environment than conventional agriculture because it requires less arable land.”
+Question 13
+Skill: Support / Illustrate Claim
+[Hard] Tags: Weaken / Strengthen Hypothesis
+Born in Argentina in 1921, composer Astor Piazzolla was a pioneer of the nuevo tango (New Tango)
+movement that emerged in the 1950s and then spread throughout Latin America, Europe, and Japan as
+nuevo tango. Piazzolla traveled across Buenos Aires and beyond, studying classical composition
+techniques as well as traditional milonga rhythms, folk melodies, and other facets of Argentine musical
+heritage. These studies formed the foundation for the early movement’s fusion of traditional Argentine
+tango forms with jazz harmonies and classical structures in new compositions that represented modern
+urban life and pushed artistic boundaries. As the movement spread beyond Argentina, the range of
+musical traditions woven into its fabric also expanded.
+Which detail about songs associated with nuevo tango, if true, would best illustrate the underlined claim?
+A) Many feature rhythmic patterns addressing contemporary social issues that stemmed from shared
+experiences of political upheaval in South American countries.
+B) Many demonstrate the stylistic influence of bossa nova, a genre of Brazilian music that had come to
+be characterized by lyrical melodies in the early 1960s.
+C) Many were written with parts meant to be played on the bandoneón, a traditional instrument used
+across South American countries, including Argentina.
+D) Many were produced by Japanese artists in the late 1970s, with others by artists in additional
+countries first emerging soon after.
+
+-- 18 of 37 --
+
+Question 14
+Skill: Logical Completion
+[Hard] Tags: Logical Completion
+The Clean Air Act requires US federal agencies to evaluate the air-quality effects of proposed industrial
+activities, such as building power plants. While many Clean Air Act assessments require public hearings,
+general conformity determinations (GCDs) allow streamlined reviews without hearings for activities that
+will have a minimal effect on air quality. In 2021 the rule governing GCDs was revised: before, GCDs
+could be issued for actions that “do not individually or cumulatively have a significant effect on air quality,”
+but the revised rule allowed GCDs if actions “normally do not have a significant effect on air quality.”
+Environmental groups found this revision to be potentially harmful because _______.
+Which choice most logically completes the text?
+A) the increasing need to build new industrial facilities in the US incentivizes agencies to issue GCDs
+after 2021 for reasons that would not have been considered valid prior to 2021.
+B) the 2021 relaxation of the rule regarding GCDs would permit more streamlined reviews, resulting in
+more approvals by federal agencies and a paradoxically slower review process.
+C) the rule that governed GCDs before 2021 allowed expedited reviews of actions that might have
+significant effects on air quality if those effects were believed to be rare, while the 2021 revision
+subjected such actions to slower reviews.
+D) the 2021 revision of the rule governing GCDs would allow expedited reviews of actions that had a
+minimal air-quality effect when considered on their own but a significant effect when considered
+together.
+Question 15
+Skill: Logical Completion
+[Hard] Tags: Logical Completion
+Microbial electrolysis cells (MECs) harness the ability of certain bacteria to break down organic waste and
+produce hydrogen gas. The bacteria form colonies on the surface of an anode, but transferring the
+resulting electrons from the bacterial membrane to an external circuit requires the electrons to pass
+through a series of inefficient metabolic steps. Accordingly, MEC hydrogen output rarely exceeds a rate of
+2.5 liters per day (L/d). In an experiment, researchers coated the anode with graphene nanoparticles. The
+resulting hydrogen output was 5.8 L/d. Since materials such as graphene exhibit exceptional electrical
+conductivity, the researchers hypothesized that _______.
+Which choice most logically completes the text?
+A) graphene nanoparticles may increase the metabolic processes of the bacteria, thereby increasing
+the number of electrons available for the circuit.
+B) as the density of the bacterial colony increases, the metabolic steps may accelerate independent of
+the presence of the graphene nanoparticles.
+C) electrons may be conducted directly to the circuit before the graphene nanoparticles catalyze the
+metabolic steps.
+D) graphene nanoparticles may allow electrons to bypass the series of metabolic steps and transfer
+directly to the circuit.
+
+-- 19 of 37 --
+
+Question 16
+Skill: Standard English Conventions
+[Medium] Tags: Punctuation
+Featured in Radical Fiber, a 2019 group exhibition at the Textile Museum in Washington, D.C., was the
+work of artist Faith Ringgold, who is best known for her narrative quilts that juxtapose painted imagery with
+written stories. Her work challenges conventional notions of race, gender, history, and _______ she is
+credited with expanding the horizons of textile-based art.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) memory,
+B) memory and
+C) memory
+D) memory, and
+Question 17
+Skill: Standard English Conventions
+[Medium] Tags: Punctuation
+Ratified in 2010, Kenya’s constitution, according to legal _______ contains all of the eight constitutional
+features that promote governmental transparency. Explicit provisions for freedom of information,
+Odhiambo and Akech’s research explains, are more likely to be found in constitutions enacted after 2000.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) researchers Odhiambo and Akech
+B) researchers Odhiambo and Akech,
+C) researchers, Odhiambo and Akech
+D) researchers, Odhiambo and Akech,
+Question 18
+Skill: Standard English Conventions
+[Medium] Tags: Sentence Structure
+Although both 433 Eros and 25143 Itokawa are classified as near-Earth asteroids—rocky bodies that orbit
+close to our planet—they exhibit striking differences in _______ object 433 Eros is considered a
+monolithic asteroid with a solid, unfractured interior, while 25143 Itokawa, showing a loose collection of
+rubble held together by gravity, is considered a rubble-pile asteroid.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) behavior. The
+B) behavior; while the
+C) behavior, while the
+D) behavior; the
+Question 19
+
+-- 20 of 37 --
+
+Skill: Standard English Conventions
+[Medium] Tags: Verb Form / Tense
+In a parliamentary election, one might expect major parties to focus on the most densely populated
+districts. However, if polls and historical voting patterns suggest that the outcome in a given district is
+already settled, a party may choose not to campaign there. Ultimately, a district’s electoral history and
+polling data, not its population size, _______ its strategic importance to campaigns.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) has determined
+B) determines
+C) determining
+D) determine
+Question 20
+Skill: Standard English Conventions
+[Hard] Tags: Verb Form / Tense
+That the repeated eruptions of Mount Etna, a stratovolcano on the island of Sicily, have occurred on
+timescales as brief as six months—shorter intervals between eruptions than have been observed in some
+other volcanoes of its class—_______ to the volcano’s position above an exceptionally active subduction
+zone and rapid magma supply from its mantle source.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) is due
+B) due
+C) being due
+D) having been due
+Question 21
+Skill: Standard English Conventions
+[Hard] Tags: Verb Form / Tense
+In her 2015 book, sociologist Arlie Russell Hochschild documents the political attitudes of working-class
+communities in rural Louisiana. Hochschild’s ethnographic study _______ nearly 60 in-depth interviews
+conducted between 2011 and 2016 reveals not only persistent economic anxieties but also a deepening
+distrust of federal institutions, particularly those related to environmental regulation.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) had examined
+B) examining
+C) examines
+D) examined
+Question 22
+
+-- 21 of 37 --
+
+Skill: Transitions
+[Medium] Tags: Transitions
+Scientists studying asteroid deflection have focused on secondary objects such as S/2020 (2013 PY6), a
+moonlet orbiting the near-Earth asteroid 2013 PY6. In 2022 NASA intentionally crashed a probe into just
+such an object, the moonlet Dimorphos. _______ Dimorphos’s orbital period around the near-Earth
+asteroid Didymos was permanently altered.
+Which choice completes the text with the most logical transition?
+A) In comparison,
+B) In addition,
+C) Consequently,
+D) Specifically,
+Question 23
+Skill: Transitions
+[Medium] Tags: Transitions
+According to the band theory of solids, metals such as gold and aluminum do not form bonds through
+directional sharing of electrons. _______ metals are held together by a sea of delocalized electrons that
+move freely, interacting with neither specific atoms nor each other. This framework for understanding the
+electronic structure within metals can be used to help explain thermal and electrical conductivity.
+Which choice completes the text with the most logical transition?
+A) For example,
+B) Rather,
+C) Accordingly,
+D) Likewise,
+Question 24
+Skill: Transitions
+[Hard] Tags: Transitions
+In an ecphrastic poem, a poet explores a work of visual art, such as a drawing, sculpture, or painting. John
+Keats’s 1819 poem “Ode on a Grecian Urn,” for example, meditates on an ancient Greek vase; _______
+Tracy K. Smith’s 2011 poem “Hubble Photographs” takes as its subject a series of deep-space images
+captured by the Hubble Space Telescope.
+Which choice completes the text with the most logical transition?
+A) nevertheless,
+B) conversely,
+C) likewise,
+D) hence,
+Question 25
+
+-- 22 of 37 --
+
+Skill: Transitions
+[Hard] Tags: Transitions
+Honeybee phospholipase (HbPLA) is a distinctly evolved enzyme that can cleave a substrate called
+phosphatidylcholine to release anti-inflammatory compounds and can also act as an antimicrobial peptide,
+a class of protein present in all insects. _______ HbPLA is a bifunctional enzyme whose presence
+indicates an insect capable of producing anti-inflammatory compounds; in contrast, the presence of
+antimicrobial peptides alone would be insufficient for determining this capability.
+Which choice completes the text with the most logical transition?
+A) Nevertheless,
+B) In fact,
+C) Moreover,
+D) That is,
+Question 26
+Skill: Rhetorical Synthesis
+[Medium] Tags: Rhetorical Synthesis
+A student has gathered the following information:
+• The Bangladesh Garment Workers’ Federation (BGWF) is a national labor union for the South Asian
+nation of Bangladesh.
+• It advocates for improved working conditions and safety standards for garment workers.
+• IndustriALL Global Union is an international federation that represents national labor unions across
+manufacturing sectors.
+• It represents the BGWF.
+Which choice most effectively uses information from the given sentences to explain the purpose of
+national union federations?
+A) The BGWF is a national labor union in Bangladesh.
+B) National labor unions, such as the BGWF, work to improve conditions for workers in their member
+nations.
+C) The BGWF is one of the national labor unions represented by IndustriALL Global Union.
+D) International federations like IndustriALL represent the national labor unions in a specific sector.
+Question 27
+Skill: Rhetorical Synthesis
+[Hard] Tags: Rhetorical Synthesis
+While researching a topic, a student has taken the following notes:
+• Generally, a material will expand when heated.
+• The expansion of a material when heated is known as thermal expansion.
+• A 2020 study led by Hiroshi Yamamoto and Kenji Takahashi tested the thermal expansion of various
+polymers.
+• When a sample of polyethylene (PE) plastic was heated, its average length increased by 0.12 mm.
+• When a sample of polytetrafluoroethylene (PTFE) was heated, its average length increased by 0.98 mm.
+
+-- 23 of 37 --
+
+The student wants to emphasize a similarity between PE and PTFE. Which choice most effectively uses
+relevant information from the notes to accomplish this goal?
+A) In 2020, two research teams observed the effects of thermal expansion on various polymers,
+including PE and PTFE.
+B) Both PE and PTFE expand when heated, according to a 2020 study.
+C) Researchers determined that when heated, the average length of PTFE increased more than that
+of PE.
+D) Heating a material will generally cause it to expand, a process known as thermal expansion.
+
+-- 24 of 37 --
+
+SECTION 2, MODULE 1: Math
+22 Questions — 35 Minutes
+Question 1
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+The equation d = 25 + 3t gives the distance d, in miles, of a cyclist from a starting point t hours after the
+cyclist began riding. What is the distance, in miles, of the cyclist from the starting point 5 hours after the
+cyclist began riding?
+A) 25
+B) 37
+C) 40
+D) 50
+Question 2
+Skill: Geometry (Triangles)
+[Easy] Tags: Geometry (Triangles)
+[Figure: A right triangle with hypotenuse labeled 25, one leg labeled 7, and the other leg labeled a. The
+right angle is at the vertex between legs 7 and a. Note: Figure not drawn to scale.]
+Which equation shows the relationship between the side lengths of the given triangle?
+A) 7a = 25
+B) 7 + a = 25
+C) 72 + a2 = 252
+D) 72 − a2 = 252
+Question 3
+Skill: Data Interpretation (Graph)
+[Easy] Tags: Data Interpretation (Graph)
+[Figure: A histogram showing the distribution of 25 weights, in kilograms, in a data set. The first bar (0 to
+<10 kg) has frequency 3, second bar (10 to <20 kg) has frequency 5, third bar (20 to <30 kg) has
+frequency 4, fourth bar (30 to <40 kg) has frequency 6, fifth bar (40 to <50 kg) has frequency 7.]
+The histogram shows the distribution of 25 weights, in kilograms, in a data set. The first bar represents the
+weights that are less than 10 kilograms, the second bar represents the weights that are at least 10
+kilograms but less than 20 kilograms, and so on. Which of the following could be the maximum weight, in
+kilograms, in this data set?
+A) 9
+B) 29
+
+-- 25 of 37 --
+
+C) 39
+D) 47
+Question 4
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+If 3x + 12 = 27, what is the value of x + 4?
+A) 5
+B) 9
+C) 15
+D) 19
+Question 5
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+9x + 35 = 9x + k
+In the given equation, k is a constant. The equation has infinitely many solutions. What is the value of k?
+Question 6
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+A rope that has a length of 156 centimeters (cm) is cut into three pieces. One piece is 52 cm long. The
+other two pieces have lengths that are equal to each other. What is the length, in cm, of one of the other
+two pieces of equal length?
+Question 7
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+A store sells notebooks for $4 each and pens for $2 each. If a customer buys a total of 15 items and
+spends $42, how many notebooks did the customer buy?
+Question 8
+Skill: Coordinate Geometry
+[Medium] Tags: Coordinate Geometry
+[Figure: A scatterplot showing the relationship between two variables, x and y. A line of best fit is also
+shown. The line passes through approximately (−12, 16) and (0, 4), with a negative slope. Points are
+scattered around the line.]
+
+-- 26 of 37 --
+
+Which of the following equations best represents the line of best fit shown?
+A) y = x − 18.5
+B) y = −x + 18.5
+C) y = x − 4.0
+D) y = −x + 4.0
+Question 9
+Skill: Exponents & Polynomials
+[Medium] Tags: Exponents & Polynomials
+The expression 5x4 + 11x4 − 9x4 is equivalent to bx4, where b is a constant. What is the value of b?
+Question 10
+Skill: Systems of Equations
+[Medium] Tags: Systems of Equations
+At what point (x, y) do the graphs of the equations y = 3x + 5 and y = 4x − 3 intersect in the xy-plane?
+A) (5, 3)
+B) (3, 5)
+C) (8, 29)
+D) (29, 8)
+Question 11
+Skill: Functions
+[Medium] Tags: Functions
+A rectangle has a length that is 45 times its width. The function y = (45w)(w) represents this situation,
+where y is the area, in square meters, of the rectangle and y > 0. Which of the following is the best
+interpretation of 45w in this context?
+A) The length of the rectangle, in meters
+B) The area of the rectangle, in square meters
+C) The difference between the length and the width of the rectangle, in meters
+D) The width of the rectangle, in meters
+Question 12
+Skill: Functions
+[Medium] Tags: Functions
+f(x) = 37
+For the given linear function f, which table gives three values of x and their corresponding values of f(x)?
+A) x: 0, 1, 2 → f(x): 0, 0, 0
+
+-- 27 of 37 --
+
+B) x: 0, 1, 2 → f(x): 37, 37, 37
+C) x: 0, 1, 2 → f(x): 0, 37, 74
+D) x: 0, 1, 2 → f(x): 37, 0, −37
+Question 13
+Skill: Geometry (Parallel Lines)
+[Medium] Tags: Geometry (Triangles)
+[Figure: Two lines r and s are intersected by a transversal line k. At the intersection with line r, angles w°
+and x° are formed. At the intersection with line s, angles y° and z° are formed. Note: Figure not drawn to
+scale.]
+In the figure shown, line k intersects lines r and s. If w = 145, which additional piece of information is
+sufficient to prove that lines r and s are parallel?
+A) x = 35
+B) y = 145
+C) w + y = 180
+D) y + z = 180
+Question 14
+Skill: Geometry (Circles)
+[Hard] Tags: Geometry (Circles)
+x2 − 6x + y2 − 10y − 66 = 0
+In the xy-plane, the graph of the given equation is a circle. If this circle is inscribed in a square, what is the
+perimeter of the square?
+A) 20
+B) 40
+C) 80
+D) 320
+Question 15
+Skill: Ratios & Percentages
+[Hard] Tags: Ratios & Percentages
+A fitness studio offers a series of three bootcamp classes. 800 people attended the first class. 55% of the
+people who attended the first class attended the second class, and 40% of the people who attended the
+first and second classes attended the third class. How many people attended all three classes?
+Question 16
+Skill: Exponential Growth/Decay
+[Hard] Tags: Exponential Growth/Decay
+
+-- 28 of 37 --
+
+f(x) = 30(3)x/5
+Which table gives four values of x and their corresponding values of f(x) for the given exponential
+function?
+A) x: −5, 0, 5, 10 → f(x): 10, 0, 30, 60
+B) x: −5, 0, 5, 10 → f(x): 10, 30, 90, 270
+C) x: −5, 0, 5, 10 → f(x): −10, 30, 90, 270
+D) x: −5, 0, 5, 10 → f(x): 10, 30, 60, 90
+Question 17
+Skill: Geometry (Area/Volume)
+[Hard] Tags: Geometry (Area/Volume)
+A cylindrical water tank has a radius of 5 meters and a height of 8 meters. If the tank is filled to 75% of its
+capacity, what is the volume of water in the tank, in cubic meters? (Use π ≈ 3.14)
+Question 18
+Skill: Geometry (Area/Volume)
+[Hard] Tags: Geometry (Area/Volume)
+To study fluctuations in mineral content, samples of rock were taken from 18 quarries, each cut in the
+shape of a cube. The length of the edge of one of these cubes is 4.000 centimeters. This cube has a
+density of 0.500 grams per cubic centimeter. What is the mass of this cube, in grams?
+Question 19
+Skill: Quadratics / Absolute Value
+[Hard] Tags: Quadratics
+−3|4x + 6| + 9 = −9
+What are all solutions to the given equation?
+A) 0
+B) 0 and −3
+C) 0 and −14/4
+D) There is no solution.
+Question 20
+Skill: Quadratics
+[Hard] Tags: Quadratics
+x2 − 72x − 18 = 0
+What is the sum of the solutions to the given equation?
+
+-- 29 of 37 --
+
+A) 0
+B) 9
+C) 18
+D) 72
+Question 21
+Skill: Geometry (Area/Volume)
+[Hard] Tags: Geometry (Area/Volume)
+[Figure: A right circular cone with apex A at the top, and B is a point on the circumference of the base. The
+height of the cone is 12 centimeters and the slant height (segment AB, not shown) is 20 centimeters. Note:
+Figure not drawn to scale.]
+For the right circular cone shown, B is a point on the circumference of the base, and the length of segment
+AB (not shown) is 20 centimeters. If the height of the cone is 12 centimeters and the volume of the cone is
+kπ cubic centimeters, what is the value of k?
+Question 22
+Skill: Coordinate Geometry
+[Hard] Tags: Coordinate Geometry
+In the xy-plane, line j and line m are perpendicular and intersect at the point (4, 6). If line j is defined by the
+equation y = mx + b, where m and b are constants and m > 1, which of the following points lies on line m?
+A) (5, 6 − 1/m)
+B) (5, 6 + 1/m)
+C) (5, 6 − m)
+D) (5, 6 + m)
+
+-- 30 of 37 --
+
+SECTION 2, MODULE 2: Math
+22 Questions — 35 Minutes
+Question 1
+Skill: Functions / Graph Interpretation
+[Easy] Tags: Data Interpretation (Graph)
+[Graph: A parabola opening downward showing the height above ground (in meters) of a ball x seconds
+after the ball was launched upward from a platform. The graph passes through approximately (0, 3), peaks
+near (0.8, 5.2), and returns to 0 near (1.8, 0). A point is marked at (1.2, 4.5).]
+The graph shows the height above ground, in meters, of a ball x seconds after the ball was launched
+upward from a platform. Which statement is the best interpretation of the marked point (1.2, 4.5) in this
+context?
+A) 1.2 seconds after being launched, the ball’s height above ground is 4.5 meters.
+B) 4.5 seconds after being launched, the ball’s height above ground is 1.2 meters.
+C) The ball was launched from an initial height of 1.2 meters with an initial velocity of 4.5 meters per
+second.
+D) The ball reaches its maximum height of 4.5 meters at 1.2 seconds.
+Question 2
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+In one month in 2019, a freelancer earned a total of $900 by working at a primary contract and at a
+secondary contract doing part-time work. The equation 20h + 15c = 900 represents this situation, where h
+is the number of hours worked at the primary contract and c is the number of hours worked at the
+secondary contract. Which of the following is the best interpretation of 20 in this context?
+A) The amount, in dollars, the freelancer earned for each hour at the primary contract
+B) The amount, in dollars, the freelancer earned for each hour at the secondary contract
+C) The number of hours the freelancer worked at the primary contract
+D) The number of hours the freelancer worked at the secondary contract
+Question 3
+Skill: Statistics (Standard Deviation)
+[Easy] Tags: Statistics (Mean/Median)
+Which of the following lists represents a data set with the smallest standard deviation?
+A) 30, 31, 33, 35, 36
+B) 31, 31, 33, 35, 35
+C) 31, 32, 33, 34, 35
+
+-- 31 of 37 --
+
+D) 32, 33, 33, 33, 34
+Question 4
+Skill: Geometry (Similar Triangles)
+[Medium] Tags: Geometry (Triangles)
+[Figure: In the figure shown, triangle FGH is similar to triangle FIJ. The measure of angle FIJ is 62°, and
+FH = 18(IJ). Note: Figure not drawn to scale.]
+In the figure shown, triangle FGH is similar to triangle FIJ. The measure of angle FIJ is 62°, and FH =
+18(IJ). What is the measure of angle FGH?
+A) 18°
+B) 62°
+C) (18 + 62)°
+D) (18 · 62)°
+Question 5
+Skill: Probability
+[Medium] Tags: Probability
+At a convention center, there are a total of 500 attendees. Each attendee is located in either Hall X, Hall Y,
+or Hall Z. If one of these attendees is selected at random, the probability of selecting an attendee in Hall X
+is 0.54, and the probability of selecting an attendee in Hall Y is 0.36. How many attendees are located in
+Hall Z?
+A) 10
+B) 50
+C) 90
+D) 180
+Question 6
+Skill: Systems of Equations
+[Medium] Tags: Systems of Equations
+y = x/3 + 8
+y = −x/3 + 16
+The solution to the given system of equations is (x, y). What is the value of 2y?
+A) 24
+B) 20
+C) 16
+D) 8
+Question 7
+
+-- 32 of 37 --
+
+Skill: Linear Equations
+[Easy] Tags: Linear Equations
+In 7 days, a hummingbird consumed 31.5 grams of nectar. Which equation describes the amount of nectar
+y, in grams, the hummingbird consumed in these 7 days?
+A) y = 31.5 + 7
+B) y = 31.5
+C) y = 31.5/7
+D) y = 7
+Question 8
+Skill: Exponential Growth/Decay
+[Medium] Tags: Exponential Growth/Decay
+A pharmacologist observes a sample of a drug compound. An exponential model estimates that the mass,
+in milligrams, of the sample decreases by 18% every 8.5 minutes. Which of the following equations could
+represent this model, where M is the estimated mass, in milligrams, of the sample t minutes after the
+pharmacologist began observing?
+A) M = 50(0.18)t+8.5
+B) M = 50(0.18)t/8.5
+C) M = 50(0.82)t+8.5
+D) M = 50(0.82)t/8.5
+Question 9
+Skill: Coordinate Geometry
+[Medium] Tags: Coordinate Geometry
+Line p is defined by y = −5x + 9. Line q is parallel to line p in the xy-plane and passes through the point (0,
+12). Which equation defines line q?
+A) y = 12x + 9
+B) y = −12x + 9
+C) y = 5x + 12
+D) y = −5x + 12
+Question 10
+Skill: Functions
+[Hard] Tags: Functions
+For the linear function g, g(c) = −4, where c is a constant, g(3) = 32, and the slope of the graph of y = g(x)
+in the xy-plane is 6. For the linear function h, h(c) = −5 and h(6) = 49. What is the slope of the graph of y =
+h(x) in the xy-plane?
+A) −1
+B) 2
+
+-- 33 of 37 --
+
+C) 6
+D) 8
+Question 11
+Skill: Exponents & Polynomials
+[Hard] Tags: Exponents & Polynomials
+If 3(5 − 2x) + 8(5 − 2x) + 4 = 7(5 − 2x) + 10, what is the value of 2x − 5?
+Question 12
+Skill: Inequalities
+[Hard] Tags: Inequalities
+[Graph: A coordinate plane showing a shaded region above a line. The boundary line passes through
+approximately (−8, −8) and (0, −6), with a positive slope of 0.25. The region above and to the left is
+shaded.]
+The shaded region shown represents the solutions to rx + ty ≥ −48, where r and t are constants. What is
+the value of r + t?
+A) −5
+B) −2
+C) 2
+D) 6
+Question 13
+Skill: Functions
+[Hard] Tags: Functions
+f(x) = √(3x + 2)
+The function f is defined by the given equation. If f(a) = −3a, where a is a constant, what is the value of a?
+A) 1/3
+B) 2/9
+C) −2/9
+D) −1/3
+Question 14
+Skill: Exponents & Polynomials
+[Hard] Tags: Exponents & Polynomials
+4√(p6) = t
+In the given equation, p > 1 and t > 1. If t = p2n−1, where n is a constant, what is the value of n?
+
+-- 34 of 37 --
+
+Question 15
+Skill: Quadratics
+[Hard] Tags: Quadratics
+The function g is a quadratic function. In the xy-plane, the graph of y = g(x) has a vertex at (1, 4) and
+passes through the points (2, 38) and (−1, 140). What is the value of g(−2) − g(0)?
+A) 108
+B) 176
+C) 272
+D) 312
+Question 16
+Skill: Quadratics / Factoring
+[Hard] Tags: Quadratics
+f(x) = −2(x − 3)(x + 7)
+For the given function, what is the y-coordinate of the y-intercept of the graph of y = f(x) in the xy-plane?
+Question 17
+Skill: Exponential Functions
+[Hard] Tags: Exponential Growth/Decay
+[Graph: The graph of y = f(x) + 3 is shown. The graph is an exponential decay curve that passes through
+approximately (0, 6) and approaches y = 3 as x increases. It passes through [Graph: The graph of y = f(x)
++ 3 is shown. The curve passes through approximately (0, 5) and decreases steeply as x increases,
+crossing y = 0 near x = 1.2. As x decreases toward negative infinity, the curve approaches y = 6 from
+below.]
+The graph of y = f(x) + 3 is shown. Which equation defines function f?
+A) f(x) = −4x + 1
+B) f(x) = −4x + 3
+C) f(x) = −4x + 5
+D) f(x) = −4x + 7
+Question 18
+Skill: Ratios & Percentages
+[Hard] Tags: Ratios & Percentages
+A square blueprint has a side length of 60 inches, and 1 inch on the blueprint represents an actual
+distance of 8 miles. A smaller version of the same blueprint is printed as a square with the side length 65%
+shorter than the side length of the previous blueprint. On the smaller blueprint, which of the following is
+closest to the actual distance, in miles, represented by 1 inch?
+A) 5.20
+
+-- 35 of 37 --
+
+B) 12.31
+C) 22.86
+D) 36.57
+Question 19
+Skill: Quadratics
+[Hard] Tags: Quadratics
+3x2(2x − 5)(2x − u) = 0
+In the given equation, u is a positive constant. The sum of the solutions to the equation is 17/4. What is the
+value of u?
+Question 20
+Skill: Geometry (Similar Figures)
+[Hard] Tags: Geometry (Area/Volume)
+Right rectangular prism P is similar to right rectangular prism Q. The surface area of rectangular prism P is
+72 square centimeters (cm2), and the surface area of rectangular prism Q is 1,800 cm2. The volume of
+rectangular prism Q is 2,500 cubic centimeters (cm3). What is the sum of the volumes, in cm3, of right
+rectangular prism P and right rectangular prism Q?
+Question 21
+Skill: Exponential Functions
+[Hard] Tags: Exponential Growth/Decay
+The function g is defined by g(x) = cdx/m, where c, d, and m are constants, and d and m are integers. If
+g(3) = 8 and g(6) = 216, what is the value of g(9)?
+Question 22
+Skill: Quadratics
+[Hard] Tags: Quadratics
+A ball is thrown upward from a height of 6 feet. The height h, in feet, of the ball t seconds after it is thrown
+is given by h = −16t2 + 40t + 6. How many seconds after being thrown does the ball reach its maximum
+height?
+A) 0.75
+B) 1.25
+C) 2.50
+D) 3.00
+
+-- 36 of 37 --
+
+ANSWER KEY
+Section 1, Module 1: Reading and Writing
+1. A 2. A 3. A 4. A 5. A
+6. A 7. A 8. A 9. A 10. B
+11. D 12. C 13. C 14. A 15. A
+16. B 17. C 18. A 19. A 20. B
+21. B 22. B 23. B 24. B 25. A
+26. A 27. A
+Section 1, Module 2: Reading and Writing
+1. B 2. A 3. D 4. B 5. A
+6. B 7. C 8. D 9. A 10. D
+11. C 12. C 13. B 14. D 15. D
+16. A 17. D 18. A 19. D 20. A
+21. B 22. C 23. B 24. C 25. D
+26. B 27. B
+Section 2, Module 1: Math
+1. C 2. C 3. D 4. B 5. 35
+6. 52 7. 6 8. D 9. 7 10. C
+11. A 12. B 13. B 14. C 15. 176
+16. B 17. 471 18. 32 19. B 20. D
+21. 1024 22. A
+Section 2, Module 2: Math
+1. A 2. A 3. D 4. B 5. B
+6. A 7. B 8. D 9. D 10. C
+11. -1.5 12. D 13. D 14. 5/4 15. C
+16. 42 17. B 18. C 19. 7/2 20. 2520
+21. 5832 22. B
+Total Questions: 98
+These questions are 100% original compositions designed to reflect the format and difficulty of the Digital SAT. They are not
+affiliated with, endorsed by, or sourced from the College Board or any official SAT materials.
+
+-- 37 of 37 --
+

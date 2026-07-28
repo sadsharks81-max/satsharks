@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const role_middleware_1 = require("../middleware/role.middleware");
+const essay_controller_1 = require("../controllers/essay.controller");
+const router = (0, express_1.Router)();
+router.post("/submit", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), essay_controller_1.submitEssay);
+router.get("/my", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), essay_controller_1.getMyEssays);
+router.get("/admin/all", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), essay_controller_1.getAllEssays);
+router.put("/admin/:id", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), essay_controller_1.updateEssay);
+router.delete("/admin/:id", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), essay_controller_1.deleteEssay);
+exports.default = router;

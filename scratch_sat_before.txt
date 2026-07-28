@@ -1,0 +1,579 @@
+﻿commit 86028c409a0b33470f05889e7bb3ad99c90f5451
+Author: Umair Maqsood <142876620+Umairmaqsood00@users.noreply.github.com>
+Date:   Thu Jul 16 12:54:58 2026 +0500
+
+    updated access crirteria
+
+diff --git a/backend/src/controllers/practice.controller.ts b/backend/src/controllers/practice.controller.ts
+index a303acf..2e3a749 100644
+--- a/backend/src/controllers/practice.controller.ts
++++ b/backend/src/controllers/practice.controller.ts
+@@ -9,6 +9,17 @@ export const submitPracticeAnswer = async (req: AuthRequest, res: Response) => {
+     const { questionId, selectedAnswer, timeSpent } = req.body;
+     const studentId = req.user?.userId;
+ 
++    if (req.user?.subscription === "FREE") {
++      const count = await PracticeSession.countDocuments({ student: studentId });
++      if (count >= 20) {
++        return res.status(403).json({
++          success: false,
++          error: "You have reached the free limit of 20 practice questions. Please upgrade to a Premium plan to unlock unlimited access to all 3,686 questions!",
++          limitReached: true,
++        });
++      }
++    }
++
+     const question = await Question.findById(questionId);
+     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
+ 
+diff --git a/backend/src/controllers/sat.controller.ts b/backend/src/controllers/sat.controller.ts
+index 5fbbf80..0368889 100644
+--- a/backend/src/controllers/sat.controller.ts
++++ b/backend/src/controllers/sat.controller.ts
+@@ -8,9 +8,7 @@ import { checkAnswerCorrectness } from "../utils/grading";
+ // --- Student: list available SAT tests ---
+ export const getSATTests = async (req: AuthRequest, res: Response) => {
+   try {
+-    const userSub = req.user?.subscription;
+     const filter: any = { isActive: true };
+-    if (userSub === "FREE") filter.accessLevel = "FREE";
+ 
+     const tests = await SATTest.find(filter)
+       .sort({ year: -1, testNumber: 1 });
+diff --git a/frontend/src/routes/dashboard/practice.tsx b/frontend/src/routes/dashboard/practice.tsx
+index d20a591..ca272c9 100644
+--- a/frontend/src/routes/dashboard/practice.tsx
++++ b/frontend/src/routes/dashboard/practice.tsx
+@@ -1,4 +1,4 @@
+-import { createFileRoute } from "@tanstack/react-router";
++import { createFileRoute, Link } from "@tanstack/react-router";
+ import { useState, useEffect, ReactNode } from "react";
+ import { StudentLayout } from "../../components/layout/StudentLayout";
+ import { Badge } from "../../components/ui/Badge";
+@@ -7,6 +7,7 @@ import { Select } from "../../components/ui/Select";
+ import { EmptyState } from "../../components/ui/EmptyState";
+ import { ZoomableImage } from "../../components/ui/ZoomableImage";
+ import { api } from "../../services/api";
++import { useAuth } from "../../hooks/useAuth";
+ import type { Question, QuestionCategory } from "../../types";
+ 
+ export const Route = createFileRoute("/dashboard/practice")({
+@@ -35,6 +36,7 @@ const getRWTextSplit = (text: string) => {
+ };
+ 
+ function Practice() {
++  const { user } = useAuth();
+   const [questions, setQuestions] = useState<Question[]>([]);
+   const [categories, setCategories] = useState<QuestionCategory[]>([]);
+   const [currentIdx, setCurrentIdx] = useState(0);
+@@ -43,6 +45,22 @@ function Practice() {
+   const [result, setResult] = useState<{ isCorrect: boolean; correctAnswer: string; explanation: string } | null>(null);
+   const [loading, setLoading] = useState(true);
+   const [stats, setStats] = useState({ total: 0, correct: 0 });
++  const [totalSolved, setTotalSolved] = useState(0);
++
++  const fetchPracticeHistory = async () => {
++    try {
++      const res = await api.get("/api/practice/history?limit=1");
++      if (res.success) {
++        setTotalSolved(res.pagination?.total || 0);
++      }
++    } catch (err) {
++      console.error("Failed to load practice history", err);
++    }
++  };
++
++  useEffect(() => {
++    fetchPracticeHistory();
++  }, []);
+   const [timeSpent, setTimeSpent] = useState(0);
+ 
+   // Filters
+@@ -109,6 +127,12 @@ function Practice() {
+         total: prev.total + 1,
+         correct: prev.correct + (res.result.isCorrect ? 1 : 0),
+       }));
++      setTotalSolved((prev) => prev + 1);
++    } else {
++      alert(res.error || "Failed to submit answer");
++      if (res.limitReached) {
++        fetchPracticeHistory();
++      }
+     }
+   };
+ 
+@@ -716,6 +740,22 @@ function Practice() {
+         </div>
+       </div>
+ 
++      {user?.subscription === "FREE" && (
++        <div className="mb-6 p-4 rounded-xl bg-surface-container-low border border-outline-variant/40 flex items-center justify-between gap-4">
++          <div className="flex items-center gap-3">
++            <Icon name="help_center" className="text-primary text-[18px]" />
++            <span className="text-xs font-semibold text-on-surface">
++              Practice Limit: {totalSolved} / 20 questions solved
++            </span>
++          </div>
++          {totalSolved >= 20 && (
++            <Link to="/sat" className="text-xs font-bold text-accent hover:underline">
++              Upgrade to Premium for Unlimited Questions
++            </Link>
++          )}
++        </div>
++      )}
++
+       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8 w-full items-center">
+         <Select
+           label=""
+@@ -752,7 +792,7 @@ function Practice() {
+         />
+         <button
+           onClick={() => setIsPracticeMode(true)}
+-          disabled={!q}
++          disabled={!q || (user?.subscription === "FREE" && totalSolved >= 20)}
+           className="w-full h-[40px] px-6 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm shrink-0"
+         >
+           <Icon name="open_in_full" className="text-[18px]" />
+@@ -760,7 +800,23 @@ function Practice() {
+         </button>
+       </div>
+ 
+-      {loading ? (
++      {user?.subscription === "FREE" && totalSolved >= 20 ? (
++        <div className="rounded-2xl bg-surface-container-lowest text-on-surface p-10 text-center border border-outline-variant/40 shark-shadow max-w-xl mx-auto my-8">
++          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/15 text-accent mb-6">
++            <Icon name="lock" className="text-[32px]" />
++          </div>
++          <h2 className="font-display text-2xl font-bold mb-4">Practice Limit Reached</h2>
++          <p className="text-sm text-on-surface-variant leading-relaxed mb-6">
++            You have solved the free limit of 20 practice questions. To continue solving the remaining 3,666+ prep questions and boost your score, upgrade to our Premium plan!
++          </p>
++          <Link
++            to="/sat"
++            className="btn-shimmer inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-xs font-bold uppercase tracking-[0.08em] text-on-primary shark-shadow hover:bg-accent transition-all duration-300 cursor-pointer"
++          >
++            Upgrade to Premium
++          </Link>
++        </div>
++      ) : loading ? (
+         <div className="text-center py-12 text-on-surface-variant">Loading questions...</div>
+       ) : !q ? (
+         <EmptyState icon="help_center" title="No questions found" description="Try adjusting your filters" />
+diff --git a/frontend/src/routes/dashboard/sat-tests.tsx b/frontend/src/routes/dashboard/sat-tests.tsx
+index e0d8d7a..b51303f 100644
+--- a/frontend/src/routes/dashboard/sat-tests.tsx
++++ b/frontend/src/routes/dashboard/sat-tests.tsx
+@@ -1,4 +1,4 @@
+-import { createFileRoute, useNavigate } from "@tanstack/react-router";
++import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+ import { useState, useEffect } from "react";
+ import { StudentLayout } from "../../components/layout/StudentLayout";
+ import { Badge } from "../../components/ui/Badge";
+@@ -19,6 +19,8 @@ function SATTestList() {
+   const [loading, setLoading] = useState(true);
+   const [startingTestId, setStartingTestId] = useState<string | null>(null);
+ 
++  const lockedCount = tests.filter((t) => t.accessLevel === "PAID" && user?.subscription === "FREE").length;
++
+   useEffect(() => {
+     api.get("/api/sat").then((res) => {
+       if (res.success) setTests(res.tests || []);
+@@ -72,6 +74,26 @@ function SATTestList() {
+         </div>
+       </div>
+ 
++      {lockedCount > 0 && (
++        <div className="mb-6 p-5 rounded-2xl bg-surface-container-low border border-outline-variant/40 flex flex-col sm:flex-row items-center justify-between gap-4 shark-shadow">
++          <div className="flex items-center gap-4">
++            <div className="flex-shrink-0 h-10 w-10 rounded-xl bg-accent/15 flex items-center justify-center text-accent">
++              <Icon name="lock" className="text-[20px]" />
++            </div>
++            <div>
++              <div className="font-bold text-sm text-on-surface">Upgrade to Premium to Unlock {lockedCount} Mock Tests!</div>
++              <div className="text-xs text-on-surface-variant font-medium">You currently have a FREE subscription. Upgrade to gain unlimited access to all premium full-length adaptive Digital SAT tests.</div>
++            </div>
++          </div>
++          <Link
++            to="/sat"
++            className="btn-shimmer bg-primary text-on-primary hover:bg-accent text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-lg whitespace-nowrap cursor-pointer transition-all duration-300"
++          >
++            Upgrade Now
++          </Link>
++        </div>
++      )}
++
+       {loading ? (
+         <div className="text-center py-12 text-on-surface-variant">Loading SAT tests...</div>
+       ) : tests.length === 0 ? (
+@@ -98,7 +120,7 @@ function SATTestList() {
+                       )}
+                     </div>
+                     <p className="text-xs text-on-surface-variant">Digital SAT Year: {test.year} ┬╖ Exam #{test.testNumber}</p>
+-                    
++
+                     {/* PDF Actions */}
+                     {!locked && test.explanationPdfUrl && (
+                       <div className="mt-4 flex gap-3 flex-wrap">
+@@ -116,17 +138,21 @@ function SATTestList() {
+                   </div>
+ 
+                   <div className="shrink-0">
+-                    <button
+-                      onClick={() => handleStart(test._id)}
+-                      disabled={locked}
+-                      className={`px-8 py-3.5 rounded-xl text-sm font-bold uppercase tracking-widest transition-all ${
+-                        locked
+-                          ? "bg-surface-container-high text-on-surface-variant cursor-not-allowed"
+-                          : "btn-shimmer bg-primary text-on-primary shark-shadow hover:bg-accent cursor-pointer"
+-                      }`}
+-                    >
+-                      {locked ? "Upgrade to Access" : "Start Test"}
+-                    </button>
++                    {locked ? (
++                      <Link
++                        to="/sat"
++                        className="inline-block text-center px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all btn-shimmer bg-accent text-primary shark-shadow hover:bg-accent/90 cursor-pointer"
++                      >
++                        Upgrade to Access
++                      </Link>
++                    ) : (
++                      <button
++                        onClick={() => handleStart(test._id)}
++                        className="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all btn-shimmer bg-primary text-on-primary shark-shadow hover:bg-accent cursor-pointer"
++                      >
++                        Start Test
++                      </button>
++                    )}
+                   </div>
+                 </div>
+               </div>
+import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { Header } from "../components/layout/Header";
+import { Footer } from "../components/layout/Footer";
+import { useAuth } from "../hooks/useAuth";
+import { Icon } from "../components/common/Icon";
+import { ContactForm } from "../components/common/ContactForm";
+
+export const Route = createFileRoute("/sat")({
+  component: SATPrepPage,
+});
+
+function useRegion() {
+  const [region, setRegion] = useState("loading");
+
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const isPK = tz === "Asia/Karachi";
+      setRegion(isPK ? "pk" : "intl");
+    } catch {
+      setRegion("intl");
+    }
+  }, []);
+
+  return region;
+}
+
+const PRICING = {
+  pk: {
+    rw: { amount: "Rs 20,000", period: "/ module" },
+    math: { amount: "Rs 20,000", period: "/ module" },
+    bundle: { amount: "Rs 35,000", period: "/ full course" },
+  },
+  intl: {
+    rw: { amount: "$200", period: "/ module" },
+    math: { amount: "$200", period: "/ module" },
+    bundle: { amount: "$350", period: "/ full course" },
+  },
+};
+
+const CheckIcon = ({ color = "#3B7DD8" }) => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0 mt-0.5">
+    <circle cx="10" cy="10" r="10" fill={color} opacity="0.12" />
+    <path d="M6 10.5L8.5 13L14 7.5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const StarIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0 mt-0.5">
+    <circle cx="10" cy="10" r="10" fill="#F4B300" opacity="0.12" />
+    <path d="M10 3.5l2 4 4.5.5-3.25 3 1 4.5-4.25-2.25-4.25 2.25 1-4.5-3.25-3 4.5-.5 2-4z" fill="#F4B300" />
+  </svg>
+);
+
+interface PriceBadgeProps {
+  amount: string;
+  period: string;
+  accent: string;
+}
+
+function PriceBadge({ amount, period, accent }: PriceBadgeProps) {
+  const isGold = accent === "gold";
+  return (
+    <div className={`inline-flex items-baseline gap-1 rounded-xl px-4 py-2 border ${
+      isGold ? "bg-accent/10 border-accent/25" : "bg-secondary/10 border-secondary/25"
+    }`}>
+      <span className={`text-2xl font-extrabold tracking-tight ${
+        isGold ? "text-[#D4911E]" : "text-secondary"
+      }`}>{amount}</span>
+      <span className={`text-sm font-semibold ${isGold ? "text-[#B07A15]" : "text-secondary/80"
+        }`}>{period}</span>
+    </div>
+  );
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="inline-block w-40 h-[38px] rounded-xl bg-surface-container-high animate-pulse" />
+  );
+}
+
+function SATPrepPage() {
+  const { user } = useAuth();
+  const region = useRegion();
+
+  const prices = region === "loading" ? null : PRICING[region as keyof typeof PRICING];
+
+  const getWhatsAppLink = (planName: string) => {
+    const emailStr = user ? ` (Registered Email: ${user.email})` : "";
+    const text = `Hi SAT Sharks! I want to enroll in the ${planName} of the SAT prep.${emailStr} Please guide me on the next steps.`;
+    return `https://wa.me/923164514334?text=${encodeURIComponent(text)}`;
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <div className="bg-surface-container-low min-h-screen font-body text-on-surface">
+          {/* Hero */}
+          <div className="bg-gradient-to-br from-[#0B1929] via-[#162D4D] to-[#1A3558] py-16 px-6 text-center">
+            <div className="max-w-2xl mx-auto">
+              <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
+                <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">Pricing & Modules</span>
+              </div>
+              <h1 className="font-display text-4xl font-extrabold text-white leading-tight mb-4 tracking-tight md:text-5xl">
+                Structured Prep.<br />
+                <span className="text-[#5BA3F5]">Flexible Modules.</span>
+              </h1>
+              <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                Select specific modules to target your weak areas or enroll in our complete bundle for full syllabus mastery. All paths feature live online sessions, Desmos training, and actual past papers.
+              </p>
+            </div>
+          </div>
+
+          {/* Stat strip */}
+          <div className="bg-[#0F1B2D] border-b border-[#3B7DD8]/15">
+            <div className="max-w-3xl mx-auto flex justify-center gap-8 md:gap-16 py-5 px-6">
+              {[
+                ["6", "Live Classes / Week"],
+                ["8+", "Past Papers Offered"],
+                ["100%", "Desmos Guided Study"],
+              ].map(([num, label], i) => (
+                <div key={i} className="text-center">
+                  <div className="font-body text-2xl md:text-3xl font-extrabold text-accent tracking-tight">{num}</div>
+                  <div className="font-mono text-[10px] md:text-xs text-slate-400 font-bold tracking-widest uppercase mt-1">{label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Cards Section */}
+          <div className="max-w-[1200px] mx-auto px-6 py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              
+              {/* R&W Card */}
+              <div className="bg-surface rounded-2xl p-8 border border-outline-variant/35 shadow-sm hover:shadow-md transition-all flex flex-col justify-between hover-lift">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Icon name="history_edu" className="text-xl" />
+                    </span>
+                    <h3 className="font-body font-bold text-xl md:text-2xl text-on-surface">Reading & Writing</h3>
+                  </div>
+                  <p className="text-[14.5px] text-on-surface-variant leading-relaxed mb-6">
+                    Master SAT English syntax, vocabulary, reading inferences, and rhetorical strategies to maximize your verbal score.
+                  </p>
+                  
+                  <div className="mb-6">
+                    {prices ? (
+                      <PriceBadge amount={prices.rw.amount} period={prices.rw.period} accent="blue" />
+                    ) : (
+                      <LoadingSkeleton />
+                    )}
+                  </div>
+
+                  <div className="border-t border-outline-variant/30 pt-6 space-y-4">
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">3 live sessions per week (English specific)</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Full coverage of Reading & Writing modules</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Grammar drills & sentence completion shortcuts</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Curated verbal practice question banks</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <a
+                    href={getWhatsAppLink("Reading & Writing Module")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full btn-shimmer flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold uppercase tracking-wider text-on-primary shadow-sm hover:bg-accent transition-all cursor-pointer text-center border-none"
+                  >
+                    Enroll via WhatsApp
+                    <Icon name="arrow_forward" className="text-sm" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Math Card */}
+              <div className="bg-surface rounded-2xl p-8 border border-outline-variant/35 shadow-sm hover:shadow-md transition-all flex flex-col justify-between hover-lift">
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                      <Icon name="calculate" className="text-xl" />
+                    </span>
+                    <h3 className="font-body font-bold text-xl md:text-2xl text-on-surface">Math Module</h3>
+                  </div>
+                  <p className="text-[14.5px] text-on-surface-variant leading-relaxed mb-6">
+                    Acquire advanced skills in algebra, geometry, and problem solving, alongside extensive graphing calculator methods.
+                  </p>
+                  
+                  <div className="mb-6">
+                    {prices ? (
+                      <PriceBadge amount={prices.math.amount} period={prices.math.period} accent="blue" />
+                    ) : (
+                      <LoadingSkeleton />
+                    )}
+                  </div>
+
+                  <div className="border-t border-outline-variant/30 pt-6 space-y-4">
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">3 live sessions per week (Math specific)</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Desmos masterclass: Solve equations 2x faster</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Advanced algebra & geometry formulas drills</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <CheckIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Weekly past Math section exams & review</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <a
+                    href={getWhatsAppLink("Math Module")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full btn-shimmer flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-bold uppercase tracking-wider text-on-primary shadow-sm hover:bg-accent transition-all cursor-pointer text-center border-none"
+                  >
+                    Enroll via WhatsApp
+                    <Icon name="arrow_forward" className="text-sm" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Complete Prep Card (Bundle) */}
+              <div className="bg-surface rounded-2xl p-8 border-2 border-accent shadow-md hover:shadow-lg transition-all flex flex-col justify-between hover-lift relative">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-accent text-primary text-[10px] font-mono font-extrabold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                  Recommended Bundle
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/15 text-accent">
+                      <Icon name="auto_awesome" className="text-xl" />
+                    </span>
+                    <h3 className="font-body font-bold text-xl md:text-2xl text-on-surface">Complete SAT Prep</h3>
+                  </div>
+                  <p className="text-[14.5px] text-on-surface-variant leading-relaxed mb-6">
+                    Our all-inclusive package covering the full verbal and math syllabus, complete past papers, and personal advising.
+                  </p>
+                  
+                  <div className="mb-6">
+                    {prices ? (
+                      <PriceBadge amount={prices.bundle.amount} period={prices.bundle.period} accent="gold" />
+                    ) : (
+                      <LoadingSkeleton />
+                    )}
+                  </div>
+
+                  <div className="border-t border-outline-variant/30 pt-6 space-y-4">
+                    <div className="flex gap-2.5 items-start">
+                      <StarIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">6 live classes per week (English + Math)</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <StarIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">Full-length adaptive practice tests</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <StarIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">All books, cheat-sheets, and past papers</span>
+                    </div>
+                    <div className="flex gap-2.5 items-start">
+                      <StarIcon />
+                      <span className="text-on-surface font-medium text-sm leading-relaxed">1-on-1 private strategy check-in audit</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <a
+                    href={getWhatsAppLink("Complete SAT Prep Bundle")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full btn-shimmer flex items-center justify-center gap-2 rounded-xl bg-accent py-3.5 text-sm font-bold uppercase tracking-wider text-primary shadow-md hover:bg-accent/90 transition-all cursor-pointer text-center border-none"
+                  >
+                    Enroll via WhatsApp
+                    <Icon name="arrow_forward" className="text-sm" />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Direct inquiry info */}
+            <div className="mt-16 text-center max-w-lg mx-auto bg-surface p-6 rounded-2xl border border-outline-variant/40 shadow-sm">
+              <h4 className="font-bold text-sm text-primary mb-2">Need a Customized Study Plan?</h4>
+              <p className="text-sm text-on-surface-variant leading-relaxed mb-4">
+                Chat with our curriculum advisor directly on WhatsApp to design a prep plan tailored to your target test date and score goals.
+              </p>
+              <a
+                href="https://wa.me/923164514334?text=Hi%20SAT%20Sharks!%20I'm%20looking%20for%20a%20customized%20SAT%20study%20prep%20plan."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-bold uppercase tracking-wider px-6 py-3 transition-colors shadow-sm cursor-pointer"
+              >
+                <Icon name="chat" className="text-[16px]" />
+                Consult via WhatsApp
+              </a>
+            </div>
+
+          </div>
+
+          {/* Contact form block */}
+          <ContactForm />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}

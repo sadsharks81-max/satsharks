@@ -1,0 +1,536 @@
+SAT-Style Practice Test
+June 2024 Edition (Original)
+ANSWER KEY WITH FULL EXPLANATIONS
+Section 1: Reading and Writing — Modules 1 & 2 (54 Questions)
+Section 2: Mathematics — Modules 1 & 2 (44 Questions)
+Total: 98 Questions
+These questions are 100% original compositions designed to reflect the format and difficulty of the Digital SAT. They are not
+affiliated with, endorsed by, or sourced from the College Board or any official SAT materials.
+
+-- 1 of 16 --
+
+Quick-Reference Answer Key
+Section 1, Module 1 — Reading & Writing (27 Questions)
+Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans
+1 B 2 A 3 A 4 B 5 C 6 A 7 C 8 A 9 C
+10 D 11 A 12 D 13 A 14 D 15 D 16 C 17 B 18 B
+19 C 20 A 21 C 22 B 23 A 24 A 25 B 26 A 27 B
+Section 1, Module 2 — Reading & Writing (27 Questions)
+Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans
+1 D 2 C 3 D 4 B 5 C 6 B 7 D 8 C 9 A
+10 B 11 C 12 C 13 C 14 D 15 D 16 C 17 C 18 B
+19 B 20 D 21 B 22 B 23 A 24 C 25 B 26 A 27 B
+Section 2, Module 1 — Math (22 Questions)
+Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans
+1 36 2 D 3 D 4 A 5 32 6 1272 7 D 8 A 9 A
+10 45 11 B 12 B 13 40 14 C 15 D 16 864 17 18 18 15
+19 C 20 B 21 D 22 D
+Section 2, Module 2 — Math (22 Questions)
+Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans Q# Ans
+1 13 2 C 3 A 4 B 5 A 6 C 7 A 8 B 9 B
+10 9600 11 D 12 A 13 4/5 14 3600 15 D 16 4/5 17 C 18 18
+19 D 20 D 21 60000 22 D
+
+-- 2 of 16 --
+
+SECTION 1, MODULE 1: Reading & Writing (27 Questions)
+Question 1 (Vocabulary in Context)
+Answer: B) Throw
+In the passage, Tommy throws a stone "so far that it becomes a tiny dark speck before vanishing beneath
+the grey waves." The word "hurl" means to throw something with great force, which matches the description
+of the stone traveling a great distance.
+Question 2 (Vocabulary in Context)
+Answer: A) echo
+Lin's memorial is described as reflecting the tradition of Japanese simplicity—anyone familiar with Japanese
+gardens "would recognize the influence." An "echo" is a reflection or reverberation of something, making it
+the best fit for a design that mirrors another tradition.
+Question 3 (Vocabulary in Context)
+Answer: A) alleviate
+The Singapore Exchange ensures transparency standards, which can reduce or ease investors' concerns
+about regulatory gaps. "Alleviate" means to make something less severe or to relieve, which fits the context
+of reducing concerns.
+Question 4 (Vocabulary in Context)
+Answer: B) overlook
+The passage says classifying musicians into rigid genres causes critics to miss subtleties. "Overlook" means
+to fail to notice or to miss, which matches "may inadvertently miss nuances" in the following sentence.
+Question 5 (Main Purpose)
+Answer: C) To portray Ifemelu's strong commitment to collecting responses for the survey
+The text shows Ifemelu guarding the survey "like a prized heirloom," carrying it at all times, approaching
+neighbors everywhere—at mailboxes, elevators, parking garages, and laundry rooms. This persistent
+behavior portrays her strong commitment to collecting survey responses.
+Question 6 (Text Structure and Purpose)
+Answer: A) It provides a general definition of the phenomenon discussed in the text.
+The underlined sentence defines reduplication as a phenomenon "in which an element of a root word is
+repeated, sometimes with modification, within another word that is related to the root word." This is a general
+definition of the linguistic concept being discussed.
+Question 7 (Reading Comprehension)
+Answer: C) They have a much stronger effect on water flow than nanoplastics alone do.
+The text explicitly states that emulsifiers "are released into the water from nanoplastics and have a much
+stronger flow-reducing effect." This directly answers what Yamamoto and colleagues discovered about
+emulsifiers.
+Question 8 (Main Idea)
+Answer: A) Continued research and development in synthetic photovoltaic technology is needed
+before the devices can be widely used as an energy source.
+The text states the technology "is not yet commercially feasible as a large-scale power source" and
+describes ongoing engineering efforts to address challenges. This supports the main idea that continued
+R&D is needed before widespread use.
+
+-- 3 of 16 --
+
+Question 9 (Data Interpretation)
+Answer: C) 2,019 square kilometers.
+The table shows Nisga'a Lands in British Columbia has an area of 2,019 square kilometers. The student is
+comparing this to his own territory's area of 39,000 square kilometers.
+Question 10 (Data Interpretation)
+Answer: D) Italy reported 87 damaging insect species, which is more than either Portugal or
+Greece reported.
+From the table: Italy reported 87 insect species, Portugal reported 22, and Greece reported 7. Italy's count
+(87) is indeed greater than both Portugal (22) and Greece (7), directly supporting the researchers'
+conclusion.
+Question 11 (Command of Evidence)
+Answer: A) The study by Chen and colleagues had a higher alignment rating than the study by
+Schmidt and colleagues did.
+The conclusion states that Chen's data would need less adjustment to fit the database classifications than
+Schmidt's data. A higher classification alignment rating directly supports this, as higher alignment means less
+adjustment is needed.
+Question 12 (Data Interpretation)
+Answer: D) The supply of fresh vegetables was ranked higher for local residents than were the
+other four benefits.
+Local residents ranked supply of fresh vegetables at 3 (out of 20), while the other listed benefits received
+rankings of 10, 18, 14, and 16. A lower rank number means a higher perceived contribution, so rank 3 is the
+highest among the listed benefits for local residents, supporting the official's conclusion.
+Question 13 (Command of Evidence)
+Answer: A) None of the species that produced light did so before the simulated encounters, and
+nearly all stopped producing light within ten seconds after the encounters.
+If the light is directed at predators (the claim), we would expect it to occur only during predator encounters
+and stop afterward. Choice A shows exactly this: light was produced only during encounters and stopped
+shortly after, supporting the claim that the signals are anti-predator responses rather than intraspecies
+communication.
+Question 14 (Logical Completion)
+Answer: D) there are geographic differences in primary language within South Asia that are
+reflected in the settlement patterns of South Asian immigrants in London.
+The passage shows that immigrants from northern India (Hindi speakers) settled in Southall, while those
+from the Sylhet region of Bangladesh (Sylheti/Bengali speakers) settled in Tower Hamlets. This parallel
+between geographic origin and settlement patterns is best explained by geographic language differences
+being reflected in London settlement patterns.
+Question 15 (Standard English Conventions)
+Answer: D) to appear
+"Making the pioneering nurse one of many healthcare professionals to appear on public health documents" is
+grammatically correct. The infinitive "to appear" modifies "professionals," describing what they did. The other
+choices create verb tense or agreement errors in context.
+Question 16 (Standard English Conventions)
+Answer: C) route, which is 6 miles long,
+
+-- 4 of 16 --
+
+A nonrestrictive (nonessential) clause like "which is 6 miles long" provides additional information and must be
+set off by commas on both sides. Choice C correctly places commas before and after the clause.
+Question 17 (Standard English Conventions)
+Answer: B) spanning
+"Montana, spanning 4,506 feet in elevation, reaches its highest point..." requires a participial phrase. The
+main verb of the sentence is "reaches." The participle "spanning" correctly modifies "Montana" without
+creating a run-on sentence or comma splice.
+Question 18 (Standard English Conventions)
+Answer: B) nation—Norway.
+The dash before "Norway" correctly introduces the appositive that identifies the specific IMF member nation.
+At the end of a sentence, a single dash is the appropriate punctuation for this dramatic identification.
+Question 19 (Standard English Conventions)
+Answer: C) that,
+"Conservation efforts that, through habitat restoration and scientific research, aim to bring tigers back..." The
+relative clause "that... aim to bring tigers back" is interrupted by the parenthetical phrase "through habitat
+restoration and scientific research," which needs commas around it. Choice C provides the first comma.
+Question 20 (Standard English Conventions)
+Answer: A) are
+The subject is compound: "The star graph and the cycle graph." A compound subject joined by "and" takes a
+plural verb. Therefore "are" is correct.
+Question 21 (Standard English Conventions)
+Answer: C) dendrochronologist
+The phrase "claims dendrochronologist Valerie Trouet" is an inverted attribution (like "says Dr. Smith"). No
+punctuation is needed between the job title and the name. Adding commas or dashes would incorrectly
+separate the title from the name in this attribution structure.
+Question 22 (Transitions)
+Answer: B) consequently,
+The Alvin can reach depths exceeding 6,000 meters, and most hydrothermal vents are at extreme depths.
+As a RESULT (consequence), the Alvin can provide more data about these vents. "Consequently" correctly
+signals this cause-and-effect relationship.
+Question 23 (Transitions)
+Answer: A) Of course,
+The passage notes that confetti was historically made from ledger rolls, then says these rolls had been
+replaced by computers by 2012. "Of course" signals that this transition to computers is an obvious, expected
+development that the reader would naturally anticipate.
+Question 24 (Rhetorical Synthesis)
+Answer: A) One way to distinguish the crested gecko from the mourning gecko is to look at their
+tails...
+The goal is to emphasize a difference between the two geckos. Choice A directly contrasts a specific
+physical feature (the tails) between the two species, effectively highlighting a distinguishing characteristic.
+Question 25 (Rhetorical Synthesis)
+
+-- 5 of 16 --
+
+Answer: B) The two calendars handle leap years differently; for example, the Julian calendar adds
+a leap day every four years without exception, while the Gregorian calendar introduced additional
+rules...
+The goal is to emphasize a difference. Choice B clearly identifies how the calendars differ in their leap year
+rules, providing specific details about the Julian approach (every 4 years, no exceptions) versus the
+Gregorian modification.
+Question 26 (Rhetorical Synthesis)
+Answer: A) Based on their Beaufort numbers, a storm (number 10) involves stronger winds than a
+near gale (number 7), and a near gale involves stronger winds than a gentle breeze (number 3).
+The goal is to compare the intensity of three wind categories. Choice A systematically compares all three
+categories by their Beaufort numbers, establishing a clear ordering: storm > near gale > gentle breeze.
+Question 27 (Rhetorical Synthesis)
+Answer: B) It was in September 1962, in the agricultural town of Delano, California, that Dolores
+Huerta co-founded... the National Farmworkers Association.
+The goal is to begin a narration of Huerta's co-founding of the National Farmworkers Association. Choice B
+uses vivid, narrative-style language ("It was in September 1962, in the agricultural town of Delano...") to set
+the scene, making it an effective opening for a narration.
+
+-- 6 of 16 --
+
+SECTION 1, MODULE 2: Reading & Writing (27 Questions)
+Question 1 (Words in Context)
+Answer: D) nullify
+Transportation costs could cancel out or eliminate the financial benefits of remittances for families in remote
+villages. "Nullify" means to make something void or ineffective, which precisely describes how costs could
+negate the benefits.
+Question 2 (Words in Context)
+Answer: C) defunct
+The art installations require software that is "largely unsupported since 2017" (specifically Java applets).
+"Defunct" means no longer existing or functioning, which accurately describes software that is no longer
+supported.
+Question 3 (Words in Context)
+Answer: D) stymie
+Lowering the tax threshold could hinder economic growth by "increasing the administrative burden" during a
+critical scaling period. "Stymie" means to prevent or hinder progress, which matches the idea of
+administrative burdens obstructing entrepreneurial growth.
+Question 4 (Words in Context)
+Answer: B) engendering
+The surge in vinyl record values had "the counterintuitive effect of ______ demand"—new collectors flooded
+the market. "Engendering" means causing or giving rise to something. The price surge engendered
+(created/generated) new demand.
+Question 5 (Text Structure)
+Answer: C) It presents the result of a study, then raises a potential concern related to that result.
+The text first presents Yamamoto's conclusion (ocean temperatures affect tuna migration), then raises the
+concern from Mendez that the small sample size (30 fish) could lead to biased analysis and exaggerated
+effects.
+Question 6 (Text Structure and Purpose)
+Answer: B) It emphasizes the potential utility of the team's model.
+The underlined sentence says the model "is sure to be invaluable in determining the optimal mix of a district's
+businesses." This directly emphasizes the potential usefulness (utility) of the research team's predictive
+model.
+Question 7 (Main Purpose)
+Answer: D) To situate Tanaka and Okonkwo's study in the context of their field
+The text describes prior work by Alvarez (shared pathways) and Sharma (different pathways), notes the gap
+in knowledge, then explains how Tanaka and Okonkwo's study was motivated to address this gap. This
+situates their work within the broader field of evolutionary biology research.
+Question 8 (Cross-Text Connections)
+Answer: C) At present, it only partially captures the stylistic dimensions of the fiction written in the
+period.
+Text 1 argues that scholarship overemphasizes confessional modes while ignoring works like Spark's. Text 2
+argues that scholars have focused too narrowly on "confessional sincerity versus ironic detachment," missing
+
+-- 7 of 16 --
+
+other stylistic dimensions. Both authors agree that current scholarship only partially captures the full picture.
+Question 9 (Main Idea)
+Answer: A) A group of economists asserts that people with strong community ties are
+consequently motivated to take certain considerations into account when voting.
+Lindqvist et al. propose that community solidarity motivates lower-income voters to support programs funded
+by taxes on themselves. The key insight is that social bonds (community ties) influence voting behavior,
+causing people to take communal welfare into account when voting.
+Question 10 (Data Interpretation)
+Answer: B) the wolf habitat in Scandinavia cannot support as many individuals as can the wolf
+habitat in Abruzzo.
+The maximum density reported by Liberg (Scandinavia) was 2.10, compared to Ciucci's (Abruzzo) maximum
+of 7.80. This difference suggests Scandinavia's habitat cannot support as many wolves per 1,000 km² as
+Abruzzo can.
+Question 11 (Command of Evidence)
+Answer: C) Lily was immensely interested in people who possessed great fortunes. Otherwise not
+at all.
+The claim is that Lily "admires wealth in other people to the exclusion of all other qualities." Choice C shows
+this perfectly: she was interested in people with fortunes, and "otherwise not at all"—meaning wealth was the
+only quality that mattered to her.
+Question 12 (Command of Evidence)
+Answer: C) It is easier to detect low and harmless concentrations of VOCs in Carrier 58MCA filters
+than it is to detect high and harmful concentrations of VOCs using PIDs.
+The hypothesis is that HVAC filter accumulation could serve as a detection method, eliminating the need for
+costly PIDs. If filters can detect even low concentrations more easily than PIDs detect high ones, this
+strongly supports the filters' usefulness as a replacement monitoring tool.
+Question 13 (Command of Evidence)
+Answer: C) Cats showed a different pattern of brain activity when smelling the familiar scent vs.
+the unfamiliar scent, and this difference decreased as cat age decreased.
+The conclusion is that younger cats are worse at differentiating familiar from unfamiliar scents. Choice C
+directly supports this: as age decreases (younger cats), the difference in brain response between familiar
+and unfamiliar scents also decreases, meaning younger cats differentiate less effectively.
+Question 14 (Command of Evidence)
+Answer: D) "Mill and furnace, forge and field, / Have opened wider paths before the common
+hand..."
+The claim is that new freedoms and possibilities have become available to the working class. Choice D
+describes how workplaces ("mill and furnace, forge and field") have "opened wider paths before the common
+hand" with "greater yields" that are "more justly earned"—directly illustrating new opportunities and freedoms
+for workers.
+Question 15 (Logical Completion)
+Answer: D) some aspect of the scientific understanding of pulsar formation or neutron star
+evolution may be incomplete.
+The passage states that conditions during neutron star formation are believed to have been "ill-suited to
+producing such extreme spin rates." If some pulsars still spin extremely fast despite this, it suggests our
+
+-- 8 of 16 --
+
+understanding of the formation or evolution process may be incomplete.
+Question 16 (Logical Completion)
+Answer: C) the hypothesis about the development of this visual defense likely does not account
+for all instances of the trait in squid.
+The hypothesis says chromatophore displays evolved because they have lower metabolic cost than ink
+defense. But if species with chromatophore displays ALSO produce highly toxic ink, they haven't abandoned
+the ink defense. This suggests the metabolic-cost hypothesis doesn't fully explain why all species developed
+chromatophore displays.
+Question 17 (Standard English Conventions)
+Answer: C) initiative: the
+A colon after "initiative" correctly introduces the specific name and description of the initiative. "Timeline of
+Soul Food" is an appositive that elaborates on what the "important new initiative" is.
+Question 18 (Standard English Conventions)
+Answer: D) linguist Nomsa Dlamini
+When a title is followed by a specific name (one individual is being identified), no punctuation is needed:
+"linguist Nomsa Dlamini of the University of Cape Town." The title and name form a single unit.
+Question 19 (Standard English Conventions)
+Answer: B) centuries: the
+A colon after "centuries" introduces the name and description of the mercantile alliance. The text that follows
+("the Hanseatic League, a loose confederation...") identifies what the alliance was.
+Question 20 (Standard English Conventions)
+Answer: D) ranks
+The subject is "collection" (singular), not "artworks" or "artists." "Whose extensive collection... ranks among
+the finest" uses the singular verb "ranks" to agree with the singular subject "collection."
+Question 21 (Standard English Conventions)
+Answer: B) sharks Scarface and Luna
+The names "Scarface and Luna" are essential (restrictive) appositives that identify which specific sharks. No
+commas are needed because the names are necessary information—without them, we wouldn't know which
+sharks are meant. There is also no comma after "Luna" because nothing follows that requires one in this
+context.
+Question 22 (Standard English Conventions)
+Answer: B) Macharia, having
+The sentence needs "Macharia" as the subject of "celebrates." The participial phrase "having referred to
+Kenya's thriving film scene..." is set off by commas as a nonrestrictive modifier. "Macharia, having referred...
+celebrates" is grammatically correct.
+Question 23 (Transitions)
+Answer: A) In contrast,
+The passage compares an older solar park (40 MW, 2008) with a newer one (187 MW, 2020). "In contrast"
+correctly signals this comparison between the two different performance levels.
+Question 24 (Rhetorical Synthesis)
+Answer: C) A reconstructed model of Titanoboa is on display at the Smithsonian National Museum
+of Natural History in Washington, D.C.
+
+-- 9 of 16 --
+
+The goal is to specify Titanoboa's location. Choice C directly states where a reconstructed model can be
+found: the Smithsonian National Museum of Natural History in Washington, D.C., precisely specifying the
+location.
+Question 25 (Rhetorical Synthesis)
+Answer: B) Lemon juice, with a pH of approximately 2, is highly acidic, while baking soda solution
+(pH 9) and bleach (pH 12.5) are both basic, with bleach being the most basic of the three.
+The goal is to compare the acidity or basicity of three substances. Choice B provides specific pH values for
+all three substances, classifies each as acidic or basic, and ranks them relative to each other—an effective
+comparison.
+Question 26 (Rhetorical Synthesis)
+Answer: A) Carmen Miranda's story begins in Marco de Canaveses, Portugal, in 1909.
+The goal is to begin a narrative about Carmen Miranda's life. Choice A establishes the setting (Marco de
+Canaveses, Portugal) and the time (1909) in a narrative style ("her story begins"), making it an effective
+opening for a biography.
+Question 27 (Rhetorical Synthesis)
+Answer: B) Consistent with McAllester's observation that Nakai's music "draws on Native flute
+traditions..." Changes incorporates a traditional cedar flute.
+The goal is to connect the McAllester quotation to a specific album. Choice B directly links the quotation
+(about drawing on Native flute traditions) to the specific album Changes (which incorporates a traditional
+cedar flute), effectively connecting the critical observation to the concrete work.
+
+-- 10 of 16 --
+
+SECTION 2, MODULE 1: Mathematics (22 Questions)
+Question 1 (Geometry — Parallel Lines)
+Answer: 36
+The 144° angle and angle y are co-interior (same-side interior) angles formed by a transversal crossing
+parallel lines. Co-interior angles are supplementary: 144 + y = 180, so y = 36.
+Question 2 (Inequalities)
+Answer: D) 22 ≤ v ≤ 28
+The cyclist's speed varied between 22 and 28 km/h, meaning v is at least 22 and at most 28. This is
+represented by the compound inequality 22 ≤ v ≤ 28.
+Question 3 (Linear Equations — Scaling)
+Answer: D) 24
+56x = 8(7x) = 8(3) = 24. Since 56 = 8 × 7, we multiply both sides of 7x = 3 by 8.
+Question 4 (Polynomial Operations)
+Answer: A) x³ + 9x² − 5x + 36
+(x³ + 6x² − 5x) + 3(x² + 12) = x³ + 6x² − 5x + 3x² + 36 = x³ + 9x² − 5x + 36.
+Question 5 (Function Evaluation)
+Answer: 32
+f(3) = 3³ + 5 = 27 + 5 = 32.
+Question 6 (Solving Equations with Functions)
+Answer: 1272
+g(x) = x/4 = 318. Solving: x = 318 × 4 = 1,272.
+Question 7 (Linear Models / Scatterplots)
+Answer: D) y = 9.5 − 0.9x
+The data shows a negative linear trend with a y-intercept around 9–10 and a negative slope of approximately
+−0.9. Among the choices, y = 9.5 − 0.9x best fits the pattern. Checking: at x = 1, y ≈ 8.6; at x = 10, y ≈ 0.5.
+Question 8 (Quadratic Functions — Vertex)
+Answer: A) The toy rocket's minimum height was 3 feet above the ground.
+The vertex form f(x) = (1/16)(x − 6)² + 3 has vertex at (6, 3). Since the coefficient 1/16 is positive, the
+parabola opens upward, making the vertex a minimum. The minimum height is 3 feet.
+Question 9 (Tables and Linear Equations)
+Answer: A) x: 0, 3, 6 and y: 15, 20, 25
+Check with 5x − 3y = −45: At x = 0: 0 − 3(15) = −45 3. At x = 3: 15 − 3(20) = 15 − 60 = −45 3. At x = 6: 30 −
+3(25) = 30 − 75 = −45 3.
+Question 10 (Word Problems)
+Answer: 45
+Total mixture = 60 mL. Medication = 15 mL. Saline = 60 − 15 = 45 mL.
+Question 11 (Systems of Equations)
+Answer: B) 0
+
+-- 11 of 16 --
+
+Set equal: −(1/5)x = (1/13)x. Moving all terms to one side: −(1/5)x − (1/13)x = 0. Factor out x: x(−1/5 − 1/13) =
+0. Since the coefficient is nonzero, x = 0.
+Question 12 (Exponential Growth)
+Answer: B) s = 2,400(1.08)m
+An 8% increase each month means each month's count is 1.08 times the previous month's count. Starting at
+2,400: s = 2,400(1.08)m.
+Question 13 (Exponential Functions — Doubling)
+Answer: 40
+f(t) = 5,000(2)t/40. The population doubles when 2t/40 = 2, i.e., when t/40 = 1, so t = 40 minutes.
+Question 14 (Systems — Infinitely Many Solutions)
+Answer: C) 3/8
+For infinitely many solutions, both equations must represent the same line. The first equation has slope 3/8,
+so the second equation must also have slope 3/8.
+Question 15 (Quadratic Equations)
+Answer: D) 6
+Divide 6x² − 18x − 36 = 0 by 6: x² − 3x − 6 = 0. Therefore x² − 3x = 6.
+Question 16 (Geometry — Volume and Surface Area)
+Answer: 864
+Side length = ³√1728 = 12 cm. Surface area = 6 × 12² = 6 × 144 = 864 cm².
+Question 17 (Word Problems — Linear Equations)
+Answer: 18
+Before coupon: $91 + $35 = $126. Price per notebook: $126 ÷ 7 = $18.
+Question 18 (Quadratic Equations — Discriminant)
+Answer: 15
+For no real solutions: b² − 4(−3)(−20) < 0 → b² − 240 < 0 → b² < 240 → b < √240 ≈ 15.49. The largest
+positive integer is 15.
+Question 19 (Trigonometry — Right Triangles)
+Answer: C) 93.0
+In right triangle DEF with right angle at F: tan(E) = opposite/adjacent = DF/EF. So 1/5 = 18.6/EF → EF = 18.6
+× 5 = 93.0.
+Question 20 (Quadratic Functions — Minimum)
+Answer: B) 9
+f(x) = (x − 5)² + 9. The minimum of (x − 5)² is 0 (at x = 5). Therefore, the minimum of f(x) = 0 + 9 = 9.
+Question 21 (Circles and Angles)
+Answer: D) 21π
+Point A is at (0, 1) and C is at (0, −1). The angle ABC from ray BA to ray BC is π radians (180°). Equivalent
+angles: π + 2kπ for integer k. Testing: 21π = π + 20π = π + 10(2π). So 21π is coterminal with π. 3
+Question 22 (Triangle Similarity)
+Answer: D) Neither I nor II is sufficient.
+
+-- 12 of 16 --
+
+We know angle J = angle M = 45° and KL/NO = 20/15 = 4/3. For SAS similarity, we need two sides that
+include the known angle to be proportional. But KL and NO are opposite the known angle, not adjacent to it.
+Statement I gives one adjacent side ratio, and Statement II gives another, but each alone provides only one
+proportional side pair adjacent to the angle plus one opposite—not sufficient for SAS. Neither alone is
+sufficient.
+
+-- 13 of 16 --
+
+SECTION 2, MODULE 2: Mathematics (22 Questions)
+Question 1 (Linear Functions — Constants)
+Answer: 13
+f(x) = 6x + c. When x = 0: f(0) = 6(0) + c = c = 13.
+Question 2 (Statistics — Comparing Medians)
+Answer: C) The medians of data sets P and Q are equal.
+Data set P has 6 values; its median = (10 + 10)/2 = 10. Data set Q has 7 values; its median = the 4th value =
+10. Both medians are 10.
+Question 3 (Statistics — Margin of Error)
+Answer: A) It is plausible that the proportion is between 0.29 and 0.41.
+Confidence interval: 0.35 ± 0.06 = (0.29, 0.41). It is plausible the true proportion falls within this range.
+Question 4 (Linear Inequalities)
+Answer: B) (0, 6)
+The shaded region is above/left of a line with positive slope through the origin (slope ≈ 2). Testing (0, 6): the
+line at x = 0 is y = 0. Since 6 > 0, point (0, 6) is in the shaded region.
+Question 5 (Quadratic Functions — Tables)
+Answer: A) f(x) = 2x² + 6x + 10
+Check f(0) = 10 3 (all pass). Check f(1) = 18: A gives 2 + 6 + 10 = 18 3, B gives 7 + 1 + 10 = 18 3. Check
+f(−1) = 6: A gives 2 − 6 + 10 = 6 3, B gives 7 − 1 + 10 = 16 7. Only A passes all checks.
+Question 6 (Exponential Growth — Graph)
+Answer: C) 1.4 times
+From the graph: at x = 0, y ≈ 5 (thousand); at x = 1, y ≈ 7 (thousand). Ratio: 7/5 = 1.4. The revenue at x = 1 is
+1.4 times the revenue at x = 0.
+Question 7 (Linear Functions — Slope)
+Answer: A) 5
+In C(x) = 85 − 5x, the coefficient of x is −5. The magnitude |5| represents the rate of decrease: 5 percent per
+hour.
+Question 8 (Geometry — Special Right Triangles)
+Answer: B) 16√3
+The 30° angle is at the bottom-right, the right angle is at the bottom-left, so the top angle is 60°. The vertical
+side w is opposite the 30° angle. Using tan(30°) = w/48: w = 48 × tan(30°) = 48 × (1/√3) = 48/√3 = 48√3/3 =
+16√3.
+Question 9 (Proportional Relationships)
+Answer: B) 2,520
+q/r = 3,150/4,200 = 3/4. When r = 3,360: q = (3/4)(3,360) = 2,520.
+Question 10 (Geometry — Cube Surface Area)
+Answer: 9,600
+Side = ³√64,000 = 40 units. Surface area = 6 × 40² = 6 × 1,600 = 9,600 sq units.
+
+-- 14 of 16 --
+
+Question 11 (Linear Equations — No Solution)
+Answer: D) 5/2
+Distribute: (6cx + 24)/5 = 3x − 2 → 6cx + 24 = 15x − 10 → (6c − 15)x = −34. For no solution, 6c − 15 = 0 → c
+= 15/6 = 5/2. The constant −34 ≠ 0, confirming no solution.
+Question 12 (Linear Functions — x-intercept)
+Answer: A) When f(x) = 0, the number is −21/7.
+f(x) = 7x + 21. The x-intercept is where f(x) = 0: 7x + 21 = 0 → x = −3 = −21/7. This means when the output is
+0, the input (the number) is −21/7.
+Question 13 (Rational Equations)
+Answer: B) d = 5c/(3 − 4c)
+Starting from 3/c − 5/d = 4: rearrange to 3/c − 4 = 5/d → (3 − 4c)/c = 5/d. Cross-multiply: d(3 − 4c) = 5c → d =
+5c/(3 − 4c).
+Question 14 (Word Problems — Systems)
+Answer: 3,600
+Let a = votes against. Votes for = 6a. Difference: 6a − a = 18,000 → 5a = 18,000 → a = 3,600.
+Question 15 (Function Evaluation — Quadratic)
+Answer: D) 432
+f(12) = 3(12²) = 3(144) = 432.
+Question 16 (Exponents and Radicals)
+Answer: 4/5
+n√(p³) = p3/4. Also t5/4 = (p2n−1)5/4 = p5(2n−1)/4. Setting exponents equal: 3/4 = 5(2n − 1)/4 → 3 = 10n − 5 →
+10n = 8 → n = 4/5.
+Question 17 (Absolute Value Equations)
+Answer: C) 0 only
+6|x − 5| = k gives |x − 5| = k/6. An absolute value equation has exactly one solution when k/6 = 0 (the only
+solution is x = 5). If k/6 > 0, there are two solutions. If k/6 < 0, there are no solutions.
+Question 18 (Quadratic Equations — Discriminant)
+Answer: 18
+For −5x² + bx − 18 = 0 to have no real solution: b² − 4(−5)(−18) < 0 → b² − 360 < 0 → b² < 360 → b < √360 ≈
+18.97. The largest positive integer is 18.
+Question 19 (Exponential Functions — y-intercept)
+Answer: D) Neither I nor II
+f(0) = a(1 + 2.5b). For g(x) = a(2.5x + k): g(0) = a(1 + k). The y-intercept value a(1 + k) is not displayed as a
+single constant or coefficient. For h(x) = a(2.5)x + m: h(0) = a + m. The y-intercept is a + m, which again is
+not displayed as a single visible constant. Neither form displays the y-coordinate as a constant or coefficient.
+Question 20 (Linear Equations — Word Problems)
+Answer: D) y = 95x + 85
+Cost = $180 for the first hour + $95 for each additional hour (x − 1 additional hours). y = 180 + 95(x − 1) =
+180 + 95x − 95 = 95x + 85.
+Question 21 (Percentages — Multi-step)
+
+-- 15 of 16 --
+
+Answer: 60,000
+Mass of X = 3.75Y (375% of Y). Mass of X = 0.00625Z (0.625% of Z). So Z = X/0.00625 = 3.75Y/0.00625 =
+600Y. Z is 600 times Y, which is 60,000% of Y. Therefore q = 60,000.
+Question 22 (Triangle Similarity)
+Answer: D) Neither I nor II is sufficient.
+We know angle A = angle D = 40° and BC/EF = 18/12 = 3/2. BC and EF are opposite the known equal
+angles (not adjacent to them). For SAS similarity, we need two sides that include the known angle to be
+proportional. Statement I gives AB/DE = 3/2 (one side adjacent), and II gives AC/DF = 3/2 (the other side
+adjacent). Each alone provides only one adjacent proportional side—insufficient for SAS. We would need
+both together. Neither alone is sufficient.
+End of Answer Key — SAT-Style Practice Test: June 2024 Edition
+
+-- 16 of 16 --
+

@@ -1,0 +1,1888 @@
+ADAPTIVE DIGITAL SAT PRACTICE TEST
+DSAT_Dec_2024_US_2-W
+100% Original Compositions
+Section 1: Reading & Writing — Module 1 (27 Qs) | Module 2 Easier (27 Qs) | Module 2 Harder (27 Qs)
+Section 2: Math — Module 1 (22 Qs) | Module 2 Easier (22 Qs) | Module 2 Harder (22 Qs)
+Total: 148 Questions
+These questions are 100% original compositions reflecting the Digital SAT format. Not affiliated with or sourced from College Board, ETS, or
+any official SAT materials.
+
+-- 1 of 54 --
+
+SECTION 1: READING & WRITING
+Module 1 (27 Questions — All Students)
+Question 1
+Skill: Words in Context | Difficulty: Medium
+The following text is adapted from Edwidge Danticat's 2004 novel The Dew Breaker. Ka is a young sculptor living
+in Brooklyn. In her studio, her favorite part of the morning routine, she shapes lumps of wet clay into angular
+faces with her thumbs. She presses dried flowers into wax tablets and plants tiny mosaic tiles along the borders
+of her picture frames.
+As used in the text, what do the words "shapes" and "plants" both most nearly mean?
+A) Molds
+B) Grows
+C) Designs
+D) Positions
+Question 2
+Skill: Words in Context | Difficulty: Medium
+The intricate geometric patterns found on traditional Moroccan zellige tilework in Fez are iconic representations
+of North African artisanship. Artisans across the Mediterranean have adopted variations of this style — the
+mosaic facade of the Alhambra in Granada, Spain, for instance, is widely thought to _______ the decorative
+conventions of Moroccan zellige.
+Which choice completes the text with the most logical and precise word or phrase?
+A) replicate
+B) imitate
+C) disregard
+D) surpass
+Question 3
+Skill: Words in Context | Difficulty: Easy
+In a warehouse, _______ the accumulation of excess inventory such as outdated electronics can be challenging
+because surplus goods tend to pile up rapidly and occupy valuable storage space, making it difficult to clear them
+entirely.
+Which choice completes the text with the most logical and precise word or phrase?
+A) distributing
+B) cataloging
+C) curbing
+D) concealing
+
+-- 2 of 54 --
+
+Question 4
+Skill: Words in Context | Difficulty: Medium
+Specific design elements are nearly universal in the construction of pagodas, such as the tiered rooftop (or spire),
+which is regarded as a _______ of pagoda architecture. Even pagodas that blend features of several regional
+traditions, such as the Shwedagon Pagoda in Yangon, which draws from Burmese, Mon, and Indian influences,
+will still incorporate many of these conventional elements.
+Which choice completes the text with the most logical and precise word or phrase?
+A) trademark
+B) contradiction
+C) inspiration
+D) replica
+Question 5
+Skill: Text Structure and Purpose | Difficulty: Hard
+Mariana Torres-Vega and her research team have examined how parallel adaptation — a process in which
+organisms in geographically isolated populations independently develop similar traits — can arise from shared
+ancestral genetic variation or from entirely novel mutations. Concurrently, Kenji Nakamura and colleagues have
+studied how parallel adaptation manifests across different environmental pressures, but the degree to which
+shared versus independent genetic pathways contribute to this phenomenon remains poorly characterized. This
+gap prompted biologists Rafael Mendes and Priya Chakraborty to assess both mechanisms of parallel adaptation
+in a comprehensive 2018 analysis.
+Which choice best states the function of the underlined portion in the text as a whole?
+A) It offers examples of how a phenomenon was investigated by researchers prior to Mendes and
+Chakraborty's analysis.
+B) It provides a foundational description of a phenomenon that is central to the discussion that follows.
+C) It clarifies a concept that the author suggests was misunderstood in the studies referenced in the text.
+D) It introduces an experimental method that is explored in greater detail later in the text.
+Question 6
+Skill: Text Structure and Purpose | Difficulty: Hard
+In Quechua, an Indigenous language family spoken across the Andes region of South America, wasi means
+"house," whereas wasiwasi means "village" or "many houses." This linguistic device, in which part or all of a root
+word is repeated, sometimes with phonological alteration, within a derived word that is semantically related to the
+original, is known as reduplication. In this instance, the syllable wasi is doubled to form wasiwasi. There are
+numerous examples of this kind of reduplication in Quechua.
+Which choice best describes the overall structure of the text?
+A) It describes the relationship between Quechua and several other languages, raises a question about the
+nature of that relationship, and then answers that question.
+B) It identifies the most commonly reduplicated words in Quechua, explains why it is difficult to translate
+those words into Spanish, and then provides examples of languages other than Spanish into which those
+words can be translated.
+C) It presents some specific words in Quechua, describes the general linguistic phenomenon exemplified by
+those words, and then states that this phenomenon occurs frequently in Quechua.
+D) It explains the phenomenon of reduplication, discusses why reduplication has been controversial among
+scholars, and then argues that an analysis of Quechua could help resolve that controversy.
+
+-- 3 of 54 --
+
+Question 7
+Skill: Cross-Text Connections | Difficulty: Hard
+Text 1
+Henrik Larsen and his research group have identified geological evidence in sonar imagery of a
+35-kilometer-wide subsurface depression beneath approximately one kilometer of sediment off the coast of
+northern Europe that is consistent with a 350-meter-wide celestial body striking the ocean floor. This formation,
+which the team designated Boreas, displays all the characteristic indicators of a high-velocity impact site: a raised
+perimeter, an elliptical outline, a stepped base, and a notable zone of central rebound.
+Text 2
+Both volcanic caldera collapse and deep-seated salt tectonics can produce crater-like depressions without
+requiring a high-velocity impact event. However, volcanic caldera formation is extremely improbable in the region
+near Boreas, and although salt tectonics could have plausibly occurred in this area and would produce a
+depression with a stepped base or an elliptical outline, it would not generate the zone of central rebound
+observed at Boreas.
+Which choice best describes a difference between the approach of Text 1 and the approach of Text 2?
+A) Text 1 objectively presents Larsen and colleagues' findings and conclusions, whereas Text 2 attempts to
+convey the researchers' enthusiasm upon discovering Boreas.
+B) Text 1 focuses on features Boreas lacks, whereas Text 2 indicates features it shares with other geological
+depressions.
+C) Text 1 discusses a single plausible cause of Boreas, whereas Text 2 evaluates two possible causes.
+D) Text 1 emphasizes the evidence supporting a celestial impact as the cause of Boreas, whereas Text 2
+argues against that explanation.
+Question 8
+Skill: Inferences | Difficulty: Medium
+The following text is from Nella Larsen's 1929 novel Passing. The narrator and her companion, daughters of a
+respected physician, are receiving instruction from Professor Aldridge.
+Our instructor, Professor Aldridge, invited his younger colleague, David, to a lecture one afternoon. By then I was
+twenty and had absorbed everything Aldridge could impart, so I welcomed a fresh perspective. David was an
+emerging essayist, and he had learned from his colleague that the Aldridge sisters were none other than the
+daughters of Dr. Eloise Aldridge, and they possessed remarkable analytical minds. David was hoping not only to
+observe our seminar but to seek an introduction to the professor herself at Mother's residence.
+Based on the text, why does David accompany his colleague to the lecture one day?
+A) David has learned all his colleague can teach him and now desires to be taught by the sisters.
+B) David has not received formal instruction in essay writing and wants to ask the sisters' famous mother to
+be his mentor.
+C) David wants to present his essays to the sisters and inquire about their perspectives on his work.
+D) David anticipates having the opportunity to be introduced to both the sisters and their mother.
+
+-- 4 of 54 --
+
+Question 9
+Skill: Inferences | Difficulty: Hard
+Determined to produce as many canvases as possible, Beatrice Palmer, a leading figure among the landscape
+painters known as the Carolina Naturalists, pioneered "rapid layering," which in part involved applying pigment
+across several surfaces simultaneously. That many of Palmer's followers, including Jerome Walsh, adopted the
+technique accounts in part for the impressionistic qualities that are now synonymous with the group's collective
+style. But not all Naturalists fully embraced this approach; for instance, though Clara Reeves was also prolific, her
+canvases were executed with greater precision and deliberation.
+What does the text most strongly suggest about paintings by Walsh?
+A) Because of the manner in which they were created, they likely have visual qualities that are regarded as
+more typical of Carolina Naturalist paintings than the qualities in works by Reeves are.
+B) Although it is evident that Walsh adopted some of Palmer's preferred techniques, Walsh's works are less
+derivative of works by Palmer than is typically acknowledged.
+C) The lack of precision with which they were executed suggests that they are inferior to works by either
+Palmer or Reeves.
+D) Walsh's reliance on the technique of rapid layering likely accounts for his works being more aesthetically
+interesting than works by Reeves are.
+Question 10
+Skill: Inferences | Difficulty: Hard
+Copenhagen has high cycling rates, but other cities cannot increase their cycling rates simply by replicating a
+single feature of Copenhagen — e.g., its extensive network of protected bike lanes — that is associated with
+cycling culture. As urban planner Sofia Lindgren argues, many factors influence people's decision-making about
+whether to cycle: some studies have shown the importance of topography, others have shown the importance of
+climate and seasonal weather patterns, and so on, and it is clear that none of these factors in isolation fully
+explains cycling habits in a given city.
+Based on the text, the author would most likely agree with which statement about Copenhagen's "extensive
+network of protected bike lanes"?
+A) It may increase cycling in Copenhagen but is known to reduce cycling in other cities.
+B) It is better understood as an effect of the high level of cycling in Copenhagen than as a cause of that
+cycling.
+C) It affects cycling decisions in Copenhagen less than topography and seasonal weather patterns do.
+D) It should be understood as just one of several factors that influence cycling activity in Copenhagen.
+
+-- 5 of 54 --
+
+Question 11
+Skill: Command of Quantitative Evidence | Difficulty: Medium
+Gabriela Fernandez and colleagues gathered data on 19 non-native shrub species cultivated in South America.
+They analyzed reports from Argentina, Chile, and Brazil about the number of these species grown in those
+countries as well as the numbers of beetle and mite species that damage those shrubs. The researchers
+concluded that Argentina had a greater number of damaging mite species than either of the other countries did.
+[PLACEHOLDER: Table titled 'Numbers of the 19 Non-native Shrub Species Reported and the Beetle and Mite Threats
+to Them' with columns: Country | Shrubs | Mites | Beetles. Rows: Argentina: 14, 210, 95 | Brazil: 2, 12, 9 | Chile: 8, 31,
+55]
+Which choice best describes data from the table that support Fernandez and colleagues' conclusion?
+A) Brazil reported 15 damaging mite species but only 9 damaging beetle species.
+B) Argentina reported 210 damaging mite species, whereas Chile reported 55 damaging beetle species.
+C) Argentina reported 210 damaging mite species, which is more than either Chile or Brazil reported.
+D) Chile and Brazil reported 8 and 2 damaging mite species, respectively, which is far fewer than Argentina
+reported.
+Question 12
+Skill: Textual Evidence | Difficulty: Hard
+Verses is an 1897 collection of poetry by Paul Laurence Dunbar. In one of Dunbar's poems, the speaker criticizes
+those who vocally champion distant humanitarian causes while neglecting suffering in their own communities,
+saying _______
+Which quotation from Verses most effectively illustrates the claim?
+A) "The oak may fall before the storm / While reeds still bend and sway, / Yet strength alone will not
+transform / The darkness into day." (from "The Oak and the Reed")
+B) "When ye weep for lands across the foam, / The stranger in his distant plight, / Remember those who
+starve at home / And perish in your city's night." (from "A Plea to the Comfortable")
+C) "Sing praise to every hill and glen, / To rivers broad and free, / Where liberty shall rise again / For all
+humanity." (from "Ode to the Homeland")
+D) "Let me craft the verses true, / Verses for the brave and bold; / Verses ringing sharp and new / Wherever
+courage may unfold." (from "Verses for the Brave")
+
+-- 6 of 54 --
+
+Question 13
+Skill: Command of Quantitative Evidence | Difficulty: Medium
+Many deciduous trees display leaves that are broader on one side of their central vein than the other, a condition
+known as foliar asymmetry. University of Michigan botanist Diane Kowalski and colleagues examined several
+species of maple and related trees, which produce leaves in opposite pairs, to determine if both leaves in a pair
+tend to exhibit asymmetry toward the same direction (same-direction asymmetry) or not. They found that
+opposite-direction asymmetry was far more common than same-direction asymmetry; in the sugar maple, for
+example, approximately _______
+[PLACEHOLDER: Bar graph titled 'Asymmetry Direction of Leaf Pairs in Maples' with x-axis 'Asymmetry direction in pair'
+(opposite direction, same direction) and y-axis 'Number of pairs' (0 to 500). Three species shown: sugar maple (dark
+gray), red maple (light gray), silver maple (black). Opposite direction bars: sugar maple ~120, red maple ~130, silver
+maple ~480. Same direction bars: sugar maple ~50, red maple ~45, silver maple ~160.]
+Which choice most effectively uses data from the graph to complete the example?
+A) 120 leaf pairs show opposite-direction asymmetry, whereas approximately 50 pairs show same-direction
+asymmetry.
+B) 85 leaf pairs show opposite-direction asymmetry, whereas approximately 35 pairs show same-direction
+asymmetry.
+C) 500 leaf pairs show opposite-direction asymmetry, whereas no pairs show same-direction asymmetry.
+D) 85 leaf pairs show opposite-direction asymmetry, whereas no pairs show same-direction asymmetry.
+Question 14
+Skill: Inferences | Difficulty: Hard
+Bluebell (Hyacinthoides non-scripta) plants are native to the British Isles, where temperate conditions have
+historically limited potential invasive competitors. As winters have become milder in recent decades, however,
+Spanish bluebell (Hyacinthoides hispanica) populations have expanded into Britain. It has been proposed that
+warming-induced extensions of the growing season in spring can benefit invasive species more than native ones;
+to evaluate this possibility, ecologists Thomas Whitfield and Anika Johansson tracked H. non-scripta and H.
+hispanica, along with other native and invasive species, over several years, concluding that invasives are
+advantaged by delays in frost onset during autumn in Britain.
+Which finding, if true, would most directly support Whitfield and Johansson's conclusion?
+A) Although H. non-scripta and H. hispanica both tended to extend their flowering period later into autumn in
+years with late frost onset, the extension was much greater for H. hispanica than for H. non-scripta.
+B) Although significant year-to-year variations in frost onset were observed during the study, neither H.
+hispanica nor H. non-scripta showed any significant year-to-year variation in the timing of leaf senescence.
+C) Although H. non-scripta and H. hispanica tended to cease flowering at about the same time in years with
+historically typical temperature patterns, H. hispanica ceased flowering later than H. non-scripta did in years
+with late frost onset.
+D) Although H. non-scripta and H. hispanica both tended to produce more flowers overall in years with late
+frost onset than they did in years with historically typical temperature patterns, the years with late frost onset
+also had early growing season onset in spring.
+
+-- 7 of 54 --
+
+Question 15
+Skill: Inferences | Difficulty: Hard
+Rural Appalachian West Virginia's McDowell County is among the most sparsely populated counties in the
+eastern United States: the US Census Bureau classified it as 97.2% rural in 2010. Researchers studying
+populations of counties like McDowell often struggle to recruit and retain participants. Anthony Russo and
+colleagues tested whether a method called respondent-driven sampling could improve recruitment and retention.
+Working in two rural counties, the researchers identified a small number of people who had the characteristics
+desired for a proposed study and asked them to recruit additional participants from their personal networks.
+Russo and colleagues found that participants recruited via respondent-driven sampling showed a much higher
+retention rate than did people recruited by outsiders, suggesting that _______
+Which choice most logically completes the text?
+A) being recruited to participate in a study by someone with whom one is personally connected may create a
+sense of commitment to persist with participation in the study.
+B) people with relatively small personal networks are inherently less likely to be recruited to participate in a
+study via respondent-driven sampling than are people with relatively large personal networks.
+C) respondent-driven sampling is more likely to improve retention rates among rural participants than among
+nonrural participants.
+D) personal networks can become large enough that two people can share a network but nevertheless
+regard each other as strangers.
+Question 16
+Skill: Form, Structure, and Sense | Difficulty: Easy
+Portrait of a Musician (1490) is one of several surviving works by Leonardo da Vinci's Milanese workshop.
+Currently, the painting _______ at the Pinacoteca Ambrosiana in Milan, where visitors can view the Italian
+Renaissance master's work on permanent display.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) will have hung
+B) hangs
+C) hung
+D) was hanging
+Question 17
+Skill: Form, Structure, and Sense | Difficulty: Medium
+The human hand contains a complex arrangement of intrinsic muscles, each playing a vital role in the hand's
+dexterous movement. The flexor pollicis brevis, which is attached to the trapezium bone, _______ responsibility
+for bending the thumb at its base joint.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) bearing
+B) to bear
+C) bears
+D) having borne
+
+-- 8 of 54 --
+
+Question 18
+Skill: Form, Structure, and Sense | Difficulty: Easy
+Georgia resident Tunis Campbell, one of the roughly two thousand African Americans elected to public office
+during the era that followed the Civil War, _______ his tenure as a state senator in 1868.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) to begin
+B) having begun
+C) beginning
+D) began
+Question 19
+Skill: Boundaries | Difficulty: Medium
+The ancient redwood (Sequoia sempervirens) known as Hyperion, located in northern California, was recognized
+as the tallest known tree on Earth, at 380 feet. With over two millennia of growth data in its _______ single tree
+like this, claims dendroclimatologist Patricia Engel, can reveal the ecological history of an entire region.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) rings, A
+B) rings; a
+C) rings and a
+D) rings, a
+Question 20
+Skill: Boundaries | Difficulty: Medium
+After uncovering records about Robert Smalls, who represented South Carolina in the US House of
+Representatives, the historian discovered biographical accounts of two other Black Americans who served in
+_______ John Roy Lynch of Mississippi and Josiah Walls of Florida.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) Congress;
+B) Congress:
+C) Congress.
+D) Congress
+
+-- 9 of 54 --
+
+Question 21
+Skill: Transitions | Difficulty: Medium
+Marcus Whitman adopted the pen name "Aurelius" — the name of a celebrated Roman emperor and philosopher
+— in political pamphlets he composed in 1803, a choice that accomplished far more than simply disguising his
+identity. _______ it was a deliberate rhetorical strategy through which Whitman associated his political
+arguments with the esteemed civic ideals of the classical world, thereby strengthening the authority of his writing.
+Which choice completes the text with the most logical transition?
+A) Indeed,
+B) Conversely,
+C) In addition,
+D) However,
+Question 22
+Skill: Transitions | Difficulty: Medium
+In Rachel Carson's The Sea Around Us — where, early on, the author marvels at the delicate bioluminescence of
+a single jellyfish but later recoils when contemplating vast colonies of jellyfish consuming entire fisheries —
+Carson grapples with the complicated dualities of the marine world. _______ the ocean's mesmerizing beauty
+and its ruthless indifference prove inseparable for Carson, like "two currents of the same tide."
+Which choice completes the text with the most logical transition?
+A) Ultimately,
+B) To that end,
+C) Hence,
+D) Moreover,
+Question 23
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• The Andean condor is a species of bird that can be found in the Andes Mountains of South America.
+• It has an average wingspan of 3.1 meters.
+• The wandering albatross is a species of bird that can be found over the Southern Ocean.
+• It has an average wingspan of 3.4 meters.
+The student wants to emphasize a similarity between the Andean condor and the wandering albatross. Which
+choice most effectively uses relevant information from the notes to accomplish this goal?
+A) On average, the Andean condor has a wingspan of 3.1 meters, while the wandering albatross has a
+wingspan of 3.4 meters.
+B) The wandering albatross, which has an average wingspan of 3.4 meters, can be found over the Southern
+Ocean.
+C) The wandering albatross and the Andean condor can both be found in the Southern Hemisphere.
+D) The Andes Mountains of South America are home to several bird species, one of which is the Andean
+condor.
+
+-- 10 of 54 --
+
+Question 24
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• The Beaufort scale is a system that classifies wind speed based on observed conditions at sea and on land.
+• Winds at Beaufort number 3 are classified as a "gentle breeze" and blow at 12–19 km/h.
+• Winds at Beaufort number 7 are classified as a "near gale" and blow at 50–61 km/h.
+• Winds at Beaufort number 10 are classified as a "storm" and blow at 89–102 km/h.
+The student wants to emphasize the wind speed of a near gale. Which choice most effectively uses relevant
+information from the notes to accomplish this goal?
+A) On the Beaufort scale, a storm (number 10) has wind speeds of 89–102 km/h, which is faster than a near
+gale.
+B) A near gale has a Beaufort number of 7, which means that it is stronger than a gentle breeze (number 3)
+but weaker than a storm (number 10).
+C) The Beaufort scale classifies wind based on observed conditions; for example, a gentle breeze blows at
+12–19 km/h.
+D) Classified as Beaufort number 7, a near gale produces wind speeds of 50–61 km/h.
+Question 25
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Langston Hughes was a celebrated poet.
+• His first published collection of poetry was a book.
+• It was called The Weary Blues.
+• It first appeared through Alfred A. Knopf in 1926.
+The student wants to identify the title of Langston Hughes's first published poetry collection. Which choice most
+effectively uses relevant information from the notes to accomplish this goal?
+A) Langston Hughes's first published poetry collection appeared in 1926.
+B) Langston Hughes's first published poetry collection was called The Weary Blues.
+C) In 1926, a poetry collection by Langston Hughes appeared through Alfred A. Knopf.
+D) Celebrated poet Langston Hughes's first published work of literature was a collection of poetry.
+
+-- 11 of 54 --
+
+Question 26
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Spatial orientation is a fundamental aspect of navigation.
+• In the Montessori method of education, there is a sensory exercise for children called the stereognostic bag
+activity.
+• In the activity, children identify objects inside a cloth bag using only touch.
+• In traditional Waldorf education, there is a comparable exercise called form drawing.
+• In form drawing, children trace geometric shapes in the air with their eyes closed.
+The student wants to emphasize a similarity between the two exercises. Which choice most effectively uses
+relevant information from the notes to accomplish this goal?
+A) The stereognostic bag activity in the Montessori method and form drawing in Waldorf education are both
+exercises that develop children's spatial skills.
+B) Both the stereognostic bag activity and form drawing are exercises found in major educational
+philosophies.
+C) In the stereognostic bag activity, children identify objects by touch alone, in contrast to form drawing,
+where children trace shapes in the air with eyes closed.
+D) In the Montessori method, there are a number of sensory exercises, including the stereognostic bag
+activity.
+Question 27
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Equilibrium is a 2020 sculpture by Brazilian artist Carlos Meireles.
+• It is a suspended mobile constructed from recycled aluminum sheets.
+• Mobiles became popular with artists in the 1930s and began to decline in mainstream popularity in the 1970s.
+• Mobiles experienced a resurgence among artists in the 2000s and remain popular today.
+• Sculptor Diana Varga notes, "[Mobiles] must be assembled by hand because there is no automated way to
+balance them."
+The student wants to connect the sculpture to the history of mobiles in art. Which choice most effectively uses
+relevant information from the notes to accomplish this goal?
+A) Mobiles like Equilibrium are popular with artists and collectors, though they must, as Varga notes, be
+assembled by hand since they cannot be easily mass-produced.
+B) With Equilibrium, Meireles joins the generations of artists who have helped sustain the mobile as an
+artistic medium since its resurgence in the 2000s.
+C) Continuing from the 1930s to today, mobiles have been a popular artistic form, both as gallery
+installations and as kinetic sculptures.
+D) The recycled aluminum mobile Equilibrium connects to the rich history of a medium whose artistic
+popularity has long been in decline.
+
+-- 12 of 54 --
+
+SECTION 1: READING & WRITING
+Module 2 — Easier Path (27 Questions)
+(~70% Easy/Medium, ~30% Hard)
+Question 1
+Skill: Words in Context | Difficulty: Easy
+The following text is adapted from Mark Twain's 1876 novel The Adventures of Tom Sawyer. Tom is a schoolboy
+in a small Missouri town.
+In the classroom, his least favorite part of the week, he traces letters of the alphabet on his slate with a worn
+piece of chalk. He folds scraps of paper into boats and drops them into the ink well on his desk.
+As used in the text, what does the word "traces" most nearly mean?
+A) Follows
+B) Discovers
+C) Draws
+D) Investigates
+Question 2
+Skill: Words in Context | Difficulty: Easy
+Insights from historical declines in marine biodiversity can help inform conservation strategies aimed at protecting
+endangered aquatic species. The environmental pressures that led to the disappearance of the Caribbean monk
+seal around 1950 may also be _______ threatened marine mammals today.
+Which choice completes the text with the most logical and precise word or phrase?
+A) hidden from
+B) relevant to
+C) combined with
+D) reliant on
+Question 3
+Skill: Words in Context | Difficulty: Easy
+In a 2019 article celebrating documentaries depicting Indigenous communities, reviewers for the Los Angeles
+Times _______ Nanook Revisited's 1975 film Voices of the North and Alanis Obomsawin's 1993 film
+Kanehsatake, praising the former as "deeply moving" and the latter as "unflinching and essential."
+Which choice completes the text with the most logical and precise word or phrase?
+A) promoted
+B) parodied
+C) dismissed
+D) commended
+
+-- 13 of 54 --
+
+Question 4
+Skill: Text Structure and Purpose | Difficulty: Medium
+In 1885, in an effort to determine how long certain bacterial cultures could survive under laboratory conditions,
+microbiologist Heinrich Bauer sealed 15 glass vials containing nutrient broth and samples from various bacterial
+strains, including Bacillus, Clostridium, and Staphylococcus. Since then, some of the vials have been opened in
+periodic checks of viability that researchers are conducting. After 50 years had elapsed, most of the cultures in
+those vials had ceased to be viable, but Bacillus endospores have remained viable, including those from a vial
+opened in 2023 by microbiologists Sarah Lin, Jorge Medina, and colleagues.
+Which choice best states the main purpose of the text?
+A) To discuss an ongoing experiment
+B) To explain how to eliminate certain bacteria
+C) To compare two experiments addressing the same questions
+D) To describe difficulties associated with preserving bacterial cultures
+Question 5
+Skill: Text Structure and Purpose | Difficulty: Medium
+Peruvian textile artist Luciana Calderon weaves narratives of endurance, using her distinctive method of
+intertwining metallic thread with photographs of people. In some works, Calderon focuses on honoring cultural
+figures who are people of Indigenous heritage, as she does in her depiction of activist Gregoria Apaza. However,
+in other works, Calderon celebrates everyday individuals, as she does in her luminous portrait of an elderly
+woman at a marketplace. Calderon sees both of these approaches as ways of illustrating the resilience and
+connectedness of all people.
+Which choice best describes the overall structure of the text?
+A) It introduces Calderon's cultural background, describes how this background influences her art, and then
+outlines some of her ideas for future projects.
+B) It compares Calderon to other contemporary artists, indicates how two of her works are similar, and then
+emphasizes Calderon's enthusiasm for artistic collaboration.
+C) It explains how metallic thread has historically been used in art, details how Calderon uses metallic thread
+in her own work, and then comments on the popularity of her art.
+D) It provides details about Calderon's artworks, discusses specific examples of her work, and relates them
+to one of her artistic goals.
+
+-- 14 of 54 --
+
+Question 6
+Skill: Text Structure and Purpose | Difficulty: Medium
+The following text is from Sara Teasdale's 1926 poem "Wisdom."
+When I have ceased to break my wings
+Against the faultiness of things,
+And learned that compromises wait
+Behind each hardly opened gate,
+Which choice best describes the function of the underlined portion in the text as a whole?
+A) It explains the speaker's views about proper conduct toward new acquaintances.
+B) It provides examples of realizations the speaker has gradually accepted.
+C) It presents an episode from the speaker's youth that she remembers fondly.
+D) It emphasizes the social habits the speaker has developed over her lifetime.
+Question 7
+Skill: Cross-Text Connections | Difficulty: Medium
+Text 1
+In 2017, Oaxaca, Mexico, was designated a Creative City of Gastronomy by UNESCO in recognition of its
+exceptional culinary traditions. The designation is well known among residents and visitors alike. It is widely
+accepted that the recognition of Oaxaca by UNESCO has drawn attention to local recipes, mole-making
+traditions, and mezcal producers, and has provided a boost to the region's food tourism.
+Text 2
+Many restaurant owners in Oaxaca hoped that culinary tourism would surge after the city received its UNESCO
+designation in 2017. However, as researcher Carmen Delgado and colleagues argue, cities must still develop
+targeted promotional campaigns to fully capitalize on such a designation. Without a deliberate effort to market
+Oaxaca's food scene, many current and prospective visitors may remain unaware that it is recognized for its
+uniquely rich cuisine.
+Based on the texts, both authors would most likely agree with which statement?
+A) The benefits of Oaxaca having been named a Creative City of Gastronomy extend well beyond increased
+tourism.
+B) Increased culinary tourism isn't guaranteed after a city has been named a Creative City of Gastronomy.
+C) A city's culinary scene can benefit from the city being named a Creative City of Gastronomy.
+D) A significant number of visitors to Oaxaca may not know that it was named a Creative City of
+Gastronomy.
+
+-- 15 of 54 --
+
+Question 8
+Skill: Central Ideas and Details | Difficulty: Medium
+Like many other reptile species that inhabit only the Canary Islands archipelago, the El Hierro giant lizard has
+adapted to life in a narrowly defined habitat, resulting in highly specialized physical and behavioral characteristics
+that aid the species in survival. However, because the El Hierro giant lizard is highly specialized, it is especially
+vulnerable to environmental changes that can disrupt the delicately balanced ecosystem in which it lives.
+Which choice best states the main idea of the text?
+A) Canary Islands reptiles display a unique range of physical and behavioral characteristics and as a result
+can only live in habitats unique to the Canary Islands archipelago.
+B) The El Hierro giant lizard is an example of a species unique to the Canary Islands archipelago that is
+highly specialized and therefore particularly susceptible to habitat disturbances.
+C) The El Hierro giant lizard is a species of reptile that is related to many other Canary Islands reptiles but
+does not share a habitat with any of them.
+D) The El Hierro giant lizard is an example of a highly specialized reptile species found only on the Canary
+Islands archipelago and is related to several other highly specialized reptile species found there.
+Question 9
+Skill: Inferences | Difficulty: Medium
+In 2006, sculptor Rebecca Warren created Passage. In this work, Warren constructed a 60-meter-long
+arrangement of carved stones in the Mojave Desert. Warren's work is part of the earth art movement, in which
+artists reject the confinement and commercialization of art galleries. These artists typically install large-scale
+works outdoors, often in remote locations.
+Based on the text, what can be inferred about Passage?
+A) Its location may be considered remote.
+B) It marked a shift in the popularity of the earth art movement.
+C) It may have had more commercial success in a different outdoor location.
+D) It was created early in Warren's career.
+Question 10
+Skill: Command of Quantitative Evidence | Difficulty: Easy
+A student is researching early personal computing devices and other important technology products that were
+part of the global rise of the consumer electronics industry during the 1980s and 1990s. The student is surprised
+to find that the Palm Pilot sold relatively few units worldwide, with only about _______
+[PLACEHOLDER: Table titled 'Consumer Electronics of the 1980s and 1990s' with columns: Product | Manufacturer |
+Approximate number of units sold worldwide. Rows: Palm Pilot | Palm Inc. | 1,000,000 | Game Boy | Nintendo |
+15,800,000 | Newton | Apple Inc. | 1,500,000 | Tamagotchi | Bandai | 5,200,000]
+Which choice most effectively uses data from the table to complete the statement?
+A) 1,500,000 units sold compared to the approximately 5,200,000 units sold of the Newton.
+B) 1,000,000 units sold compared to the approximately 15,800,000 units sold of the Game Boy.
+C) 1,000,000 units sold compared to the approximately 15,800,000 units sold of the Newton.
+D) 1,500,000 units sold compared to the approximately 5,200,000 units sold of the Tamagotchi.
+
+-- 16 of 54 --
+
+Question 11
+Skill: Inferences | Difficulty: Medium
+A student is studying how monarch butterflies, painted lady butterflies, and red admiral butterflies respond to
+magnetic fields. The student knew that many butterflies display navigation shifts of more than 15 degrees in
+response to magnetic fields applied at ground level, but assumed that butterflies do not detect magnetic fields
+applied from above until reading a study by Elena Vasquez, James Porter, and their team.
+Which finding from Elena Vasquez, James Porter, and their team's study, if true, would most directly challenge
+the underlined assumption?
+A) Neither monarch butterflies nor red admirals display navigation shifts of more than 15 degrees in
+response to overhead magnetic fields.
+B) Painted lady butterflies have better overall magnetoreception than do red admiral butterflies.
+C) Both painted lady butterflies and monarch butterflies react only to magnetic fields applied at ground level.
+D) Monarch butterflies, painted lady butterflies, and red admiral butterflies display navigation shifts of more
+than 15 degrees in response to both ground-level and overhead magnetic fields.
+Question 12
+Skill: Textual Evidence | Difficulty: Hard
+"The Yellow Wallpaper" is an 1892 short story written by Charlotte Perkins Gilman. In the story, the narrator
+becomes increasingly fixated on the wallpaper pattern in the room where she is confined: _______
+Which quotation from "The Yellow Wallpaper" most effectively illustrates the claim?
+A) "The color is repellant, almost revolting; a smoldering, unclean yellow. For a day or two I merely observed
+the pattern in idle curiosity, but now I find myself tracing its convolutions with growing intensity."
+B) "John says the very worst thing I can do is to think about my condition, and I confess it always makes me
+feel restless to be so confined here."
+C) "A young housemaid who attended the garden asked if I cared to walk among the roses. I smiled, as
+though inspecting an exotic jewel from a far-off land with no intention of acquiring it."
+D) "It seemed to me a strangely patterned surface, and the way its shapes twisted and curled behind the
+outer design gave me a feeling of unease such as I had not experienced in years."
+
+-- 17 of 54 --
+
+Question 13
+Skill: Command of Quantitative Evidence | Difficulty: Hard
+[PLACEHOLDER: Table showing average annual growth rates of dairy exports from countries over the five years before
+and five years after an FTA with the US. Columns: Country | Pre-FTA Growth Rate of Exports to US (%) | Pre-FTA
+Growth Rate of Total Exports (%) | Post-FTA Growth Rate of Exports to US (%) | Post-FTA Growth Rate of Total Exports
+(%). Rows: New Zealand: 7.2, -3.1, 5.4, 6.8 | Canada: 11.9, 14.3, 12.5, 18.7 | Chile: -4.6, 38.7, -6.2, 33.4 | Argentina:
+10.1, 39.5, 17.2, 3.6 | Costa Rica: -5.9, 6.1, 8.8, 9.7. Text below table: A 2023 Department of Agriculture report by
+researchers calculated average annual growth rates of dairy exports from countries over the five years before and the
+five years following the creation of an FTA with the US. The researchers note that an increase in the rate of exports to
+the US in the post-FTA period does not necessarily indicate that a country produced more goods for export as a result of
+the FTA. Rather, FTAs sometimes incentivize countries to redirect existing trade from nonmember countries to FTA
+partners, as is most likely the case with _______]
+Which choice most effectively uses data from the table to complete the statement?
+A) Australia, because the post-FTA period coincided with increasing rates of both its dairy exports to the US
+and its total dairy exports to countries not participating in the FTA.
+B) New Zealand, because its rate of dairy exports to the US and its rate of total dairy exports both decreased
+in the post-FTA period relative to the pre-FTA period.
+C) Chile, because its rate of dairy exports to the US increased in the post-FTA period relative to the pre-FTA
+period, while its rate of total dairy exports decreased during the same period.
+D) Canada, because the post-FTA period saw a decrease in its rate of dairy exports to the US but not in its
+rate of total dairy exports.
+Question 14
+Skill: Inferences | Difficulty: Medium
+Research conducted in individual East Asian societies has demonstrated associations between personality traits
+and five musical characteristics (energy, complexity, refinement, warmth, and modernity) underlying individual
+preferences for styles of East Asian music. To investigate these associations across cultures, Yuki Tanaka et al.
+collected music-preference assessments for East Asian genres and self-reported personality traits from
+participants in forty-one countries across five continents. The study confirmed that the five-characteristic
+framework accurately captured participants' tastes in East Asian music, and, moreover, the study found similar
+correlations between patterns of these characteristics and of personality traits, suggesting that _______
+Which choice most logically completes the text?
+A) the five-characteristic framework can likely be used to predict preferences for non-East-Asian music
+styles based on personality traits even if the characteristics of those styles substantially differ from
+characteristics of East Asian music styles.
+B) the strength of the relationship between personality traits and musical preferences varies less across
+cultures than researchers had previously assumed.
+C) people with a relatively high degree of familiarity with East Asian music styles are likely to express
+stronger preferences for those styles than people with a relatively low degree of familiarity with those styles
+are.
+D) across cultural contexts, people who share similar profiles of personality traits tend to prefer listening to
+similar types of music.
+
+-- 18 of 54 --
+
+Question 15
+Skill: Inferences | Difficulty: Medium
+The Atlantic cod and the winter flounder are ectothermic (cold-blooded) fish, whereas the bluefin tuna and the
+swordfish are regional endotherms — they retain metabolic heat resulting in body temperatures above the
+ambient water temperature. Modeling the effect of falling ambient temperatures on ectotherms indicated to
+researchers Ingrid Solberg and colleagues that ectotherms' body temperatures inevitably decrease toward the
+ambient temperature. Data from wild mako sharks show that even though their body temperature consistently
+remains 2.0 to 3.0°C above ambient, it also declines as the ambient temperature falls. This suggests that the
+body temperatures of the _______
+Which choice most logically completes the text?
+A) bluefin tuna and the swordfish are likely to be more variable than the body temperature of the mako shark.
+B) winter flounder and the mako shark are at least partly determined by the ambient water temperature.
+C) mako shark and the swordfish remain fixed even as ambient water temperature changes, while the body
+temperature of the winter flounder changes with variations in the ambient water temperature.
+D) mako shark and the bluefin tuna remain fixed even if the ambient water temperature changes, while the
+body temperature of the Atlantic cod varies even if the ambient temperature is stable.
+Question 16
+Skill: Form, Structure, and Sense | Difficulty: Easy
+Biomedical engineers have developed synthesized titanium dioxide nanoparticles that are used to improve
+diagnostic imaging for certain conditions related to tissue inflammation. As nanotechnology advances, medical
+imaging technology _______ to advance as well.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) had likely been continuing
+B) will likely continue
+C) would likely have continued
+D) had likely continued
+Question 17
+Skill: Boundaries | Difficulty: Easy
+Apollo, Zeus, and Artemis were legendary figures to ancient Greek storytellers. Between the 8th century and
+_______ deities appeared in epic poems recited throughout the Hellenistic world, forming part of a dominant
+mythological tradition — the term for a shared body of sacred narratives — known as the Olympian canon.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) the 3rd century when these
+B) the 3rd century. These
+C) the 3rd century, because these
+D) the 3rd century, these
+
+-- 19 of 54 --
+
+Question 18
+Skill: Form, Structure, and Sense | Difficulty: Easy
+Cherokee artist Martha Redbird's mastery of traditional basket-weaving techniques is apparent in her expertly
+crafted baskets, which typically are woven from river cane (a sturdy and pliable material) and _______ bold
+geometric patterns.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) display
+B) had displayed
+C) were displaying
+D) displayed
+Question 19
+Skill: Boundaries | Difficulty: Medium
+A 2016 study led by _______ studied the impact of microplastics on coastal invertebrate populations. Another
+study, led by Keiko Yamamoto in 2019, looked at microplastics in freshwater invertebrates and two other
+pollutant categories: pharmaceutical residues and heavy metals.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) researcher, Elena Bianchi,
+B) researcher Elena Bianchi,
+C) researcher Elena Bianchi
+D) researcher, Elena Bianchi
+Question 20
+Skill: Form, Structure, and Sense | Difficulty: Easy
+Most palms (trees that produce coconuts, dates, and similar fruits) are evergreen, meaning that they keep live
+fronds year-round. The sago palm (Cycas revoluta), however, is a deciduous cycad, meaning that it regularly
+_______ all its fronds.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) shed
+B) have shed
+C) sheds
+D) shedding
+Question 21
+Skill: Boundaries | Difficulty: Medium
+Among the many ancient Mesopotamian units of measurement, the units kus and gar were used to measure
+distance and _______ neither unit is commonly used today.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) volume; respectively,
+B) volume respectively
+C) volume, respectively;
+D) volume, respectively,
+
+-- 20 of 54 --
+
+Question 22
+Skill: Transitions | Difficulty: Easy
+Ceramic artist Yolanda Reyes-Fuentes wanted to avoid using petroleum-based glazes that could release toxic
+fumes during firing. _______ she began experimenting with more environmentally friendly mineral-based glaze
+methods, using naturally occurring materials like wood ash and feldspar for their distinctive earth tones.
+Which choice completes the text with the most logical transition?
+A) With this in mind,
+B) To sum up,
+C) Nevertheless,
+D) In actuality,
+Question 23
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching a topic, a student has taken the following notes:
+• In a 2022 study, researchers showed participants an unaltered photograph of a famous landmark alongside two
+digitally modified versions.
+• The Leaning Tower of Pisa is a white marble bell tower that tilts to one side.
+• In the first modification, the tower was shown perfectly upright.
+• In the second modification, the tower was shown leaning in the opposite direction.
+• Participants were asked to identify the correct version.
+• 91.3% of participants selected the unaltered image, and 8.7% selected a modified version.
+The student wants to emphasize how many participants selected a modified version of the Leaning Tower of
+Pisa. Which choice most effectively uses relevant information from the notes to accomplish this goal?
+A) When participants were asked to identify the correct version of the Leaning Tower of Pisa, 91.3% selected
+the unaltered image.
+B) A 2022 study showed participants an unaltered photograph of the Leaning Tower of Pisa, which is a white
+marble bell tower, alongside two modified versions.
+C) Participants were asked to identify the correct version of the Leaning Tower of Pisa, which is a white
+marble bell tower that tilts to one side.
+D) When shown three versions of the Leaning Tower of Pisa and asked to select the correct one, 8.7% of
+participants chose a modified version.
+
+-- 21 of 54 --
+
+Question 24
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching a topic, a student has taken the following notes:
+• The human palate contains taste receptors for a bitter, sharp flavor known as astringency.
+• Astringency is triggered by the tannin compounds in a variety of foods, including red wine and unripe fruit.
+• Participants in a study tasted a sample of Darjeeling, a type of black tea.
+• They rated its astringency intensity as strong.
+• The participants tasted a sample of chamomile, an herbal tea.
+• They rated its astringency intensity as mild.
+The student wants to emphasize a difference between the two teas. Which choice most effectively uses relevant
+information from the notes to accomplish this goal?
+A) Although Darjeeling and chamomile are both types of tea, the former's astringent flavor is more intense.
+B) Some types of tea, like Darjeeling and chamomile, trigger astringency in human taste buds.
+C) While Darjeeling and chamomile both contain astringent flavors, astringency can also be found in red
+wine and unripe fruit.
+D) Darjeeling is a type of black tea, but so is chamomile.
+Question 25
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching a topic, a student has taken the following notes:
+• Dryococelus australis is an insect species.
+• It was believed to be extinct until a living population was identified on Lord Howe Island in 2001.
+• Coelacanth is a fish genus.
+• It was believed to be extinct until a living specimen was identified off the coast of South Africa in 1938.
+• They are considered Lazarus taxa.
+• "Lazarus taxa" is a term for living organisms that were once believed to be extinct.
+The student wants to specify where Dryococelus australis was identified. Which choice most effectively uses
+relevant information from the notes to accomplish this goal?
+A) In 1938, a living specimen of Coelacanth was found off the coast of South Africa.
+B) A living population of Dryococelus australis, once believed to be extinct, was identified in 2001.
+C) Previously believed to be extinct, a living population of Dryococelus australis was identified on Lord Howe
+Island.
+D) Examples of Lazarus taxa can be found in Dryococelus australis as well as Coelacanth.
+
+-- 22 of 54 --
+
+Question 26
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching a topic, a student has taken the following notes:
+• Ornithology is primarily the study of birds and their behavior.
+• Florence Merriam Bailey was an American ornithologist born in 1863.
+• She is known for her field studies of western North American birds.
+• Ethology is primarily the study of animal behavior across species.
+• Nikolaas Tinbergen was a Dutch ethologist born in 1907.
+• He is known for his research on instinctive behavior in herring gulls.
+Which choice most effectively uses information from the given sentences to emphasize a similarity between
+Bailey and Tinbergen?
+A) Florence Merriam Bailey conducted field research on birds; Nikolaas Tinbergen, by contrast, is known for
+his research on instinctive behavior in herring gulls.
+B) Ornithology and ethology are just two examples of the myriad fields in which scientists can specialize.
+C) Like ornithologist Florence Merriam Bailey, ethologist Nikolaas Tinbergen dedicated a scientific career to
+the study of animal life.
+D) The ornithologist Florence Merriam Bailey was born in 1863, but ethologist Nikolaas Tinbergen was born
+later, in 1907.
+Question 27
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching a topic, a student has taken the following notes:
+• Generally, an object will heat up when compressed.
+• The compression of an object is known as mechanical stress.
+• A 2021 study led by researchers Amara Osei and Liang Chen tested the compressive heating of various
+polymers.
+• When polyethylene was compressed, its average surface temperature increased by 0.9°C.
+• When silicone rubber was compressed, its average surface temperature increased by 8.7°C.
+Which choice most effectively uses information from the given sentences to explain the concept of compressive
+heating?
+A) Researchers determined that when both polymers were compressed, the surface temperature of silicone
+rubber increased more than that of polyethylene.
+B) Compressive heating is the process by which an object increases in temperature when it is compressed.
+C) An object's average surface temperature will generally change due to mechanical stress.
+D) In 2021, researchers studied the effect of compressive heating on various polymers, like polyethylene and
+silicone rubber.
+
+-- 23 of 54 --
+
+SECTION 1: READING & WRITING
+Module 2 — Harder Path (27 Questions)
+(~30% Easy/Medium, ~70% Hard)
+Question 1
+Skill: Words in Context | Difficulty: Hard
+The following text is adapted from Fyodor Dostoevsky's 1866 novel Crime and Punishment. Raskolnikov is a
+former student living in St. Petersburg.
+He reached the Haymarket at dusk. An old merchant, who was actually trying to locate him among the crowd of
+passersby, nearly collided with him. There was nothing remarkable in that; he must have altered considerably in
+appearance.
+As used in the text, what does the word "locate" most nearly mean?
+A) Expose
+B) Convince
+C) Evaluate
+D) Find
+Question 2
+Skill: Words in Context | Difficulty: Hard
+Archaeological evidence suggests that the domestication of wild emmer wheat around 9,000 BCE in the Fertile
+Crescent fundamentally transformed human subsistence strategies. The environmental conditions that facilitated
+this transition may also be _______ contemporary agricultural challenges, as modern crop scientists grapple with
+analogous pressures of climate variability and soil degradation.
+Which choice completes the text with the most logical and precise word or phrase?
+A) obscured from
+B) germane to
+C) intertwined with
+D) contingent on
+Question 3
+Skill: Words in Context | Difficulty: Medium
+In a 2021 article surveying graphic novels that explore the immigrant experience, critics for the Guardian
+_______ Marjane Satrapi's 2003 work Persepolis and Shaun Tan's 2006 work The Arrival, describing the former
+as "bracingly candid" and the latter as "visually transcendent."
+Which choice completes the text with the most logical and precise word or phrase?
+A) lionized
+B) satirized
+C) overlooked
+D) praised
+
+-- 24 of 54 --
+
+Question 4
+Skill: Text Structure and Purpose | Difficulty: Hard
+Cognitive scientist Alina Kowalczyk has proposed that the phenomenon of "tip-of-the-tongue" states — moments
+when a person is confident they know a word but cannot retrieve it — may not reflect a failure of memory retrieval
+at all. Instead, Kowalczyk argues, these states may represent a metacognitive signal that the brain generates
+when it detects partial activation of a target word's phonological representation, effectively alerting the speaker
+that retrieval is imminent but incomplete. If correct, this reconceptualization would challenge the prevailing
+"blocking" model, which holds that tip-of-the-tongue states occur when a competing word actively inhibits access
+to the target word.
+Which choice best states the main purpose of the text?
+A) To describe a researcher's alternative interpretation of a cognitive phenomenon and indicate how it
+contrasts with an established model
+B) To present evidence that definitively refutes a widely accepted theory about memory retrieval
+C) To compare two researchers' complementary approaches to studying the same cognitive phenomenon
+D) To explain why a particular cognitive phenomenon has proven difficult for scientists to study
+Question 5
+Skill: Text Structure and Purpose | Difficulty: Hard
+Japanese ceramic artist Shoji Kamoda forged vessels of paradox, using his distinctive technique of applying
+coarse, ash-laden glazes to meticulously wheel-thrown porcelain forms. In some works, Kamoda emphasized the
+raw materiality of clay, as he does in his austere stoneware tea bowls that evoke the wabi-sabi aesthetic of
+imperfection. However, in other works, Kamoda celebrated refined elegance, as he does in his luminous celadon
+vases with their flawless, jade-like surfaces. Kamoda viewed both approaches as expressions of the essential
+tension between control and surrender that defines the ceramicist's art.
+Which choice best describes the overall structure of the text?
+A) It introduces Kamoda's training in traditional Japanese ceramics, describes how that training shaped his
+artistic philosophy, and then outlines his plans for future work.
+B) It compares Kamoda to other contemporary ceramicists, shows how two of his techniques are similar, and
+then discusses his views on artistic collaboration.
+C) It explains the historical development of Japanese ceramic glazing, details Kamoda's innovations in that
+tradition, and then comments on the commercial reception of his work.
+D) It provides details about Kamoda's artistic methods, discusses contrasting examples of his work, and
+connects them to one of his artistic principles.
+
+-- 25 of 54 --
+
+Question 6
+Skill: Text Structure and Purpose | Difficulty: Hard
+The following text is from Claude McKay's 1922 poem "The Tropics in New York."
+Bananas ripe and green, and ginger-root,
+Cocoa in pods and alligator pears,
+And tangerines and mangoes and grape fruit,
+Fit for the highest prize at parish fairs.
+Which choice best describes the function of the underlined portion in the text as a whole?
+A) It explains the speaker's views about the proper way to judge tropical produce.
+B) It extends the catalog of tropical items that evoke the speaker's distant homeland.
+C) It presents a memory from the speaker's childhood that he recalls with nostalgia.
+D) It emphasizes the commercial value of the tropical fruits available in New York.
+Question 7
+Skill: Cross-Text Connections | Difficulty: Hard
+Text 1
+Economist Julia Hartmann contends that universal basic income (UBI) pilot programs in Finland and Kenya have
+demonstrated that unconditional cash transfers do not reduce recipients' motivation to seek employment.
+Hartmann points to data showing that participants in these programs maintained or even slightly increased their
+working hours compared to control groups.
+Text 2
+While acknowledging the data from Finland and Kenya, economist Wei Zhang argues that these pilots cannot be
+generalized to predict outcomes of permanent, nationwide UBI programs. Zhang notes that pilot participants
+know their benefits are temporary, which may sustain their work motivation in ways that a permanent program
+would not. Additionally, Zhang argues that the relatively small scale of pilots fails to capture potential
+macroeconomic effects, such as wage depression or inflation, that could emerge at national scale.
+Which choice best describes a difference between the approach of Text 1 and the approach of Text 2?
+A) Text 1 presents pilot program data as sufficient evidence for a conclusion about UBI's effects, whereas
+Text 2 questions whether pilot data can support such a broad conclusion.
+B) Text 1 focuses exclusively on the Finnish UBI pilot, whereas Text 2 draws on data from multiple countries.
+C) Text 1 argues that UBI would be economically beneficial, whereas Text 2 argues that UBI would be
+economically harmful.
+D) Text 1 discusses the psychological effects of UBI on recipients, whereas Text 2 discusses the political
+feasibility of UBI.
+
+-- 26 of 54 --
+
+Question 8
+Skill: Central Ideas and Details | Difficulty: Hard
+The fruit fly (Drosophila melanogaster) has long served as a model organism in genetics research, yet recent
+work by Nadia Petrov and colleagues has revealed that this very ubiquity may introduce systematic biases.
+Because decades of laboratory breeding have selected for traits that facilitate easy rearing — rapid reproduction,
+tolerance of crowding, acceptance of artificial diets — laboratory strains of D. melanogaster have diverged
+significantly from wild populations in ways that affect gene expression patterns, stress responses, and behavioral
+repertoires. Petrov argues that findings derived exclusively from laboratory strains may therefore overestimate
+the generalizability of certain genetic mechanisms across insect taxa.
+Which choice best states the main idea of the text?
+A) A commonly used research organism may yield less broadly applicable results than researchers have
+assumed, because laboratory populations have diverged from their wild counterparts.
+B) Wild fruit flies exhibit a wider range of genetic variation than laboratory strains, making wild populations
+more suitable for genetic research.
+C) Laboratory strains of fruit flies are superior to wild populations for genetics research because their traits
+have been optimized through selective breeding.
+D) Nadia Petrov has proposed replacing fruit flies with a different model organism that more closely
+resembles its wild counterpart.
+Question 9
+Skill: Inferences | Difficulty: Hard
+Sociologist Kenji Mori conducted a longitudinal study of 340 dual-income households over five years, tracking the
+relationship between domestic labor distribution and reported marital satisfaction. Mori found that couples who
+maintained a roughly equal division of household tasks reported higher satisfaction scores than couples in which
+one partner performed significantly more domestic labor. Notably, however, couples who deliberately negotiated
+their division of labor — regardless of whether the resulting distribution was equal — reported the highest
+satisfaction scores of all, suggesting that _______
+Which choice most logically completes the text?
+A) the process of actively discussing and agreeing upon domestic responsibilities may matter more to marital
+satisfaction than the specific outcome of that discussion.
+B) couples in which both partners work outside the home are inherently more likely to divide domestic labor
+equally than are couples with a single income earner.
+C) marital satisfaction is primarily determined by economic factors rather than by the distribution of
+household tasks.
+D) couples who negotiate their division of labor always arrive at a perfectly equal distribution of domestic
+tasks.
+
+-- 27 of 54 --
+
+Question 10
+Skill: Inferences | Difficulty: Hard
+Literary scholar Amira Okafor has argued that the narrative technique of unreliable narration functions differently
+in epistolary novels than in conventional first-person narratives. In a standard first-person novel, Okafor notes,
+readers can detect unreliability primarily through discrepancies between the narrator's claims and the events
+described. In epistolary novels, however, a second layer of unreliability emerges: because letters are written for a
+specific recipient, the letter-writer may strategically omit, embellish, or distort information based on what they
+want the recipient to believe. According to Okafor, this means that in epistolary novels, the reader must evaluate
+not only what the narrator says but also whom the narrator is addressing and what rhetorical purpose the
+communication serves.
+Based on the text, Okafor would most likely agree with which statement about unreliable narration in epistolary
+novels?
+A) It is less effective as a literary technique than unreliable narration in conventional first-person narratives.
+B) It requires readers to consider the social dynamics between the writer and the intended recipient of the
+letter.
+C) It is easier for readers to detect than unreliable narration in conventional first-person narratives.
+D) It occurs only when the letter-writer is deliberately attempting to deceive the letter's recipient.
+Question 11
+Skill: Command of Quantitative Evidence | Difficulty: Hard
+Environmental scientist Lucia Ferreira and colleagues gathered data on 25 non-native grass species cultivated in
+Australia. They analyzed reports from Queensland, Victoria, and Western Australia about the number of these
+species grown in those states as well as the numbers of aphid and fungal pathogen species that damage those
+grasses. The researchers concluded that Queensland had a greater number of damaging aphid species than
+either of the other states did.
+[PLACEHOLDER: Table titled 'Numbers of the 25 Non-native Grass Species Reported and the Aphid and Fungal
+Pathogen Threats to Them' with columns: State | Grasses | Aphids | Fungal Pathogens. Rows: Queensland: 16, 185, 88 |
+Victoria: 3, 14, 7 | Western Australia: 9, 38, 62]
+Which choice best describes data from the table that support Ferreira and colleagues' conclusion?
+A) Victoria reported 22 damaging aphid species but only 7 damaging fungal pathogen species.
+B) Queensland reported 185 damaging aphid species, whereas Western Australia reported 62 damaging
+fungal pathogen species.
+C) Queensland reported 185 damaging aphid species, which is more than either Victoria or Western
+Australia reported.
+D) Victoria and Western Australia reported 14 and 3 damaging aphid species, respectively, which is far fewer
+than Queensland reported.
+
+-- 28 of 54 --
+
+Question 12
+Skill: Textual Evidence | Difficulty: Hard
+Collected Verse is an 1899 collection of poetry by Thomas Hardy. In one of Hardy's poems, the speaker reflects
+on the irony of human ambition in the face of nature's indifference, observing _______
+Which quotation from Collected Verse most effectively illustrates the claim?
+A) "The tower that men built with pride and care / Now hosts the ivy's quiet reign, / While those who laid its
+stones lie where / No monument records their name." (from "The Ruin")
+B) "We walked beneath the autumn boughs / And spoke of springs we'd never see, / And made each other
+tender vows / That time would keep eternally." (from "October Promises")
+C) "Praise heaven for the morning light, / For pastures green and rivers wide, / Where truth and justice stand
+upright / And mercy walks on every side." (from "A Morning Hymn")
+D) "Let me fashion songs of toil, / Songs for workers, young and old; / Songs to rouse like turning soil /
+Wherever labor's tale is told." (from "Songs of the Field")
+Question 13
+Skill: Command of Quantitative Evidence | Difficulty: Hard
+Many perennial grasses exhibit root systems that extend deeper on the windward side of the plant than on the
+leeward side, a phenomenon known as anemotropic root asymmetry. University of Nebraska ecologist Marcus
+Braun and colleagues examined several species of prairie grass and related plants, which grow in dense
+clusters, to determine if neighboring plants in a cluster tend to exhibit asymmetry toward the same direction
+(concordant asymmetry) or in opposing directions. They found that discordant asymmetry was far more prevalent
+than concordant asymmetry; in big bluestem, for example, approximately _______
+[PLACEHOLDER: Bar graph titled 'Root Asymmetry Direction in Prairie Grass Clusters' with x-axis 'Asymmetry direction
+in cluster' (discordant, concordant) and y-axis 'Number of pairs' (0 to 600). Three species shown: big bluestem (dark
+gray), switchgrass (light gray), indiangrass (black). Discordant bars: big bluestem ~175, switchgrass ~160, indiangrass
+~550. Concordant bars: big bluestem ~70, switchgrass ~55, indiangrass ~190.]
+Which choice most effectively uses data from the graph to complete the example?
+A) 175 plant pairs show discordant asymmetry, whereas approximately 70 pairs show concordant
+asymmetry.
+B) 95 plant pairs show discordant asymmetry, whereas approximately 40 pairs show concordant asymmetry.
+C) 600 plant pairs show discordant asymmetry, whereas no pairs show concordant asymmetry.
+D) 95 plant pairs show discordant asymmetry, whereas no pairs show concordant asymmetry.
+
+-- 29 of 54 --
+
+Question 14
+Skill: Inferences | Difficulty: Hard
+Arctic char (Salvelinus alpinus) are native to subarctic lakes in Scandinavia, where extreme seasonal
+temperature swings have historically prevented many warm-water invasive species from establishing
+populations. As average water temperatures have risen in recent decades, however, European perch (Perca
+fluviatilis) have colonized several previously char-dominated lakes. It has been hypothesized that
+warming-induced extensions of the ice-free season can disproportionately advantage invasive fish over native
+cold-adapted species; to evaluate this, limnologists Sigrid Halvorsen and Erik Lindqvist tracked both species over
+multiple years, concluding that invasive perch benefit more from delayed autumn freeze-up than native char do.
+Which finding, if true, would most directly support Halvorsen and Lindqvist's conclusion?
+A) Although both species extended their active feeding period in years with late freeze-up, the extension was
+substantially greater for perch than for char.
+B) Although significant year-to-year variation in freeze-up dates was observed, neither species showed any
+change in spawning timing.
+C) Although both species tended to spawn at similar times in years with typical freeze-up, perch spawned
+earlier than char in years with late freeze-up.
+D) Although both species produced more offspring in late-freeze-up years, those years also coincided with
+unusually early ice-out in spring.
+Question 15
+Skill: Inferences | Difficulty: Hard
+Neuroscientist Priya Chandrasekaran has proposed that the well-documented "spacing effect" — the finding that
+information studied across multiple sessions is better retained than information studied in a single session — may
+operate through a different mechanism than previously assumed. The conventional explanation holds that
+spacing allows for memory consolidation during intervals between sessions. Chandrasekaran's alternative
+hypothesis suggests that each new study session generates a slightly different contextual encoding of the
+material, and that this multiplicity of contextual cues provides more retrieval pathways during recall. If
+Chandrasekaran's hypothesis is correct, then _______
+Which choice most logically completes the text?
+A) studying material in varied environments across sessions should produce better retention than studying in
+the same environment each time, because the contextual variation would create additional retrieval
+pathways.
+B) the spacing effect should be equally strong regardless of whether the study sessions occur in the same
+environment or in different environments.
+C) massed study should actually produce better retention than spaced study when the test environment
+matches the study environment.
+D) the spacing effect should disappear entirely when the intervals between study sessions exceed a certain
+threshold.
+
+-- 30 of 54 --
+
+Question 16
+Skill: Form, Structure, and Sense | Difficulty: Medium
+Marine archaeologists have identified preserved Bronze Age shipwrecks along the Turkish coast that are used to
+reconstruct ancient Mediterranean trade networks. As underwater surveying technology improves, our
+understanding of ancient maritime commerce _______ to deepen as well.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) had likely been continuing
+B) will likely continue
+C) would likely have continued
+D) had likely continued
+Question 17
+Skill: Boundaries | Difficulty: Medium
+Cleopatra, Nefertiti, and Hatshepsut were extraordinary figures to ancient Egyptian chroniclers. Between the 15th
+century BCE and _______ rulers appeared in temple inscriptions throughout the Nile Valley, forming part of a
+dominant historical narrative — the tradition of recording royal achievements — known as the annals of the
+pharaohs.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) the 1st century BCE when these
+B) the 1st century BCE. These
+C) the 1st century BCE, because these
+D) the 1st century BCE, these
+Question 18
+Skill: Form, Structure, and Sense | Difficulty: Medium
+Inuit artist Kenojuak Ashevak's command of traditional printmaking techniques is evident in her celebrated prints,
+which characteristically are rendered in stone-cut relief (a labor-intensive and precise medium) and _______ vivid
+depictions of Arctic wildlife.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) showcase
+B) had showcased
+C) were showcasing
+D) showcased
+
+-- 31 of 54 --
+
+Question 19
+Skill: Boundaries | Difficulty: Hard
+A 2018 study led by _______ examined the impact of microbiome diversity on autoimmune responses in murine
+models. Another study, led by Fatima Al-Rashid in 2021, investigated microbiome diversity in human subjects
+and two additional immune markers: interleukin-6 and tumor necrosis factor.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) researcher, David Okonkwo,
+B) researcher David Okonkwo,
+C) researcher David Okonkwo
+D) researcher, David Okonkwo
+Question 20
+Skill: Form, Structure, and Sense | Difficulty: Medium
+Most species of bamboo (grasses that can grow to extraordinary heights) are evergreen, retaining their leaves
+throughout the year. The arrow bamboo (Pseudosasa japonica), however, is semi-deciduous, meaning that it
+periodically _______ a substantial portion of its foliage.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) dropped
+B) have dropped
+C) drops
+D) dropping
+Question 21
+Skill: Boundaries | Difficulty: Hard
+Among the numerous ancient Chinese units of measurement, the units chi and zhang were used to measure
+length and _______ neither unit is commonly used in modern international commerce.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) height; respectively,
+B) height respectively
+C) height, respectively;
+D) height, respectively,
+
+-- 32 of 54 --
+
+Question 22
+Skill: Transitions | Difficulty: Hard
+In Toni Morrison's Beloved — where, early on, the protagonist finds solace in the quiet rhythms of domestic life
+but later confronts the devastating return of a spectral figure embodying her traumatic past — Morrison explores
+the impossibility of fully escaping history. _______ the seductive comfort of forgetting and the moral imperative of
+remembering prove equally inescapable for Sethe, like "two sides of the same coin."
+Which choice completes the text with the most logical transition?
+A) Ultimately,
+B) To that end,
+C) Hence,
+D) Moreover,
+Question 23
+Skill: Rhetorical Synthesis | Difficulty: Hard
+While researching a topic, a student has taken the following notes:
+• In a 2023 study, neuroscientists presented participants with a standard version of a well-known optical illusion
+alongside three subtly altered versions.
+• The Müller-Lyer illusion consists of two lines of equal length with arrows at their endpoints pointing in opposite
+directions.
+• In the first alteration, the arrow angles were increased by 15 degrees.
+• In the second alteration, the arrow angles were decreased by 15 degrees.
+• In the third alteration, the arrows were replaced with circles.
+• Participants were asked to identify which version most strongly produced the illusion of unequal line lengths.
+• 72.4% of participants selected the standard version, and 27.6% selected an altered version.
+The student wants to emphasize how many participants selected an altered version. Which choice most
+effectively uses relevant information from the notes to accomplish this goal?
+A) When participants were asked to identify which version most strongly produced the Müller-Lyer illusion,
+72.4% selected the standard version.
+B) A 2023 study showed participants a standard Müller-Lyer illusion, which consists of two lines with arrows,
+alongside three altered versions.
+C) Participants were asked to evaluate different versions of the Müller-Lyer illusion, which involves two lines
+of equal length with arrows at their endpoints.
+D) When shown four versions of the Müller-Lyer illusion and asked to select the most effective one, 27.6% of
+participants chose an altered version.
+
+-- 33 of 54 --
+
+Question 24
+Skill: Rhetorical Synthesis | Difficulty: Hard
+While researching a topic, a student has taken the following notes:
+• The human nose contains olfactory receptors for a pungent, sharp scent known as isothiocyanate.
+• Isothiocyanate is released by the enzymatic breakdown of compounds in a variety of foods, including wasabi
+and horseradish.
+• Participants in a study evaluated a sample of English mustard, a type of prepared condiment.
+• They rated its isothiocyanate pungency as intense.
+• The participants evaluated a sample of Dijon mustard, another type of prepared condiment.
+• They rated its isothiocyanate pungency as moderate.
+The student wants to emphasize a difference between the two mustards. Which choice most effectively uses
+relevant information from the notes to accomplish this goal?
+A) Although English mustard and Dijon mustard are both prepared condiments, the former's isothiocyanate
+pungency is more intense.
+B) Some types of prepared condiment, like English mustard and Dijon mustard, release isothiocyanate
+compounds.
+C) While English mustard and Dijon mustard both release isothiocyanate, the compound can also be found
+in wasabi and horseradish.
+D) English mustard is a type of prepared condiment, but so is Dijon mustard.
+Question 25
+Skill: Rhetorical Synthesis | Difficulty: Hard
+While researching a topic, a student has taken the following notes:
+• Latimeria chalumnae is a species of coelacanth fish.
+• It was believed to have gone extinct 66 million years ago until a living specimen was caught near South Africa in
+1938.
+• Metasequoia glyptostroboides (the dawn redwood) is a conifer species.
+• It was known only from fossil records until living trees were found in Sichuan, China, in 1943.
+• Both are considered Lazarus taxa — organisms presumed extinct that are later found alive.
+The student wants to specify when Metasequoia glyptostroboides was discovered alive. Which choice most
+effectively uses relevant information from the notes to accomplish this goal?
+A) In 1938, a living coelacanth specimen was caught near South Africa.
+B) A living Metasequoia glyptostroboides, previously known only from fossils, was discovered in 1943.
+C) Previously known only from fossil records, living dawn redwoods were found in Sichuan, China.
+D) Examples of Lazarus taxa include both Latimeria chalumnae and Metasequoia glyptostroboides.
+
+-- 34 of 54 --
+
+Question 26
+Skill: Rhetorical Synthesis | Difficulty: Hard
+While researching a topic, a student has taken the following notes:
+• Mycology is primarily the study of fungi and their ecological roles.
+• Beatrix Potter was a British mycologist and illustrator born in 1866.
+• She is known for her detailed watercolor studies of British fungi.
+• Lichenology is primarily the study of symbiotic organisms formed by fungi and algae.
+• Elke Mackenzie was a South African lichenologist born in 1914.
+• She is known for her taxonomic classification of southern African lichens.
+Which choice most effectively uses information from the given sentences to emphasize a similarity between
+Potter and Mackenzie?
+A) Beatrix Potter studied fungi through watercolor illustration; Elke Mackenzie, by contrast, classified
+southern African lichens.
+B) Mycology and lichenology are just two of the many fields in which scientists can specialize.
+C) Like mycologist Beatrix Potter, lichenologist Elke Mackenzie devoted her scientific career to the study of
+organisms in the fungal kingdom.
+D) The mycologist Beatrix Potter was born in 1866, but lichenologist Elke Mackenzie was born later, in 1914.
+Question 27
+Skill: Transitions | Difficulty: Hard
+Philosopher Hannah Arendt adopted the phrase "the banality of evil" — a formulation that became one of the
+most contested concepts in twentieth-century moral philosophy — in her 1963 report on the trial of a war criminal,
+a choice that accomplished far more than simply describing the defendant's demeanor. _______ it was a
+deliberate conceptual framework through which Arendt challenged the prevailing assumption that perpetrators of
+atrocities must possess exceptional malice, thereby reorienting philosophical discourse on moral responsibility.
+Which choice completes the text with the most logical transition?
+A) Indeed,
+B) Conversely,
+C) In addition,
+D) However,
+
+-- 35 of 54 --
+
+SECTION 2: MATH
+Module 1 (22 Questions — All Students)
+Question 1
+Skill: Linear Equations in Two Variables | Difficulty: Easy
+[PLACEHOLDER: Coordinate plane showing a line passing through points (-1, 1), (0, 3), and (1, 5). The line has a
+positive slope of 2 and a y-intercept of 3. Grid lines visible from -8 to 8 on both axes.]
+The graph shows the linear relationship between x and y. Which table gives three values of x and their
+corresponding values of y for this relationship?
+A) x: -1, 0, 1 → y: -1, 2, 5
+B) x: -1, 0, 1 → y: 1, 3, 5
+C) x: -1, 0, 1 → y: 0, 2, 4
+D) x: -1, 0, 1 → y: -2, 1, 4
+Question 2
+Skill: Problem-Solving and Data Analysis | Difficulty: Medium
+[PLACEHOLDER: Scatterplot with x-axis 'Age (years)' ranging from 0 to 7, y-axis 'Wingspan (cm)' ranging from 40 to
+120. Six data points scattered near a line of best fit. The line passes approximately through (1, 55) and (7, 105). At age
+4, the line is at approximately 80 cm.]
+The scatterplot shows 6 measurements of the wingspan, in centimeters (cm), of a species of hawk from an age of
+1 year to 7 years old. A line of best fit is also shown. For a hawk at an age of 4 years old, what is the wingspan
+predicted by the line of best fit, to the nearest 10 cm?
+(Student-produced response)
+Question 3
+Skill: Linear Equations in One Variable | Difficulty: Easy
+If 8x + 24 = 72, what is the value of x + 3?
+A) 6
+B) 9
+C) 24
+D) 30
+Question 4
+Skill: Linear Inequalities in One or Two Variables | Difficulty: Easy
+For a certain category, the positive length n, in meters, of a beam must be less than 420 meters. Which inequality
+represents this situation?
+A) n > 420
+B) n < 0
+C) -420 < n < 0
+D) 0 < n < 420
+
+-- 36 of 54 --
+
+Question 5
+Skill: Area and Volume | Difficulty: Easy
+The perimeter of an obtuse triangle is 31 meters. The lengths of two sides of this triangle are 7 meters and 11
+meters. What is the length, in meters, of the third side of this triangle?
+A) 13
+B) 14
+C) 18
+D) 22
+Question 6
+Skill: Statistics — Mean, Median | Difficulty: Easy
+[PLACEHOLDER: Table with columns: Task | Time (minutes). Rows: A: 9 | B: 6 | C: 14 | D: 11 | E: 10]
+The table shows the amount of time it took a participant in a study to complete each of 5 tasks. What was the
+mean time, in minutes, for this participant to complete a task?
+A) 8
+B) 10
+C) 11
+D) 14
+Question 7
+Skill: Inference from Sample Statistics and Margin of Error | Difficulty: Medium
+A group of 50 employees selected at random from all the employees at a company were surveyed about the
+number of podcasts they listened to last month. From the data collected, it was estimated that the mean number
+of podcasts employees at the company listened to last month is 8.2, with an associated margin of error of 1.4.
+Which of the following is the most appropriate conclusion?
+A) It is plausible that the actual mean number of podcasts employees at the company listened to last month
+is less than 6.8.
+B) It is plausible that the actual mean number of podcasts employees at the company listened to last month
+is between 6.8 and 9.6.
+C) It is plausible that every employee at the company listened to between 8.2 and 12.4 podcasts last month.
+D) It is plausible that the actual mean number of podcasts employees at the company listened to last month
+is greater than 9.6.
+Question 8
+Skill: Equivalent Expressions | Difficulty: Medium
+Which expression is equivalent to (7x9 − 4x + 6) − (11x6 + 3x − 2)?
+A) -4x9 − 7x − 8
+B) -11x6 + 7x9 − 7x + 8
+C) -11x6 + 7x9 + x + 4
+D) -4x9 − x + 4
+
+-- 37 of 54 --
+
+Question 9
+Skill: Two-Variable Data: Models and Scatterplots | Difficulty: Medium
+[PLACEHOLDER: Scatterplot on a 10×10 grid showing approximately 15 data points. The data shows a weak negative
+correlation. Points are scattered roughly in a band from upper-left (around (1,6)) to lower-right (around (9,1)), with
+considerable spread.]
+The scatterplot shows the relationship between two variables, x and y. Which of the following graphs shows a line
+of best fit that is most appropriate for the data shown in the scatterplot?
+A) Graph showing a line with a steep positive slope from bottom-left to upper-right, passing well above most
+points.
+B) Graph showing a line with a moderate negative slope from upper-left to lower-right, roughly bisecting the
+data cloud.
+C) Graph showing a nearly horizontal line passing through the center of the data cloud.
+D) Graph showing a line with a moderate positive slope from lower-left to upper-right, roughly bisecting the
+data cloud.
+Question 10
+Skill: Equivalent Expressions | Difficulty: Medium
+The function g(x) = 180(x − 2) gives the sum of the interior angles, in degrees, for a regular polygon with x sides.
+What is the sum of the interior angles, in degrees, for a regular polygon with 40 sides?
+(Student-produced response)
+Question 11
+Skill: Nonlinear Functions | Difficulty: Medium
+[PLACEHOLDER: Table with columns: x | h(x). Rows: 0, 12 | 1, 14 | 2, 20. Note: 3^0=1, so h(0)=1+11=12 doesn't work
+cleanly. Use: 0→12, 1→14, 2→20. Actually use: x: 0→13, 1→15, 2→21 so h(x)=3^x+12 works: 1+12=13, 3+12=15,
+9+12=21.]
+For the function h, the table gives three values of x and their corresponding values of h(x). Which equation could
+define h?
+A) h(x) = 3x + 12
+B) h(x) = 3x + 11
+C) h(x) = 3x + 3
+D) h(x) = 3x
+Question 12
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Medium
+f(x) = 5(x − 2)(x − 7)(x − 13)
+If the given function f is graphed in the xy-plane, where y = f(x), what is the x-coordinate of an x-intercept of the
+graph?
+(Student-produced response)
+
+-- 38 of 54 --
+
+Question 13
+Skill: Systems of Two Linear Equations in Two Variables | Difficulty: Medium
+x + 5y = 23
+3x + y = 5
+The solution to the given system of equations is (x, y). What is the value of 4x + 6y?
+A) 14
+B) 18
+C) 28
+D) 42
+Question 14
+Skill: Lines, Angles, and Triangles | Difficulty: Medium
+In triangle GHJ, the measure of angle G is 52° and the measure of angle H is 93°. In triangle KLM, the measure
+of angle K is 52° and the measure of angle L is 93°. Which of the following additional pieces of information is
+needed to determine whether triangle GHJ is similar to triangle KLM?
+A) The measure of angle J
+B) The measure of angle M
+C) The measure of angle J and the measure of angle M
+D) No additional information is needed.
+Question 15
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Hard
+x2 + y = 25
+-x + y = 1
+The solutions to the given system of equations are of the form (x, y). What is a possible value of x?
+A) -6
+B) -4
+C) -1
+D) 24
+Question 16
+Skill: Nonlinear Functions | Difficulty: Hard
+In the xy-plane, the graph of function f, where y = f(x), has exactly 6 x-intercepts. One of these x-intercepts is (13,
+0). The rational function g is defined by g(x) = f(x) / (x − 13). In the xy-plane, how many x-intercepts does the
+graph of y = g(x) have?
+(Student-produced response)
+
+-- 39 of 54 --
+
+Question 17
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Medium
+(x − 5)(x − 11) / (x − 3) = 0
+What is the sum of the solutions to the given equation?
+A) 6
+B) 11
+C) 16
+D) 22
+Question 18
+Skill: Linear Equations in Two Variables | Difficulty: Hard
+In the xy-plane, line t passes through the point (0, 0) and is parallel to the line represented by the equation y =
+38x + 7. If line t also passes through the point (5, d), what is the value of d?
+(Student-produced response)
+Question 19
+Skill: Area and Volume / Circles | Difficulty: Medium
+A circle has center P, and points C and D lie on the circle. The measure of arc CD is 90°, and the length of this
+arc is 5 inches. What is the circumference, in inches, of the circle?
+A) 5
+B) 10
+C) 15
+D) 20
+Question 20
+Skill: Ratios, Rates, Proportional Relationships | Difficulty: Medium
+While the mass of an object is the same everywhere, the weight of an object is not the same on different planets.
+An object has a weight of 150.00 pounds on Earth and a weight of 170.25 pounds on Neptune. The object's
+weight on Jupiter is 236.4% of its weight on Earth. If the object's weight on Neptune is x% of its weight on Jupiter,
+which of the following is closest to the value of x?
+A) 42.34
+B) 71.83
+C) 270.09
+D) 480.10
+
+-- 40 of 54 --
+
+Question 21
+Skill: Systems of Two Linear Equations in Two Variables | Difficulty: Hard
+-x − wy = -245
+3x − wy = 73
+In the given system of equations, w is a constant. In the xy-plane, the graphs of these equations intersect at the
+point (q, 14), where q is a constant. What is the value of w?
+(Student-produced response)
+Question 22
+Skill: Right Triangles and Trigonometry | Difficulty: Hard
+[PLACEHOLDER: Right triangle with vertices A (top), B (bottom-left), C (bottom-right). Right angle at C. Hypotenuse AB
+= 130. Angle at B = 25°. Figure not drawn to scale. The side opposite to angle B is AC and the side adjacent to angle B is
+BC.]
+In the right triangle shown, what is the value of tan B?
+(Student-produced response)
+
+-- 41 of 54 --
+
+SECTION 2: MATH
+Module 2 — Easier Path (22 Questions)
+(~70% Easy/Medium, ~30% Hard)
+Question 1
+Skill: Linear Functions | Difficulty: Easy
+The function p is defined by p(x) = 24 − x. What is the value of p(6)?
+A) 4
+B) 18
+C) 24
+D) 30
+Question 2
+Skill: Nonlinear Functions | Difficulty: Easy
+[PLACEHOLDER: Graph showing a downward-opening parabola. X-axis labeled 'Price (dollars)' from 0 to 80. Y-axis
+labeled 'Profit (dollars)' from 0 to 1,800. The parabola has a vertex at approximately (30, 1,600), crosses x-axis near x=5
+and x=55.]
+The graph gives the estimated profit, in dollars, for a bakery when the price of a loaf of bread is x dollars. What
+does the y-value of the vertex of the graph represent in this context?
+A) The price, in dollars, of a loaf of bread
+B) The minimum estimated profit, in dollars
+C) The maximum estimated profit, in dollars
+D) The estimated profit, in dollars, when the price of a loaf of bread is 0 dollars
+Question 3
+Skill: Linear Equations in Two Variables | Difficulty: Easy
+[PLACEHOLDER: Table with columns: x | y. Rows: 0, 70 | 1, 78 | 2, 86.]
+For a linear relationship between x and y, the table gives three values of x and their corresponding values of y.
+Which equation represents this relationship?
+A) y = 8x + 70
+B) y = x + 78
+C) y = x + 8
+D) y = 8x
+
+-- 42 of 54 --
+
+Question 4
+Skill: Area and Volume | Difficulty: Easy
+A circle has a radius of 17 meters. What is the area, in square meters, of the circle?
+A) 17π/2
+B) 17π
+C) 34π
+D) 289π
+Question 5
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Medium
+p = √(10c − 36)
+The given equation relates the variables p and c, where c is positive. Which equation correctly expresses c in
+terms of p?
+A) c = (p + 36)2 / 10
+B) c = p2/10 + 36/10
+C) c = p/18 + 36/18
+D) c = √(p + 36) / 10
+Question 6
+Skill: Linear Functions | Difficulty: Easy
+The function f is defined by f(x) = -76x. What is the slope of the graph of y = f(x) in the xy-plane?
+A) -76
+B) -1/76
+C) 1
+D) 76
+Question 7
+Skill: Linear Functions | Difficulty: Medium
+A linear model estimates the population of a town from 1995 to 2019. The model estimates the population was 48
+thousand in 1995, 205 thousand in 2015, and x thousand in 2019. To the nearest whole number, what is the
+value of x?
+(Student-produced response)
+Question 8
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Medium
+w2 + 6w − 40 = 0
+Which of the following is a solution to the given equation?
+A) 4 − 2√14
+B) 2√14
+C) √14
+D) -6 + 2√14
+
+-- 43 of 54 --
+
+Question 9
+Skill: Lines, Angles, and Triangles | Difficulty: Hard
+[PLACEHOLDER: Figure showing triangle FHI with point R on segment FH. Segment RG is drawn parallel to segment
+HI. Angle at I = 31°. Angle FRG = 68°. Angles p and r are marked at vertices F and H respectively. Figure not drawn to
+scale.]
+In the figure shown, point R lies on segment FH, and segment RG is parallel to segment HI. The measure of
+angle I is 31°, and the measure of angle FRG is 68°. What is the value of p − r?
+(Student-produced response)
+Question 10
+Skill: Nonlinear Functions | Difficulty: Medium
+On March 1, there were 185 views of a blog post on a website. Every 3 days after March 1, the number of views
+of the blog post had increased by 50% of the number of views 3 days earlier. The function f gives the predicted
+number of views x days after March 1. Which equation defines f?
+A) f(x) = 185(0.50)x/3
+B) f(x) = 185(0.50)3x
+C) f(x) = 185(1.50)x/3
+D) f(x) = 185(1.50)3x
+Question 11
+Skill: Linear Inequalities in One or Two Variables | Difficulty: Medium
+[PLACEHOLDER: Coordinate plane showing a shaded region. The boundary line passes through (0, 0) and has a
+negative slope. The shaded region is below and to the right of the line. The line appears to pass through points like (8,
+-8) and (-8, 8), suggesting the boundary is y = -x, so sy < 96 with the line being y = 96/s * (1/x). Actually: boundary line
+passes through (-8, 2) and (8, -2) approximately. The shaded region is below the line. Grid from -8 to 8 on x-axis, -10 to 2
+on y-axis.]
+The shaded region shown represents the solutions to the inequality sy < 96, where s is a constant. What is the
+value of s?
+A) 12
+B) 6
+C) -6
+D) -12
+Question 12
+Skill: Linear Equations in One Variable | Difficulty: Medium
+How many solutions does the equation 6(12x − 18) = -18(6 − 4x) have?
+A) Exactly one
+B) Exactly two
+C) Infinitely many
+D) Zero
+
+-- 44 of 54 --
+
+Question 13
+Skill: Nonlinear Functions | Difficulty: Medium
+f(x) = 5,200(0.45)x/12
+The function f gives the value, in dollars, of a certain piece of machinery after x months of use. If the value of the
+machinery decreases each year by p% of its value the preceding year, what is the value of p?
+A) 4
+B) 12
+C) 45
+D) 55
+Question 14
+Skill: Linear Functions | Difficulty: Hard
+A gardener's initial count of aphids on a certain rosebush was 800. The gardener set a goal to reduce the
+population to 200 aphids. The gardener uses a model that predicts the population begins at 800 and decreases
+by 90 aphids per week in the first three weeks, and then decreases by 150 aphids per week thereafter. According
+to this model, at the end of week w after the initial count, where w > 3, which of the following functions gives the
+predicted number of aphids still needed to reach the gardener's goal?
+A) p(w) = 200 − 150w
+B) p(w) = 330 + 150w
+C) p(w) = 680 − 150w
+D) p(w) = -80 + 150w
+Question 15
+Skill: Linear Equations in Two Variables | Difficulty: Medium
+[PLACEHOLDER: Coordinate plane showing a line with a positive slope. The line crosses the y-axis at (0, 4) and the
+x-axis at (-3, 0). Grid visible from -1 to 9 on x-axis and -9 to 4 on y-axis.]
+What is an equation of the graph shown?
+A) 4x − 3y = 12
+B) 4x − 3y = -12
+C) 3x − 4y = 12
+D) 3x − 4y = -12
+Question 16
+Skill: Equivalent Expressions | Difficulty: Hard
+Which expression is a factor of 25x2(x + 8) − 25(x + 8)3?
+A) -10x + 80
+B) 5x + 8
+C) 8x + 8
+D) 20x − 80
+
+-- 45 of 54 --
+
+Question 17
+Skill: Systems of Two Linear Equations in Two Variables | Difficulty: Hard
+24x = 1,500y − 2,400
+One of the two equations in a system of linear equations is given. The system has no solution. Which equation
+could be the second equation in this system?
+A) (1/24)x = 2y
+B) (1/24)x = 50y − 100
+C) x = 2y
+D) x = 50y − 100
+Question 18
+Skill: Nonlinear Functions | Difficulty: Hard
+The exponential function f is defined by f(x) = a·bx, where a and b are positive constants. If f(s) = t and f(s + 1) = t
+· 0.73t / t, where s and t are constants, what is the value of b?
+A) 0.27
+B) 0.73
+C) 1.27
+D) 1.73
+Question 19
+Skill: Ratios, Rates, Proportional Relationships | Difficulty: Hard
+A tank has a volume of 0.72 cubic meters. Which of the following is closest to this volume, in gallons?
+(Note: 100.00 centimeters = 1 meter. Use 3,785.41 cubic centimeters = 1.00 gallon.)
+A) 0.07
+B) 5.27
+C) 190.19
+D) 756.14
+Question 20
+Skill: Nonlinear Functions | Difficulty: Hard
+Function g is a quadratic function. The graph of y = g(x) in the xy-plane has a vertex at (5, −8), contains the point
+(4, −5), and has a y-intercept at (0, a). The graph of y = 6 · g(x) has a y-intercept at (0, b). What is the positive
+difference between a and b?
+(Student-produced response)
+Question 21
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Hard
+-x2 + cx − 81 = 0
+In the given equation, c is an integer. The equation has no real solutions. What is the least possible value of c?
+(Student-produced response)
+
+-- 46 of 54 --
+
+Question 22
+Skill: Ratios, Rates, Proportional Relationships | Difficulty: Hard
+A biologist investigated two species of beetles: a predator and its prey. At the start of a month, there was an
+equal number of the two species. At the end of the month, the number of prey had increased by 3,200% of the
+number of prey at the start of the month, and the number of predators had increased by 220% of the number of
+predators at the start of the month. The number of prey at the end of the month was p% greater than the number
+of predators at the end of the month. What is the value of p?
+(Student-produced response)
+
+-- 47 of 54 --
+
+SECTION 2: MATH
+Module 2 — Harder Path (22 Questions)
+(~30% Easy/Medium, ~70% Hard)
+Question 1
+Skill: Linear Functions | Difficulty: Easy
+The function h is defined by h(x) = 32 − x. What is the value of h(5)?
+A) 5
+B) 16
+C) 27
+D) 37
+Question 2
+Skill: Nonlinear Functions | Difficulty: Medium
+[PLACEHOLDER: Graph showing an upward-opening parabola. X-axis labeled 'Production quantity (units)' from 0 to
+100. Y-axis labeled 'Cost (dollars)' from 0 to 2,500. The parabola has a vertex at approximately (40, 400), meaning the
+minimum cost occurs at 40 units.]
+The graph gives the estimated cost, in dollars, for a manufacturer when the production quantity is x units. What
+does the y-value of the vertex of the graph represent in this context?
+A) The production quantity, in units
+B) The minimum estimated cost, in dollars
+C) The maximum estimated cost, in dollars
+D) The estimated cost, in dollars, when the production quantity is 0 units
+Question 3
+Skill: Linear Equations in Two Variables | Difficulty: Easy
+[PLACEHOLDER: Table with columns: x | y. Rows: 0, 45 | 1, 57 | 2, 69.]
+For a linear relationship between x and y, the table gives three values of x and their corresponding values of y.
+Which equation represents this relationship?
+A) y = 12x + 45
+B) y = x + 57
+C) y = x + 12
+D) y = 12x
+
+-- 48 of 54 --
+
+Question 4
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Hard
+p = √(14c − 50)
+The given equation relates the variables p and c, where c is positive. Which equation correctly expresses c in
+terms of p?
+A) c = (p + 50)2 / 14
+B) c = p2/14 + 50/14
+C) c = p/22 + 50/22
+D) c = √(p + 50) / 14
+Question 5
+Skill: Linear Functions | Difficulty: Medium
+The function f is defined by f(x) = -54x. What is the slope of the graph of y = f(x) in the xy-plane?
+A) -54
+B) -1/54
+C) 1
+D) 54
+Question 6
+Skill: Linear Functions | Difficulty: Hard
+A linear model estimates the enrollment at a university from 1998 to 2022. The model estimates the enrollment
+was 63 thousand in 1998, 231 thousand in 2018, and x thousand in 2022. To the nearest whole number, what is
+the value of x?
+(Student-produced response)
+Question 7
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Hard
+w2 + 10w − 39 = 0
+Which of the following is a solution to the given equation?
+A) 5 − 2√16
+B) 2√16
+C) √16
+D) -5 + 8
+
+-- 49 of 54 --
+
+Question 8
+Skill: Lines, Angles, and Triangles | Difficulty: Hard
+[PLACEHOLDER: Figure showing triangle EGH with point M on segment EG. Segment MN is drawn parallel to segment
+GH. Angle at H = 29°. Angle EMN = 72°. Angles a and b are marked at vertices E and G respectively. Figure not drawn
+to scale.]
+In the figure shown, point M lies on segment EG, and segment MN is parallel to segment GH. The measure of
+angle H is 29°, and the measure of angle EMN is 72°. What is the value of a − b?
+(Student-produced response)
+Question 9
+Skill: Nonlinear Functions | Difficulty: Hard
+On April 1, there were 310 subscribers to a newsletter. Every 4 days after April 1, the number of subscribers had
+increased by 40% of the number of subscribers 4 days earlier. The function f gives the predicted number of
+subscribers x days after April 1. Which equation defines f?
+A) f(x) = 310(0.40)x/4
+B) f(x) = 310(0.40)4x
+C) f(x) = 310(1.40)x/4
+D) f(x) = 310(1.40)4x
+Question 10
+Skill: Linear Inequalities in One or Two Variables | Difficulty: Hard
+[PLACEHOLDER: Coordinate plane showing a shaded region. The boundary line has a negative slope passing through
+the origin area. The shaded region is below the boundary line. The line appears to pass through (-8, 2) and (8, -2)
+approximately, with the shaded region below it. Grid from -8 to 8 on x-axis, -10 to 2 on y-axis.]
+The shaded region shown represents the solutions to the inequality ty < 144, where t is a constant. What is the
+value of t?
+A) 18
+B) 9
+C) -9
+D) -18
+Question 11
+Skill: Linear Equations in One Variable | Difficulty: Hard
+How many solutions does the equation 5(15x − 25) = -25(5 − 3x) have?
+A) Exactly one
+B) Exactly two
+C) Infinitely many
+D) Zero
+
+-- 50 of 54 --
+
+Question 12
+Skill: Nonlinear Functions | Difficulty: Hard
+f(x) = 8,400(0.28)x/12
+The function f gives the value, in dollars, of a certain instrument after x months of use. If the value of the
+instrument decreases each year by p% of its value the preceding year, what is the value of p?
+A) 7
+B) 12
+C) 28
+D) 72
+Question 13
+Skill: Linear Functions | Difficulty: Hard
+A beekeeper's initial observation of the population of a certain hive was 900 bees. The beekeeper set a goal to
+increase the population to 2,400 bees. The beekeeper uses a model that predicts the population begins at 900
+and increases by 100 bees per week in the first three weeks, and then increases by 160 bees per week
+thereafter. According to this model, at the end of week w after the initial observation, where w > 3, which of the
+following functions gives the predicted number of bees still needed to reach the beekeeper's goal?
+A) p(w) = 2,400 − 160w
+B) p(w) = 2,220 + 160w
+C) p(w) = 1,320 − 160w
+D) p(w) = -180 + 160w
+Question 14
+Skill: Linear Equations in Two Variables | Difficulty: Hard
+[PLACEHOLDER: Coordinate plane showing a line with a positive slope. The line crosses the x-axis at (4, 0) and the
+y-axis at (0, -7). Grid visible.]
+What is an equation of the graph shown?
+A) 7x − 4y = 28
+B) 7x − 4y = -28
+C) 4x − 7y = 28
+D) 4x − 7y = -28
+Question 15
+Skill: Equivalent Expressions | Difficulty: Hard
+Which expression is a factor of 49x2(x + 6) − 49(x + 6)3?
+A) -14x + 84
+B) 7x + 6
+C) 6x + 6
+D) 28x − 84
+
+-- 51 of 54 --
+
+Question 16
+Skill: Systems of Two Linear Equations in Two Variables | Difficulty: Hard
+36x = 2,100y − 4,200
+One of the two equations in a system of linear equations is given. The system has no solution. Which equation
+could be the second equation in this system?
+A) (1/36)x = 2y
+B) (1/36)x = 175/3 · y − 350/3
+C) x = 2y
+D) x = 175/3 · y − 350/3
+Question 17
+Skill: Nonlinear Functions | Difficulty: Hard
+The exponential function f is defined by f(x) = a·bx, where a and b are positive constants. If f(s) = t and f(s + 1) =
+0.91t, where s and t are constants, what is the value of b?
+A) 0.09
+B) 0.91
+C) 1.09
+D) 1.91
+Question 18
+Skill: Ratios, Rates, Proportional Relationships | Difficulty: Hard
+A reservoir has a volume of 0.95 cubic meters. Which of the following is closest to this volume, in gallons?
+(Note: 100.00 centimeters = 1 meter. Use 3,785.41 cubic centimeters = 1.00 gallon.)
+A) 0.10
+B) 3.60
+C) 250.96
+D) 1,006.35
+Question 19
+Skill: Nonlinear Functions | Difficulty: Hard
+Function g is a quadratic function. The graph of y = g(x) in the xy-plane has a vertex at (3, −10), contains the
+point (2, −7), and has a y-intercept at (0, a). The graph of y = 4 · g(x) has a y-intercept at (0, b). What is the
+positive difference between a and b?
+(Student-produced response)
+Question 20
+Skill: Nonlinear Equations in One Variable and Systems | Difficulty: Hard
+-x2 + dx − 49 = 0
+In the given equation, d is an integer. The equation has no real solutions. What is the least possible value of d?
+(Student-produced response)
+
+-- 52 of 54 --
+
+Question 21
+Skill: Ratios, Rates, Proportional Relationships | Difficulty: Hard
+A researcher investigated two species of fish: a predator and its prey. At the start of a season, there was an equal
+number of the two species. At the end of the season, the number of prey had increased by 1,800% of the number
+of prey at the start of the season, and the number of predators had increased by 150% of the number of
+predators at the start of the season. The number of prey at the end of the season was p% greater than the
+number of predators at the end of the season. What is the value of p?
+(Student-produced response)
+Question 22
+Skill: Systems of Two Linear Equations in Two Variables | Difficulty: Hard
+-x − wy = -312
+4x − wy = 88
+In the given system of equations, w is a constant. In the xy-plane, the graphs of these equations intersect at the
+point (q, 11), where q is a constant. What is the value of w?
+(Student-produced response)
+
+-- 53 of 54 --
+
+QUESTION COUNT VERIFICATION
+• S1 M1: 27 | S1 M2 Easier: 27 | S1 M2 Harder: 27
+• S2 M1: 22 | S2 M2 Easier: 22 | S2 M2 Harder: 22
+• TOTAL: 147
+These questions are 100% original compositions reflecting the Digital SAT format. Not affiliated with or sourced from College Board, ETS, or
+any official SAT materials.
+Easier Module 2: ~70% Easy/Medium, ~30% Hard
+Harder Module 2: ~30% Easy/Medium, ~70% Hard
+
+-- 54 of 54 --
+

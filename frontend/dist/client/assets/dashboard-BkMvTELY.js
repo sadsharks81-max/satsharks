@@ -1,0 +1,1 @@
+import{j as t,N as r,O as n}from"./index-Cq6cpOdQ.js";import{u as i}from"./useAuth-DCY9iwt2.js";function u(){const{user:e,isLoading:s}=i();return s?t.jsx("div",{className:"min-h-screen flex items-center justify-center",children:"Loading..."}):e?e.role==="ADMIN"?t.jsx(r,{to:"/admin"}):t.jsx(n,{}):t.jsx(r,{to:"/auth/login"})}export{u as component};

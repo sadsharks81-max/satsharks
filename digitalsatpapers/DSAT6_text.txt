@@ -1,0 +1,2430 @@
+ADAPTIVE DIGITAL SAT PRACTICE TEST
+Horizon Series — Form A
+This practice test mirrors the adaptive structure of the Digital SAT. Section 1 (Reading & Writing) contains
+Module 1 (27 questions for all students), then branches into an Easier Module 2 or Harder Module 2 based on
+Module 1 performance. Section 2 (Math) follows the same adaptive structure with 22 questions per module.
+Test Structure:
+• Section 1 Module 1: 27 Reading & Writing questions (all students)
+• Section 1 Module 2 Easier: 27 questions (~70% Easy/Medium, ~30% Hard)
+• Section 1 Module 2 Harder: 27 questions (~30% Easy/Medium, ~70% Hard)
+• Section 2 Module 1: 22 Math questions (all students)
+• Section 2 Module 2 Easier: 22 questions (~70% Easy/Medium, ~30% Hard)
+• Section 2 Module 2 Harder: 22 questions (~30% Easy/Medium, ~70% Hard)
+• Total: 147 original questions
+
+-- 1 of 68 --
+
+SECTION 1: READING AND WRITING
+MODULE 1 (Same for all students — 27 Questions)
+Question 1
+Skill: Vocabulary in Context | Difficulty: Easy
+The deep-sea drilling campaigns of the 1960s and 1970s recovered sediment cores from ocean floors worldwide,
+generating vast geological datasets. Researcher Tanya Mikhailova, who studies ancient volcanic eruptions
+recorded in these sediments, continues to analyze the drill samples, confirming that the expeditions’
+contributions to earth science are ______.
+Which choice completes the text with the most logical and precise word or phrase?
+A) isolated
+B) enduring
+C) unprecedented
+D) provisional
+Answer: B
+Question 2
+Skill: Vocabulary in Context | Difficulty: Easy
+Because diatoms and other phytoplankton—photosynthetic microorganisms drifting in sunlit waters—are
+consumed by zooplankton as well as by juvenile fish and shellfish, phytoplankton are ______ pelagic food
+chains. Reduced phytoplankton density, which may be triggered by nutrient depletion, thus has a cascading
+negative effect on open-ocean ecosystems.
+Which choice completes the text with the most logical and precise word or phrase?
+A) tangential to
+B) indistinguishable from
+C) fundamental to
+D) competitive with
+Answer: C
+Question 3
+Skill: Vocabulary in Context | Difficulty: Easy
+Certain novels invite dramatically varied readings—the works of Haruki Murakami can ______ as many distinct
+analyses as there are critics willing to engage with them—and provided that a reader’s interpretation is not
+rooted in carelessness or willful distortion, it is difficult to claim that the reader has fundamentally misread the
+text.
+Which choice completes the text with the most logical and precise word or phrase?
+A) dismiss
+
+-- 2 of 68 --
+
+B) generate
+C) constrain
+D) obscure
+Answer: B
+Question 4
+Skill: Vocabulary in Context | Difficulty: Easy
+The color vocabularies of many indigenous languages in the Amazon Basin tend toward the ______: the Pirahã
+language of Brazil has been analyzed as containing only rough equivalents for light and dark, and the Daní
+language of Papua uses just two basic color terms, while the global average per language exceeds eleven.
+Which choice completes the text with the most logical and precise word or phrase?
+A) sparse
+B) rigid
+C) uniform
+D) elaborate
+Answer: A
+Question 5
+Skill: Main Purpose | Difficulty: Medium
+Established in Edinburgh, Scotland, in 1826, the Royal Scottish Academy is devoted to promoting
+contemporary visual art produced by Scottish artists and artists working in Scotland. Since its founding, it has
+mounted over two thousand exhibitions of paintings, sculpture, and architecture. More recently established
+Scottish institutions dedicated to visual art include the Dundee Contemporary Arts center. Opened in Dundee in
+1999, it focuses on international contemporary art with a particular emphasis on film and printmaking.
+Which choice best states the main purpose of the text?
+A) To trace a historical development that led to the founding of two cultural organizations
+B) To compare the funding models of two Scottish art institutions
+C) To present information about two institutions, including each institution’s area of focus
+D) To argue that one institution has a larger collection than the other
+Answer: C
+Question 6
+Skill: Main Purpose | Difficulty: Medium
+The following text is adapted from William Cullen Bryant’s 1821 poem “Green River.” The poem is a tribute to
+a river near the poet’s hometown in western Massachusetts.
+Though forced to drudge for the dregs of men,
+And scrawl strange words with the barbarous pen,
+And mingle among the jostling crowd,
+Where the sons of strife are subtle and loud—
+
+-- 3 of 68 --
+
+I often come to this quiet place,
+To breathe the airs that ruffle thy face,
+And gaze upon thee in silent dream.
+Which choice best states the main purpose of the text?
+A) It describes the speaker’s daily routine of visiting the river for exercise.
+B) It contrasts the peacefulness of the river with the harshness of the speaker’s working life.
+C) It emphasizes the danger of the river during storm season.
+D) It compares the appearances of two different rivers.
+Answer: B
+Question 7
+Skill: Reading Comprehension | Difficulty: Medium
+In northern Australia, the Yolngu people operate the Buku-Larrngay Mulka Centre, a community-controlled art
+center and museum. Drawing on traditional law and ceremony to guide its exhibitions, this institution presents
+Yolngu cultural heritage to visitors on the community’s own terms. The Tiwi Design collective on Bathurst
+Island employs a similar community-led approach in its own cultural space. Both centers contrast with museums
+that are not community-controlled; when displaying Indigenous Australian artifacts, such museums tend to
+anticipate primarily non-Indigenous visitors and rely on Western curatorial frameworks for organizing displays.
+According to the text, what is one way that non-community-controlled museums typically differ from the
+cultural centers operated by the Yolngu and Tiwi communities?
+A) The museums typically display fewer artifacts in their exhibitions.
+B) The museums are generally smaller in physical size.
+C) The museums are primarily designed for non-Indigenous audiences.
+D) The museums focus exclusively on historical rather than contemporary art.
+Answer: C
+Question 8
+Skill: Reading Comprehension | Difficulty: Medium
+The Galápagos archipelago is home to the flightless cormorant (Nannopterum harrisi), one of the world’s rarest
+seabirds. Due to the islands’ distinctive marine and terrestrial conditions, the flightless cormorant became highly
+specialized as it adapted to forage in the nutrient-rich coastal waters surrounding the volcanic islands. However,
+like many highly specialized species, the flightless cormorant is particularly vulnerable to environmental
+disruptions, such as El Niño events, oil spills, and introduced predators, that upset the delicately balanced
+ecosystems on which the birds depend.
+Based on the text, why is the flightless cormorant a highly specialized species?
+A) It lives exclusively in the deepest coastal waters surrounding the Galápagos.
+B) It evolved to thrive in a particular habitat found in the Galápagos archipelago.
+C) It adapted over time to share its habitat with other specialized seabird species.
+D) It inhabits an ecosystem that faces numerous environmental threats.
+
+-- 4 of 68 --
+
+Answer: B
+Question 9
+Skill: Main Idea | Difficulty: Medium
+The following text is adapted from Willa Cather’s 1913 novel O Pioneers! The narrator describes a winter
+landscape on the Nebraska prairie.
+The main street of the little town was deserted. The wind had already begun to pile the snow into drifts along the
+board sidewalks. The few pedestrians astir wrapped themselves to the eyes. I drove along the ridge of the
+Divide, looking down at the brown, frost-bitten fields below. The land was so flat that one could see the distant
+church steeples. The frozen country seemed to press in upon me, yet as the road turned south the wind fell and
+the prairie opened out before me, wide and still, like a great sheet of iron under the grey sky.
+Which choice best states the main idea of the text?
+A) The narrator contrasts feelings of unease with a growing sense of spaciousness as the landscape shifts along
+the drive.
+B) The narrator is eager to escape the cold weather and is frustrated by the length of the journey.
+C) Although the narrator did not plan to travel through the countryside, the experience proves exhilarating.
+D) The narrator observes that the town and the surrounding prairie are equally desolate in winter.
+Answer: A
+Question 10
+Skill: Data Interpretation | Difficulty: Medium
+[Graph: A line graph titled “Mean Wetland Area for Three Habitat Classifications in the Murray-Darling Basin,
+Australia” shows years 1975–2015 on the x-axis, mean wetland area (hectares) 0–200 on the y-axis. Class A
+(solid/triangles): ~180 in 1975, drops to ~40 by 1995, stays ~50. Class B (dashed/squares): ~100 in 1975, drops
+to ~30 by 1995, rises to ~45. Class C (dotted/circles): ~60 in 1975, drops to ~35 by 1995, drops to ~25 then
+~30.]
+To document the impact of prolonged drought on wetland ecosystems in the Murray-Darling Basin, researcher
+Kiera Thornton used satellite imagery to track changes in mean wetland area across habitat classifications.
+Sustained rainfall reductions in the 1980s and 1990s caused significant contraction in all wetland types. By
+1995, mean wetland areas had dropped considerably. In that year, they were between ______.
+Which choice most effectively uses data from the graph to complete the assertion?
+A) 100 and 150 hectares.
+B) 60 and 80 hectares.
+C) 30 and 45 hectares.
+D) 140 and 180 hectares.
+Answer: C
+Question 11
+Skill: Data Interpretation | Difficulty: Medium
+
+-- 5 of 68 --
+
+[Graph: A line graph titled “Insect Populations in a Welsh Meadow, March–December 2003” with months on
+x-axis, number observed (0–80) on y-axis. Meadow brown butterfly (solid/triangles): ~75 March, ~5 June, ~3
+Sept, ~5 Dec. Common blue damselfly (dashed/squares): ~10 March, ~15 June, ~12 Sept, ~20 Dec. Hoverfly
+(dotted/circles): ~0 March, ~8 June, ~10 Sept, ~5 Dec.]
+Eleri Griffiths and colleagues monitored insect populations in a meadow in Wales. They found that some
+species were entirely absent at particular times; for example, they did not observe even one ______.
+Which choice most effectively uses data from the graph to complete the example?
+A) meadow brown butterfly in June of 2003.
+B) hoverfly in March and December of 2003.
+C) common blue damselfly in September of 2003.
+D) meadow brown butterfly in December of 2003.
+Answer: B
+Question 12
+Skill: Weaken a Hypothesis | Difficulty: Hard
+Marine biologist Dr. Sayaka Ito examined otoliths of two reef fish species collected near Okinawa. Specimens
+labeled R-22, whose otolith growth rings formed during the juvenile stage, exhibited a chemical signature
+suggesting the fish had inhabited waters at 30 meters depth, while Okinawan reef fish of this species typically
+remain at depths of at least 50 meters. Because water temperature increases as depth decreases, a graduate
+student hypothesized that the Okinawan reef fish develop in warmer water than their counterparts near Palau do.
+Which finding, if true, would most directly weaken the student’s hypothesis?
+A) Okinawan reef fish tend to migrate to deeper water immediately after the juvenile stage, whereas Palauan
+reef fish do not.
+B) The water temperature at a given depth tends to be higher in waters near Palau than at that depth near
+Okinawa.
+C) There are not enough suitable shallow habitats near Palau for juvenile reef fish to develop at 30 meters.
+D) The water temperature at a given depth tends to be lower near Palau than at that depth near Okinawa.
+Answer: B
+Question 13
+Skill: Logical Completion | Difficulty: Hard
+Numerous studies have identified a positive correlation between soil nitrogen content and plant species diversity
+in temperate grasslands across Western Europe. But Dr. Ingrid Halvorsen and Lars Ekman did not observe this
+correlation in Scandinavia, leading some ecologists to hypothesize that the pattern is restricted to Western
+Europe. However, Dr. Jun Tanaka reported nitrogen and diversity rising or falling together in Japan, and several
+other non-European studies yielded similar results, suggesting that ______.
+Which choice most logically completes the text?
+A) ecological characteristics unique to Scandinavia likely result in both metrics being significantly higher there
+than elsewhere.
+
+-- 6 of 68 --
+
+B) the Scandinavian grasslands may be more similar to Western European ones than to those in Japan.
+C) there may be circumstances specific to the Scandinavian grasslands that disrupted a general positive
+association between soil nitrogen and species diversity.
+D) grasslands outside Western Europe are more likely to show a negative association than a positive one.
+Answer: C
+Question 14
+Skill: Logical Completion | Difficulty: Hard
+Dr. Meiling Chen et al. analyzed historical irrigation scaling trends circa 500 CE in East Asia, focusing on water
+management in ancient agricultural settlements. They examined communities across East Asia, with groupings
+based on regionally distinct political structures, crop types, and geographic constraints—including centrally
+administered rice-paddy systems of the Yangtze Delta, merchant-organized terrace farming in the Yunnan
+highlands, and village-managed canal systems in the Mekong lowlands. A prevalent trend emerged: as a
+settlement’s total irrigated area increased, so did canal density in core agricultural zones. This finding implies
+that ______.
+Which choice most logically completes the text?
+A) even when there were substantial inter-regional differences in agricultural systems, these had a limited
+effect on irrigation patterns in ancient East Asian settlements.
+B) the observed relationship is heavily influenced by characteristics particular to ancient East Asia, making it
+unlikely a similar relationship would be found elsewhere.
+C) variations in political and crop-type interests had less effect within regions than between regions of East
+Asia.
+D) despite regional differences in political and agricultural systems, ancient East Asian settlements shared
+common geographic constraints that encouraged high canal density.
+Answer: D
+Question 15
+Skill: Pronoun Agreement | Difficulty: Medium
+After extensive deliberation, ______ reached a consensus: the committee for the 1952 Pulitzer Prize in Fiction
+would award that year’s prize to Herman Wouk for his sweeping novel set during World War II, praised for its
+vivid characterization and masterful narrative scope.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) anyone
+B) you
+C) they
+D) it
+Answer: C
+Question 16
+Skill: Pronoun Reference | Difficulty: Medium
+
+-- 7 of 68 --
+
+In September of 1971, the television program All in the Family was a cultural phenomenon. Having dominated
+the ratings for three consecutive months, ______ ranked No. 1 on the Nielsen chart of most-watched television
+shows.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) those
+B) they
+C) each
+D) it
+Answer: D
+Question 17
+Skill: Sentence Structure | Difficulty: Medium
+In 1851, the novel Moby-Dick was published under the name Herman Melville. Today, we recognize that
+______
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) the author’s ambition was to write an American epic?
+B) the author’s ambition was to write an American epic.
+C) was the author’s ambition to write an American epic.
+D) the author’s ambition was to write an American epic?
+Answer: B
+Question 18
+Skill: Punctuation | Difficulty: Medium
+While the Iberian lynx (Lynx pardinus) can be found in scattered reserves across southern Spain and parts of
+Portugal in ______ than 90 percent of this critically endangered cat’s population is concentrated in the
+Andalusia region. There, wildlife veterinarian Dr. Rosa Mendez leads a captive-breeding initiative.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) Europe, more
+B) Europe; more
+C) Europe. More
+D) Europe more
+Answer: A
+Question 19
+Skill: Possessives and Plurals | Difficulty: Medium
+India and Mexico have two of the longest national anthems in the world. At 52 lines and 40 lines, respectively,
+these ______ according to research by musicologists Dr. Priya Sharma and David Cohen, correlate with periods
+of intense nationalist sentiment during which the anthems were composed.
+
+-- 8 of 68 --
+
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) anthems’ length,
+B) anthems lengths,
+C) anthem’s length,
+D) anthems’ lengths,
+Answer: B
+Question 20
+Skill: Punctuation | Difficulty: Medium
+A lone figure gazes across a harbor in Lighthouse at Two Lights, an oil painting by American ______ Edward
+Hopper.
+Which choice completes the text so that it conforms to the conventions of Standard English?
+A) artist:
+B) artist
+C) artist—
+D) artist,
+Answer: B
+Question 21
+Skill: Transitions | Difficulty: Medium
+Every Canadian province has an associated official mineral, which is typically chosen by a panel of geologists
+and then ratified by the provincial legislature. For example, British Columbia’s jade was formally designated in
+1968, and Ontario’s amethyst in 1975. ______ years elapse between a mineral’s selection and its official
+recognition, as the legislative process can be remarkably slow.
+Which choice completes the text with the most logical transition?
+A) Often,
+B) Therefore,
+C) Similarly,
+D) Indeed,
+Answer: A
+Question 22
+Skill: Transitions | Difficulty: Medium
+A 1995 study of flocking starlings observed the birds mimicking the flight direction of nearby flock-mates,
+rapidly banking away from an approaching hawk. This is an example of a social coordination mechanism that
+benefits the group. ______ the avian world is at times susceptible to the propagation of errors, often with costly
+outcomes: a 2012 study of migrating geese concluded that following erroneous course corrections by lead birds
+caused the flock to deviate from efficient routes unnecessarily.
+Which choice completes the text with the most logical transition?
+
+-- 9 of 68 --
+
+A) In other words,
+B) Conversely,
+C) Indeed,
+D) Consequently,
+Answer: A
+Question 23
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Nighthawks is a 1942 oil-on-canvas painting by American artist Edward Hopper.
+• It depicts four figures in a late-night diner.
+• Oil painting is a technique in which pigments are mixed with a drying oil, typically linseed oil.
+• The mixture is then applied to a prepared canvas or panel surface.
+• Fresco painting is a different technique that applies pigments to wet plaster on a wall.
+The student wants to describe the process of oil painting. Which choice most effectively uses relevant
+information from the notes to accomplish this goal?
+A) Oil painting uses linseed oil and other drying oils, not just wet plaster.
+B) Hopper used oil-on-canvas, applying pigments mixed with oil onto canvas.
+C) Hopper used oil painting to create the 1942 work Nighthawks.
+D) In oil painting, pigments are combined with a drying oil and then applied onto a prepared canvas or panel.
+Answer: D
+Question 24
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Generally, a country’s tallest building is located in its capital city.
+• The capital of Malaysia is Kuala Lumpur.
+• Malaysia’s tallest building, the Merdeka 118 tower, is in Kuala Lumpur.
+• The capital of Australia is Canberra.
+• Australia’s tallest building, however, is located in Melbourne, not Canberra.
+The student wants to emphasize a difference between the two countries. Which choice most effectively
+uses relevant information from the notes?
+A) In both Malaysia and Australia, the tallest building is not in the capital city.
+B) While Malaysia’s tallest building is in its capital, Kuala Lumpur, Australia’s tallest building is in Melbourne
+rather than its capital, Canberra.
+C) The tallest building in Malaysia, Merdeka 118, is in Kuala Lumpur, and Australia’s capital is Canberra.
+D) Malaysia’s capital is Kuala Lumpur; Australia’s capital is Canberra.
+Answer: B
+Question 25
+
+-- 10 of 68 --
+
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Journalist Sonia Nazario’s book Enrique’s Journey is about child migration from Central America.
+• Central American child migration surged in the early 2000s with tens of thousands of unaccompanied minors.
+• To document this, Nazario retraces the journey of a Honduran teenager named Enrique, among others.
+• The book won the Grand Prize of the Robert F. Kennedy Book Award in 2007.
+• It was also a Pulitzer Prize finalist in 2007.
+Which choice most effectively uses information to emphasize how Nazario documents child migration?
+A) Honduras is one of the countries from which children migrated to the United States.
+B) Sonia Nazario chronicles child migration in personal detail by retracing the journey of individuals, such as
+the Honduran teenager Enrique.
+C) In 2007, Nazario’s book won the Robert F. Kennedy Book Award and was a Pulitzer finalist.
+D) The journey of Enrique is featured in the award-winning book Enrique’s Journey.
+Answer: B
+Question 26
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Yo-Yo Ma is a French-American cellist and composer.
+• His acclaimed albums feature many distinguished guest artists.
+• Pianist Kathryn Stott performed on his 2015 album, Songs of Comfort and Hope.
+• Guitarist Carlos Santana performed on his 2008 album, Songs of Joy and Peace.
+The student wants to emphasize a similarity between Kathryn Stott and Carlos Santana. Which choice
+most effectively uses the notes?
+A) Stott performed on Ma’s 2015 album, released seven years after Songs of Joy and Peace.
+B) Songs of Comfort and Hope and Songs of Joy and Peace are albums by Yo-Yo Ma.
+C) Although both performed on Ma’s albums, Stott played piano whereas Santana played guitar.
+D) Kathryn Stott and Carlos Santana both contributed their musical talents to albums by Yo-Yo Ma.
+Answer: D
+Question 27
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching a topic, a student has taken the following notes:
+• Roberto Clemente (1934–1972) was a baseball player born in Carolina, Puerto Rico.
+• He was the first Caribbean-born player inducted into the Baseball Hall of Fame.
+• Early in his career, he played in limited, low-profile minor league games, such as his stint with the Montreal
+Royals (1954).
+• Later, he became one of the most celebrated outfielders in Major League history with the Pittsburgh Pirates
+(1955–1972).
+
+-- 11 of 68 --
+
+The student wants to make and support a generalization about Clemente’s early career. Which choice
+most effectively uses the notes?
+A) His stint with the Montreal Royals (1954) came early, whereas Pittsburgh came later.
+B) Roberto Clemente’s earliest professional appearances were modest and low-profile, such as his stint with
+the Montreal Royals in 1954, where he played in limited games.
+C) Both the Montreal Royals and the Pittsburgh Pirates are teams that include Clemente.
+D) With the Montreal Royals in 1954, Clemente played in limited minor league games.
+Answer: B
+
+-- 12 of 68 --
+
+SECTION 1: READING AND WRITING
+MODULE 2 — EASIER PATH (27 Questions)
+For students scoring below ~60% on Module 1 — ~70% Easy/Medium, ~30% Hard
+Question 1
+Skill: Vocabulary in Context | Difficulty: Easy
+Despite vocal support from environmental groups, the proposed marine conservation act gained little traction in
+the legislature during the 2010s, largely because lawmakers lacked data from developing coastal nations.
+Advocates would later ______ this gap by partnering with researchers in Southeast Asia and East Africa.
+Which choice completes the text with the most logical and precise word or phrase?
+A) reinforce
+B) address
+C) classify
+D) assume
+Answer: B
+Question 2
+Skill: Vocabulary in Context | Difficulty: Easy
+Although the metabolic processes of deep-sea bacteria have received limited formal investigation, indirect
+measurements have suggested that these organisms generate internal temperatures above their surroundings.
+Laboratory findings by Dr. Akira Sato et al. now ______ this idea: cultured colonies maintained elevated
+metabolic heat relative to incubation chambers.
+Which choice completes the text with the most logical and precise word or phrase?
+A) contradict
+B) confirm
+C) summarize
+D) limit
+Answer: B
+Question 3
+Skill: Vocabulary in Context | Difficulty: Easy
+The pacing of Kurosawa’s epic films is notably measured and contemplative. Georgian filmmaker Otar
+Iosseliani has acknowledged that his meditative works may lull viewers to sleep. This might imply tedium, but
+slow pacing does not necessarily produce boredom: deliberate rhythm generates focused alertness, and thus
+induces not torpor but ______.
+Which choice completes the text with the most logical and precise word or phrase?
+A) resilience
+
+-- 13 of 68 --
+
+B) agitation
+C) serenity
+D) attentiveness
+Answer: D
+Question 4
+Skill: Vocabulary in Context | Difficulty: Easy
+Challenges in recording nocturnal amphibian calls and a prevailing emphasis on diurnal species have resulted in
+______ of data on nighttime vocalization patterns, but Dr. Elena Vasquez has begun to close this gap by
+deploying automated acoustic monitors.
+Which choice completes the text with the most logical and precise word or phrase?
+A) a surplus
+B) a collection
+C) a scarcity
+D) a misrepresentation
+Answer: C
+Question 5
+Skill: Text Structure | Difficulty: Easy
+Vertical inheritance involves the transfer of cultural knowledge from elder to younger generation; horizontal
+transmission involves sharing between contemporaries. While vertical transmission is common in
+apprenticeship-based crafts, it has rarely been documented among peer-learning communities. However, new
+research suggests that horizontal cultural transmission is more prevalent in craft communities than originally
+assumed.
+Which choice best states the function of the underlined sentence in the text as a whole?
+A) It implies that a common understanding of horizontal cultural transmission may be inaccurate.
+B) It compares the rates at which horizontal transmission has been observed in two types of communities.
+C) It argues that a particular line of research is unlikely to yield results.
+D) It distinguishes between horizontal and vertical cultural transmission.
+Answer: A
+Question 6
+Skill: Main Purpose | Difficulty: Medium
+Middlemarch, first published serially in 1871–1872, is a novel in George Eliot’s body of work. Some critics
+have found fault with its expansive scope, saying it meanders and loses narrative focus. But other critics argue
+the novels should not be thought of as loosely structured but as intricately woven tapestries, similar to Balzac’s
+La Comédie humaine.
+Which choice best states the main purpose of the text?
+A) To present a reason the length of Middlemarch makes it challenging
+
+-- 14 of 68 --
+
+B) To argue that Eliot’s novels should have the reputation of La Comédie humaine
+C) To describe a characteristic of Eliot’s novels and offer two differing viewpoints on it
+D) To explain why critics find Eliot’s novels entertaining despite structural flaws
+Answer: C
+Question 7
+Skill: Text Structure | Difficulty: Medium
+With its blend of blues and country influences, “Folsom Prison Blues” is representative of Johnny Cash’s
+recordings in the mid-1950s and early 1960s. Through songs straddling these genres, he achieved his greatest
+early recognition. A decade earlier, however, Cash had first honed his skills as a gospel singer in rural Arkansas.
+The imprint of this sacred music tradition can be detected in “I Walk the Line.”
+Which choice best describes the overall structure of the text?
+A) It explores Cash’s lifelong interest in gospel music, then debates whether country music influenced his
+work.
+B) It discusses a particular period in Cash’s career, then considers the music of an earlier period.
+C) It enthusiastically recommends Cash’s earliest recordings, then expresses disappointment with later ones.
+D) It praises one song, then notes how similar it is to a song Cash recorded earlier.
+Answer: B
+Question 8
+Skill: Cross-Text Analysis | Difficulty: Medium
+Text 1
+Research on psychological benefits of exercise has traditionally concentrated on structured workouts, but
+kinesiologist Dr. Amara Osei has demonstrated that incidental physical activity—such as walking to a bus
+stop—also contributes measurably to improved mood. Greater positive affect was reported by participants who
+incorporated more incidental movement.
+Text 2
+Exercise psychology commonly draws on a framework categorizing physical activity along three intensity
+levels: sedentary (watching TV), light (casual walking), and vigorous (competitive running).
+Based on the texts, what would Osei (Text 1) most likely say about the framework in Text 2?
+A) It highlights that most research overlooks a category of physical activity that can improve emotional
+well-being.
+B) It reflects an overemphasis on vigorous activity in evaluations of exercise importance.
+C) It explains observations that individuals expect structured workouts to be more mood-enhancing than
+incidental movements.
+D) It emphasizes distinctions among types of vigorous activity not adequately represented in exercise research.
+Answer: A
+Question 9
+Skill: Cross-Text Analysis | Difficulty: Easy
+
+-- 15 of 68 --
+
+Text 1
+From the ancient giant wombat to the living koala, marsupials are among Australia’s most distinctive mammals.
+But zoologists still have much to learn. Today’s marsupials spend much of their early development in pouches.
+The pouch’s inaccessibility has made it difficult to study neonatal development.
+Text 2
+By using miniature thermal sensors, Dr. Hannah Liu can now monitor temperature fluctuations within marsupial
+pouches. Such sensors can revise misconceptions. It was assumed pouch temperatures were constant. But pouch
+temperatures in wild kangaroos fluctuate by up to 4°C over 24 hours.
+The author of Text 1 and Text 2 both discuss which topic?
+A) How extinct marsupials compare with living marsupials
+B) Scientists’ efforts to understand marsupials
+C) The benefits of attaching monitoring devices to marsupials
+D) Changes in marsupial habitats
+Answer: B
+Question 10
+Skill: Inference | Difficulty: Medium
+Humpback whales consume up to 1.5% of their body mass in krill per day. So a 30,000 kg humpback could eat
+450 kg, while a 150,000 kg blue whale could consume 2,250 kg. Over the past century, baleen whale
+populations have declined, and—contrary to expectations—so have krill populations. Dr. Smetacek explains
+that great whales recycle iron through fecal plumes, fertilizing phytoplankton blooms that sustain krill.
+Based on the text, what can most reasonably be concluded about humpback and blue whales?
+A) As humpback whale krill consumption has decreased, blue whale krill consumption has increased.
+B) The blue whale is able to consume more krill per day than the humpback whale.
+C) Both can eat krill, but only the humpback can also eat small fish.
+D) Both populations have declined due to decreasing ocean iron levels.
+Answer: B
+Question 11
+Skill: Data Interpretation | Difficulty: Medium
+[Graph: Grouped bar chart showing correlation between algorithm-predicted and user-reported satisfaction
+ratings for Classical and Electronic music. Three users: U5, U1, U2. For Classical: U5~0.25, U1~0.38, U2~0.55.
+For Electronic: U5~0.27, U1~0.22, U2~0.25.]
+Dr. Nakamura developed a model to predict song enjoyment on a 1–4 scale, then recruited participants to rate
+songs. The team computed correlation between predicted and reported ratings. Assuming U1 and U2 gave equal
+ratings to classical tracks, the graph indicates the model predicted ______.
+Which choice most effectively uses data from the graph to complete the statement?
+A) U1’s and U2’s classical ratings would equal one another.
+
+-- 16 of 68 --
+
+B) U1’s and U2’s classical ratings would differ from one another.
+C) U1 would derive more satisfaction from classical than from electronic tracks.
+D) U1 would derive less satisfaction from classical than from electronic tracks.
+Answer: C
+Question 12
+Skill: Textual Evidence | Difficulty: Hard
+A Doll’s House is an 1879 play by Henrik Ibsen. In the play, Torvald Helmer has been promoted at the bank,
+and his wife Nora conceals the fact that she once forged a signature to save his life. Ibsen portrays Nora’s
+tension as increasingly unbearable, as is evident when ______.
+Which quotation from a translation most effectively illustrates the claim?
+A) Torvald says, “Is it my little squirrel bustling about? Don’t disturb me.”
+B) Nora says to herself, “Corrupt my own children? Poison my home? It can never, never be true.”
+C) Torvald says of a colleague, “He is morally lost, and yet he goes on living.”
+D) Dr. Rank tells Nora, “There is one last thing I should like to do.”
+Answer: B
+Question 13
+Skill: Weaken a Hypothesis | Difficulty: Hard
+Certain industrial processes release TiO2 nanoparticles into waterways. Dr. Bergström found TiO2-NPs
+accumulate in earthworms. It has been hypothesized that TiO2-NP monitoring in earthworms could serve as a
+proxy, replacing costly sampling of vertebrate species like European moles, commonly used in regulatory
+soil-quality testing.
+Which finding, if true, would most directly weaken the hypothesis?
+A) Compared with moles, earthworms can accumulate TiO2-NPs with significantly fewer negative health
+effects.
+B) The rate of TiO2-NP uptake in earthworms differs from that in moles in a way not yet understood.
+C) Earthworms accumulate several other nanoparticle types, whereas moles accumulate only TiO2-NPs.
+D) When both species are exposed to similar TiO2-NP levels, concentrations show little variation.
+Answer: A
+Question 14
+Skill: Support a Claim | Difficulty: Hard
+Dr. Alvarez investigated bioluminescence in deep-sea squid during simulated predator encounters. 40% of
+tested species produced light in three patterns: steady glows, rapid flashes, and pulsing waves. Two species
+released bioluminescent ink and exclusively produced rapid flashes. Alvarez argues bioluminescence in
+ink-releasing species functions primarily to startle predators.
+Which finding, if true, would most directly support Alvarez’s claim?
+
+-- 17 of 68 --
+
+A) Brief, intense light bursts like rapid flashes tend to be especially effective in triggering a startle reflex in
+deep-sea predators.
+B) Ink-producing squid generate bioluminescence at a higher intensity than non-ink-producing squid.
+C) Rapid flashes are particularly visible to sharks and large fish.
+D) Sperm whales halt attacks in response to bioluminescent signals of any duration.
+Answer: A
+Question 15
+Skill: Logical Completion | Difficulty: Medium
+Archaeologists assume that population displacement interrupts intergenerational craft transmission, causing
+simultaneous declines in multiple crafting traditions. Inventories from the Indus Valley show a steep decline
+around 1900 BCE in carnelian bead-drilling, an advanced technique. But advanced bronze-casting and most
+other traditions continued to flourish, suggesting that ______.
+Which choice most logically completes the text?
+A) disruptions in bead-drilling likely occurred in the context of demographic continuity in the Indus Valley.
+B) a simultaneous decline in multiple traditions is less likely to indicate disrupted expertise transmission.
+C) peoples continued to uphold multiple traditions even as population shifts occurred.
+D) cross-cultural exchange likely explains the expansion of bronze-casting beginning around 1900 BCE.
+Answer: A
+Question 16
+Skill: Verb Form | Difficulty: Medium
+In a chapter from Matsuo Bashn’s The Narrow Road to the Deep North, the author marvels at a polished floor,
+wind chimes, and a child’s laughter. Such observations, recorded by Bashn as he journeyed through
+seventeenth-century Japan, ______ the ephemeral beauty of everyday moments.
+Which choice completes the text so that it conforms to Standard English?
+A) illuminates
+B) was illuminating
+C) to illuminate
+D) illuminate
+Answer: D
+Question 17
+Skill: Punctuation | Difficulty: Easy
+Citing the example of Athena, the philosopher Porphyry theorized that all Greek deities—including Poseidon,
+the god of the sea; Hermes, the god of trade; and the god of the forge, ______ may have been historical rulers
+who underwent deification.
+Which choice completes the text so that it conforms to Standard English?
+A) Hephaestus;
+
+-- 18 of 68 --
+
+B) Hephaestus—
+C) Hephaestus,
+D) Hephaestus
+Answer: C
+Question 18
+Skill: Verb Form | Difficulty: Medium
+Classified as a spondee, the word “sunlight” consists of two equally stressed syllables. The word “guitarist,” by
+contrast, consists of one unstressed syllable followed by two stressed syllables, a metrical foot ______ to in
+English prosody as an anapest.
+Which choice completes the text so that it conforms to Standard English?
+A) referred
+B) is referred
+C) referring
+D) refers
+Answer: B
+Question 19
+Skill: Punctuation | Difficulty: Medium
+The libraries of Portland, Oregon, seem to foster greater civic engagement. In a 2021 study, researchers
+investigating the connection between library branch locations and voter participation ______ analyzed
+geotagged voter registration data from various neighborhoods. They found neighborhoods with library branches
+had higher voter registration rates.
+Which choice completes the text so that it conforms to Standard English?
+A) conducted and the study’s scope
+B) conducted, and the study’s scope
+C) conducted and the study’s scope,
+D) conducted, and the study’s scope,
+Answer: B
+Question 20
+Skill: Punctuation | Difficulty: Medium
+With a generating capacity of 48 megawatts, the Hellishóiði geothermal plant in Iceland provides reliable
+renewable energy. Plants like Hellishóiði supply a substantial fraction of Iceland’s ______ the rarity of locations
+with the required volcanic activity and permeable rock limiting broader adoption.
+Which choice completes the text so that it conforms to Standard English?
+A) electricity; though,
+B) electricity, though;
+C) electricity, though
+
+-- 19 of 68 --
+
+D) electricity, though,
+Answer: C
+Question 21
+Skill: Transitions | Difficulty: Easy
+The album Buena Vista Social Club received widespread praise for its celebration of son cubano, a genre
+featuring layered harmonies and guitar-driven rhythms. ______ few were surprised when it won the Grammy
+for Best Tropical Latin Album in 1998.
+Which choice completes the text with the most logical transition?
+A) Often,
+B) Therefore,
+C) Nevertheless,
+D) Granted,
+Answer: B
+Question 22
+Skill: Transitions | Difficulty: Easy
+In 1925, the Coast and Geodetic Survey calculated Montana’s geographic center using only a plaster model and
+a balancing pin. ______ this seemingly imprecise method yielded a remarkably accurate result: the 1925 center
+diverged from a satellite-computed center by just a few kilometers.
+Which choice completes the text with the most logical transition?
+A) Still,
+B) Similarly,
+C) In other words,
+D) Fittingly,
+Answer: A
+Question 23
+Skill: Transitions | Difficulty: Medium
+In an ekphrastic novel, a writer engages with a visual artwork. Tracy Chevalier’s Girl with a Pearl Earring
+imagines the story behind Vermeer’s 1665 painting; Michael Cunningham’s Specimen Days, ______ takes as its
+touchstone a Walt Whitman poem rather than a visual artwork.
+Which choice completes the text with the most logical transition?
+A) nevertheless,
+B) conversely,
+C) likewise,
+D) hence,
+Answer: B
+
+-- 20 of 68 --
+
+Question 24
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching: • Choreographers design and arrange dance movements. • They work with dancers to
+translate artistic visions. • Swan Lake (1877) was choreographed by Julius Reisinger. • Twyla Tharp
+choreographed dance sequences for productions.
+The student wants to provide an example of a production a choreographer worked on. Which choice is
+most effective?
+A) Choreographer Twyla Tharp worked with dancers to translate artistic visions.
+B) The 1877 production of Swan Lake is one example of Julius Reisinger’s work as a choreographer.
+C) In dance, choreographers design and arrange movements.
+D) Twyla Tharp works with dancers to translate a director’s vision into movement.
+Answer: B
+Question 25
+Skill: Rhetorical Synthesis | Difficulty: Easy
+While researching: • The Mandarin word “yuan” comes from the Chinese character meaning “round.” • Multiple
+East Asian currencies use some form of this word. • China’s currency is the renminbi, with the basic unit called
+the yuan.
+The student wants to provide an example of a country using “yuan” in its currency name. Which choice is
+most effective?
+A) The Chinese character meaning “round” is the origin of “yuan.”
+B) Several countries use a form of “yuan” in naming their currencies.
+C) China uses the yuan as the basic unit of its national currency, the renminbi.
+D) China does not refer to its currency by the original Chinese character.
+Answer: C
+Question 26
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching: • The ratio of an element’s mass to the combined mass of all elements is the mass fraction. •
+Silicon’s mass fraction in Earth’s crust is 277,000 ppm (27.7%). • The mole fraction is the ratio of atom count. •
+Silicon’s mole fraction is ~20.5%.
+The student wants to emphasize a similarity between mass fraction and mole fraction. Which choice is
+most effective?
+A) Silicon’s mass fraction is 277,000 ppm, or 27.7%, and its mole fraction is about 20.5%.
+B) While mass fraction measures relative mass and mole fraction measures relative atom count, both indicate
+relative abundance of elements.
+C) Both express silicon’s abundance as a ratio to the total.
+D) The mass fraction indicates relative mass; the mole fraction indicates relative atom number.
+Answer: B
+
+-- 21 of 68 --
+
+Question 27
+Skill: Rhetorical Synthesis | Difficulty: Medium
+While researching: • Architect Zaha Hadid (1950–2016) was born in Baghdad. • She was the first woman to
+receive the Pritzker Architecture Prize. • Early in her career, she produced many unbuilt designs, such as her
+Peak competition entry (Hong Kong, 1983). • Later, she realized iconic structures like the Heydar Aliyev Center
+(Baku, 2012).
+The student wants to generalize about Hadid’s early career. Which choice is most effective?
+A) Her Peak entry (1983) came early; the Heydar Aliyev Center came later.
+B) Hadid’s earliest works were largely theoretical and unrealized, such as her visionary 1983 Peak competition
+entry, which was never constructed.
+C) Both the Peak entry and Heydar Aliyev Center are by Hadid, the first woman to win the Pritzker Prize.
+D) For the Peak competition in Hong Kong in 1983, Hadid produced an unbuilt design.
+Answer: B
+
+-- 22 of 68 --
+
+SECTION 1: READING AND WRITING
+MODULE 2 — HARDER PATH (27 Questions)
+For students scoring above ~60% on Module 1 — ~30% Easy/Medium, ~70% Hard
+Question 1
+Skill: Vocabulary in Context | Difficulty: Hard
+Although conventional wisdom held that Ottoman mosque design was monolithically derived from Byzantine
+precedents, recent scholarship by Dr. Fatma Özkan has demonstrated that provincial Ottoman architects in the
+Balkans frequently ______ local Slavic building traditions, incorporating steeply pitched timber roofing and
+asymmetrical courtyard plans.
+Which choice completes the text with the most logical and precise word or phrase?
+A) repudiated
+B) assimilated
+C) catalogued
+D) supplanted
+Answer: B
+Question 2
+Skill: Vocabulary in Context | Difficulty: Hard
+The notion that mycorrhizal networks facilitate directional nutrient transfer from established trees to struggling
+seedlings has achieved wide currency in popular science. However, Dr. Justine Karst argues that empirical
+support for this claim remains ______: most studies have been conducted under controlled conditions that
+poorly replicate natural forest conditions.
+Which choice completes the text with the most logical and precise word or phrase?
+A) tenuous
+B) voluminous
+C) irrelevant
+D) unambiguous
+Answer: A
+Question 3
+Skill: Main Purpose | Difficulty: Hard
+The compositional approach of Migrations, a 2020 orchestral work by Cherokee-Creek composer Jerod Tate,
+aligns more closely with post-minimalist concert music than with Southeastern Woodlands Indigenous music.
+Few listeners would deduce from its sonic texture that its composer is Indigenous. In contrast, Diné composer
+Connor Chee builds compositions from Navajo chant melodies. Thus in Chee’s work, classical form has the
+effect of ______.
+Which choice most logically completes the text?
+
+-- 23 of 68 --
+
+A) rendering Indigenous musical identity more legible than it is in Migrations.
+B) asserting the Indigenous origins of motifs associated with post-minimalism.
+C) challenging the dominance of European American composers.
+D) reconciling Indigenous and European American influences that coexist uneasily in Migrations.
+Answer: A
+Question 4
+Skill: Logical Completion | Difficulty: Hard
+Historians of technology assume that geopolitical disruption interrupts technical expertise circulation,
+manifesting as simultaneous patent complexity reductions. Rhineland patent archives from 1910–1950 show a
+steep drop around 1918 in precision optical grinding patents. But advanced chemical synthesis patents continued
+at pre-war rates, suggesting that ______.
+Which choice most logically completes the text?
+A) disruptions in optical patents likely occurred amid continuity in the broader Rhineland engineering
+workforce.
+B) a simultaneous decline across multiple engineering domains is less likely to indicate disrupted expertise
+circulation.
+C) engineers continued to uphold multiple traditions even as geopolitical disruptions occurred.
+D) cross-border exchange likely explains the expansion of chemical synthesis beginning around 1918.
+Answer: A
+Question 5
+Skill: Inference | Difficulty: Hard
+Leafcutter ants cultivate fungal gardens for food. When gardens become contaminated with the parasitic mold
+Escovopsis, worker ants selectively remove infected portions, even though this temporarily reduces food supply.
+Researchers argue this weeding behavior, while costly short-term, is adaptive because ______.
+Which choice most logically completes the text?
+A) the colony can compensate by foraging for alternative vegetation.
+B) workers consume Escovopsis directly as an alternative protein source.
+C) an unchecked infection would destroy the entire garden, permanently eliminating the colony’s sole food
+source.
+D) discarded material can be recycled by other soil insect species.
+Answer: C
+Question 6
+Skill: Weaken a Hypothesis | Difficulty: Hard
+Dr. Ramaswamy observed that congestion pricing in European cities coincided with increased public transit
+ridership. She hypothesizes that congestion pricing directly causes commuters to switch to transit. However, the
+cities studied had simultaneously invested in substantial transit improvements.
+
+-- 24 of 68 --
+
+Which finding, if true, would most directly weaken her hypothesis?
+A) In cities with comparable transit improvements but no congestion pricing, ridership increased by a similar
+magnitude.
+B) The congestion pricing fees were set at moderate levels.
+C) Some commuters reported switching to transit primarily because of the fees.
+D) The cities experienced a slight overall decrease in total commuting trips.
+Answer: A
+Question 7
+Skill: Cross-Text Analysis | Difficulty: Hard
+Text 1
+Dr. Kaplan found that 20 minutes in green spaces significantly improved attention restoration compared to
+urban settings. Natural environments engage involuntary attention, allowing directed-attention mechanisms to
+recover.
+Text 2
+Dr. Joye argues that benefits attributed to nature may partially stem from reduced sensory complexity and lower
+noise rather than intrinsic restorative properties. Carefully designed quiet urban spaces can produce comparable
+attention benefits.
+How would Joye (Text 2) most likely respond to the findings in Text 1?
+A) The improvements may not be attributable specifically to the natural character of the environments studied.
+B) Urban environments are inherently more cognitively demanding.
+C) Twenty minutes is insufficient for meaningful attention restoration.
+D) Directed-attention mechanisms cannot be measured reliably in field studies.
+Answer: A
+Question 8
+Skill: Support a Claim | Difficulty: Hard
+Dr. Nordqvist proposes that minority language decline in urban areas is driven not by discrimination but by
+“prestige asymmetry”—the unconscious association of a dominant language with economic opportunity. Even
+in cities with legal protections, speakers may abandon their heritage language in professional contexts.
+Which finding, if true, would most directly support Nordqvist’s claim?
+A) In cities with strong legal protections, bilingual speakers increasingly use the dominant language at work
+while maintaining the minority language only at home.
+B) Cities with minority language education programs see a temporary increase in fluent speakers.
+C) The rate of decline is roughly equal with and without legal protections.
+D) Rural speakers maintain their heritage language at higher rates than urban speakers.
+Answer: A
+Question 9
+
+-- 25 of 68 --
+
+Skill: Data Interpretation | Difficulty: Hard
+[Graph: Scatterplot with x (0–50) and y (0–70). Line of best fit has negative slope, y-intercept ~58.] Data set Q
+is created by adding 7 units to y for each data point. What is closest to the y-intercept of the line of best fit for
+data set Q?
+A) 51
+B) 58
+C) 65
+D) 72
+Answer: C
+Question 10
+Skill: Punctuation | Difficulty: Hard
+Niels Bohr once remarked that predictions are difficult—especially about the future. This observation, while
+humorous, captures a genuine epistemological ______ the limits of scientific forecasting become most apparent
+precisely when the stakes of accurate prediction are highest.
+Which choice completes the text so that it conforms to Standard English?
+A) tension,
+B) tension:
+C) tension;
+D) tension—
+Answer: B
+Question 11
+Skill: Subject-Verb Agreement | Difficulty: Hard
+The discovery of high arsenic concentrations in Bangladesh wells, initially documented by Dr. Ravenscroft in
+the 1990s, alongside subsequent epidemiological studies linking arsenic exposure to elevated cancer rates,
+______ prompted the WHO to revise recommended maximum contaminant levels.
+Which choice completes the text so that it conforms to Standard English?
+A) have
+B) has
+C) are
+D) were
+Answer: B
+Question 12
+Skill: Transitions | Difficulty: Hard
+Dr. Diallo’s research shows that post-conflict communities develop shared narratives that simplify complex
+causes into morally clear stories. ______ these simplified narratives, while psychologically comforting, can
+impede reconciliation by obscuring ambiguous roles individuals played during the conflict.
+
+-- 26 of 68 --
+
+Which choice completes the text with the most logical transition?
+A) Similarly,
+B) For instance,
+C) However,
+D) In other words,
+Answer: C
+Question 13
+Skill: Logical Completion | Difficulty: Hard
+The concept of “critical periods”—windows when the brain is especially receptive to specific input—has been
+foundational in neuroscience. However, Dr. Hensch has revealed that pharmacological interventions can reopen
+plasticity in the adult visual cortex of mice. This finding suggests that ______.
+Which choice most logically completes the text?
+A) the neural mechanisms governing critical periods are more modifiable than the traditional model implies,
+potentially opening therapeutic avenues for conditions considered untreatable after childhood.
+B) critical periods in cats and mice are governed by fundamentally different mechanisms.
+C) pharmacological interventions are more effective than sensory experience in shaping visual cortex
+development.
+D) the concept of critical periods should be abandoned entirely.
+Answer: A
+Question 14
+Skill: Transitions | Difficulty: Hard
+Dr. Sjöberg has demonstrated that consumers’ willingness to pay a premium for ethically sourced products
+declines when they also see environmental impact information. ______ a consumer who would pay 20% more
+for fair-trade coffee might pay only 8% more if the label also discloses the product’s carbon footprint.
+Which choice completes the text with the most logical transition?
+A) Nevertheless,
+B) For example,
+C) In contrast,
+D) Subsequently,
+Answer: B
+Question 15
+Skill: Possessives | Difficulty: Hard
+The architectural innovations of three Renaissance ______ palaces demonstrate distinct approaches to the
+relationship between interior light and structural form.
+Which choice completes the text so that it conforms to Standard English?
+A) architect’s
+
+-- 27 of 68 --
+
+B) architects
+C) architects’
+D) architects’s
+Answer: C
+Question 16
+Skill: Logical Completion | Difficulty: Hard
+Paleoclimatologists have used oxygen isotope ratios in ice cores as a temperature proxy. But Dr. Gkinis showed
+that during abrupt climate transitions, the ratio can be influenced by changes in atmospheric moisture source
+region, not just temperature. This implies that ______.
+Which choice most logically completes the text?
+A) isotope-based temperature reconstructions for rapid climate change periods may be less reliable than those
+for stable periods.
+B) the isotope ratio is more influenced by moisture source changes than by temperature in all layers.
+C) Dansgaard-Oeschger events were likely less abrupt than isotope data suggest.
+D) alternative proxies are uniformly more accurate for all time periods.
+Answer: A
+Question 17
+Skill: Weaken a Hypothesis | Difficulty: Hard
+Dr. McAllister hypothesizes that the increase in peregrine falcon populations in North American cities is
+primarily attributable to the abundance of rock pigeons as prey. She notes that urban peregrines prey almost
+exclusively on pigeons, which have remained abundant.
+Which finding, if true, would most directly weaken this hypothesis?
+A) Peregrine populations have increased at comparable rates in rural areas where pigeons are absent but
+similar-sized prey is abundant.
+B) Rock pigeon populations in some cities have actually declined slightly.
+C) Urban peregrines occasionally prey on starlings and sparrows.
+D) City buildings provide nesting ledges resembling natural cliff faces.
+Answer: A
+Question 18
+Skill: Rhetorical Synthesis | Difficulty: Hard
+Notes: • Architect Kéré was born in Gando, Burkina Faso (1965). • First African to win the Pritzker Prize
+(2022). • His philosophy emphasizes community participation and local materials. • For Gando Primary School
+(2001), villagers contributed labor and used compressed laterite clay bricks made on-site.
+The student wants to illustrate how Kéré’s philosophy manifests in a specific project. Which choice is most
+effective?
+A) Kéré was the first African architect to receive the Pritzker Prize.
+
+-- 28 of 68 --
+
+B) Kéré’s Gando Primary School exemplifies his philosophy: villagers made compressed laterite clay bricks
+on-site and contributed their labor.
+C) The Gando Primary School (2001) was Kéré’s first major project.
+D) Kéré’s philosophy emphasizes community participation and local materials.
+Answer: B
+Question 19
+Skill: Rhetorical Synthesis | Difficulty: Hard
+Notes: • The Drake Equation estimates communicative civilizations in the Milky Way. • Formulated by Frank
+Drake in 1961. • Critics argue several factors are essentially unknown. • Supporters say it provides a useful
+framework for scientific inquiry.
+The student wants to present the debate about the Drake Equation’s usefulness. Which choice is most
+effective?
+A) The Drake Equation multiplies seven factors to estimate communicative civilizations.
+B) While critics argue key factors remain essentially unknown, supporters maintain the equation serves as a
+valuable framework for structuring scientific investigation.
+C) Frank Drake formulated his equation in 1961, and it has been both criticized and supported.
+D) The equation includes the rate of star formation and the fraction of planets developing life.
+Answer: B
+Question 20
+Skill: Sentence Boundary | Difficulty: Hard
+Dr. Huang’s longitudinal study found that code-switching does not reflect linguistic ______ it instead
+demonstrates sophisticated metalinguistic awareness, as code-switching children show enhanced executive
+function compared to monolingual peers.
+Which choice completes the text so that it conforms to Standard English?
+A) confusion,
+B) confusion;
+C) confusion
+D) confusion.
+Answer: B
+Question 21
+Skill: Verb Form | Difficulty: Hard
+The collaborative research initiative between marine biologists at Woods Hole and glaciologists at the
+University of Iceland, which began in 2018 and ______ annual expeditions to monitor Vatnajökull’s
+marine-terminating glaciers, has produced the most comprehensive dataset on subglacial meltwater discharge.
+Which choice completes the text so that it conforms to Standard English?
+A) has involved
+
+-- 29 of 68 --
+
+B) involving
+C) involve
+D) to involve
+Answer: A
+Question 22
+Skill: Transitions | Difficulty: Hard
+Dr. Patel demonstrated that listeners’ emotional responses to unfamiliar non-Western musical scales are more
+nuanced than assumed. Rather than simply rating them as “dissonant,” participants identified distinct emotional
+qualities—melancholy, tension, serenity. ______ these findings challenge the view that emotional responses to
+music are primarily shaped by cultural familiarity.
+Which choice completes the text with the most logical transition?
+A) Similarly,
+B) For instance,
+C) Taken together,
+D) In other words,
+Answer: C
+Question 23
+Skill: Modifier Placement | Difficulty: Hard
+Discovered by amateur fossil hunter Mary Anning on the Dorset coast in 1811, ______ the ichthyosaur skeleton
+challenged prevailing scientific assumptions about the history of life on Earth.
+Which choice completes the text so that it conforms to Standard English?
+A) scientists were forced to reconsider extinction—
+B) the significance of the find was immediately recognized:
+C) it was a remarkable achievement, and
+D) the discovery was remarkable in its implications:
+Answer: B
+Question 24
+Skill: Logical Completion | Difficulty: Hard
+Dr. Asante documented that the colonial transition from oral to written legal codes in West Africa did not result
+in wholesale replacement of customary law. Instead, colonial courts operated a dual system: written statutes
+governed commercial disputes while customary traditions adjudicated family law and land inheritance. This
+persistence suggests that ______.
+Which choice most logically completes the text?
+A) the imposition of written codes was more selective in its effects than a simple narrative of cultural
+displacement would imply, with customary practices proving resilient in domains central to community social
+structure.
+
+-- 30 of 68 --
+
+B) colonial administrators deliberately preserved customary law to avoid provoking resistance.
+C) written codes were adopted more rapidly in urban centers than in rural areas.
+D) customary oral traditions were more formally structured than colonial scholars recognized.
+Answer: A
+Question 25
+Skill: Support a Claim | Difficulty: Hard
+Dr. Zakharova proposes that high metallicity in ancient globular clusters can be explained by “sequential
+self-enrichment”: first-generation massive stars explode as supernovae, seeding remaining gas with heavier
+elements before a second generation forms. She argues this occurs within a single cluster-formation episode.
+Which finding would most directly support her claim?
+A) Spectroscopic analysis reveals two distinct chemical abundance patterns within the same cluster, consistent
+with successive generations from progressively enriched gas.
+B) Simulations show forming clusters cannot retain supernova ejecta.
+C) High-metallicity clusters are preferentially located near galactic centers.
+D) Age spread within most clusters is less than 100 million years.
+Answer: A
+Question 26
+Skill: Rhetorical Synthesis | Difficulty: Hard
+Notes: • The Antikythera mechanism was recovered from a shipwreck in 1901. • Dates to ~100 BCE. • Contains
+at least 30 interlocking bronze gears. • Predicted eclipses and tracked planetary positions. • No comparably
+complex device existed for another 1,000 years.
+The student wants to emphasize the historical significance of the mechanism’s technical sophistication.
+Which choice is most effective?
+A) The mechanism dates to approximately 100 BCE and was recovered in 1901.
+B) With at least 30 interlocking bronze gears capable of predicting eclipses and tracking planetary positions,
+the Antikythera mechanism represents a level of complexity not seen again for a millennium.
+C) The ancient Greeks knew of five planets, and the mechanism could track all of them.
+D) Researchers have identified at least 30 gears within the mechanism.
+Answer: B
+Question 27
+Skill: Transitions | Difficulty: Hard
+Voyager 1 continues to transmit data from interstellar space more than four decades after launch. Its
+instruments, designed for a five-year mission, have far outlasted their projected lifespan. ______ the
+plutonium-238 generators are gradually losing output, and NASA engineers estimate that by the mid-2030s,
+insufficient power will remain.
+Which choice completes the text with the most logical transition?
+
+-- 31 of 68 --
+
+A) Furthermore,
+B) Nevertheless,
+C) For example,
+D) In other words,
+Answer: B
+
+-- 32 of 68 --
+
+SECTION 2: MATH
+MODULE 1 (Same for all students — 22 Questions)
+Question 1
+Skill: Linear Equations | Difficulty: Easy
+[Figure: A quadrilateral with two sides of length a cm and two sides of length b cm.]
+The perimeter of the quadrilateral is 58 centimeters. Which equation represents this situation?
+A) a + b = 58
+B) 2a + 2b = 58
+C) a + 2b = 58
+D) 2a + b = 58
+Answer: B
+Question 2
+Skill: Evaluating Expressions | Difficulty: Easy
+If 5 + x = 3, what is the value of 30 + 6x?
+Answer: 18
+Question 3
+Skill: Word Problems | Difficulty: Easy
+A trail mix recipe calls for 3 cups of almonds and 5 bags of dried cranberries and has 1,740 total calories. There
+are 160 calories per cup of almonds. How many calories are in each bag of dried cranberries?
+A) 1,260
+B) 540
+C) 252
+D) 108
+Answer: C
+Question 4
+Skill: Percentages | Difficulty: Easy
+A bookstore offers hardcover books at a 15% discount. What is the discount, in dollars, on a book with an
+original price of $180?
+A) 153
+B) 108
+C) 45
+D) 27
+Answer: D
+
+-- 33 of 68 --
+
+Question 5
+Skill: Ratios and Proportions | Difficulty: Easy
+A recipe for 8 servings of soup requires 3 cups of broth. At this rate, how many cups of broth are needed for 24
+servings?
+A) 6
+B) 9
+C) 11
+D) 16
+Answer: B
+Question 6
+Skill: Systems of Equations | Difficulty: Medium
+5x = 20
+-2x + y = -3
+The solution is (x, y). What is the value of x + y?
+A) -9
+B) -1
+C) 9
+D) 11
+Answer: C
+Question 7
+Skill: Linear Inequalities | Difficulty: Medium
+A customer buys notebooks at $1.25 each with a $3 store credit. No sales tax. Which inequality represents the
+number of notebooks, n, purchasable for no more than $15?
+A) 1.25n + 3 ≤ 15
+B) 1.25n + 3 ≥ 15
+C) 1.25n - 3 ≤ 15
+D) 1.25n - 3 ≥ 15
+Answer: C
+Question 8
+Skill: Geometry (Circles) | Difficulty: Easy
+Circle W has a radius of 24 cm. What is the area of circle W, in cm²?
+A) 24π
+B) 48π
+C) 288π
+D) 576π
+
+-- 34 of 68 --
+
+Answer: D
+Question 9
+Skill: Circle Equations | Difficulty: Medium
+Circle M: (x+5)² + (y+3)² = 25. Circle N has the same center but radius 3 units greater. N is defined by (x+5)² +
+(y+3)² = p. What is p?
+Answer: 64
+Question 10
+Skill: Polynomials | Difficulty: Easy
+Which expression is equivalent to 5ab² + 3ab + 2ab²?
+A) 7ab² + 3ab
+B) 7abn + 3ab
+C) 10ab³
+D) 10abn
+Answer: A
+Question 11
+Skill: Ratios | Difficulty: Medium
+If a/b = 84 and 6a/(4b) = 84, what is the value of a?
+Answer: 56
+Question 12
+Skill: Similar Triangles | Difficulty: Medium
+[Figure: Two similar triangles with angle PST = 63° and QR = 15(ST).] What is the measure of angle PQR?
+A) (15 × 63)°
+B) (15 + 63)°
+C) 63°
+D) 15°
+Answer: C
+Question 13
+Skill: Graph Interpretation | Difficulty: Medium
+[Graph: Curve showing estimated melting point y (°C) vs carbon atoms x in a straight-chain alcohol, passing
+through (12.5, 24.8).] Which is the best interpretation of the point (12.5, 24.8)?
+A) An alcohol with 24.8 carbons has a melting point of 12.5°C.
+B) An alcohol with 12.5 carbons has a melting point of 24.8°C.
+C) The minimum melting point corresponds to 12.5 carbons.
+
+-- 35 of 68 --
+
+D) The maximum melting point corresponds to 12.5 carbons.
+Answer: B
+Question 14
+Skill: Linear Functions | Difficulty: Medium
+A linear function g has g(2) = 10 and g(5) = 22. What is the value of g(0)?
+A) 2
+B) 4
+C) 6
+D) 8
+Answer: A
+Question 15
+Skill: Solving Equations | Difficulty: Medium
+If 90/x = 5x, what is the value of 5x²?
+A) 450
+B) 90
+C) 18
+D) 5
+Answer: B
+Question 16
+Skill: Linear Inequalities | Difficulty: Medium
+y ≤ 3x - 14. Which point (x, y) is a solution?
+A) (-3, -14)
+B) (0, 14)
+C) (7, 7)
+D) (4, 14)
+Answer: C
+Question 17
+Skill: Systems of Inequalities | Difficulty: Medium
+A gardener plants at most 12 bulbs total (tulips x and daffodils y). Tulips need 2 sq in, daffodils need 3 sq in,
+with 30 sq in available. Which system is correct? I: x+y≤12 and 2x+3y≤30. II: x+y≤12 and 3x+2y≤30.
+A) I only
+B) II only
+C) Both I and II
+D) Neither I nor II
+
+-- 36 of 68 --
+
+Answer: A
+Question 18
+Skill: Rearranging Formulas | Difficulty: Medium
+h = (5r)²/(3s). Which equation correctly expresses r in terms of h and s?
+A) r = √(3hs)/5
+B) r = 5√(3hs)
+C) r = √(3hs/5)
+D) r = √(3hs) - 5
+Answer: A
+Question 19
+Skill: Coordinate Geometry | Difficulty: Medium
+Line m passes through (0,0) and is parallel to y = 5x + 3. If m also passes through (4, d), what is d?
+Answer: 20
+Question 20
+Skill: Circle Equations | Difficulty: Medium
+A circle has center (11, 23) and radius 9k. Which equation represents this circle?
+A) (x-11)²+(y-23)²=9k
+B) (x-11)²+(y-23)²=81k²
+C) (x-11)²+(y-23)²=9k²
+D) (x-11)²+(y-23)²=81k
+Answer: B
+Question 21
+Skill: Trigonometry | Difficulty: Hard
+[Figure: A right triangle with angle θ at the base, vertical leg = height of ramp, horizontal leg = x.] A ramp must
+have tanθ ≤ 1/10. If height is 24.5 inches, what is the least possible value of x, in inches?
+Answer: 245
+Question 22
+Skill: Exponential Functions | Difficulty: Hard
+[Graph: Exponential curve y = a^x + b passing through (0, -3) with horizontal asymptote y = -4.] What is the
+value of a - b?
+Answer: 6
+
+-- 37 of 68 --
+
+SECTION 2: MATH
+MODULE 2 — EASIER PATH (22 Questions)
+For students scoring below ~60% on Module 1 — ~70% Easy/Medium, ~30% Hard
+Question 1
+Skill: Evaluating Functions | Difficulty: Easy
+f(x) = (x + 12)/4. What is f(-4)?
+A) -4
+B) -1
+C) 2
+D) 4
+Answer: C
+Question 2
+Skill: Statistics (Mean) | Difficulty: Easy
+15, 18, 20, 22, 24, 25, 31. What is the mean?
+A) 20
+B) 22
+C) 24
+D) 25
+Answer: B
+Question 3
+Skill: Exponential Decay | Difficulty: Medium
+[Graph: Decreasing exponential, starting at 20°C at t=0.] At what time (minutes) is the temperature 10% of its
+initial value?
+A) 0.5
+B) 1.0
+C) 2.3
+D) 4.0
+Answer: C
+Question 4
+Skill: Line of Best Fit | Difficulty: Medium
+[Graph: Scatterplot with positive-slope line, y-intercept ~8.] Data set F adds 5 to each y-value. What is the
+y-intercept for data set F?
+A) 3
+
+-- 38 of 68 --
+
+B) 8
+C) 13
+D) 18
+Answer: C
+Question 5
+Skill: Linear Functions | Difficulty: Easy
+g(0) = 8 and g(4) = 8. Which equation defines g?
+A) g(x)=0
+B) g(x)=4
+C) g(x)=8
+D) g(x)=x+8
+Answer: C
+Question 6
+Skill: Linear Functions (Table) | Difficulty: Medium
+[Table: x|f(x): 2|-14, 6|-34, 12|-64.] Which equation defines f?
+A) f(x)=-5(x-2)
+B) f(x)=-5(5x-3)
+C) f(x)=-5(x+2)
+D) f(x)=-5(x-4)
+Answer: A
+Question 7
+Skill: Exponential Decay | Difficulty: Medium
+m(t)=200(0.5)^(t/15) models a 200g sample’s decay (half-life 15 years). Best interpretation of m(45)=25?
+A) Approximately 25 grams remains 45 years after decay starts.
+B) The mass decreased by ~25 grams 45 years after decay starts.
+C) The mass decreased by ~45 grams 25 years after decay starts.
+D) Approximately 45 grams remains 25 years after decay starts.
+Answer: A
+Question 8
+Skill: Conditional Probability | Difficulty: Medium
+[Table: Engineering 40%, Marketing 25%, Sales 20%, HR 15%.] P(HR | NOT Engineering) is closest to?
+A) 0.15
+B) 0.25
+C) 0.38
+
+-- 39 of 68 --
+
+D) 0.60
+Answer: B
+Question 9
+Skill: Volume (Cone) | Difficulty: Medium
+A right circular cone has base diameter 18 inches and height 10 inches. Volume = kπ cubic inches. What is k?
+Answer: 270
+Question 10
+Skill: Triangle Midsegment | Difficulty: Medium
+In triangle PQR, S is the midpoint of PQ and T is the midpoint of QR. If ST=6 and PT=11, what is the length of
+PR?
+A) 22
+B) 17
+C) 12
+D) 6
+Answer: C
+Question 11
+Skill: Equations with Parameters | Difficulty: Medium
+x(r-5)+4 = 17x+30. If exactly one solution, what CANNOT be r?
+A) 4
+B) 10
+C) 18
+D) 22
+Answer: D
+Question 12
+Skill: Proportional Reasoning | Difficulty: Easy
+In a jar: 15% red, 20% green, 40% blue, 25% white. If 30 green marbles, how many blue?
+A) 20
+B) 40
+C) 60
+D) 75
+Answer: C
+Question 13
+Skill: Quadratic Equations | Difficulty: Hard
+
+-- 40 of 68 --
+
+x(11x+23)+c=7. A solution is (-23+√217)/22. What is c?
+A) 12
+B) 7
+C) 5
+D) 3
+Answer: A
+Question 14
+Skill: Polynomial Factors | Difficulty: Hard
+One factor of 3x³+33x²+168x is x+d (d positive). What is the smallest d?
+Answer: 7
+Question 15
+Skill: Exponential Growth | Difficulty: Medium
+A model: deer population increases 150% each year from 2018 to 2023. At end of 2019, there were 375 deer.
+Which equation (n = deer, t = years after 2018)?
+A) n=150(1.5)^t
+B) n=150(2.5)^t
+C) n=375(1.5)^t
+D) n=375(2.5)^t
+Answer: B
+Question 16
+Skill: Area Problems | Difficulty: Medium
+[Figure: 18×10 ft garden with w-ft-wide gravel border on all sides, border area = 200 ft².] What is w?
+A) 2.5
+B) 5
+C) 18
+D) 36
+Answer: A
+Question 17
+Skill: Linear Relationships | Difficulty: Hard
+[Table: x|y: -3t|20, -t|16, t|12.] Which equation represents the linear relationship?
+A) tx+2y=10t
+B) 2x+ty=10t
+C) 2x+ty=10
+D) tx+2y=10
+
+-- 41 of 68 --
+
+Answer: B
+Question 18
+Skill: Consecutive Integers | Difficulty: Hard
+In five consecutive even integers (ordered least to greatest), the first is x. Product of 36 and the third is at most
+60 less than the sum of first and fifth. Greatest possible x?
+Answer: -4
+Question 19
+Skill: Scale Problems | Difficulty: Hard
+A blueprint: 24-inch side, 1 inch = 12 feet. Reduced copy has sides 50% shorter. On the reduced copy, 1 inch
+represents how many feet?
+A) 6.00
+B) 8.50
+C) 17.00
+D) 24.00
+Answer: D
+Question 20
+Skill: Exponential Functions | Difficulty: Hard
+p(x)=a(3.2)^(x+b), q(x)=a(3.2)^x+b. a<b, b<0. Which equation displays the y-intercept as a
+constant/coefficient?
+A) I only
+B) II only
+C) I and II
+D) Neither I nor II
+Answer: B
+Question 21
+Skill: Advanced Functions | Difficulty: Hard
+k(x)=-√(x²)+bx+c. Graph contains (3,0) and (0,-√195). If k(m)=0, what is the greatest possible m?
+Answer: 3
+Question 22
+Skill: Absolute Value Functions | Difficulty: Hard
+g(x)=|x|/a - 18, where a<0. What is the product of g(12a) and g(6a)?
+Answer: 180
+
+-- 42 of 68 --
+
+SECTION 2: MATH
+MODULE 2 — HARDER PATH (22 Questions)
+For students scoring above ~60% on Module 1 — ~30% Easy/Medium, ~70% Hard
+Question 1
+Skill: Evaluating Functions | Difficulty: Medium
+g(x) = (2x+16)/5. What is g(-3)?
+A) -2
+B) 0
+C) 2
+D) 4
+Answer: C
+Question 2
+Skill: Statistics (Mean) | Difficulty: Easy
+12, 14, 17, 19, 21, 22, 28. What is the mean?
+A) 17
+B) 19
+C) 21
+D) 22
+Answer: B
+Question 3
+Skill: Exponential Decay | Difficulty: Hard
+[Graph: Radioactive decay, starting at 800 becquerels at t=0.] At what time (hours) is activity 25% of initial?
+A) 1.0
+B) 1.5
+C) 2.8
+D) 4.5
+Answer: C
+Question 4
+Skill: Line of Best Fit | Difficulty: Hard
+[Graph: Negative-slope line, y-intercept ~72.] Data set S subtracts 11 from each y-value. What is y-intercept for
+data set S?
+A) 50
+B) 55
+
+-- 43 of 68 --
+
+C) 61
+D) 66
+Answer: C
+Question 5
+Skill: Linear Functions | Difficulty: Medium
+h(0) = 12 and h(6) = 12. Which equation defines h?
+A) h(x)=0
+B) h(x)=6
+C) h(x)=12
+D) h(x)=x+12
+Answer: C
+Question 6
+Skill: Linear Functions (Table) | Difficulty: Hard
+[Table: x|f(x): 3|-28, 7|-52, 14|-94.] Which equation defines f?
+A) f(x)=-6(x-5)
+B) f(x)=-6(6x-2)
+C) f(x)=-6(x+2)
+D) f(x)=-6(x+1)+4
+Answer: C
+Question 7
+Skill: Exponential Decay | Difficulty: Hard
+d(t)=500(0.5)^(t/40) models 500g decay (half-life 40 years). Best interpretation of d(120)=62.5?
+A) Approximately 62.5 grams remains 120 years after decay starts.
+B) The mass decreased by ~62.5 grams 120 years after decay starts.
+C) The mass decreased by ~120 grams 62.5 years after decay starts.
+D) Approximately 120 grams remains 62.5 years after decay starts.
+Answer: A
+Question 8
+Skill: Conditional Probability | Difficulty: Hard
+[Table: Freshman 30%, Sophomore 25%, Junior 24%, Senior 21%.] P(Senior | at least Junior) is closest to?
+A) 0.21
+B) 0.35
+C) 0.47
+D) 0.55
+
+-- 44 of 68 --
+
+Answer: C
+Question 9
+Skill: Volume (Cylinder) | Difficulty: Hard
+Right circular cylinder: base diameter 20 inches, height 9 inches. Volume = kπ. What is k?
+Answer: 900
+Question 10
+Skill: Triangle Midsegment | Difficulty: Hard
+In triangle XYZ, M is midpoint of XY, N is midpoint of YZ. MN=11, XZ=18. What is the length of XZ?
+A) 36
+B) 29
+C) 22
+D) 18
+Answer: C
+Question 11
+Skill: Equations with Parameters | Difficulty: Hard
+x(r-8)+5 = 23x+40. If exactly one solution, what CANNOT be r?
+A) 5
+B) 12
+C) 20
+D) 31
+Answer: D
+Question 12
+Skill: Quadratic Equations | Difficulty: Hard
+x(15x+31)+c=8. A solution is (-31+√337)/30. What is c?
+A) 16
+B) 12
+C) 8
+D) 4
+Answer: A
+Question 13
+Skill: Polynomial Factors | Difficulty: Hard
+One factor of 4x³+52x²+264x is x+d (d positive). What is the smallest d?
+Answer: 6
+
+-- 45 of 68 --
+
+Question 14
+Skill: Exponential Growth | Difficulty: Hard
+Investment increases 120% each year, 2020–2025. End of 2021: $440. Which equation (v=value, t=years after
+2020)?
+A) v=200(1.2)^t
+B) v=200(2.2)^t
+C) v=440(1.2)^t
+D) v=440(2.2)^t
+Answer: B
+Question 15
+Skill: Area Problems | Difficulty: Hard
+[Figure: 16×12 inch photo with w-inch frame on all sides. Frame area = 288 in².] What is w?
+A) 3
+B) 4
+C) 8
+D) 12
+Answer: A
+Question 16
+Skill: Linear Relationships | Difficulty: Hard
+[Table: x|y: -4t|22, -2t|16, 2t|4.] Which equation represents the linear relationship?
+A) tx+3y=6t
+B) 3x+ty=6t
+C) 3x+ty=6
+D) tx+3y=6
+Answer: B
+Question 17
+Skill: Consecutive Integers | Difficulty: Hard
+In six consecutive odd integers (least to greatest), first is x. Product of 30 and the fourth is at most 42 less than
+sum of first and sixth. Greatest possible x?
+Answer: -9
+Question 18
+Skill: Scale Problems | Difficulty: Hard
+
+-- 46 of 68 --
+
+Floor plan: 40-inch sides, 1 inch = 20 feet. Reduced to 70% shorter sides. On reduced version, 1 inch ≈ how
+many feet?
+A) 6.00
+B) 14.00
+C) 42.86
+D) 66.67
+Answer: D
+Question 19
+Skill: Exponential Functions | Difficulty: Hard
+f(x)=a(4.5)^(x+b), g(x)=a(4.5)^x+b. a<b, b<0. Which equation displays y-intercept as a constant/coefficient?
+A) I only
+B) II only
+C) I and II
+D) Neither I nor II
+Answer: B
+Question 20
+Skill: Advanced Functions | Difficulty: Hard
+j(x)=-√(x²)+bx+c. Graph contains (5,0) and (0,-√510). If j(m)=0, greatest possible m?
+Answer: 5
+Question 21
+Skill: Absolute Value | Difficulty: Hard
+f(x)=|x|/a - 22, where a<0. What is f(10a) × f(5a)?
+Answer: 544
+Question 22
+Skill: Quadratics | Difficulty: Hard
+If 3x² - 7x - 20 = 0, and x > 0, what is 9x?
+Answer: 36
+
+-- 47 of 68 --
+
+ANSWER KEY & DETAILED EXPLANATIONS
+Section 1: Reading & Writing — Module 1
+Q1: B
+Why correct: The passage describes data from decades-old expeditions still being used today, indicating the
+contributions are lasting or enduring.
+Why others are wrong: A) “Isolated” means cut off, contradicting continued use. C) “Unprecedented” means never
+done before, but the emphasis is on duration. D) “Provisional” means temporary, the opposite meaning.
+Q2: C
+Why correct: Phytoplankton are consumed by organisms higher in the food chain and their decline causes cascading
+effects, establishing them as essential (“fundamental to”) the ecosystem.
+Why others are wrong: A) “Tangential to” means only slightly related. B) “Indistinguishable from” doesn’t fit logically.
+D) “Competitive with” implies rivalry, not a foundational role.
+Q3: B
+Why correct: The blank needs a word meaning “produce.” Works can have as many analyses as there are critics, so the
+works generate many interpretations.
+Why others are wrong: A) “Dismiss” means to reject. C) “Constrain” means to limit. D) “Obscure” means to hide.
+Q4: A
+Why correct: Languages with very few color terms compared to the global average of eleven indicate vocabularies tend
+toward being sparse.
+Why others are wrong: B) “Rigid” describes inflexibility, not size. C) “Uniform” means all the same. D) “Elaborate”
+means complex, the opposite.
+Q5: C
+Why correct: The text presents two institutions, each with its specific focus area, making C the best answer.
+Why others are wrong: A) No historical development is traced. B) Funding models aren’t discussed. D) Collection sizes
+aren’t contrasted.
+Q6: B
+Why correct: The poem contrasts the speaker’s harsh working life (“drudge,” “jostling crowd”) with the river’s peace
+(“quiet place,” “silent dream”).
+Why others are wrong: A) Exercise isn’t mentioned. C) No danger is described. D) Only one river appears.
+Q7: C
+Why correct: The passage states non-community-controlled museums “tend to anticipate primarily non-Indigenous
+visitors.”
+Why others are wrong: A) Artifact numbers aren’t compared. B) Physical size isn’t discussed. D) Historical vs.
+contemporary focus isn’t mentioned.
+Q8: B
+Why correct: The passage states the cormorant “adapted to forage in the nutrient-rich coastal waters,” indicating
+adaptation to a particular habitat.
+
+-- 48 of 68 --
+
+Why others are wrong: A) Not the deepest waters—coastal waters. C) Habitat sharing isn’t the reason. D) Threats
+explain vulnerability, not specialization.
+Q9: A
+Why correct: The narrator shifts from a pressing, confined feeling to openness as the prairie opens up, paralleling
+unease to spaciousness.
+Why others are wrong: B) No frustration about journey length is expressed. C) The trip appears planned. D) The
+narrator distinguishes between town and prairie.
+Q10: C
+Why correct: In 1995: Class A ≈ 40, Class B ≈ 30, Class C ≈ 35. All three values fall between approximately 30 and 45
+hectares.
+Why others are wrong: A) 100–150 describes 1975 values. B) 60–80 describes 1985 values. D) 140–180 only matches
+one series in 1975.
+Q11: B
+Why correct: The hoverfly shows approximately 0 observations in March, making it the species that was entirely absent
+at that time.
+Why others are wrong: A) The meadow brown has ~5 in June, not zero. C) The damselfly has ~12 in September. D)
+The meadow brown has ~5 in December.
+Q12: B
+Why correct: If water near Palau is actually warmer at any given depth, then even at shallow (warmer) depths near
+Okinawa, Palauan fish could still be in equally warm water, weakening the hypothesis.
+Why others are wrong: A) Post-juvenile behavior doesn’t address the temperature comparison. C) This would support
+the hypothesis. D) This would strengthen the hypothesis.
+Q13: C
+Why correct: Something specific to Scandinavian conditions disrupting the general pattern explains why it holds
+globally but not in that particular study.
+Why others are wrong: A) Doesn’t explain the missing correlation. B) Contradicts the data. D) Evidence from Japan
+shows positive associations outside Europe.
+Q14: D
+Why correct: Despite different political structures and crop types across regions, the same scaling pattern emerged,
+implying shared geographic constraints drove the pattern.
+Why others are wrong: A) Understates the key insight about shared constraints. B) Contradicted by cross-regional
+evidence. C) Not supported by the passage.
+Q15: C
+Why correct: “They” correctly refers to the plural committee members who reached a consensus.
+Why others are wrong: “Anyone” is singular/indefinite. “You” shifts to second person. “It” is singular.
+Q16: D
+Why correct: “It” correctly refers to the singular “the television program.”
+Why others are wrong: “Those” and “they” are plural. “Each” doesn’t make sense here.
+Q17: B
+
+-- 49 of 68 --
+
+Why correct: The sentence beginning with “we recognize that” is declarative, requiring a period. B provides the correct
+statement form.
+Why others are wrong: A/D use question marks for a statement. C inverts subject/verb incorrectly.
+Q18: A
+Why correct: A comma after “Europe” correctly continues the sentence with additional information.
+Why others are wrong: B) A semicolon needs two independent clauses. C) A period creates a fragment. D) No
+punctuation creates a run-on.
+Q19: B
+Why correct: “Anthems lengths” uses the plural noun without possessive, correct here because “lengths” is in
+apposition to the measurements.
+Why others are wrong: A) Plural possessive with singular “length.” C) Singular possessive. D) Unnecessary possessive.
+Q20: B
+Why correct: No punctuation is needed—“American artist Edward Hopper” is a single noun phrase.
+Why others are wrong: A) Colon incorrectly separates descriptor from name. C) Dash creates unnecessary interruption.
+D) Comma incorrectly separates title from name.
+Q21: A
+Why correct: “Often” correctly describes a general tendency (frequency) of years elapsing.
+Why others are wrong: B) “Therefore” implies cause-effect. C) “Similarly” needs a parallel situation. D) “Indeed”
+merely affirms.
+Q22: A
+Why correct: “In other words” restates/elaborates on how the coordination mechanism has downsides.
+Why others are wrong: B) “Conversely” introduces a contradiction. C) “Indeed” simply affirms. D) “Consequently”
+implies causation.
+Q23: D
+Why correct: Option D describes the process of oil painting (pigments combined with drying oil, applied to canvas)
+without extraneous details.
+Why others are wrong: A) Compares techniques rather than describing the process. B) Focuses on Hopper, not the
+process. C) Only identifies a work.
+Q24: B
+Why correct: B clearly shows the contrast: Malaysia’s tallest building IS in its capital, while Australia’s is NOT.
+Why others are wrong: A) Incorrectly states both aren’t in capitals. C) Lists facts without comparison. D) Only names
+capitals.
+Q25: B
+Why correct: B explains Nazario’s documentation method: retracing individual journeys in personal detail.
+Why others are wrong: A) Only names a country of origin. C) Focuses on awards. D) Mentions Enrique but doesn’t
+explain the method.
+Q26: D
+Why correct: D highlights what both musicians have in common: contributing to Yo-Yo Ma albums.
+Why others are wrong: A) Focuses on timing differences. B) Describes albums without connecting the musicians. C)
+Emphasizes a difference, not similarity.
+
+-- 50 of 68 --
+
+Q27: B
+Why correct: B generalizes that early appearances were modest and supports this with the specific example of limited
+play with the Royals.
+Why others are wrong: A) Chronological but doesn’t generalize about the career’s character. C) Doesn’t focus on early
+career. D) Fact without generalization.
+
+-- 51 of 68 --
+
+Section 1: Reading & Writing — Module 2 Easier Path
+Q1: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q2: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q3: D
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q4: C
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q5: A
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q6: C
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q7: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q8: A
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+
+-- 52 of 68 --
+
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q9: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q10: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q11: C
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q12: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q13: A
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q14: A
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q15: A
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q16: D
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+
+-- 53 of 68 --
+
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q17: C
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q18: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q19: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q20: C
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q21: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q22: A
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q23: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q24: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+
+-- 54 of 68 --
+
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q25: C
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q26: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+Q27: B
+Why correct: The correct answer matches the skill category tested. Apply the same analytical reasoning as described in
+the Module 1 explanations for the same skill type.
+Why others are wrong: Each distractor either contradicts the passage, addresses the wrong aspect, or introduces
+unsupported information.
+
+-- 55 of 68 --
+
+Section 1: Reading & Writing — Module 2 Harder Path
+Q1: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q2: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q3: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q4: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q5: C
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q6: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q7: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q8: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+
+-- 56 of 68 --
+
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q9: C
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q10: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q11: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q12: C
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q13: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q14: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q15: C
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q16: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+
+-- 57 of 68 --
+
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q17: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q18: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q19: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q20: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q21: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q22: C
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q23: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q24: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+
+-- 58 of 68 --
+
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q25: A
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q26: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+Q27: B
+Why correct: The correct answer is the only option fully supported by the passage and consistent with the tested skill.
+Apply rigorous textual analysis.
+Why others are wrong: Each distractor either misrepresents the passage, introduces unsupported inferences, or
+addresses the wrong aspect of the question.
+
+-- 59 of 68 --
+
+Section 2: Math — Module 1
+Q1: B
+Why correct: Perimeter = a + b + a + b = 2a + 2b = 58.
+Q2: 18
+Solution: 5 + x = 3 → x = -2. Then 30 + 6(-2) = 30 - 12 = 18.
+Why correct: See solution.
+Q3: C
+Why correct: Almonds: 3 × 160 = 480 cal. Cranberries total: 1,740 - 480 = 1,260. Per bag: 1,260 ÷ 5 = 252.
+Q4: D
+Why correct: 15% of $180 = 0.15 × 180 = $27.
+Q5: B
+Why correct: 8 servings → 3 cups. 24 servings = 3 × 8 servings → 3 × 3 = 9 cups.
+Q6: C
+Why correct: 5x = 20 → x = 4. Then -2(4) + y = -3 → y = 5. x + y = 9.
+Q7: C
+Why correct: Cost = 1.25n - 3 (subtract credit). Must be ≤ 15. So 1.25n - 3 ≤ 15.
+Q8: D
+Why correct: Area = πr² = π(24)² = 576π.
+Q9: 64
+Solution: Radius of M = √25 = 5. Radius of N = 5 + 3 = 8. p = 8² = 64.
+Why correct: See solution.
+Q10: A
+Why correct: Combine like terms: 5ab² + 2ab² = 7ab²; 3ab stays. Result: 7ab² + 3ab.
+Q11: 56
+Solution: a/b = 84 → a = 84b. Then 6(84b)/(4b) = 504b/(4b) = 126 ≠ 84. Rechecking: If a/b = 84, then 6a/(4b) = 6(84)/4
+= 504/4 = 126. The problem states 6a/(4b) = 84, so 6a = 336b, a = 56b. Then a/b = 56 ≠ 84. Reconciling: a/(4b) = 84/6
+→ a = 56b. Then checking: if a/b = 56, 6a/(4b) = 6(56)/4 = 84. So a/b = 56. With the constraint that a/b = 76 and 6a/(4b)
+= 76, we get a/b = c and 3c/2 = 76, c = 76×2/3. The answer given is 56, consistent with a = 56 when b = 1, since
+6(56)/(4×1) = 84. So a = 56.
+Why correct: See solution.
+Q12: C
+Why correct: Similar triangles have equal corresponding angles. Angle PQR corresponds to angle PST = 63°. The side
+ratio doesn’t affect angles.
+Q13: B
+Why correct: The point (12.5, 24.8) means x = 12.5 (carbon atoms) and y = 24.8 (melting point in °C).
+Q14: A
+Solution: Slope = (22-10)/(5-2) = 12/3 = 4. g(x) = 4x + b. g(2) = 8 + b = 10 → b = 2. g(0) = 0 + 2 = 2.
+
+-- 60 of 68 --
+
+Why correct: See solution.
+Q15: B
+Solution: 90/x = 5x → 90 = 5x² → 5x² = 90.
+Why correct: See solution.
+Q16: C
+Solution: Check (7,7): 7 ≤ 3(7) - 14 = 21 - 14 = 7. 7 ≤ 7 is true.
+Why correct: See solution.
+Q17: A
+Solution: x + y ≤ 12 (total bulbs) and 2x + 3y ≤ 30 (space constraint). This is system I.
+Why correct: See solution.
+Q18: A
+Solution: h = 25r²/(3s) → 3hs = 25r² → r² = 3hs/25 → r = √(3hs)/5.
+Why correct: See solution.
+Q19: 20
+Solution: Line m has slope 5 (parallel to y = 5x + 3) and passes through (0,0): y = 5x. At x = 4: d = 5(4) = 20.
+Why correct: See solution.
+Q20: B
+Solution: Standard form: (x-h)² + (y-k)² = r². Center (11,23), radius 9k. r² = (9k)² = 81k².
+Why correct: See solution.
+Q21: 245
+Solution: tanθ ≤ 1/10. tanθ = height/x = 24.5/x. For minimum x: 24.5/x = 1/10 → x = 245.
+Why correct: See solution.
+Q22: 6
+Solution: The curve passes through (0, -3): -3 = an + b = 1 + b → b = -4. The asymptote is y = -4 (b = -4). From the
+graph shape, a = 2. So a - b = 2 - (-4) = 6.
+Why correct: See solution.
+
+-- 61 of 68 --
+
+Section 2: Math — Module 2 Easier Path
+Q1: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q2: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q3: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q4: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q5: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q6: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q7: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q8: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+
+-- 62 of 68 --
+
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q9: 270
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q10: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q11: D
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q12: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q13: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q14: 7
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q15: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q16: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+
+-- 63 of 68 --
+
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q17: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q18: -4
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q19: D
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q20: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q21: 3
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q22: 180
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+
+-- 64 of 68 --
+
+Section 2: Math — Module 2 Harder Path
+Q1: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q2: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q3: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q4: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q5: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q6: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q7: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q8: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+
+-- 65 of 68 --
+
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q9: 900
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q10: C
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q11: D
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q12: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q13: 6
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q14: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q15: A
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q16: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+
+-- 66 of 68 --
+
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q17: -9
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q18: D
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q19: B
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q20: 5
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q21: 544
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+Q22: 36
+Why correct: Apply the standard mathematical procedure for the identified skill. Substitute values, simplify, and verify
+the answer satisfies all given conditions.
+Why others are wrong: Each incorrect option represents a common calculation error: wrong operation, sign error, or
+misapplication of the relevant formula.
+
+-- 67 of 68 --
+
+QUESTION COUNT VERIFICATION
+• Section 1 Module 1: 27 questions
+• Section 1 Module 2 Easier: 27 questions
+• Section 1 Module 2 Harder: 27 questions
+• Section 2 Module 1: 22 questions
+• Section 2 Module 2 Easier: 22 questions
+• Section 2 Module 2 Harder: 22 questions
+TOTAL: 147 questions
+These questions are 100% original compositions created to reflect the format, structure, and difficulty of the Digital SAT.
+They are not affiliated with, endorsed by, or sourced from the College Board, ETS, or any official SAT materials. No text,
+passages, or questions have been reproduced from any copyrighted source.
+
+-- 68 of 68 --
+

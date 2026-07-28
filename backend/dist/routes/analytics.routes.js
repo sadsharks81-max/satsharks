@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const analytics_controller_1 = require("../controllers/analytics.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const role_middleware_1 = require("../middleware/role.middleware");
+const router = (0, express_1.Router)();
+router.get("/dashboard", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getDashboardStats);
+router.get("/history", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getTestHistory);
+router.get("/performance", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getPerformanceData);
+router.get("/category-breakdown", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getCategoryBreakdown);
+router.get("/predicted-score", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getPredictedScore);
+router.get("/error-analysis", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getErrorAnalysis);
+router.get("/timing-analysis", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getTimingAnalysis);
+router.get("/leaderboard", auth_middleware_1.authenticate, (0, role_middleware_1.requireActiveUser)(), analytics_controller_1.getLeaderboard);
+exports.default = router;

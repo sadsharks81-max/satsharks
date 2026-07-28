@@ -1,0 +1,1120 @@
+SAT-Style Practice Test
+Complete Answer Key with Detailed Explanations
+147 Questions | All Sections and Modules
+Includes strategy tips and reasoning for every question
+
+-- 1 of 27 --
+
+SECTION 1, MODULE 1: Reading and Writing
+Question 1
+Correct Answer: ) ongoing
+The passage says Suzanne Dodd "continues to analyze transmissions," and the word must describe a contribution
+that is still happening. "Ongoing" means continuing, which directly matches the idea of a mission that has not ended.
+Why other choices fail: "Unprecedented" (B) means never done before, which describes uniqueness, not continuity.
+"Debatable" ( ) contradicts "confirming." "Peripheral" (D) means unimportant, which contradicts the positive tone.
+Tip: When you see "continues" or "still" in the passage, the blank almost always needs a word conveying persistence or
+duration. Eliminate choices that describe quality (unprecedented) or value judgments (debatable, peripheral) when the
+passage emphasizes time.
+Question 2
+Correct Answer: A) He was violating an expectation about how to prepare for the tournament.
+The narrator was "supposed to study" and was "meant to memorize" specific strategies, but instead he "skipped
+ahead" and moved pieces "wherever they seemed right." Improvising here means acting without following the
+prescribed preparation, thus violating the expectation that he would study properly.
+Why other choices fail: "Gaining an unfair advantage" (B) is unsupported; improvising without studying would be a
+disadvantage. "Deceiving his chess instructor" (C) has no textual support; no instructor is mentioned. "Lying to himself" (D)
+is too strong; he simply did not study.
+Tip: For "Words in Context" on literary passages, ground the meaning in what the character actually does, not what the
+word might mean in isolation. The narrator contrasts what he was told to do with what he actually did.
+Question 3
+Correct Answer: ) contributions
+Volunteers "submit quotations illustrating word usage" from their own "personal libraries and archives." These
+submissions are voluntary offerings that help the dictionary. "Contributions" means something given to help a
+common effort, which fits perfectly.
+Why other choices fail: "Resolutions" (B) means formal decisions. "Negotiations" ( ) means discussions to reach
+agreement. "Justifications" (D) means reasons given to defend something. None describe voluntary submissions of
+materials.
+Tip: Match the blank to the action described. Volunteers submit materials to aid a project. The word must mean "things
+given voluntarily." Only "contributions" captures that meaning.
+Question 4
+Correct Answer: ) expected by
+The passage argues that polished acoustics are a modern development ("not widespread until the 1800s").
+Therefore, centuries ago, audiences would not have had polished concert halls, and bare-walled venues would have
+been the norm. Something that is the norm is "expected."
+Why other choices fail: "Confusing to" (B) implies audiences could not understand the experience, which is too strong.
+"Exciting to" (C) and "disliked by" ( ) project emotions that the passage does not support.
+Tip: Look for the logical contrast. The passage says modern audiences find bare walls startling because they are used to
+polished halls. Centuries ago the situation was reversed: bare walls were all audiences knew, so they would have expected
+them.
+Question 5
+Correct Answer: ) To suggest an unexpected solution to a problem
+The text opens with "Struggling with an overpopulation of deer?" and then says "One surprising approach" is to
+reintroduce predators. The word "surprising" directly signals that the solution is unexpected. The entire passage is
+C
+A
+C
+A
+D
+A
+C
+
+-- 2 of 27 --
+
+built around proposing this idea.
+Why other choices fail: "Discuss the best way" (B) is too broad; the text presents one approach, not a comprehensive
+discussion. "Describe how dangerous" ( ) is wrong; the text focuses on helpfulness, not danger. "Identify a new ecological
+trend" (D) mischaracterizes the purpose.
+Tip: Main purpose questions often hinge on the opening sentence. "Struggling with X? Here is a surprising approach" =
+suggesting an unexpected solution. Map the structure: problem then surprising solution.
+Question 6
+Correct Answer: A) It discusses fiction by earlier African American writers, then describes how fiction by
+more recent African American writers differs from the earlier fiction.
+The first half discusses Morrison and her contemporaries (1970s and 1980s) and their "haunting, psychologically
+complex narratives." The second half introduces younger writers like Nnedi Okofor who have "gravitated toward"
+different genres like science fiction. This is a then vs. now structure.
+Why other choices fail: "Praises then criticizes" (B) is wrong; neither writer is criticized. "Compares to non-Black writers" (C)
+is wrong; all writers discussed are Black. "Describes one author's early and recent works" (D) is wrong; two different
+authors are discussed.
+Tip: For text structure questions, identify the pivot word. "Recently, however" signals a shift from earlier writers to newer
+ones and a contrast in genre.
+Question 7
+Correct Answer: A) It presents a criticism of the methodology reported by Dixson and colleagues in their
+2016 study.
+The underlined sentence says "Dixson's study relied on a sample of only 12 fish from a single reef system." The
+word "only" and the qualifier "a single" both signal that the sample is being characterized as limited, which is a
+methodological criticism.
+Why other choices fail: "Lists traits" (B) is wrong; no traits of clownfish are listed. "Emphasizes where" (C) captures only
+part of the sentence; the emphasis is on the smallness of the sample, not just its location. "States the conclusion" (D) is
+wrong; the conclusion is in the first sentence.
+Tip: When a sentence uses minimizing language ("only," "just," "merely," "a single"), it is usually functioning as a critique of
+scope or methodology. The follow-up about "skewed results" confirms this critical function.
+Question 8
+Correct Answer: A) Analogs allow scientists to test the ability of research equipment to withstand some
+of the conditions it will encounter during a mission.
+The passage says analogs "help researchers evaluate how well their instruments will perform under Venusian
+conditions." This directly means analogs let scientists test equipment before sending it to Venus.
+Why other choices fail: "Track chemical changes over time" (B) is not mentioned. "Combined with Earth materials" (C)
+distorts the passage. "Compare Venus to Earth" (D) is not the stated purpose.
+Tip: For inference questions, find the sentence that most directly answers the question and paraphrase it. The passage
+says analogs help "evaluate how well instruments will perform," which matches choice A almost word for word.
+Question 9
+Correct Answer: ) 61.00 million metric tons of lithium in 2022.
+The question says "Australia produced 5.20 million metric tons of lithium in 2000 and _______." Since the sentence
+is about Australia, we need Australia's 2022 figure from the table, which is 61.00.
+Why other choices fail: Choice B (6.20) is Argentina's 2022 figure. Choice C (19.00) is China's 2022 figure. Choice
+(39.00) is Chile's 2022 figure. All are from the correct year but the wrong country.
+Tip: For data interpretation, read the stem carefully to identify which row and column you need. The sentence specifies
+Australia and pairs 2000 with a 2022 figure. Go directly to the Australia row, 2022 column.
+Question 10
+A
+D
+A
+
+-- 3 of 27 --
+
+Correct Answer: B) In a Khmer stone inscription from approximately 683 CE, a dot appears between two
+numerals in a context that clearly indicates a positional value of nothing.
+Keller's claim is that Khmer inscriptions from around 683 CE contain a dot functioning as a zero placeholder. Choice
+B provides direct evidence: a dot between numerals indicating "nothing," which is exactly what a zero placeholder
+does.
+Why other choices fail: Choice A undermines the claim by suggesting dots had a different function. Choice C supports
+Brahmagupta, not the Khmer claim. Choice D says Coedes's readings are inaccurate, which would weaken the claim.
+Tip: To strengthen a specific historical claim, you need evidence that directly matches the claim's specifics: the right date,
+the right artifact, and the right function. Choice B matches all three.
+Question 11
+Correct Answer: D) Sick days were fairly similar for the YGA and NTR groups at 6 months, but at 18
+months they had significantly increased for the NTR group and significantly decreased for the YGA
+group.
+The data shows YGA went from 3.1 to 1.8 (decreased) and NTR went from 3.3 to 4.9 (increased). At 6 months the
+values were close (3.1 vs 3.3), but at 18 months they diverged dramatically. Choice D accurately describes this
+pattern and supports the conclusion that yoga was more effective over time.
+Why other choices fail: Choice A introduces "low morale" and "illness," which are not in the table. Choice B says YGA
+"barely changed," but 3.1 to 1.8 is a significant decrease. Choice C says the gap "narrowed," but it actually widened.
+Tip: When a conclusion says an effect "took time to become apparent," look for data showing similar starting points but
+diverging endpoints. That pattern is what D describes.
+Question 12
+Correct Answer: C) "Cricket Flour Bar" and "Mealworm Pasta."
+The statement says "the magnitude of this labeling effect varied." To best illustrate the largest magnitude of variation,
+you want the foods with the most dramatic labeling effect. Cricket Flour Bar and Mealworm Pasta have the largest
+gaps (roughly 3 points each), making them the most striking illustration of how much labels can influence ratings.
+Why other choices fail: Choice A shows the smallest gaps. Choice B mixes a medium and large gap. Choice D mixes a
+medium and small gap. None illustrate the extreme end of the variation as dramatically as C.
+Tip: When a graph question asks you to illustrate that an effect "varied," look for the data points that show the most extreme
+manifestation of that effect. The largest gaps demonstrate the upper range of the variation.
+Question 13
+Correct Answer: C) the greater exposure to humans among the captive lions induced them to acquire
+more right-pawed behaviors.
+The passage notes that captive felines show more right-pawedness than wild felines. The logical completion should
+explain this discrepancy. Since captive animals have more human contact, and humans are predominantly
+right-handed, it is plausible that captive felines acquired right-pawed behaviors through exposure to humans.
+Why other choices fail: Choices A and B discuss sample size, which does not explain the captive vs. wild pattern. Choice D
+suggests different criteria, which is possible but does not explain a systematic captive vs. wild difference.
+Tip: For logical completion, identify what the passage is building toward. The key contrast is captive vs. wild. The blank
+must explain WHY captive felines show more right-pawedness. Human exposure is the most obvious difference between
+captive and wild animals.
+Question 14
+Correct Answer: A) there is seasonal flooding for far fewer than 90 days per year.
+The passage says both species "prefer areas that experience seasonal flooding for more than 90 days per year."
+The conclusion is that "neither species is very drawn to areas where _______." Logically, if both prefer more than 90
+days of flooding, neither would be attracted to areas with far fewer than 90 days.
+Why other choices fail: Choice B introduces unrelated species. Choice C says "any features that attract the other," but the
+passage shows they share a preference. Choice D is wrong because only red-crowned cranes prefer shallow water, not
+
+-- 4 of 27 --
+
+both species.
+Tip: When a conclusion says "neither species is drawn to X," X must be the opposite of what both species prefer. Both
+prefer more than 90 days of flooding, so the opposite is far fewer than 90 days.
+Question 15
+Correct Answer: A) the edition of War and Peace has more words per page than the edition of The
+Goldfinch.
+War and Peace: 580,000 words / 1,225 pages = approximately 474 words per page. The Goldfinch: 297,000 words /
+771 pages = approximately 385 words per page. War and Peace has significantly more words per page.
+Why other choices fail: Choice B makes an unsupported claim about translation. Choice C about reading time is not directly
+indicated by the data. Choice D about paper thickness is speculation without evidence.
+Tip: When a logical completion question involves numbers, do the math. Divide word count by page count for each book
+and compare. The calculation is straightforward division.
+Question 16
+Correct Answer: B) Completed
+"Completed around 1665, the painting can now be found..." requires a past participle to form a participial phrase
+modifying "the painting." "Completed" is the past participle that works as a modifier.
+Why other choices fail: "Will complete" (A) is future tense and wrong direction. "Completes" (C) is present tense and would
+create a run-on. "Was completed" (D) would require the sentence to be restructured with a conjunction.
+Tip: When a sentence starts with a blank followed by a time reference and then a comma, it usually needs a past participle
+to create a participial phrase. Test: "[Past participle] around [time], the [subject]..."
+Question 17
+Correct Answer: C) stems
+The subject is "this capability" (singular), and we need a finite verb. "Stems" is a present-tense, singular verb that
+agrees with the singular subject and creates a complete clause: "this capability stems from..."
+Why other choices fail: "Stemming" (A) and "having stemmed" (B) are participles that cannot serve as the main verb. "To
+stem" (D) is an infinitive that cannot serve as the main verb of the clause.
+Tip: Identify the subject and check whether you need a finite verb or a modifier. "This capability" is the subject and needs a
+conjugated verb. "Stemming" and "having stemmed" are participles; "to stem" is an infinitive. Only "stems" is a finite verb.
+Question 18
+Correct Answer: B) languages—
+The sentence contains a closing dash before "and accounts for." To create a properly paired parenthetical, you need
+an opening dash after "400 languages." This creates: "comprises more than 400 languages—Mandarin and
+Cantonese, which are spoken by...—and accounts for..."
+Why other choices fail: "Languages" (A) with no punctuation creates an ungrammatical run ("400 languages Mandarin").
+"Languages:" (C) introduces a list but does not pair with the closing dash. "Languages," (D) does not pair with the closing
+dash either.
+Tip: When you see a closing dash later in a sentence, look for where the parenthetical begins and place a matching
+opening dash there. Paired dashes work like paired parentheses.
+Question 19
+Correct Answer: A) case; though,
+Two independent clauses need proper separation. "This has not always been the case" is one clause; "throughout
+geologic history, the continents have collided..." is another. A semicolon properly separates them. "Though," set off
+by a comma, functions as a conjunctive adverb.
+Why other choices fail: "Case, though," (B) creates a comma splice. "Case, though;" (C) has incorrect punctuation
+placement. "Case, though" (D) also creates a comma splice or run-on.
+
+-- 5 of 27 --
+
+Tip: When you see two independent clauses, check for a semicolon or period. A comma alone (choices B, C, D patterns)
+would create a comma splice. The semicolon in A correctly separates the clauses.
+Question 20
+Correct Answer: ) rooms;
+The sentence contains three independent clauses in a series: (1) "mirrored walls create infinite reflections," (2)
+"polka-dotted sculptures fill entire rooms," and (3) "suspended nets of light shift and shimmer." Since these are
+independent clauses, a semicolon is the correct separator.
+Why other choices fail: "Rooms," (A) creates a comma splice between clauses 2 and 3. "Rooms—" ( ) does not properly
+separate list items. "Rooms:" (D) implies what follows is an elaboration, but it is actually a third parallel item.
+Tip: When you have a list of independent clauses (each with its own subject and verb), semicolons separate them, just as
+they would separate two independent clauses. Look for the pattern: [clause], [clause]; [clause].
+Question 21
+Correct Answer: B) Still,
+The previous sentences acknowledge that Rococo ornamentation "couldn't exactly pass for a natural setting."
+Despite this concession, the next sentence says "one sees organic influences." "Still" signals a concession: despite
+what was just acknowledged, something is nevertheless true.
+Why other choices fail: "Furthermore" (A) adds to the same point rather than introducing a counterpoint. "Similarly" (C)
+suggests parallel ideas, but the text contrasts ornament with nature. "In other words" (D) restates, but this is a new point.
+Tip: "Granted... Still..." is a classic concession pattern. "Granted" acknowledges a point, and "Still" introduces a
+counterpoint. Look for this pattern on transition questions.
+Question 22
+Correct Answer: ) By comparison,
+Japan requires voters to be 18; Scotland allows voting at 16. These are two different countries' voting ages being
+compared. "By comparison" introduces a contrasting example from a different context.
+Why other choices fail: "Firstly" (A) implies a numbered list. "For example" ( ) implies Scotland illustrates Japan's rule,
+which it does not. "Therefore" (D) implies Scotland's rule is a consequence of Japan's.
+Tip: When two different entities or countries are presented with different policies or facts, "By comparison" is the correct
+transition to introduce the second one.
+Question 23
+Correct Answer: B) On the other hand,
+The passage gives the Prius as an example of fuel efficiency, then presents a pickup truck as the opposite. "On the
+other hand" introduces a contrasting example.
+Why other choices fail: "Specifically" (A) would elaborate on the Prius, not introduce a contrast. "As a result" (C) implies
+causation. "In conclusion" (D) signals a summary.
+Tip: The structure is: general claim, then example supporting it, then example contrasting it. "On the other hand" bridges
+the supporting example to the contrasting one.
+Question 24
+Correct Answer: ) fittingly,
+Channing "opposed slavery and advocated for human dignity." His sermons "challenged pro-slavery advocates." His
+actions match his beliefs. "Fittingly" means "in a way that is appropriate or suitable," connecting his abolitionist
+identity to his abolitionist sermons.
+Why other choices fail: "In other words" (A) would restate the same point. "By comparison" ( ) would introduce a contrast.
+"Nevertheless" (D) would introduce something contradictory to his beliefs.
+Tip: When someone's actions are consistent with their stated beliefs or identity, "fittingly" is the correct transition. It means
+"as you would expect given what was just described."
+C
+B
+C
+B
+C
+B
+
+-- 6 of 27 --
+
+Question 25
+Correct Answer: A) The municipality of Tulum in Quintana Roo, Mexico, covers an area of roughly 2,090
+km².
+The goal is to emphasize the SIZE of Tulum. Only choice A mentions the specific area measurement (2,090 km²),
+which directly communicates size.
+Why other choices fail: B discusses services, not size. C mentions the number of municipalities, not Tulum's size. D
+discusses waste management, unrelated to size.
+Tip: For rhetorical synthesis, match the stated goal to the content of each choice. "Emphasize size" requires a size
+measurement. Scan for numbers that describe area, length, or magnitude.
+Question 26
+Correct Answer: A) Both the Gwaii Haanas NMCA and the Fathom Five NMCA were established to protect
+endangered species or ecosystems.
+The goal is to emphasize a SIMILARITY. Both were established to protect endangered things (glass sponge reefs
+and shipwreck ecosystems). Choice A explicitly states "Both... were established to protect," highlighting the shared
+purpose.
+Why other choices fail: B mentions only Fathom Five. C highlights a difference in size. D is about the total number of
+NMCAs, not a similarity between the two.
+Tip: For "emphasize a similarity" questions, look for the choice that starts with "Both" or uses language that draws a
+parallel. Eliminate choices that highlight differences (size, location) or mention only one of the two.
+Question 27
+Correct Answer: A) Elements of classical Rinpa painting, manga, and corporate branding are playfully
+mixed in the Superflat piece Tan Tan Bo Puking by artist Takashi Murakami.
+The goal is to "provide a specific example of playful mixing." Choice A names the specific work (Tan Tan Bo Puking)
+and lists the specific elements being mixed (Rinpa painting, manga, corporate branding). This is the most concrete,
+specific answer.
+Why other choices fail: B quotes the artist but does not specify the work or the elements mixed. C names the work but does
+not list the elements. D mentions the work but describes the movement generally.
+Tip: When the goal is "provide a specific example," the correct answer will name a particular work and describe particular
+elements. General statements about a movement are not specific examples.
+
+-- 7 of 27 --
+
+SECTION 1, MODULE 2: Reading and Writing
+Question 1
+Correct Answer: B) dynamic
+The passage defines the blank: "constantly shifting," "change in width and elevation." Something that is constantly
+shifting is dynamic. The colon after the blank signals that what follows is a definition.
+Why other choices fail: "Unrivaled" (A) means unmatched, describing superiority. "Sustainable" (C) means maintainable,
+about longevity. "Immutable" (D) means unchangeable, which is the OPPOSITE of what is described.
+Tip: When a colon follows the blank, the text after the colon defines the word. Read that definition and find the matching
+vocabulary word.
+Question 2
+Correct Answer: A) corroborated
+Del Conde noticed a similarity and then "by digitally analyzing both works" she confirmed ("corroborated") the stylistic
+parallels. Corroborate means to confirm or support with evidence.
+Why other choices fail: "Amalgamated" (B) means combined/merged. "Promulgated" (C) means made widely known.
+"Consolidated" (D) means combined into a single entity. None mean "confirmed."
+Tip: When a scholar first argues something and then does analysis to confirm it, the verb must mean "confirmed" or
+"verified." "Corroborated" fits both blanks: Kahlo corroborated a shared vision through her art, and del Conde corroborated
+the parallels through digital analysis.
+Question 3
+Correct Answer: D) exhibit
+Hadid's designs "can be said to _______ elements of both classical geometry and organic forms." The designs show
+or display these elements. "Exhibit" means to display or show.
+Why other choices fail: "Defy" (A) means to resist or challenge. "Neglect" (B) means to fail to care for. "Foretell" (C) means
+to predict. None describe showing or displaying.
+Tip: When the passage says designs "can be said to [blank] elements of X and Y," the verb needs to mean "show" or
+"display." Test each choice in the sentence.
+Question 4
+Correct Answer: B) mediated by
+The data shows that the type of local policy framework (proactive vs. restrictive) was associated with very different
+likelihoods of establishing refugee programs (0.45 vs. 0.08). "Mediated by" means that the local policies served as
+the intermediary variable through which government responses operated.
+Why other choices fail: "Predicated on" (A) means based on, which is close but suggests dependence rather than
+mediation. "Decoupled from" (C) means separated from, contradicting the data. "Material to" (D) means relevant to, which
+is too weak.
+Tip: In social science contexts, "mediated by" means a variable acts as a mechanism or channel. The data shows local
+policies are that mechanism. "Predicated on" means "based on," which is close but less precise.
+Question 5
+Correct Answer: A) To present a reason why a literary critic is impressed by a certain novel
+The text introduces Harold Bloom (a literary critic) and explains that he praises The Dispossessed for its "masterful
+synthesis" of utopian and critical modes. The text is presenting Bloom's reason for admiring the novel.
+Why other choices fail: "Explain what inspired" (B) is wrong; Bloom's opinion, not Le Guin's inspiration, is the focus.
+"Compare writer and philosopher" (C) is wrong; Marcuse is used to frame Bloom's praise. "Argue all writing must be
+classified" (D) misrepresents the text; the point is that Le Guin transcended the classification.
+
+-- 8 of 27 --
+
+Tip: Main purpose questions require you to identify WHO is doing WHAT. Bloom praises Le Guin's novel for a specific
+quality. That is the main purpose: presenting a critic's reason for being impressed.
+Question 6
+Correct Answer: B) It presents the favorable opinion of Mr. Turveydrop that other people hold and then
+describes the behaviors of Mr. Turveydrop that enable him to maintain that favorable opinion.
+The first part describes how merchants and fellow dancing masters regard Turveydrop favorably. The second part
+describes his behaviors: never arguing with passion, never revealing his beliefs, never letting anyone detect he was
+performing a role. These behaviors explain HOW he maintains the favorable opinion.
+Why other choices fail: Choice A is wrong; there is no naive vs. sophisticated distinction. Choice C is wrong; there is no
+decline in regard. Choice D is wrong; the text does not reveal his private behavior, only his public performance strategies.
+Tip: For text structure in literary passages, separate what others think from what the character does. The first part is others'
+perception; the second part is his strategic behavior.
+Question 7
+Correct Answer: C) As a point of contrast with the Strand, Bond Street suggests to Clarissa the
+possibility of experiencing the lasting beauty promised by the contemplative spaces the novel seems to
+favor.
+Text 2 says Bond Street "embodies an elegance that values beauty, permanence, and contemplation" as a contrast
+to the Strand's "noise, speed, and commercial energy." In Text 1, Clarissa sees Bond Street's stones as suggesting
+"permanence" and "a serenity beyond the grasp of commerce." Choice C captures this: Bond Street, as a contrast to
+the Strand, suggests lasting beauty and contemplation.
+Why other choices fail: Choice A says Bond Street symbolizes commercial encroachment, which contradicts both texts.
+Choice B says Clarissa is dissatisfied, which is not supported. Choice D says Bond Street is "modest," but Text 1 describes
+it as dignified.
+Tip: For dual-text questions, find the overlapping interpretation. Both texts describe Bond Street as a contrast to the Strand,
+associated with permanence and beauty rather than commerce.
+Question 8
+Correct Answer: D) It reflects an approach to form and shape that Niemeyer later moved away from.
+The Santos Dumont Airport "reflect[s] the rectilinear aesthetics of traditional Brazilian Neoclassicism." This was
+Niemeyer's EARLIER style. After his European trip, he adopted "sweeping curves and open spaces." Thus, the
+airport reflects an approach he later moved away from.
+Why other choices fail: Choice A says "transitional," but it is pre-transition. Choice B says it shows European influence, but
+it predates his European trip. Choice C says it influenced him throughout, but the passage says he moved to a different
+style.
+Tip: Look for chronological markers. "Earlier projects" like the airport used rectilinear forms. His LATER work used curves.
+The airport represents the style he abandoned.
+Question 9
+Correct Answer: A) He has the appearance of a distinguished figure, but it is uncertain whether he has
+accomplished anything to earn distinction.
+Boleyn's "expression seemed designed to ornament a monument" (looks distinguished), but examining "the actual
+fruits" of his service would be "discourteous" (implying the fruits are meager). His memoirs "might have illuminated
+this puzzle" but their substance was buried. He looks important but may have achieved nothing.
+Why other choices fail: Choice B says "modest profile," but his expression is compared to a monument. Choice C says
+memoirs "reveal dishonorable actions," but the memoirs reveal nothing because their substance is buried. Choice D says
+achievements must be "kept secret," which is not supported.
+Tip: In literary characterization, contrast appearance with substance. "Seemed designed to ornament a monument"
+describes impressive appearance. "Discourteous to examine the actual fruits" suggests the reality does not match.
+
+-- 9 of 27 --
+
+Question 10
+Correct Answer: D) The difference in average ISCH scores for songbird communities at Govan and
+Partick, two sites with a higher percentage of bank consisting of meadows than of wetlands, was
+statistically insignificant.
+The finding is that meadows are more positively correlated with songbird health than wetlands. Choice D shows two
+meadow-dominant sites with consistent (statistically similar) ISCH scores, demonstrating that meadow-heavy sites
+reliably correlate with a particular level of songbird health.
+Why other choices fail: Choice A contradicts the finding (high naturalization = lower scores). Choice B contradicts it
+(meadow site scores lower than wetland site). Choice C is ambiguous and does not isolate the meadow vs. wetland
+variable.
+Tip: When "illustrating" a correlation, look for data that is consistent with, not contradictory to, the finding. A and B describe
+scenarios that contradict it. D is the only choice compatible with meadows being beneficial.
+Question 11
+Correct Answer: C) "The photograph I chose is accompanied by a statement of the personal
+interpretation I've developed over countless hours standing beside the work..."
+The underlined claim says the show amplifies "a distinct perspective not typically given a formal platform." Choice C
+describes a guard's personal interpretation developed through "countless hours standing beside the work," shared
+previously only in "small impromptu conversations." This is a distinct perspective (from a guard's unique vantage
+point) not typically given a formal platform (previously shared only informally).
+Why other choices fail: Choice A describes affection for the pieces but not a unique perspective or informal platform.
+Choice B is about lesser-known photographs, not about the guard's perspective. Choice D describes collaboration with
+professional curators, undermining the "distinct perspective" claim.
+Tip: Match each element of the claim to the quotation. "Distinct perspective" = interpretation from hours of observation. "Not
+typically given a formal platform" = previously shared only in casual conversations.
+Question 12
+Correct Answer: C) "A growing population that is adding substantially more protein to its diet will
+contribute to an increasing demand for food production in the 21st century."
+The student wants to support the claim that vertical farming may help address "an expected rise in global food
+demand." Choice C directly establishes that rising food demand is expected (growing population, more protein),
+which is the premise the student's claim rests on.
+Why other choices fail: Choice A is about consumer beliefs on food safety. Choice B is about taste differences. Choice D
+describes vertical farming's environmental benefits but does not address rising food demand.
+Tip: The claim has two parts: (1) food demand will rise, and (2) vertical farming can help. The quotation needs to support at
+least one of these. Choice C establishes part (1), giving the student a factual basis for the argument.
+Question 13
+Correct Answer: B) Many demonstrate the stylistic influence of bossa nova, a genre of Brazilian music...
+The underlined claim says "the range of musical traditions woven into its fabric also expanded" as the movement
+spread beyond Argentina. Choice B shows a non-Argentine tradition (Brazilian bossa nova) being incorporated,
+directly illustrating the expansion of musical traditions.
+Why other choices fail: Choice A involves shared South American experiences, not new musical traditions. Choice C is
+about the bandoneon, an Argentine instrument, not an expanded tradition. Choice D is about who produced the music, not
+about new musical traditions being incorporated.
+Tip: The claim is about the range of traditions expanding as the movement spread geographically. You need a tradition
+from OUTSIDE Argentina being incorporated. Bossa nova is Brazilian, not Argentine.
+Question 14
+
+-- 10 of 27 --
+
+Correct Answer: D) the 2021 revision of the rule governing GCDs would allow expedited reviews of
+actions that had a minimal air-quality effect when considered on their own but a significant effect when
+considered together.
+The old rule required that actions "do not individually OR CUMULATIVELY have a significant effect." The new rule
+only says "normally do not have a significant effect," dropping the cumulative requirement. This means actions that
+individually seem harmless but collectively cause significant damage could now get streamlined reviews.
+Why other choices fail: Choice A is about incentives, which is not the textual focus. Choice B contradicts itself
+("paradoxically slower"). Choice C reverses what happened (it says the old rule allowed expedited reviews for harmful
+actions).
+Tip: Compare the old and new language word by word. The old rule said "individually or cumulatively"; the new rule
+dropped "cumulatively." That removal is what environmental groups found harmful.
+Question 15
+Correct Answer: D) graphene nanoparticles may allow electrons to bypass the series of metabolic steps
+and transfer directly to the circuit.
+The passage says electrons normally pass through "inefficient metabolic steps." Graphene has "exceptional
+electrical conductivity." The output more than doubled with graphene. The hypothesis should logically connect
+graphene's conductivity to bypassing the inefficient steps.
+Why other choices fail: Choice A says graphene increases metabolic processes, which contradicts "bypassing." Choice B
+suggests improvement without graphene. Choice C says electrons are conducted before graphene catalyzes, which is
+incoherent.
+Tip: The hypothesis must explain WHY graphene increased output. Graphene conducts electricity well, so it likely provides
+a direct path for electrons, bypassing the inefficient metabolic steps.
+Question 16
+Correct Answer: D) memory, and
+The sentence has two independent clauses: (1) "Her work challenges conventional notions of race, gender, history,
+and memory" and (2) "she is credited with expanding the horizons of textile-based art." Two independent clauses
+need a comma plus a coordinating conjunction ("and") to be properly joined.
+Why other choices fail: "Memory," (A) creates a comma splice between two independent clauses. "Memory and" (B)
+creates "and memory and she," which is awkward. "Memory" (C) with no punctuation creates a run-on.
+Tip: When you spot two independent clauses (each with subject + verb), check the options for a comma + coordinating
+conjunction (", and"). A comma alone creates a comma splice.
+Question 17
+Correct Answer: D) researchers, Odhiambo and Akech,
+The phrase "according to legal researchers, Odhiambo and Akech," is a parenthetical. The opening comma is after
+"constitution." The closing comma must come after "Akech" to complete the parenthetical. "Odhiambo and Akech" is
+an appositive to "researchers," requiring a comma before and after.
+Why other choices fail: Choice A has no closing comma after "Akech." Choice B has a closing comma but no comma
+between "researchers" and "Odhiambo." Choice C has a comma after "researchers" but no closing comma after "Akech."
+Tip: When a parenthetical phrase with "according to" is embedded in a sentence, it needs commas at both ends. The
+comma after "Akech" closes the parenthetical that began after "constitution."
+Question 18
+Correct Answer: A) behavior. The
+The sentence before the blank and the sentence after are both independent clauses. A period creates two separate,
+grammatically correct sentences. "They exhibit striking differences in behavior. The object 433 Eros is considered..."
+is clean and correct.
+Why other choices fail: "Behavior; while the" (B) incorrectly combines a semicolon with "while." "Behavior, while the" (C)
+creates a comma splice. "Behavior; the" (D) works grammatically but the lowercase "the" creates an unusual construction.
+
+-- 11 of 27 --
+
+Tip: When you have two independent clauses and the second one provides supporting detail, a period is the cleanest
+separator. Check that the resulting sentences each stand on their own.
+Question 19
+Correct Answer: D) determine
+The subject is "a district's electoral history and polling data" (compound subject = plural). The phrase "not its
+population size" is a parenthetical and does not change the subject's number. A compound subject takes a plural
+verb: "determine."
+Why other choices fail: "Has determined" (A) is singular and past. "Determines" (B) is singular. "Determining" (C) is a
+participle, not a finite verb. All fail to match the plural subject.
+Tip: For subject-verb agreement with "X and Y, not Z, [verb]" constructions, the verb agrees with "X and Y" (plural), not with
+"Z." Strip out the parenthetical to see the true subject.
+Question 20
+Correct Answer: A) is due
+The subject is "That the repeated eruptions... have occurred on timescales as brief as six months," which is a noun
+clause (starting with "That"). Noun clauses functioning as subjects take singular verbs. "Is due" is a singular finite
+verb.
+Why other choices fail: "Due" (B) is not a verb; it would leave the sentence without a main verb. "Being due" (C) and
+"having been due" (D) are participles that cannot serve as the main verb.
+Tip: When a sentence begins with "That [clause]," the entire "That..." clause is the subject and takes a singular verb. Strip
+away the modifiers to see: "That [X] is due to [Y]."
+Question 21
+Correct Answer: B) examining
+The main verb is "reveals." The blank must be a present participle modifying "study," not a second main verb.
+"Examining" creates: "Hochschild's study [examining 60 interviews] reveals..."
+Why other choices fail: "Had examined" (A) and "examines" (C) are finite verbs that would create a run-on with "reveals."
+"Examined" (D) is ambiguous and does not clearly modify "study."
+Tip: When a sentence already has a main verb (here, "reveals"), the blank cannot be another finite verb. It must be a
+participle (modifier) or introduce a relative clause.
+Question 22
+Correct Answer: C) Consequently,
+NASA crashed a probe into Dimorphos, and as a result, its orbital period changed. "Consequently" introduces a
+result or effect of the preceding action.
+Why other choices fail: "In comparison" (A) introduces a contrast. "In addition" (B) adds unrelated information. "Specifically"
+(D) provides detail about the same point, not a result.
+Tip: When event A (crashing the probe) directly causes event B (orbital period change), "Consequently" or "As a result" is
+the correct transition.
+Question 23
+Correct Answer: B) Rather,
+The first sentence says metals "do not form bonds through directional sharing of electrons." The second sentence
+describes what they do instead: "held together by a sea of delocalized electrons." "Rather" introduces an alternative
+to what was just negated.
+Why other choices fail: "For example" (A) would introduce an illustration, not a correction. "Accordingly" (C) implies a logical
+consequence. "Likewise" (D) implies similarity.
+Tip: When a sentence says "X does NOT do Y," and the next sentence says "X does Z instead," use "Rather" to introduce
+the alternative.
+
+-- 12 of 27 --
+
+Question 24
+Correct Answer: C) likewise,
+Both Keats and Smith are given as examples of ecphrastic poetry. Keats meditates on a vase; Smith takes Hubble
+photographs as her subject. Both are poets exploring visual art. "Likewise" connects two parallel examples.
+Why other choices fail: "Nevertheless" (A) implies contrast. "Conversely" (B) implies opposition. "Hence" (D) implies
+causation.
+Tip: When two examples serve the same illustrative purpose (both are ecphrastic poems), "likewise" or "similarly" is correct.
+The subjects differ (vase vs. space images) but the activity is the same.
+Question 25
+Correct Answer: D) That is,
+The first sentence describes HbPLA's two functions (cleaving a substrate and acting as an antimicrobial peptide).
+The second sentence restates this by calling HbPLA "a bifunctional enzyme." "That is" introduces a restatement or
+clarification.
+Why other choices fail: "Nevertheless" (A) implies contrast. "In fact" (B) intensifies but does not restate. "Moreover" (C)
+adds new information.
+Tip: "That is" means "in other words" or "to put it another way." When the second sentence restates the first in different
+terms, "That is" is the correct transition.
+Question 26
+Correct Answer: B) National labor unions, such as the BGWF, work to improve conditions for workers in
+their member nations.
+The goal is to "explain the purpose of national union federations." Choice B describes what national labor unions do
+(improve conditions for workers) and uses the BGWF as an example. This directly addresses purpose.
+Why other choices fail: Choice A merely identifies the BGWF. Choice C describes a relationship with IndustriALL. Choice D
+describes international federations, not national ones.
+Tip: The key word in the goal is "purpose." Look for the choice that explains WHAT national unions DO, not just what they
+are or who represents them.
+Question 27
+Correct Answer: B) Both PE and PTFE expand when heated, according to a 2020 study.
+The goal is to "emphasize a similarity." Both PE and PTFE expanded when heated. Choice B states this shared
+behavior directly: "Both PE and PTFE expand when heated."
+Why other choices fail: Choice A says "two research teams," which is factually incorrect (it was one study). Choice C
+highlights a difference (PTFE expanded more). Choice D is a general statement not specific to the two materials.
+Tip: For "emphasize a similarity" questions, look for "Both X and Y [do the same thing]." Eliminate choices that highlight
+differences or mention only one material.
+
+-- 13 of 27 --
+
+SECTION 2, MODULE 1: Math
+Question 1
+Correct Answer: C) 40
+d = 25 + 3t. Substitute t = 5: d = 25 + 3(5) = 25 + 15 = 40.
+Tip: Plug in the given value directly. This is a simple substitution question.
+Question 2
+Correct Answer: C) 7² + a² = 25²
+By the Pythagorean theorem, in a right triangle: (leg)² + (leg)² = (hypotenuse)². So 7² + a² = 25².
+Tip: Identify the hypotenuse (the longest side, opposite the right angle) and apply a² + b² = c².
+Question 3
+Correct Answer: D) 47
+The last bar covers weights from 40 to less than 50 kg and has 7 data points. So the maximum weight must be in this
+range. 47 is less than 50, so it could be the maximum.
+Tip: The maximum must fall within the highest bar's range. Eliminate values outside that range. 9 is in bar 1, 29 in bar 3, 39
+in bar 4.
+Question 4
+Correct Answer: B) 9
+3x + 12 = 27. Notice that 3x + 12 = 3(x + 4). So 3(x + 4) = 27, giving x + 4 = 9.
+Tip: Factor the left side to match the expression asked for. 3x + 12 = 3(x + 4), so divide both sides by 3.
+Question 5
+Correct Answer: 35
+For infinitely many solutions, both sides must be identical. 9x + 35 = 9x + k requires k = 35.
+Tip: Infinitely many solutions means the equation is an identity. The constants on both sides must match.
+Question 6
+Correct Answer: 52
+156 = 52 + 2p, where p is each equal piece. 2p = 104, so p = 52.
+Tip: Total = known piece + 2(unknown piece). Solve for the unknown piece.
+Question 7
+Correct Answer: 6
+Let n = notebooks, p = pens. n + p = 15 and 4n + 2p = 42. From the first equation, p = 15 - n. Substitute: 4n + 2(15 -
+n) = 42. Simplify: 4n + 30 - 2n = 42, so 2n = 12, n = 6.
+Tip: Set up a system of equations. Substitution is efficient here since one equation can be easily solved for one variable.
+Question 8
+Correct Answer: D) y = −x + 4.0
+The line passes through (−12, 16) and (0, 4). Slope = (4 − 16)/(0 − (−12)) = −12/12 = −1. Y-intercept = 4. So y = −x +
+4.
+Tip: Use two points on the line to calculate slope: (y2 − y1)/(x2 − x1). Then use the y-intercept.
+Question 9
+
+-- 14 of 27 --
+
+Correct Answer: 7
+Tip: Combine like terms by adding/subtracting the coefficients.
+Question 10
+Correct Answer: C) (8, 29)
+Set 3x + 5 = 4x − 3. Solving: 8 = x. Then y = 3(8) + 5 = 29. The point is (8, 29).
+Tip: Set the two equations equal to find x, then substitute back to find y.
+Question 11
+Correct Answer: A) The length of the rectangle, in meters
+Length = 45 times width = 45w. The function y = (45w)(w) means area = length times width. So 45w represents the
+length.
+Tip: In area = length times width, identify which factor is which. Since length = 45 times width, 45w is the length.
+Question 12
+Correct Answer: B) x: 0, 1, 2 → f(x): 37, 37, 37
+f(x) = 37 is a constant function. For ANY value of x, f(x) = 37. So f(0) = f(1) = f(2) = 37.
+Tip: A constant function outputs the same value regardless of input. Every x gives 37.
+Question 13
+Correct Answer: B) y = 145
+If w = 145 and y = 145, then w and y are equal. If w and y are corresponding angles (or alternate interior angles),
+then equal values prove lines r and s are parallel.
+Tip: For parallel lines, you need corresponding angles equal, alternate angles equal, or co-interior angles summing to 180.
+y = w = 145 establishes corresponding angles equal.
+Question 14
+Correct Answer: C) 80
+Complete the square: (x − 3)² + (y − 5)² = 9 + 25 + 66 = 100. Radius = 10. Diameter = 20. Square side = 20.
+Perimeter = 4(20) = 80.
+Tip: Complete the square for both x and y terms. The radius gives you the diameter, which equals the side of the
+circumscribed square.
+Question 15
+Correct Answer: 176
+800 × 0.55 = 440 attended first and second. 440 × 0.40 = 176 attended all three.
+Tip: Apply successive percentages: 55% of 800, then 40% of that result.
+Question 16
+Correct Answer: B) x: −5, 0, 5, 10 → f(x): 10, 30, 90, 270
+Question 17
+Correct Answer: 471
+V = πr²h = π(25)(8) = 200π. 75% of 200π = 150π ≈ 150(3.14) = 471.
+Tip: Calculate full volume first, then take 75% of it. Use π ≈ 3.14 as directed.
+5x^4 + 11x^4 - 9x^4 = (5 + 11 - 9)x^4 = 7x^4. So b = 7.
+f(-5) = 30(3^-1) = 10. f(0) = 30(3^0) = 30. f(5) = 30(3^1) = 90. f(10) = 30(3^2) = 270.
+Tip: Substitute each x value. Remember: 3^-1 = 1/3, 3^0 = 1, 3^1 = 3, and 3^2 = 9.
+
+-- 15 of 27 --
+
+Question 18
+Correct Answer: 32
+Volume = edge³ = 4³ = 64 cm³. Mass = density × volume = 0.500 × 64 = 32 grams.
+Tip: For cubes: V = s³. Then mass = density × volume.
+Question 19
+Correct Answer: B) 0 and −3
+−3|4x + 6| + 9 = −9. Solve: −3|4x + 6| = −18, so |4x + 6| = 6. Two cases: 4x + 6 = 6 gives x = 0. 4x + 6 = −6 gives x =
+−3.
+Tip: Isolate the absolute value first. Then split into two cases: positive and negative.
+Question 20
+Correct Answer: D) 72
+By Vieta's formulas, for ax² + bx + c = 0, the sum of solutions = −b/a = −(−72)/1 = 72.
+Tip: Use Vieta's formulas: sum of roots = −b/a. No need to solve the quadratic.
+Question 21
+Correct Answer: 1024
+Slant height = 20, height = 12. Radius = √(20² − 12²) = √(400 − 144) = √256 = 16. Volume = (1/3)πr²h =
+(1/3)π(256)(12) = 1024π. So k = 1024.
+Tip: Use the Pythagorean theorem with slant height and height to find the radius. Then apply the cone volume formula.
+Question 22
+Correct Answer: A) (5, 6 − 1/m)
+Line j has slope m. Perpendicular line m has slope −1/m. Line m passes through (4, 6). At x = 5: y = 6 + (−1/m)(5 − 4)
+= 6 − 1/m.
+Tip: Perpendicular slopes are negative reciprocals. Use point-slope form with the intersection point.
+
+-- 16 of 27 --
+
+SECTION 2, MODULE 2: Math
+Question 1
+Correct Answer: A) 1.2 seconds after being launched, the ball's height above ground is 4.5 meters.
+The point (1.2, 4.5) means x = 1.2 (seconds) and y = 4.5 (meters). The x-axis is time and the y-axis is height.
+Tip: For graph interpretation, always check what each axis represents. (x, y) = (time, height).
+Question 2
+Correct Answer: ) The amount, in dollars, the freelancer earned for each hour at the primary contract
+In 20h + 15c = 900, the coefficient 20 multiplies h (hours at primary contract). Since the equation gives total dollars,
+20 must be the hourly rate at the primary contract.
+Tip: Coefficients in linear equations represent rates. The coefficient of h is the rate per hour at the primary contract.
+Question 3
+Correct Answer: D) 32, 33, 33, 33, 34
+Standard deviation measures spread. The set {32, 33, 33, 33, 34} is the most tightly clustered around its mean (33),
+so it has the smallest standard deviation.
+Tip: For standard deviation comparisons, look for the data set where values are closest to each other. No calculation
+needed; visual inspection works.
+Question 4
+Correct Answer: B) 62°
+Similar triangles have equal corresponding angles. Angle FGH corresponds to angle FIJ = 62°. Side ratios do not
+affect angles.
+Tip: In similar triangles, corresponding angles are always equal regardless of size. The side ratio FH = 18(IJ) is irrelevant to
+the angle measure.
+Question 5
+Correct Answer: ) 50
+P(Z) = 1 − P(X) − P(Y) = 1 − 0.54 − 0.36 = 0.10. Number in Z = 0.10 × 500 = 50.
+Tip: Probabilities must sum to 1. Subtract the given probabilities to find the remaining one, then multiply by the total.
+Question 6
+Correct Answer: A) 24
+Set equal: x/3 + 8 = −x/3 + 16. Solving: 2x/3 = 8, so x = 12. y = 12/3 + 8 = 12. 2y = 24.
+Tip: Set the two expressions equal, solve for x, then find y, and finally compute 2y.
+Question 7
+Correct Answer: B) y = 31.5
+The total amount consumed in 7 days was 31.5 grams. y represents this total, so y = 31.5.
+Tip: Read carefully: y is the total amount consumed in 7 days, not the daily rate. The total is 31.5.
+Question 8
+Correct Answer: D) M = 50(0.82)t/8.5
+Decreasing by 18% means retaining 82% = 0.82 each period. The period is 8.5 minutes, so the exponent is t/8.5.
+Tip: Decay by r% means multiply by (1 − r/100) each period. The exponent is t divided by the period length.
+C
+D
+
+-- 17 of 27 --
+
+Question 9
+Correct Answer: D) y = −5x + 12
+Parallel lines have the same slope. Slope = −5. Passes through (0, 12), so y-intercept = 12. Equation: y = −5x + 12.
+Tip: Parallel = same slope. The new y-intercept is the y-coordinate of the given point when the point has x = 0.
+Question 10
+Correct Answer: C) 6
+g has slope 6. g(c) = −4 and g(3) = 32. So 32 − (−4) = 36 = 6(3 − c), giving c = −3. For h: h(−3) = −5 and h(6) = 49.
+Slope = (49 − (−5))/(6 − (−3)) = 54/9 = 6.
+Tip: First find c using g's slope. Then use c to compute h's slope from two known points.
+Question 11
+Correct Answer: −1.5
+Let u = 5 − 2x. Then 3u + 8u + 4 = 7u + 10, so 11u + 4 = 7u + 10, giving 4u = 6, u = 3/2. Since u = 5 − 2x, we get 2x −
+5 = −u = −3/2 = −1.5.
+Tip: Use substitution: let u = 5 − 2x to simplify, then note 2x − 5 = −u.
+Question 12
+Correct Answer: D) 6
+From point (0, −6): r(0) + t(−6) = −48, so t = 8. From point (−8, −8): r(−8) + 8(−8) = −48, so −8r − 64 = −48, giving r =
+−2. Therefore r + t = −2 + 8 = 6.
+Tip: Substitute two points on the boundary line into the equation rx + ty = −48 to create a system and solve for r and t.
+Question 13
+Correct Answer: D) −1/3
+f(a) = −3a means √(3a + 2) = −3a. Square both sides: 3a + 2 = 9a², so 9a² − 3a − 2 = 0. Factor: (3a + 1)(3a − 2) = 0,
+giving a = −1/3 or a = 2/3. Check: a = −1/3 gives √1 = 1 and −3(−1/3) = 1. Valid. a = 2/3 gives √4 = 2 but −3(2/3) = −2.
+Invalid since √4 ≠ −2.
+Tip: After solving, always check both solutions in the ORIGINAL equation. Square root equations often produce extraneous
+solutions.
+Question 14
+Correct Answer: 5/4
+Tip: Convert the radical to a fractional exponent, then set exponents equal since the bases are the same.
+Question 15
+Correct Answer: C) 272
+Vertex form: g(x) = a(x − 1)² + 4. Using (2, 38): a(1) + 4 = 38, so a = 34. g(−2) = 34(9) + 4 = 310. g(0) = 34(1) + 4 =
+38. g(−2) − g(0) = 310 − 38 = 272.
+Tip: Use vertex form g(x) = a(x − h)² + k with the vertex. Plug in a known point to find a.
+Question 16
+Correct Answer: 42
+f(0) = −2(0 − 3)(0 + 7) = −2(−3)(7) = −2(−21) = 42.
+Tip: The y-intercept is f(0). Substitute x = 0 into the factored form.
+Question 17
+The fourth root of p^6 is p^(6/4) = p^(3/2). If t = p^(2n - 1), then 3/2 = 2n - 1, so n = 5/4.
+
+-- 18 of 27 --
+
+Correct Answer: B) f(x) = −4^x + 3
+The graph of y = f(x) + 3 passes through (0, 5) and approaches 6 from below. So f(x) + 3 = −4^x + 6. At x = 0: −1 + 6
+= 5. Correct. Therefore f(x) = −4^x + 3.
+Tip: Read the graph's behavior: horizontal asymptote and key points. Then subtract 3 to find f(x).
+Question 18
+Correct Answer: C) 22.86
+Original: 60 inches per side, 1 inch = 8 miles. Total actual side = 60 × 8 = 480 miles. Smaller: side = 60 × 0.35 = 21
+inches. New scale: 480/21 ≈ 22.86 miles per inch.
+Tip: The actual area does not change; only the blueprint size changes. Divide the actual distance by the new number of
+inches.
+Question 19
+Correct Answer: 7/2
+Solutions: x = 0, x = 5/2, x = u/2. Sum: 0 + 5/2 + u/2 = 17/4. So (5 + u)/2 = 17/4, giving u = 7/2.
+Tip: Set each factor to zero to find solutions. Then set their sum equal to 17/4 and solve for u.
+Question 20
+Correct Answer: 2520
+Scale factor k: k² = 1800/72 = 25, so k = 5. Volume of P = 2500/k³ = 2500/125 = 20. Sum = 20 + 2500 = 2520.
+Tip: For similar figures: surface area ratio = k², volume ratio = k³. Find k from surface areas, then use it for volumes.
+Question 21
+Correct Answer: 5832
+g(6)/g(3) = d^(3/m) = 216/8 = 27. g(9) = g(6) × d^(3/m) = 216 × 27 = 5832.
+Tip: In exponential functions with equal x-intervals, the ratio between consecutive outputs is constant. Use this multiplier
+pattern.
+Question 22
+Correct Answer: ) 1.25
+h = −16t² + 40t + 6. Maximum at t = −b/(2a) = −40/(2(−16)) = 40/32 = 1.25.
+Tip: For a quadratic h = at² + bt + c with a < 0, the maximum occurs at t = −b/(2a).
+D
+
+-- 19 of 27 --
+
+SECTION 1, HARD MODULE: Reading and Writing (Adaptive)
+Question 1
+Correct Answer: B) tenuous
+The passage says attributions are often contradicted by chemical dating, "exposing a persistent gap between
+subjective expertise and empirical verification." Something that is frequently contradicted is "tenuous" (weak, not
+securely held).
+Tip: Look for the word that means 'weak' or 'unreliable.' The passage describes attributions that are often overturned by
+evidence.
+Question 2
+Correct Answer: A) contingent on
+The worm's metabolism is entirely dependent on the bacteria. It is 'incapable of independent nutrient acquisition.'
+'Contingent on' means dependent on or conditional upon.
+Tip: When an organism cannot function without something, its function is 'contingent on' that thing.
+Question 3
+Correct Answer: A) engender
+Inclusive institutions produce sustained growth. 'Engender' means to cause or bring about. The passage contrasts
+inclusive institutions (which cause growth) with extractive ones (which cause poverty).
+Tip: 'Engender' means to produce or generate. It is a positive causative verb that matches 'sustained growth.'
+Question 4
+Correct Answer: ) substantiated
+The behavior 'has been _______ by decades of experimental results, leaving little room for alternative
+interpretations.' Decades of confirmation = substantiated (supported with evidence).
+Tip: When evidence supports a claim over many years, it has been 'substantiated.' Look for words meaning 'confirmed by
+evidence.'
+Question 5
+Correct Answer: A) To explain why a scholar's unconventional methodology is suited to her subject
+matter
+The text explains that Hartman blurs history and creative imagination because the traditional archive records the
+perspectives of those in power, not her subjects. The method matches the challenge.
+Tip: The text describes what Hartman does (unconventional method), then explains why (the archive is biased). This
+structure explains why the method fits the subject.
+Question 6
+Correct Answer: ) It identifies an event and then presents three different hypotheses that attempt to
+explain it.
+The text introduces the Cambrian Explosion, then presents three hypotheses: (1) rising oxygen, (2) predator-prey
+arms race, (3) Hox gene changes.
+Tip: Count the hypotheses. 'Some paleontologists... Others, however... A third hypothesis...' = three distinct explanations
+for one event.
+Question 7
+D
+D
+
+-- 20 of 27 --
+
+Correct Answer: A) By noting that Chen's emphasis on listener awareness captures only one of several
+factors that influence code-switching decisions
+Desai shows that topic and cultural association also drive code-switching, not just listener awareness. He would say
+Chen's factor is real but incomplete.
+Tip: Desai does not contradict Chen; he adds another factor. This is a 'yes, but also' response, not a direct disagreement.
+Question 8
+Correct Answer: ) He is experiencing a conflict between the urgent need to act and his body's inability
+to comply.
+Raskolnikov remembers the unlocked door ('urgent need to act') but 'his limbs refused to obey him' ('body's inability
+to comply'). He wants to leap up but cannot.
+Tip: Look for the specific evidence. 'Would have leaped up, but his limbs refused' directly states the mind-body conflict.
+Question 9
+Correct Answer: A) ...natural light group reported an average improvement of 2.4 points...artificial light
+group reported an average improvement of 0.3 points.
+The conclusion is that natural light has a GREATER EFFECT. Choice A shows the natural light improvement (2.4)
+vastly exceeding the artificial light improvement (0.3), directly supporting 'greater effect.'
+Tip: To support 'X has a greater effect than Y,' show that X's measured outcome is significantly larger than Y's.
+Question 10
+Correct Answer: C) Countries with GDP per capita between $10,000 and $40,000 show a steady, linear
+increase in life expectancy with no sign of leveling off.
+The claim is that the relationship is logarithmic (sharp increase then plateau). If the middle range shows linear
+increase with no plateau, the logarithmic pattern does not hold in that range.
+Tip: To weaken a 'logarithmic' claim, find evidence of linearity where a plateau should be. Logarithmic patterns require
+leveling off at higher values.
+Question 11
+Correct Answer: C) Hydrological modeling shows that the Ghaggar-Hakra river system...changed course
+around 2000 BCE due to tectonic activity rather than reduced rainfall.
+Vasquez claims reduced rainfall caused agricultural collapse. If the water loss was due to tectonic activity (river
+course change) rather than rainfall, her specific mechanism is wrong.
+Tip: To weaken a causal hypothesis, show that the observed effect has a different cause. Vasquez says 'rainfall'; choice C
+says 'tectonic activity.'
+Question 12
+Correct Answer: B) "Arendt's portrait of Eichmann suggests that moral catastrophe can arise not from
+extraordinary malice but from the ordinary human tendency to follow orders without reflection."
+The underlined claim says Eichmann's evil was 'thoughtlessness, an inability to consider consequences.' Choice B
+paraphrases this: 'ordinary tendency to follow orders without reflection.'
+Tip: Match the quotation to the key terms in the claim. 'Thoughtlessness' = 'without reflection.' 'Not fanaticism' = 'not
+extraordinary malice.'
+Question 13
+Correct Answer: A) A Douglas fir seedling genetically related to a nearby mother tree received 40% more
+carbon through the fungal network than an unrelated seedling...
+The claim says mother trees 'preferentially send carbon to their own seedlings.' Choice A directly shows a related
+seedling receiving more carbon than an unrelated one.
+C
+
+-- 21 of 27 --
+
+Tip: The key word is 'preferentially.' You need evidence comparing related vs. unrelated seedlings receiving different
+amounts.
+Question 14
+Correct Answer: B) employees are less likely to leave residual attention on a previous task if they have
+had the opportunity to bring it to completion before transitioning.
+Leroy's finding is that finishing a task before starting a new one reduces attention residue. Uninterrupted work blocks
+let people finish tasks, which reduces residue, which improves productivity.
+Tip: The blank must logically connect 'uninterrupted blocks' to 'improved productivity' through the mechanism of 'attention
+residue.' Choice B does this.
+Question 15
+Correct Answer: A) convection currents may play a role in some instances of the Mpemba effect but are
+not the sole mechanism responsible for the phenomenon.
+The convection hypothesis predicts the effect should disappear without convection. Brownridge suppressed
+convection but still observed the effect. So convection is not the only cause, but may still contribute.
+Tip: When an experiment removes variable X and the effect persists, X is not the sole cause. It may still be a contributing
+factor.
+Question 16
+Correct Answer: C) can regrow
+The subject is 'the axolotl.' The sentence needs a finite verb phrase that describes what the axolotl does. 'Can
+regrow' is a modal verb + infinitive that creates a complete predicate.
+Tip: Check that the blank produces a complete clause. 'To regrow' and 'regrowing' are non-finite. 'Having regrown' is a
+perfect participle. Only 'can regrow' works as a main verb.
+Question 17
+Correct Answer: ) had predicted
+The galaxies are 'far more luminous and massive than existing models _______.' The models' predictions came
+before the telescope's observations. Past perfect ('had predicted') correctly places the prediction before the
+discovery.
+Tip: Use past perfect when one past event (prediction) preceded another past event (discovery). Models had predicted X
+before the telescope revealed Y.
+Question 18
+Correct Answer: A) but also the work of
+The sentence uses 'not only... but also...' construction. 'Not only traditional art forms... but also the work of
+contemporary architects.' No extra commas needed in this construction.
+Tip: The 'not only... but also...' correlative conjunction must be completed with 'but also' and no intervening comma.
+Question 19
+Correct Answer: A) itself,
+The sentence has a main clause ('Fleming noticed that a mold colony had created a bacteria-free zone around itself')
+followed by an appositive ('an observation that led to...'). A comma separates the main clause from the appositive.
+Tip: When a noun phrase restates or elaborates on the preceding clause, a comma introduces the appositive. 'Around
+itself, an observation that...'
+Question 20
+Correct Answer: B) is
+D
+
+-- 22 of 27 --
+
+The subject is 'The collection' (singular). 'Along with the accompanying archive' is a prepositional phrase that does
+not change the subject's number. Singular subject takes singular verb: 'is.'
+Tip: 'Along with,' 'together with,' and 'as well as' do not create compound subjects. The verb agrees with the first noun only.
+Question 21
+Correct Answer: ) For instance,
+Lakoff argues that abstract thinking uses metaphor. The example of 'approaching deadline' and 'past is behind'
+illustrates this claim. 'For instance' introduces a specific example.
+Tip: When a general claim is followed by a specific illustration, 'For instance' or 'For example' is the correct transition.
+Question 22
+Correct Answer: C) In contrast,
+Germany shut down nuclear reactors; France is building more. These are opposite responses to the same issue. 'In
+contrast' introduces an opposing action.
+Tip: When two entities take opposite approaches to the same situation, 'In contrast' signals the shift.
+Question 23
+Correct Answer: D) evidently,
+The researchers found that reading literary fiction improves empathy scores. The skill of perspective-taking 'evidently
+transfers' to real-world interactions. 'Evidently' means 'as the evidence suggests.'
+Tip: 'Evidently' means 'as shown by the evidence.' It connects the research finding to the real-world application.
+Question 24
+Correct Answer: C) In particular,
+Kahneman showed people deviate from rationality in predictable ways. Loss aversion is a specific example of such a
+deviation. 'In particular' introduces a specific instance of a general claim.
+Tip: 'In particular' narrows from a general statement to a specific example. Kahneman showed deviations generally; loss
+aversion is one particular example.
+Question 25
+Correct Answer: B) Although the Ocean Cleanup project has developed systems to capture floating
+debris from the GPGP, 94% of the patch consists of microplastics dispersed throughout the water
+column, making comprehensive removal extremely difficult.
+The goal is to explain WHY cleanup is difficult DESPITE technology. Choice B contrasts the technology (captures
+floating debris) with the problem (94% are dispersed microplastics), explaining the difficulty.
+Tip: For 'explain why X despite Y,' the answer must contain both the effort (Y) and the obstacle (X), connected logically.
+Question 26
+Correct Answer: B) While CRISPR-Cas9 holds promise for improving food security and treating genetic
+disorders like sickle cell disease, its potential use for germline editing has raised ethical concerns about
+heritable changes to the human genome.
+The goal is to 'highlight a contrast between benefits and ethical concerns.' Choice B does both: benefits (food
+security, treating disorders) on one side, ethical concerns (germline editing) on the other.
+Tip: For 'contrast X and Y,' the answer must contain both X and Y with a contrasting connector like 'while' or 'although.'
+Question 27
+Correct Answer: C) The vault was designed to store backup copies of seeds so that lost collections
+could be replaced, and in 2015, seeds were withdrawn for the first time to restore gene bank collections
+destroyed during the Syrian civil war.
+D
+
+-- 23 of 27 --
+
+The goal is 'evidence that the vault has served its intended purpose.' Its purpose is to provide backup seeds when
+collections are lost. In 2015, seeds were withdrawn to replace collections destroyed in Syria. This is the vault doing
+exactly what it was designed to do.
+Tip: For 'evidence it served its purpose,' match the stated design goal to an actual instance of that goal being fulfilled.
+
+-- 24 of 27 --
+
+SECTION 2, HARD MODULE: Math (Adaptive)
+Question 1
+Correct Answer: B) 5
+2x + 3y = 14 and 5x + 7y = 33. Multiply equation 1 by 7: 14x + 21y = 98. Multiply equation 2 by 3: 15x + 21y = 99.
+Subtract: x = 1. Then 2(1) + 3y = 14, so 3y = 12, y = 4. Therefore x + y = 1 + 4 = 5.
+Tip: Use elimination to solve systems. Multiply equations to make one variable's coefficients equal, then subtract.
+Question 2
+Correct Answer: 7.5
+Let a = liters of Solution A, b = liters of Solution B. a + b = 20 and 0.30a + 0.70b = 0.55(20) = 11. From the first: b =
+20 − a. Substitute: 0.30a + 0.70(20 − a) = 11. 0.30a + 14 − 0.70a = 11. −0.40a = −3. a = 7.5.
+Tip: Set up a mixture equation: (concentration 1)(amount 1) + (concentration 2)(amount 2) = (desired concentration)(total
+amount).
+Question 3
+Correct Answer: 5
+4(3x + k) = 12x + 4k. For this to equal 12x + 20, we need 4k = 20, so k = 5.
+Tip: Distribute the left side and compare coefficients. For infinitely many solutions, both sides must be identical.
+Question 4
+Correct Answer: A) 11
+Vertex form: f(x) = 2(x − 3)² + (−7) = 2(x − 3)² − 7. f(0) = 2(0 − 3)² − 7 = 2(9) − 7 = 18 − 7 = 11.
+Tip: Write the quadratic in vertex form using the given vertex, then evaluate at x = 0.
+Question 5
+Correct Answer: −5
+f(x) = (x + 3)² − 16 has its minimum at x = −3. g(x) = f(x + 2) shifts the graph left by 2, so the minimum is at x = −3 − 2
+= −5.
+Tip: g(x) = f(x + 2) shifts the graph of f LEFT by 2 units. Shift the vertex x-coordinate accordingly.
+Question 6
+Correct Answer: C) 8
+h(h(x)) = a(ax + b) + b = a²x + ab + b = 9x + 20. So a² = 9, giving a = 3. Then ab + b = 3(5) + 5 = 20, so b = 5. Check:
+h(3x+5) = 3(3x+5) + 5 = 9x + 20. Correct. a + b = 3 + 5 = 8.
+Tip: Compose h with itself: h(h(x)) = a(ax+b)+b = a²x + ab + b. Set coefficients equal to 9x + 20.
+Question 7
+Correct Answer: ) 29
+(x + y)² = x² + 2xy + y² = 49. Since xy = 10, we have 2xy = 20. So x² + y² = 49 − 20 = 29.
+Tip: Use the identity (x + y)² = x² + 2xy + y². Subtract 2xy to isolate x² + y².
+Question 8
+Correct Answer: 12/5
+27^x = 9^(y+1). Rewrite: 3^(3x) = 3^(2(y+1)) = 3^(2y+2). So 3x = 2y + 2. With x + y = 5 (so y = 5 − x): 3x = 2(5 − x) +
+2 = 12 − 2x. 5x = 12. x = 12/5.
+Tip: Convert to the same base (base 3). Then set exponents equal and solve the system.
+D
+
+-- 25 of 27 --
+
+Question 9
+Correct Answer: −2
+By the Remainder Theorem: p(1) = 2 + a + b + 6 = 3, so a + b = −5. p(−1) = −2 + a − b + 6 = 5, so a − b = 1. Adding
+the two equations: 2a = −4, giving a = −2. (Then b = −3.)
+Tip: Use the Remainder Theorem: p(c) equals the remainder when p(x) is divided by (x − c). Set up two equations and
+solve.
+Question 10
+Correct Answer: B) 12
+For exactly one solution, the discriminant must be zero: b² − 4ac = k² − 4(1)(36) = k² − 144 = 0. So k² = 144, k = 12
+(since k is positive).
+Tip: One solution (repeated root) means discriminant = 0. Set b² − 4ac = 0 and solve for k.
+Question 11
+Correct Answer: 9
+f(x) = −x² + 10x − 16. Maximum at x = −b/(2a) = −10/(2(−1)) = 5. f(5) = −25 + 50 − 16 = 9.
+Tip: Find the vertex x-coordinate with −b/(2a), then evaluate f at that point.
+Question 12
+Correct Answer: ) 4
+Let the numbers be p and q. p + q = 20 and pq = 96. (p − q)² = (p + q)² − 4pq = 400 − 384 = 16. |p − q| = 4. (The
+numbers are 8 and 12.)
+Tip: Use the identity (p − q)² = (p + q)² − 4pq to find the difference without finding individual values.
+Question 13
+Correct Answer: 60/13
+AC = √(13² − 5²) = √(169 − 25) = √144 = 12. Area of triangle ABC = (1/2)(5)(12) = 30. Also area = (1/2)(BC)(BD) =
+(1/2)(13)(BD). So 30 = (13/2)(BD), giving BD = 60/13.
+Tip: Calculate the area two ways: using the two legs, and using the hypotenuse with the altitude. Set them equal to find the
+altitude.
+Question 14
+Correct Answer: B) 18
+From points (2,6) and (8,6), the center's x-coordinate is (2+8)/2 = 5. From points (2,6) and (2,0), the center's
+y-coordinate is (6+0)/2 = 3. Center = (5,3). r² = (5−2)² + (3−0)² = 9 + 9 = 18. Verify with all three points: each gives r²
+= 18.
+Tip: Find the center using perpendicular bisectors. The center is equidistant from all three points.
+Question 15
+Correct Answer: 504π
+Cylinder volume = π(6)²(10) = 360π. Hemisphere volume = (2/3)π(6)³ = (2/3)(216)π = 144π. Total = 360π + 144π =
+504π.
+Tip: Add the cylinder volume (πr²h) and the hemisphere volume ((2/3)πr³, which is half of (4/3)πr³).
+Question 16
+Correct Answer: C) 24.5
+Line through (2,5) and (6,1): slope = (1−5)/(6−2) = −1. Equation: y − 5 = −1(x − 2), so y = −x + 7. x-intercept: 0 = −x +
+7, x = 7, point (7,0). y-intercept: x = 0, y = 7, point (0,7). Triangle area = (1/2)(7)(7) = 24.5.
+Tip: Find the line equation, then find x and y intercepts. The triangle has legs along the axes; area = (1/2)(base)(height).
+D
+
+-- 26 of 27 --
+
+Question 17
+Correct Answer: A) y = −(x − 3)² + 2
+Reflecting y = (x−3)² + 2 over the line y = 2: the vertex (3,2) is ON the line y = 2, so it stays fixed. The parabola opens
+upward; reflected, it opens downward. Result: y = −(x−3)² + 2.
+Tip: When reflecting over y = k, points on the line stay fixed, and the direction of opening reverses. If the vertex is on the
+line of reflection, only the sign of the leading coefficient changes.
+Question 18
+Correct Answer: B) 27
+Original sum = 10 × 24 = 240. New sum = 240 + 57 = 297. New mean = 297/11 = 27.
+Tip: New mean = (old sum + new value) / (old count + 1). Calculate old sum from old mean and count.
+Question 19
+Correct Answer: ) 1/11
+P(both blue) = (4/12)(3/11) = 12/132 = 1/11.
+Tip: Without replacement: first draw 4/12, second draw 3/11. Multiply the probabilities.
+Question 20
+Correct Answer: 15
+Tip: Set up the inequality and find the smallest whole number of hours. Since doubling happens every 3 hours, t must be a
+multiple of 3.
+Question 21
+Correct Answer: A) 5/13
+In right triangle PQR with right angle at Q: sin(P) = opposite/hypotenuse = QR/PR = 5/13. cos(R) =
+adjacent/hypotenuse = QR/PR = 5/13. So cos(R) = sin(P) = 5/13.
+Tip: In a right triangle, sin of one acute angle equals cos of the other. sin(P) = cos(R) when P + R = 90°.
+Question 22
+Correct Answer: 22/3
+|2x − 3| = |x + 5|. Case 1: 2x − 3 = x + 5, so x = 8. Case 2: 2x − 3 = −(x + 5) = −x − 5, so 3x = −2, x = −2/3. Both
+solutions check out. Sum = 8 + (−2/3) = 24/3 − 2/3 = 22/3.
+Tip: Remove absolute values by considering both cases: the expressions are equal, or they are negatives of each other.
+Check both solutions in the original equation.
+End of Answer Key
+These questions are 100% original compositions designed to reflect the format and difficulty of the
+Digital SAT. They are not affiliated with, endorsed by, or sourced from the College Board or any official
+SAT materials.
+P = 500 * 2^(t/3). We need 500 * 2^(t/3) > 10,000, so 2^(t/3) > 20. Since 2^4 = 16 < 20 and 2^5 = 32 > 20, t/3 must exceed 4, so t > 12. At t =
+15: 500 * 2^5 = 16,000 > 10,000. The answer is 15 hours.
+D
+
+-- 27 of 27 --
+
