@@ -1,1 +1,0 @@
-import{b as r,j as t,N as s,O as i}from"./index-BQkelnf1.js";function o(){const{user:e,isLoading:n}=r();return n?t.jsx("div",{className:"min-h-screen flex items-center justify-center",children:"Loading..."}):e?e.role==="ADMIN"?t.jsx(s,{to:"/admin"}):t.jsx(i,{}):t.jsx(s,{to:"/auth/login"})}export{o as component};
