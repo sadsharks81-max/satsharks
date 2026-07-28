@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUserRole = exports.updateUserStatus = exports.updateUserSubscription = exports.getUsers = exports.updateUserSettings = exports.getCurrentUser = void 0;
+exports.updateUserAccessDates = exports.updateUserRole = exports.updateUserStatus = exports.updateUserSubscription = exports.getUsers = exports.updateUserSettings = exports.getCurrentUser = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const User_1 = __importDefault(require("../models/User"));
 const PaymentProof_1 = __importDefault(require("../models/PaymentProof"));
@@ -35,6 +35,9 @@ const getCurrentUser = async (req, res) => {
                 country: user.country,
                 region: user.region,
                 subscription: user.subscription,
+                subscriptionExpiry: user.subscriptionExpiry,
+                portalAccessStart: user.portalAccessStart,
+                portalAccessEnd: user.portalAccessEnd,
                 status: user.status,
                 targetScore: user.targetScore ?? 1400,
                 streakCount: user.streakCount ?? 0,
@@ -160,3 +163,25 @@ const updateUserRole = async (req, res) => {
     }
 };
 exports.updateUserRole = updateUserRole;
+const updateUserAccessDates = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { portalAccessStart, portalAccessEnd } = req.body;
+        const start = portalAccessStart ? new Date(portalAccessStart) : null;
+        const end = portalAccessEnd ? new Date(portalAccessEnd) : null;
+        if (start && end && end <= start) {
+            return res.status(400).json({ success: false, error: "The ending date must be after the starting date." });
+        }
+        const update = { portalAccessStart: start, portalAccessEnd: end, subscriptionExpiry: end };
+        if (end)
+            update.subscription = end > new Date() ? "PAID" : "FREE";
+        const user = await User_1.default.findByIdAndUpdate(id, update, { new: true }).select("-password");
+        if (!user)
+            return res.status(404).json({ success: false, error: "User not found" });
+        res.status(200).json({ success: true, user });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+exports.updateUserAccessDates = updateUserAccessDates;

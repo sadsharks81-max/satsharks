@@ -3,25 +3,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteLiveClass = exports.updateLiveClassStatus = exports.getLiveClassById = exports.getLiveClasses = exports.createLiveClass = void 0;
+exports.deleteLiveClass = exports.updateMeetLink = exports.updateLiveClassStatus = exports.getLiveClassById = exports.getLiveClasses = exports.createLiveClass = void 0;
 const LiveClass_1 = __importDefault(require("../models/LiveClass"));
+const isValidHttpsUrl = (value) => {
+    try {
+        const url = new URL(value);
+        return url.protocol === "https:";
+    }
+    catch {
+        return false;
+    }
+};
 // Create a new online class session
 const createLiveClass = async (req, res) => {
     try {
-        const { title, description, scheduledAt, duration, teacherId } = req.body;
+        const { title, description, scheduledAt, duration, teacherId, meetLink } = req.body;
         if (!title || !scheduledAt || !teacherId) {
             return res.status(400).json({ success: false, error: "Title, scheduled time, and teacher are required" });
         }
-        // Generate a unique clean Jitsi room name
-        const randomSuffix = Math.floor(100000 + Math.random() * 900000);
-        const cleanTitle = title.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").substring(0, 20);
-        const roomName = `satsharks-${cleanTitle || "class"}-${randomSuffix}`;
+        if (meetLink && !isValidHttpsUrl(meetLink)) {
+            return res.status(400).json({ success: false, error: "Google Meet link must be a valid https:// URL" });
+        }
         const newClass = await LiveClass_1.default.create({
             title,
             description,
             scheduledAt: new Date(scheduledAt),
             duration: duration || 60,
-            roomName,
+            meetLink: meetLink || null,
             teacher: teacherId,
             createdBy: req.user?.userId,
         });
@@ -98,6 +106,30 @@ const updateLiveClassStatus = async (req, res) => {
     }
 };
 exports.updateLiveClassStatus = updateLiveClassStatus;
+// Set or update the Google Meet link for a class
+const updateMeetLink = async (req, res) => {
+    try {
+        const { meetLink } = req.body;
+        if (!meetLink || !isValidHttpsUrl(meetLink)) {
+            return res.status(400).json({ success: false, error: "A valid https:// Google Meet link is required" });
+        }
+        const liveClass = await LiveClass_1.default.findById(req.params.id);
+        if (!liveClass) {
+            return res.status(404).json({ success: false, error: "Class session not found" });
+        }
+        // Security check: only teacher or admin can modify this class
+        if (req.user?.role !== "ADMIN" && String(liveClass.teacher) !== String(req.user?.userId)) {
+            return res.status(403).json({ success: false, error: "Unauthorized to update this class" });
+        }
+        liveClass.meetLink = meetLink;
+        await liveClass.save();
+        res.status(200).json({ success: true, liveClass });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+exports.updateMeetLink = updateMeetLink;
 // Delete a class session
 const deleteLiveClass = async (req, res) => {
     try {

@@ -16,6 +16,8 @@ router.get("/:id", auth_middleware_1.authenticate, live_class_controller_1.getLi
 router.post("/", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.createLiveClass);
 // Update status (only admins or teacher assigned to the class)
 router.put("/:id/status", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.updateLiveClassStatus);
+// Set/update the Google Meet link (only admins or teacher assigned to the class)
+router.put("/:id/meet-link", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.updateMeetLink);
 // Delete class (only creator or admin)
 router.delete("/:id", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.deleteLiveClass);
 exports.default = router;

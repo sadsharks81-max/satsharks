@@ -9,7 +9,8 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const getStudyMaterials = async (req, res, next) => {
     try {
-        const materials = await StudyMaterial_1.default.find()
+        const filter = req.query.category ? { category: req.query.category } : {};
+        const materials = await StudyMaterial_1.default.find(filter)
             .populate("uploadedBy", "name email")
             .sort({ createdAt: -1 });
         return res.status(200).json({
@@ -24,13 +25,16 @@ const getStudyMaterials = async (req, res, next) => {
 exports.getStudyMaterials = getStudyMaterials;
 const uploadStudyMaterial = async (req, res, next) => {
     try {
-        const { title, description } = req.body;
+        const { title, description, category } = req.body;
         const file = req.file;
         if (!title) {
             return res.status(400).json({ success: false, error: "Title is required" });
         }
         if (!file) {
             return res.status(400).json({ success: false, error: "PDF file is required" });
+        }
+        if (!["MATH", "READING_WRITING"].includes(category)) {
+            return res.status(400).json({ success: false, error: "Choose Math or Reading & Writing." });
         }
         const fileUrl = `/uploads/${file.filename}`;
         const newMaterial = await StudyMaterial_1.default.create({
@@ -39,6 +43,7 @@ const uploadStudyMaterial = async (req, res, next) => {
             fileUrl,
             fileName: file.originalname,
             fileSize: file.size,
+            category,
             uploadedBy: req.user.userId,
         });
         return res.status(201).json({

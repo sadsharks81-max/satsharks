@@ -3,19 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLeaderboard = exports.getTimingAnalysis = exports.getErrorAnalysis = exports.getPredictedScore = exports.getCategoryBreakdown = exports.getPerformanceData = exports.getTestHistory = exports.getDashboardStats = void 0;
+exports.getStudentProgressReports = exports.getLeaderboard = exports.getTimingAnalysis = exports.getErrorAnalysis = exports.getPredictedScore = exports.getCategoryBreakdown = exports.getPerformanceData = exports.getUnifiedHistory = exports.getTestHistory = exports.getDashboardStats = void 0;
 const SATTestAttempt_1 = __importDefault(require("../models/SATTestAttempt"));
 const PracticeSession_1 = __importDefault(require("../models/PracticeSession"));
+const VocabularyProgress_1 = __importDefault(require("../models/VocabularyProgress"));
 const User_1 = __importDefault(require("../models/User"));
 const getDashboardStats = async (req, res) => {
     try {
         const studentId = req.user?.userId;
-        const [totalTests, practiceCount, attempts] = await Promise.all([
+        const [totalTests, practiceCount, practiceCorrect, attempts, recentPractice] = await Promise.all([
             SATTestAttempt_1.default.countDocuments({ student: studentId, status: "COMPLETED" }),
             PracticeSession_1.default.countDocuments({ student: studentId }),
+            PracticeSession_1.default.countDocuments({ student: studentId, isCorrect: true }),
             SATTestAttempt_1.default.find({ student: studentId, status: "COMPLETED" })
                 .select("percentage totalCorrect createdAt")
                 .sort({ createdAt: -1 }),
+            PracticeSession_1.default.find({ student: studentId })
+                .populate({
+                path: "question",
+                select: "text difficulty category section",
+                populate: { path: "category", select: "name" },
+            })
+                .sort({ createdAt: -1 })
+                .limit(10)
+                .lean(),
         ]);
         const avgScore = attempts.length > 0
             ? Math.round(attempts.reduce((sum, a) => sum + a.percentage, 0) / attempts.length)
@@ -26,8 +37,27 @@ const getDashboardStats = async (req, res) => {
         const recentAttempts = attempts.slice(0, 5);
         res.status(200).json({
             success: true,
-            stats: { totalTests, practiceCount, avgScore, bestScore },
+            stats: {
+                totalTests,
+                practiceCount,
+                practiceCorrect,
+                practiceIncorrect: Math.max(0, practiceCount - practiceCorrect),
+                practiceAccuracy: practiceCount > 0 ? Math.round((practiceCorrect / practiceCount) * 100) : 0,
+                avgScore,
+                bestScore,
+            },
             recentAttempts,
+            recentPractice: recentPractice.map((session) => ({
+                id: session._id,
+                question: session.question?.text || "Practice question",
+                category: session.question?.category?.name || "General",
+                section: session.question?.section || "",
+                difficulty: session.question?.difficulty || "MEDIUM",
+                selectedAnswer: session.selectedAnswer,
+                isCorrect: session.isCorrect,
+                timeSpent: session.timeSpent,
+                createdAt: session.createdAt,
+            })),
         });
     }
     catch (error) {
@@ -61,6 +91,48 @@ const getTestHistory = async (req, res) => {
     }
 };
 exports.getTestHistory = getTestHistory;
+const getUnifiedHistory = async (req, res) => {
+    try {
+        const studentId = req.user?.userId;
+        const [fullTests, practice, vocabulary] = await Promise.all([
+            SATTestAttempt_1.default.find({ student: studentId, status: "COMPLETED" })
+                .populate("test", "title year testNumber")
+                .sort({ completedAt: -1 })
+                .lean(),
+            PracticeSession_1.default.find({ student: studentId })
+                .populate({ path: "question", select: "text category difficulty", populate: { path: "category", select: "name" } })
+                .sort({ createdAt: -1 })
+                .limit(100)
+                .lean(),
+            VocabularyProgress_1.default.findOne({ student: studentId }).lean(),
+        ]);
+        res.status(200).json({
+            success: true,
+            fullTests,
+            practice: practice.map((item) => ({
+                _id: item._id,
+                title: item.question?.category?.name || "Practice Question",
+                question: item.question?.text || "Practice question",
+                correct: item.isCorrect,
+                selectedAnswer: item.selectedAnswer,
+                timeSpent: item.timeSpent || 0,
+                createdAt: item.createdAt,
+            })),
+            vocabulary: vocabulary ? [{
+                    _id: vocabulary._id,
+                    title: "Vocabulary Mastery",
+                    totalAttempts: vocabulary.totalAttempts,
+                    totalCorrect: vocabulary.totalCorrect,
+                    percentage: vocabulary.totalAttempts ? Math.round((vocabulary.totalCorrect / vocabulary.totalAttempts) * 100) : 0,
+                    updatedAt: vocabulary.updatedAt,
+                }] : [],
+        });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+exports.getUnifiedHistory = getUnifiedHistory;
 const getPerformanceData = async (req, res) => {
     try {
         const studentId = req.user?.userId;
@@ -221,6 +293,7 @@ const getErrorAnalysis = async (req, res) => {
                         difficulty: q.difficulty || "MEDIUM",
                         correctAnswer: q.correctAnswer,
                         selectedAnswer: ans.selectedAnswer,
+                        skipped: !ans.selectedAnswer,
                         explanation: q.explanation || "No explanation provided.",
                         options: q.options || [],
                         categoryName: catName,
@@ -279,8 +352,8 @@ const getTimingAnalysis = async (req, res) => {
                 }
             }
         }
-        const rwAvg = totalRwCount > 0 ? totalRwTime / totalRwCount : 71; // 71s is average for R&W
-        const mathAvg = totalMathCount > 0 ? totalMathTime / totalMathCount : 95; // 95s is average for Math
+        const rwAvg = totalRwCount > 0 ? totalRwTime / totalRwCount : 0;
+        const mathAvg = totalMathCount > 0 ? totalMathTime / totalMathCount : 0;
         const slowQuestions = [];
         // Second pass: Flag questions where timeSpent > 1.5 * average
         for (const attempt of attempts) {
@@ -289,7 +362,10 @@ const getTimingAnalysis = async (req, res) => {
                 const isRw = firstAns
                     ? firstAns.question.section === "READING_WRITING"
                     : (mod.moduleIndex === 0 || mod.moduleIndex === 1);
-                const threshold = isRw ? rwAvg * 1.5 : mathAvg * 1.5;
+                const sectionAverage = isRw ? rwAvg : mathAvg;
+                if (sectionAverage <= 0)
+                    continue;
+                const threshold = sectionAverage * 1.5;
                 for (const ans of mod.answers) {
                     const time = ans.timeSpent || 0;
                     if (time <= threshold)
@@ -349,3 +425,76 @@ const getLeaderboard = async (req, res) => {
     }
 };
 exports.getLeaderboard = getLeaderboard;
+const getStudentProgressReports = async (req, res) => {
+    try {
+        const end = req.query.end ? new Date(String(req.query.end)) : new Date();
+        end.setHours(23, 59, 59, 999);
+        const start = req.query.start ? new Date(String(req.query.start)) : new Date(end.getTime() - 6 * 86400000);
+        start.setHours(0, 0, 0, 0);
+        if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || start > end) {
+            return res.status(400).json({ success: false, error: "Invalid report date range." });
+        }
+        const students = await User_1.default.find({ role: "STUDENT" }).select("name email status targetScore").lean();
+        const dateFilter = { $gte: start, $lte: end };
+        const reports = await Promise.all(students.map(async (student) => {
+            const [attempts, practiceTotal, practiceCorrect, vocab] = await Promise.all([
+                SATTestAttempt_1.default.find({ student: student._id, status: "COMPLETED", completedAt: dateFilter })
+                    .select("percentage totalCorrect totalQuestions totalTimeTaken completedAt")
+                    .sort({ completedAt: 1 })
+                    .lean(),
+                PracticeSession_1.default.countDocuments({ student: student._id, createdAt: dateFilter }),
+                PracticeSession_1.default.countDocuments({ student: student._id, isCorrect: true, createdAt: dateFilter }),
+                VocabularyProgress_1.default.findOne({ student: student._id }).select("totalAttempts totalCorrect").lean(),
+            ]);
+            const firstScore = attempts[0]?.percentage || 0;
+            const latestScore = attempts.at(-1)?.percentage || 0;
+            const averageScore = attempts.length
+                ? Math.round(attempts.reduce((sum, item) => sum + (item.percentage || 0), 0) / attempts.length)
+                : 0;
+            return {
+                student,
+                fullTests: attempts.length,
+                firstScore,
+                latestScore,
+                averageScore,
+                improvement: latestScore - firstScore,
+                practiceTotal,
+                practiceCorrect,
+                practiceAccuracy: practiceTotal ? Math.round((practiceCorrect / practiceTotal) * 100) : 0,
+                vocabAttempts: vocab?.totalAttempts || 0,
+                vocabAccuracy: vocab?.totalAttempts ? Math.round((vocab.totalCorrect / vocab.totalAttempts) * 100) : 0,
+                attempts,
+            };
+        }));
+        const [dailyTests, dailyPractice] = await Promise.all([
+            SATTestAttempt_1.default.aggregate([
+                { $match: { status: "COMPLETED", completedAt: dateFilter } },
+                { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$completedAt" } }, tests: { $sum: 1 }, averageScore: { $avg: "$percentage" } } },
+            ]),
+            PracticeSession_1.default.aggregate([
+                { $match: { createdAt: dateFilter } },
+                { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } }, practice: { $sum: 1 }, correct: { $sum: { $cond: ["$isCorrect", 1, 0] } } } },
+            ]),
+        ]);
+        const testMap = new Map(dailyTests.map((item) => [item._id, item]));
+        const practiceMap = new Map(dailyPractice.map((item) => [item._id, item]));
+        const daily = [];
+        for (let cursor = new Date(start); cursor <= end; cursor.setDate(cursor.getDate() + 1)) {
+            const key = cursor.toISOString().slice(0, 10);
+            const tests = testMap.get(key);
+            const practice = practiceMap.get(key);
+            daily.push({
+                date: key,
+                tests: tests?.tests || 0,
+                averageScore: Math.round(tests?.averageScore || 0),
+                practice: practice?.practice || 0,
+                correct: practice?.correct || 0,
+            });
+        }
+        res.status(200).json({ success: true, reports, daily, range: { start, end } });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+exports.getStudentProgressReports = getStudentProgressReports;

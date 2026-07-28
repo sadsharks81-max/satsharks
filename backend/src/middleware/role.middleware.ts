@@ -1,5 +1,6 @@
 import { Response, NextFunction } from "express";
 import { AuthRequest } from "./auth.middleware";
+import User from "../models/User";
 
 export const requireAdmin = () => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -47,9 +48,23 @@ export const requireInternationalUser = () => {
 };
 
 export const requireActiveUser = () => {
-  return (req: AuthRequest, res: Response, next: NextFunction) => {
+  return async (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user || req.user.status === "SUSPENDED") {
       return res.status(403).json({ success: false, error: "Forbidden: Account is suspended" });
+    }
+    if (req.user.role === "STUDENT") {
+      const user = await User.findById(req.user.userId).select("portalAccessStart portalAccessEnd subscription");
+      const now = new Date();
+      if (user?.portalAccessStart && user.portalAccessStart > now) {
+        return res.status(403).json({ success: false, error: "Your portal access has not started yet." });
+      }
+      if (user?.portalAccessEnd && user.portalAccessEnd <= now) {
+        if (user.subscription !== "FREE") {
+          user.subscription = "FREE";
+          await user.save();
+        }
+        return res.status(403).json({ success: false, error: "Your portal access has expired." });
+      }
     }
     next();
   };

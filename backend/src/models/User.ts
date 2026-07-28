@@ -10,6 +10,8 @@ export interface IUser extends Document {
   subscription: "FREE" | "PAID";
   subscriptionPlan?: string;
   subscriptionExpiry?: Date;
+  portalAccessStart?: Date;
+  portalAccessEnd?: Date;
   status: "ACTIVE" | "SUSPENDED";
   resetToken?: string;
   resetTokenExpiry?: Date;
@@ -56,6 +58,8 @@ const UserSchema: Schema = new Schema(
     subscriptionExpiry: {
       type: Date,
     },
+    portalAccessStart: { type: Date },
+    portalAccessEnd: { type: Date },
     status: {
       type: String,
       enum: ["ACTIVE", "SUSPENDED"],

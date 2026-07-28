@@ -24,6 +24,7 @@ interface Material {
   fileName: string;
   fileSize: number;
   createdAt: string;
+  category: "MATH" | "READING_WRITING";
 }
 
 function TeacherStudyMaterials() {
@@ -34,6 +35,7 @@ function TeacherStudyMaterials() {
   // Form fields
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState<"MATH" | "READING_WRITING">("MATH");
   const [file, setFile] = useState<File | null>(null);
   
   const [uploading, setUploading] = useState(false);
@@ -69,6 +71,7 @@ function TeacherStudyMaterials() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
+    formData.append("category", category);
     formData.append("file", file);
 
     try {
@@ -210,6 +213,13 @@ function TeacherStudyMaterials() {
             required
             placeholder="e.g. SAT Grammar Rules Cheatsheet"
           />
+          <label className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+            Material Category
+            <select value={category} onChange={(e) => setCategory(e.target.value as typeof category)} className="mt-2 w-full rounded-xl border border-outline-variant bg-surface p-3 text-sm normal-case">
+              <option value="MATH">Math</option>
+              <option value="READING_WRITING">English, Reading & Writing</option>
+            </select>
+          </label>
           <Textarea
             label="Short Description"
             value={description}

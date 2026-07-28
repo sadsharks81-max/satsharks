@@ -18,6 +18,7 @@ interface Material {
   fileName: string;
   fileSize: number;
   createdAt: string;
+  category: "MATH" | "READING_WRITING";
 }
 
 function StudyMaterialsPage() {
@@ -25,6 +26,7 @@ function StudyMaterialsPage() {
   const [loading, setLoading] = useState(true);
   const [activePdfUrl, setActivePdfUrl] = useState<string | null>(null);
   const [activePdfTitle, setActivePdfTitle] = useState<string>("");
+  const [category, setCategory] = useState<"MATH" | "READING_WRITING">("MATH");
 
   useEffect(() => {
     api.get("/api/study-materials").then((res) => {
@@ -64,8 +66,12 @@ function StudyMaterialsPage() {
         <h1 className="text-3xl font-bold mb-1">Study Materials</h1>
         <p className="text-on-surface-variant text-sm font-medium">Browse, view, and read study materials and notes shared by your instructors</p>
       </div>
+      <div className="mb-6 flex flex-wrap gap-2">
+        <button onClick={() => setCategory("MATH")} className={`rounded-xl px-5 py-2 text-sm font-bold ${category === "MATH" ? "bg-primary text-on-primary" : "bg-surface-container-low"}`}>Math Materials</button>
+        <button onClick={() => setCategory("READING_WRITING")} className={`rounded-xl px-5 py-2 text-sm font-bold ${category === "READING_WRITING" ? "bg-primary text-on-primary" : "bg-surface-container-low"}`}>English, Reading & Writing</button>
+      </div>
 
-      {materials.length === 0 ? (
+      {materials.filter((item) => item.category === category).length === 0 ? (
         <EmptyState
           icon="menu_book"
           title="No Study Materials Yet"
@@ -73,7 +79,7 @@ function StudyMaterialsPage() {
         />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {materials.map((mat) => (
+          {materials.filter((item) => item.category === category).map((mat) => (
             <div key={mat._id} className="bg-surface rounded-2xl p-6 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover-lift">
               <div>
                 <div className="flex items-start justify-between gap-3 mb-4">

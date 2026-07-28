@@ -40,6 +40,12 @@ const StudyMaterialSchema = new mongoose_1.Schema({
     fileUrl: { type: String, required: true },
     fileName: { type: String, required: true },
     fileSize: { type: Number, required: true },
+    category: {
+        type: String,
+        enum: ["MATH", "READING_WRITING"],
+        required: true,
+        default: "MATH",
+    },
     uploadedBy: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
 }, { timestamps: true });
 exports.default = mongoose_1.default.model("StudyMaterial", StudyMaterialSchema);

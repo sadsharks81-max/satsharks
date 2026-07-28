@@ -1,6 +1,18 @@
 import React from "react";
 import katex from "katex";
 
+export function stripEmojis(value: string | undefined | null): string {
+  if (!value) return "";
+  return value
+    .replace(/\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?/gu, "")
+    .replace(/[\u{1F1E6}-\u{1F1FF}]{2}/gu, "")
+    .replace(/[0-9#*]\uFE0F?\u20E3/gu, "")
+    .replace(/\u200D/gu, "")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/ *\n */g, "\n")
+    .trim();
+}
+
 const FRACTION_PATTERN =
   /(?<![\wπ/])(-?[A-Za-z0-9π]+°?)\/([A-Za-z0-9π]+°?)(?![\wπ/])/g;
 
@@ -120,6 +132,7 @@ function renderPlainTextMath(text: string): React.ReactNode[] {
 
 export function renderFormattedText(text: string | undefined | null): React.ReactNode {
   if (!text) return "";
+  text = stripEmojis(text);
   
   // Split by $$ (block math) and $ (inline math)
   const mathParts = text.split(/(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$)/g);

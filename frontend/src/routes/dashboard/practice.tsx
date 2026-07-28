@@ -5,6 +5,7 @@ import { Badge } from "../../components/ui/Badge";
 import { Icon } from "../../components/common/Icon";
 import { Select } from "../../components/ui/Select";
 import { EmptyState } from "../../components/ui/EmptyState";
+import { Modal } from "../../components/ui/Modal";
 import { ZoomableImage } from "../../components/ui/ZoomableImage";
 import { api, resolveImageUrl } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
@@ -38,6 +39,13 @@ const getRWTextSplit = (text: string) => {
   };
 };
 
+const CUSTOM_TEST_CATEGORY_NAMES = {
+  MATH: ["sat advanced math", "sat algebra", "sat data & statistics", "sat geometry"],
+  READING_WRITING: ["sat grammar & writing", "sat reading & writing", "sat vocabulary", "sat reading comprehension"],
+};
+
+const normalizedCategoryName = (name: string) => name.trim().toLowerCase();
+
 function Practice() {
   const { user } = useAuth();
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -49,6 +57,20 @@ function Practice() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, correct: 0 });
   const [totalSolved, setTotalSolved] = useState(0);
+  const [availableQuestionCount, setAvailableQuestionCount] = useState(0);
+  const [attemptedAnswers, setAttemptedAnswers] = useState<Array<{
+    questionId: string;
+    question: string;
+    selectedAnswer: string;
+    correctAnswer: string;
+    isCorrect: boolean;
+  }>>([]);
+  const [sessionSummary, setSessionSummary] = useState<{
+    total: number;
+    correct: number;
+    timeSpent: number;
+    answers: typeof attemptedAnswers;
+  } | null>(null);
 
   const fetchPracticeHistory = async () => {
     try {
@@ -93,6 +115,43 @@ function Practice() {
   const [timeSpent, setTimeSpent] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [timerMinutes, setTimerMinutes] = useState("");
+
+  const finishPracticeSession = () => {
+    setSessionSummary({
+      total: stats.total,
+      correct: stats.correct,
+      timeSpent,
+      answers: [...attemptedAnswers],
+    });
+    setIsPracticeMode(false);
+    setShowCalculator(false);
+    setShowReferenceModal(false);
+    setIsTimerRunning(false);
+    setTimeRemaining(null);
+    setTimeSpent(0);
+    setTimerMinutes("");
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setResult(null);
+    setStats({ total: 0, correct: 0 });
+    setAttemptedAnswers([]);
+  };
+
+  const startPracticeSession = () => {
+    const minutes = Number(timerMinutes);
+    if (!Number.isFinite(minutes) || minutes <= 0) return;
+    setCurrentIdx(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setResult(null);
+    setStats({ total: 0, correct: 0 });
+    setAttemptedAnswers([]);
+    setTimeSpent(0);
+    setTimeRemaining(Math.round(minutes * 60));
+    setIsTimerRunning(true);
+    setIsPracticeMode(true);
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -104,7 +163,7 @@ function Practice() {
           if (prev <= 1) {
             setIsTimerRunning(false);
             setTimeout(() => {
-              alert("Time's up! Your practice session timer has ended. You can continue practicing without any interruptions.");
+              finishPracticeSession();
             }, 50);
             return 0;
           }
@@ -113,7 +172,7 @@ function Practice() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isPracticeMode, isTimerRunning]);
+  }, [isPracticeMode, isTimerRunning, stats, attemptedAnswers, timeSpent]);
 
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
@@ -121,32 +180,29 @@ function Practice() {
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
-  const handleTimerClick = () => {
-    if (timeRemaining === null || timeRemaining === 0) {
-      const input = window.prompt("How many minutes do you want to set for this practice session?", "15");
-      const mins = parseInt(input || "0", 10);
-      if (mins > 0) {
-        setTimeRemaining(mins * 60);
-        setIsTimerRunning(true);
-      }
-    } else {
-      setIsTimerRunning(!isTimerRunning);
-    }
-  };
-
-
-
   const fetchQuestions = async () => {
     setLoading(true);
     const params = new URLSearchParams();
     if (section) params.set("section", section);
     if (difficulty) params.set("difficulty", difficulty);
     if (category) params.set("category", category);
-    params.set("limit", "50");
+    if (!category) {
+      const excludedCategoryIds = categories
+        .filter((item) => {
+          const name = normalizedCategoryName(item.name);
+          return Object.values(CUSTOM_TEST_CATEGORY_NAMES).flat().includes(name)
+            || name === "simple algebra"
+            || name === "algebra";
+        })
+        .map((item) => item._id);
+      if (excludedCategoryIds.length) params.set("excludeCategories", excludedCategoryIds.join(","));
+    }
+    params.set("limit", "100");
 
     const res = await api.get(`/api/questions?${params}`);
     if (res.success) {
       setQuestions(res.questions || []);
+      setAvailableQuestionCount(res.pagination?.total || 0);
       setCurrentIdx(0);
       setSelectedAnswer(null);
       setShowResult(false);
@@ -157,7 +213,7 @@ function Practice() {
 
   useEffect(() => {
     fetchQuestions();
-  }, [section, difficulty, category]);
+  }, [section, difficulty, category, categories]);
 
   const handleGenerateCustomTest = async () => {
     setIsGeneratingTest(true);
@@ -193,6 +249,16 @@ function Practice() {
         total: prev.total + 1,
         correct: prev.correct + (res.result.isCorrect ? 1 : 0),
       }));
+      setAttemptedAnswers((prev) => [
+        ...prev,
+        {
+          questionId: questions[currentIdx]._id,
+          question: questions[currentIdx].text,
+          selectedAnswer,
+          correctAnswer: res.result.correctAnswer,
+          isCorrect: res.result.isCorrect,
+        },
+      ]);
       setTotalSolved((prev) => prev + 1);
     } else {
       alert(res.error || "Failed to submit answer");
@@ -222,6 +288,24 @@ function Practice() {
 
   const q = questions[currentIdx];
   const rwSplit = q ? getRWTextSplit(q.text) : { passage: "", prompt: "" };
+  const allCustomCategoryNames = Object.values(CUSTOM_TEST_CATEGORY_NAMES).flat();
+  const regularPracticeCategories = categories.filter((item) => {
+    const name = normalizedCategoryName(item.name);
+    return !allCustomCategoryNames.includes(name)
+      && name !== "simple algebra"
+      && name !== "algebra"
+      && (!section || item.section === section);
+  });
+  const availableCustomCategories = categories.filter((item) =>
+    item.section === customSubject
+    && CUSTOM_TEST_CATEGORY_NAMES[customSubject].includes(normalizedCategoryName(item.name))
+  );
+
+  useEffect(() => {
+    if (category && !regularPracticeCategories.some((item) => item._id === category)) {
+      setCategory("");
+    }
+  }, [section, category, regularPracticeCategories]);
 
   if (isPracticeMode && q) {
     const isMath = q.section === "MATH" || section === "MATH";
@@ -236,46 +320,23 @@ function Practice() {
               SAT Practice
             </h2>
             <button
-              onClick={() => {
-                setIsPracticeMode(false);
-                setShowCalculator(false);
-                setShowReferenceModal(false);
-              }}
+              onClick={finishPracticeSession}
               className="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-error/30 text-error hover:bg-error/5 transition-colors text-xs font-bold cursor-pointer"
             >
               <Icon name="logout" className="text-[13px]" />
               <span>Exit</span>
             </button>
             
-            <button
-              onClick={handleTimerClick}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-colors text-xs font-bold cursor-pointer ${
-                isTimerRunning 
-                  ? "border-primary bg-primary/10 text-primary" 
-                  : "border-outline-variant hover:bg-surface-container-low text-on-surface-variant"
-              }`}
-            >
-              <Icon name={timeRemaining === null || timeRemaining === 0 ? "timer" : isTimerRunning ? "pause" : "play_arrow"} className="text-[13px]" />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-primary bg-primary/10 text-primary text-xs font-bold">
+              <Icon name="timer" className="text-[13px]" />
               <span className="font-mono">
-                {timeRemaining === null ? "Set Timer" : formatTime(timeRemaining)}
+                {formatTime(timeRemaining || 0)}
               </span>
-            </button>
-            {timeRemaining !== null && !isTimerRunning && (
-              <button
-                onClick={() => {
-                  setTimeRemaining(null);
-                  setIsTimerRunning(false);
-                }}
-                className="flex items-center justify-center p-1 rounded-lg border border-outline-variant hover:bg-surface-container-low text-on-surface-variant transition-colors"
-                title="Clear Timer"
-              >
-                <Icon name="close" className="text-[14px]" />
-              </button>
-            )}
+            </div>
           </div>
 
           {/* Center/Middle: Filters Row */}
-          <div className="flex items-center gap-2 flex-1 justify-center max-w-[700px]">
+          <div className="hidden">
             <Select
               label=""
               value={section}
@@ -305,7 +366,7 @@ function Practice() {
               onChange={(e) => setCategory(e.target.value)}
               options={[
                 { value: "", label: "All Categories" },
-                ...categories.map((c) => ({ value: c._id, label: c.name })),
+                ...regularPracticeCategories.map((c) => ({ value: c._id, label: c.name })),
               ]}
               className="!w-auto !py-1 !text-xs !max-w-[180px] md:!max-w-[240px]"
             />
@@ -815,13 +876,22 @@ function Practice() {
                   </div>
                 )}
 
-                <button
-                  onClick={handleNext}
-                  disabled={currentIdx >= questions.length - 1}
-                  className="px-4 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-xs font-semibold transition-colors cursor-pointer disabled:opacity-30 disabled:hover:bg-transparent flex items-center gap-1.5"
-                >
-                  Next <Icon name="arrow_forward" className="text-[14px]" />
-                </button>
+                {showResult && currentIdx >= questions.length - 1 ? (
+                  <button
+                    onClick={finishPracticeSession}
+                    className="px-4 py-2.5 rounded-xl bg-primary text-on-primary text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5"
+                  >
+                    View Results <Icon name="analytics" className="text-[14px]" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleNext}
+                    disabled={currentIdx >= questions.length - 1}
+                    className="px-4 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-xs font-semibold transition-colors cursor-pointer disabled:opacity-30 disabled:hover:bg-transparent flex items-center gap-1.5"
+                  >
+                    Next <Icon name="arrow_forward" className="text-[14px]" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -893,7 +963,7 @@ function Practice() {
 
       {activeTab === "PRACTICE" && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8 w-full items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 mb-4 w-full items-end">
         <Select
           label=""
           value={section}
@@ -923,18 +993,41 @@ function Practice() {
           onChange={(e) => setCategory(e.target.value)}
           options={[
             { value: "", label: "All Categories" },
-            ...categories.map((c) => ({ value: c._id, label: c.name })),
+            ...regularPracticeCategories.map((c) => ({ value: c._id, label: c.name })),
           ]}
           className="w-full !py-2"
         />
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Required Timer</span>
+          <div className="relative">
+            <input
+              type="number"
+              min="1"
+              max="240"
+              step="1"
+              value={timerMinutes}
+              onChange={(event) => setTimerMinutes(event.target.value)}
+              placeholder="Minutes"
+              className="h-[40px] w-full rounded-xl border border-outline-variant bg-surface px-4 pr-14 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
+            />
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-on-surface-variant">min</span>
+          </div>
+        </label>
         <button
-          onClick={() => setIsPracticeMode(true)}
-          disabled={!q || (user?.subscription === "FREE" && totalSolved >= 20)}
+          onClick={startPracticeSession}
+          disabled={!q || Number(timerMinutes) <= 0 || (user?.subscription === "FREE" && totalSolved >= 20)}
           className="w-full h-[40px] px-6 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-sm shrink-0"
         >
           <Icon name="open_in_full" className="text-[18px]" />
-          <span>Practice Mode</span>
+          <span>Start Timed Practice</span>
         </button>
+      </div>
+      <div className="mb-8 flex flex-col justify-between gap-2 rounded-xl border border-primary/15 bg-primary/5 px-4 py-3 text-sm sm:flex-row sm:items-center">
+        <span className="font-semibold text-on-surface">
+          <Icon name="help_center" className="mr-2 align-middle text-lg text-primary" />
+          {availableQuestionCount} practice questions match these filters.
+        </span>
+        <span className="text-xs text-on-surface-variant">Enter how many minutes you need, then start your session.</span>
       </div>
 
       {user?.subscription === "FREE" && totalSolved >= 20 ? (
@@ -958,6 +1051,15 @@ function Practice() {
       ) : !q ? (
         <EmptyState icon="help_center" title="No questions found" description="Try adjusting your filters" />
       ) : (
+        <>
+        <div className="rounded-2xl border border-outline-variant/40 bg-surface-container-lowest p-8 text-center shark-shadow">
+          <Icon name="timer" className="mb-3 text-4xl text-primary" />
+          <h2 className="text-xl font-bold">Your practice set is ready</h2>
+          <p className="mt-2 text-sm text-on-surface-variant">
+            {availableQuestionCount} questions are available. Enter a timer above to begin.
+          </p>
+        </div>
+        <div className="hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-0 items-start">
           {/* Left Column: Passage / Question Text */}
           <div className="flex flex-col bg-surface-container-lowest border border-outline-variant/40 rounded-2xl shark-shadow overflow-hidden">
@@ -1106,6 +1208,8 @@ function Practice() {
             </div>
           </div>
         </div>
+        </div>
+        </>
       )}
       </>
       )}
@@ -1162,9 +1266,9 @@ function Practice() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-on-surface mb-2">Select Topics (Optional)</label>
+              <label className="block text-sm font-bold text-on-surface mb-2">Select SAT Domains (Optional)</label>
               <div className="flex gap-2 flex-wrap max-h-48 overflow-y-auto custom-scrollbar p-1">
-                {categories.filter(cat => cat.section === customSubject).map((cat) => (
+                {availableCustomCategories.map((cat) => (
                   <button
                     key={cat._id}
                     onClick={() => setCustomCategories(prev => prev.includes(cat._id) ? prev.filter(c => c !== cat._id) : [...prev, cat._id])}
@@ -1175,6 +1279,9 @@ function Practice() {
                     {cat.name.replace("SAT Practice: ", "")}
                   </button>
                 ))}
+                {availableCustomCategories.length === 0 && (
+                  <p className="text-xs text-on-surface-variant">No approved domains are currently available for this subject.</p>
+                )}
               </div>
             </div>
 
@@ -1196,6 +1303,57 @@ function Practice() {
           </div>
         </div>
       )}
+
+      <Modal
+        open={Boolean(sessionSummary)}
+        onClose={() => setSessionSummary(null)}
+        title="Practice Session Results"
+        icon="analytics"
+        maxWidth="max-w-3xl"
+      >
+        {sessionSummary && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {[
+                ["Attempted", sessionSummary.total],
+                ["Correct", sessionSummary.correct],
+                ["Incorrect", sessionSummary.total - sessionSummary.correct],
+                ["Score", `${sessionSummary.total ? Math.round((sessionSummary.correct / sessionSummary.total) * 100) : 0}%`],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-xl bg-surface-container-low p-4 text-center">
+                  <div className="text-2xl font-bold text-primary">{value}</div>
+                  <div className="mt-1 text-xs font-semibold text-on-surface-variant">{label}</div>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center justify-between rounded-xl border border-outline-variant/40 px-4 py-3">
+              <span className="text-sm font-semibold">Session time</span>
+              <span className="font-mono font-bold">{formatTime(sessionSummary.timeSpent)}</span>
+            </div>
+            <div className="space-y-3">
+              <h3 className="font-bold">Attempted Questions</h3>
+              {sessionSummary.answers.length === 0 ? (
+                <p className="rounded-xl bg-surface-container-low p-4 text-sm text-on-surface-variant">
+                  No answers were submitted in this session.
+                </p>
+              ) : sessionSummary.answers.map((answer, index) => (
+                <div key={`${answer.questionId}-${index}`} className="rounded-xl border border-outline-variant/40 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-sm font-semibold">{index + 1}. {answer.question}</p>
+                    <Badge variant={answer.isCorrect ? "success" : "error"}>
+                      {answer.isCorrect ? "Correct" : "Incorrect"}
+                    </Badge>
+                  </div>
+                  <div className="mt-3 grid gap-2 text-xs sm:grid-cols-2">
+                    <span>Your answer: <strong>{answer.selectedAnswer}</strong></span>
+                    <span>Correct answer: <strong>{answer.correctAnswer}</strong></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Modal>
     </StudentLayout>
   );
 }

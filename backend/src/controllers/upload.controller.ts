@@ -5,6 +5,31 @@ import QuestionCategory from "../models/QuestionCategory";
 import { AuthRequest } from "../middleware/auth.middleware";
 import path from "path";
 import fs from "fs";
+import { PDFParse } from "pdf-parse";
+import { stripEmojis } from "../utils/text";
+
+const parseQuestionDocument = (text: string) => {
+  const normalized = text.replace(/\r/g, "").replace(/\u00a0/g, " ");
+  const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,4})[\.\)]\s+/gi)];
+  return starts.flatMap((entry, index) => {
+    const block = normalized.slice(entry.index || 0, starts[index + 1]?.index || normalized.length).trim();
+    const options = [...block.matchAll(/(?:^|\n)\s*([A-D])[\.\)]\s+([\s\S]*?)(?=(?:\n\s*[A-D][\.\)]\s+)|(?:\n\s*(?:Answer|Correct Answer)\s*:)|$)/g)];
+    if (options.length < 2 || options[0].index === undefined) return [];
+    const question = block.slice(0, options[0].index).replace(/^(?:Question\s*)?\d{1,4}[\.\)]\s*/i, "").trim();
+    const answer = block.match(/(?:Answer|Correct Answer)\s*:\s*([A-D])/i)?.[1]?.toUpperCase() || "";
+    if (!question) return [];
+    return [{
+      text: question,
+      options: options.slice(0, 4).map((item) => ({ label: item[1], text: item[2].trim() })),
+      correctAnswer: answer,
+      explanation: stripEmojis(block.match(/(?:Explanation|Rationale)\s*:\s*([\s\S]+)$/i)?.[1]?.trim() || ""),
+      category: "SAT Math",
+      difficulty: "MEDIUM",
+      confidence: answer ? 0.9 : 0.65,
+      approved: false,
+    }];
+  });
+};
 
 const UPLOAD_DIR = path.resolve(__dirname, "../../uploads");
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -23,9 +48,31 @@ export const uploadPracticeTest = async (req: AuthRequest, res: Response) => {
       fileUrl: `/uploads/${file.filename}`,
       fileSize: file.size,
       mimeType: file.mimetype,
+      uploadType: "FULL_TEST",
       uploadedBy: req.user?.userId,
     });
 
+    res.status(201).json({ success: true, upload });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const uploadPracticeQuestions = async (req: AuthRequest, res: Response) => {
+  try {
+    const { title } = req.body;
+    if (!title) return res.status(400).json({ success: false, error: "Title is required" });
+    const file = (req as any).file;
+    if (!file) return res.status(400).json({ success: false, error: "PDF file is required" });
+    const upload = await PracticeTestUpload.create({
+      title,
+      fileName: file.originalname,
+      fileUrl: `/uploads/${file.filename}`,
+      fileSize: file.size,
+      mimeType: file.mimetype,
+      uploadType: "PRACTICE_QUESTIONS",
+      uploadedBy: req.user?.userId,
+    });
     res.status(201).json({ success: true, upload });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -83,7 +130,18 @@ export const triggerExtraction = async (req: AuthRequest, res: Response) => {
       },
     ];
 
-    upload.extractedQuestions = sampleExtracted;
+    const filePath = path.resolve(__dirname, "../../", upload.fileUrl.replace(/^\//, ""));
+    const parser = new PDFParse({ data: fs.readFileSync(filePath) });
+    const parsed = await parser.getText();
+    await parser.destroy();
+    const extractedQuestions = parseQuestionDocument(parsed.text);
+    if (!extractedQuestions.length) {
+      upload.status = "FAILED";
+      upload.errorMessage = "No questions were recognized. Use numbered questions, A to D options, and an Answer line.";
+      await upload.save();
+      return res.status(422).json({ success: false, error: upload.errorMessage, upload });
+    }
+    upload.extractedQuestions = extractedQuestions;
     upload.status = "EXTRACTED";
     await upload.save();
 
@@ -128,7 +186,7 @@ export const publishUpload = async (req: AuthRequest, res: Response) => {
       text: q.text,
       options: q.options,
       correctAnswer: q.correctAnswer,
-      explanation: q.explanation,
+      explanation: stripEmojis(q.explanation),
       category: categoryMap.get(q.category.toLowerCase()) || categories[0]?._id,
       difficulty: q.difficulty || "MEDIUM",
       section: "MATH" as const,

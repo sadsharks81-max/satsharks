@@ -7,6 +7,7 @@ exports.deleteEssay = exports.updateEssay = exports.getAllEssays = exports.getMy
 const Essay_1 = __importDefault(require("../models/Essay"));
 const Notification_1 = __importDefault(require("../models/Notification"));
 const User_1 = __importDefault(require("../models/User"));
+const googleSheets_service_1 = require("../services/googleSheets.service");
 const submitEssay = async (req, res) => {
     try {
         const userId = req.user?.userId;
@@ -60,6 +61,8 @@ const submitEssay = async (req, res) => {
         if (adminNotifications.length > 0) {
             await Notification_1.default.insertMany(adminNotifications);
         }
+        // Backup to Google Sheets asynchronously in background
+        (0, googleSheets_service_1.appendEssayToSheet)(studentUser?.name || "A student", studentUser?.email || "N/A", essayText || "").catch(err => console.error("Error backing up essay to Google Sheets:", err));
         return res.status(201).json({ success: true, data: essay });
     }
     catch (error) {

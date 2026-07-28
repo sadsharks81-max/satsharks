@@ -3,12 +3,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadImage = exports.deleteUpload = exports.publishUpload = exports.reviewUpload = exports.triggerExtraction = exports.getUpload = exports.getUploads = exports.uploadPracticeTest = void 0;
+exports.uploadImage = exports.deleteUpload = exports.publishUpload = exports.reviewUpload = exports.triggerExtraction = exports.getUpload = exports.getUploads = exports.uploadPracticeQuestions = exports.uploadPracticeTest = void 0;
 const PracticeTestUpload_1 = __importDefault(require("../models/PracticeTestUpload"));
 const Question_1 = __importDefault(require("../models/Question"));
 const QuestionCategory_1 = __importDefault(require("../models/QuestionCategory"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const pdf_parse_1 = require("pdf-parse");
+const text_1 = require("../utils/text");
+const parseQuestionDocument = (text) => {
+    const normalized = text.replace(/\r/g, "").replace(/\u00a0/g, " ");
+    const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,4})[\.\)]\s+/gi)];
+    return starts.flatMap((entry, index) => {
+        const block = normalized.slice(entry.index || 0, starts[index + 1]?.index || normalized.length).trim();
+        const options = [...block.matchAll(/(?:^|\n)\s*([A-D])[\.\)]\s+([\s\S]*?)(?=(?:\n\s*[A-D][\.\)]\s+)|(?:\n\s*(?:Answer|Correct Answer)\s*:)|$)/g)];
+        if (options.length < 2 || options[0].index === undefined)
+            return [];
+        const question = block.slice(0, options[0].index).replace(/^(?:Question\s*)?\d{1,4}[\.\)]\s*/i, "").trim();
+        const answer = block.match(/(?:Answer|Correct Answer)\s*:\s*([A-D])/i)?.[1]?.toUpperCase() || "";
+        if (!question)
+            return [];
+        return [{
+                text: question,
+                options: options.slice(0, 4).map((item) => ({ label: item[1], text: item[2].trim() })),
+                correctAnswer: answer,
+                explanation: (0, text_1.stripEmojis)(block.match(/(?:Explanation|Rationale)\s*:\s*([\s\S]+)$/i)?.[1]?.trim() || ""),
+                category: "SAT Math",
+                difficulty: "MEDIUM",
+                confidence: answer ? 0.9 : 0.65,
+                approved: false,
+            }];
+    });
+};
 const UPLOAD_DIR = path_1.default.resolve(__dirname, "../../uploads");
 if (!fs_1.default.existsSync(UPLOAD_DIR))
     fs_1.default.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -26,6 +52,7 @@ const uploadPracticeTest = async (req, res) => {
             fileUrl: `/uploads/${file.filename}`,
             fileSize: file.size,
             mimeType: file.mimetype,
+            uploadType: "FULL_TEST",
             uploadedBy: req.user?.userId,
         });
         res.status(201).json({ success: true, upload });
@@ -35,6 +62,30 @@ const uploadPracticeTest = async (req, res) => {
     }
 };
 exports.uploadPracticeTest = uploadPracticeTest;
+const uploadPracticeQuestions = async (req, res) => {
+    try {
+        const { title } = req.body;
+        if (!title)
+            return res.status(400).json({ success: false, error: "Title is required" });
+        const file = req.file;
+        if (!file)
+            return res.status(400).json({ success: false, error: "PDF file is required" });
+        const upload = await PracticeTestUpload_1.default.create({
+            title,
+            fileName: file.originalname,
+            fileUrl: `/uploads/${file.filename}`,
+            fileSize: file.size,
+            mimeType: file.mimetype,
+            uploadType: "PRACTICE_QUESTIONS",
+            uploadedBy: req.user?.userId,
+        });
+        res.status(201).json({ success: true, upload });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+exports.uploadPracticeQuestions = uploadPracticeQuestions;
 const getUploads = async (req, res) => {
     try {
         const uploads = await PracticeTestUpload_1.default.find()
@@ -87,7 +138,18 @@ const triggerExtraction = async (req, res) => {
                 approved: false,
             },
         ];
-        upload.extractedQuestions = sampleExtracted;
+        const filePath = path_1.default.resolve(__dirname, "../../", upload.fileUrl.replace(/^\//, ""));
+        const parser = new pdf_parse_1.PDFParse({ data: fs_1.default.readFileSync(filePath) });
+        const parsed = await parser.getText();
+        await parser.destroy();
+        const extractedQuestions = parseQuestionDocument(parsed.text);
+        if (!extractedQuestions.length) {
+            upload.status = "FAILED";
+            upload.errorMessage = "No questions were recognized. Use numbered questions, A to D options, and an Answer line.";
+            await upload.save();
+            return res.status(422).json({ success: false, error: upload.errorMessage, upload });
+        }
+        upload.extractedQuestions = extractedQuestions;
         upload.status = "EXTRACTED";
         await upload.save();
         res.status(200).json({ success: true, upload });
@@ -130,7 +192,7 @@ const publishUpload = async (req, res) => {
             text: q.text,
             options: q.options,
             correctAnswer: q.correctAnswer,
-            explanation: q.explanation,
+            explanation: (0, text_1.stripEmojis)(q.explanation),
             category: categoryMap.get(q.category.toLowerCase()) || categories[0]?._id,
             difficulty: q.difficulty || "MEDIUM",
             section: "MATH",

@@ -64,7 +64,7 @@ function SuccessStories() {
     <div className="relative rounded-2xl bg-surface-container-lowest p-8 shark-shadow border border-outline-variant/40 flex flex-col items-center text-center justify-between min-h-[420px] animate-pulse">
       <div className="flex flex-col items-center w-full">
         {/* Avatar skeleton */}
-        <div className="w-20 h-20 rounded-full bg-surface-container-high mb-4" />
+        <div className="h-36 w-full rounded-xl bg-surface-container-high mb-5" />
         {/* Name skeleton */}
         <div className="h-4 w-24 bg-surface-container-high rounded mb-2" />
         {/* Score skeleton */}
@@ -142,10 +142,10 @@ function SuccessStories() {
                         <img
                           src={resolveImageUrl(item.imageUrl)}
                           alt={item.name}
-                          className="w-20 h-20 rounded-full object-cover border-2 border-primary/20 shadow-md mb-4"
+                          className="h-44 w-full rounded-xl object-cover object-center border-2 border-primary/20 shadow-md mb-5"
                         />
                       ) : (
-                        <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full bg-primary text-on-primary font-display text-2xl font-bold border-2 border-primary/20 shadow-md mb-4 animate-fade-in">
+                        <div className="grid h-44 w-full shrink-0 place-items-center rounded-xl bg-primary text-on-primary font-display text-5xl font-bold border-2 border-primary/20 shadow-md mb-5 animate-fade-in">
                           {item.name.charAt(0)}
                         </div>
                       )}

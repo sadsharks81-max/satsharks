@@ -10,6 +10,7 @@ import { Modal } from "../../components/ui/Modal";
 import { api } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
 import type { PerformanceDataPoint, CategoryBreakdown, PredictedScore, DashboardStats } from "../../types";
+import { stripEmojis } from "../../utils/format";
 
 export const Route = createFileRoute("/dashboard/analytics")({
   component: Analytics,
@@ -21,6 +22,7 @@ function Analytics() {
   const [performance, setPerformance] = useState<PerformanceDataPoint[]>([]);
   const [breakdown, setBreakdown] = useState<CategoryBreakdown[]>([]);
   const [predicted, setPredicted] = useState<PredictedScore | null>(null);
+  const [recentPractice, setRecentPractice] = useState<any[]>([]);
   
   // New States for Phase 4A
   const [errorStats, setErrorStats] = useState<any[]>([]);
@@ -51,7 +53,10 @@ function Analytics() {
         api.get("/api/analytics/timing-analysis")
       ]);
       
-      if (statsRes.success) setStats(statsRes.stats);
+      if (statsRes.success) {
+        setStats(statsRes.stats);
+        setRecentPractice(statsRes.recentPractice || []);
+      }
       if (perfRes.success) setPerformance(perfRes.performance || []);
       if (catRes.success) setBreakdown(catRes.breakdown || []);
       if (predRes.success && predRes.predicted) setPredicted(predRes.predicted);
@@ -204,10 +209,12 @@ function Analytics() {
       </div>
 
       {/* Stats Cards Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
         <StatCard label="Tests Taken" value={totalTaken} icon="quiz" color="primary" />
         <StatCard label="Average Accuracy" value={`${avgPercent}%`} icon="trending_up" color="secondary" />
         <StatCard label="Questions Solved" value={stats?.practiceCount || 0} icon="fitness_center" color="accent" />
+        <StatCard label="Practice Correct" value={stats?.practiceCorrect || 0} icon="check_circle" color="primary" />
+        <StatCard label="Practice Accuracy" value={`${stats?.practiceAccuracy || 0}%`} icon="target" color="secondary" />
         <StatCard label="Target SAT Score" value={user?.targetScore || 1400} icon="my_location" color="secondary" />
       </div>
 
@@ -306,6 +313,46 @@ function Analytics() {
 
           {/* Performance Data Point Timeline */}
           <div className="rounded-2xl bg-surface p-8 border border-outline-variant/40 shark-shadow">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h3 className="font-bold text-sm text-on-surface uppercase tracking-wider">Practice Question Results</h3>
+                <p className="mt-1 text-xs text-on-surface-variant">
+                  {stats?.practiceCorrect || 0} correct and {stats?.practiceIncorrect || 0} incorrect from {stats?.practiceCount || 0} attempts
+                </p>
+              </div>
+              <Badge variant={(stats?.practiceAccuracy || 0) >= 70 ? "success" : "warning"}>
+                {stats?.practiceAccuracy || 0}% accuracy
+              </Badge>
+            </div>
+            {recentPractice.length > 0 ? (
+              <div className="space-y-3">
+                {recentPractice.map((entry) => (
+                  <div key={entry.id} className="flex items-start gap-3 rounded-xl border border-outline-variant/30 bg-surface-container-lowest p-4">
+                    <Icon
+                      name={entry.isCorrect ? "check_circle" : "cancel"}
+                      className={`mt-0.5 text-xl ${entry.isCorrect ? "text-success" : "text-error"}`}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <div className="line-clamp-2 text-sm font-semibold text-on-surface">{entry.question}</div>
+                      <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-on-surface-variant">
+                        <span>{entry.category}</span>
+                        <span>{entry.difficulty}</span>
+                        <span>{entry.timeSpent || 0}s</span>
+                      </div>
+                    </div>
+                    <Badge variant={entry.isCorrect ? "success" : "error"}>
+                      {entry.isCorrect ? "Correct" : "Incorrect"}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="py-6 text-center text-sm text-on-surface-variant">No practice-question attempts recorded.</p>
+            )}
+          </div>
+
+          {/* Performance Data Point Timeline */}
+          <div className="rounded-2xl bg-surface p-8 border border-outline-variant/40 shark-shadow">
             <h3 className="font-bold text-sm text-on-surface uppercase tracking-wider mb-6">Mock Test History</h3>
             {performance.length > 0 ? (
               <div className="space-y-3">
@@ -374,7 +421,7 @@ function Analytics() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="space-y-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <Badge variant="error">{q.difficulty}</Badge>
+                          <Badge variant="error">{q.skipped ? "Skipped" : q.difficulty}</Badge>
                           <span className="text-xs font-semibold text-primary">{q.categoryName}</span>
                           <span className="text-[10px] text-on-surface-variant font-mono uppercase tracking-wider">· {q.sectionName}</span>
                         </div>
@@ -404,7 +451,7 @@ function Analytics() {
             <div className="rounded-2xl bg-surface p-8 border border-outline-variant/40 shark-shadow flex items-center justify-between">
               <div>
                 <h4 className="font-bold text-xs text-on-surface-variant uppercase tracking-wider">R&W Average Speed</h4>
-                <p className="text-2xl font-mono font-extrabold text-primary mt-1">{timingStats?.rwAvg || 71} seconds</p>
+                <p className="text-2xl font-mono font-extrabold text-primary mt-1">{timingStats?.rwAvg ?? 0} seconds</p>
                 <span className="text-[10px] text-on-surface-variant leading-none font-semibold">Suggested: 71s / question</span>
               </div>
               <span className="p-3 bg-primary/10 text-primary rounded-xl">
@@ -415,7 +462,7 @@ function Analytics() {
             <div className="rounded-2xl bg-surface p-8 border border-outline-variant/40 shark-shadow flex items-center justify-between">
               <div>
                 <h4 className="font-bold text-xs text-on-surface-variant uppercase tracking-wider">Math Average Speed</h4>
-                <p className="text-2xl font-mono font-extrabold text-primary mt-1">{timingStats?.mathAvg || 95} seconds</p>
+                <p className="text-2xl font-mono font-extrabold text-primary mt-1">{timingStats?.mathAvg ?? 0} seconds</p>
                 <span className="text-[10px] text-on-surface-variant leading-none font-semibold">Suggested: 95s / question</span>
               </div>
               <span className="p-3 bg-accent/15 text-accent rounded-xl">
@@ -561,7 +608,7 @@ function Analytics() {
       {/* Question Details / Explanation Modal */}
       <Modal open={selectedQuestionText !== null} onClose={() => setSelectedQuestionText(null)} title="Question Details" icon="menu_book" maxWidth="max-w-2xl">
         <div className="p-1 space-y-4">
-          <p className="text-sm leading-relaxed text-on-surface whitespace-pre-wrap">{selectedQuestionText}</p>
+          <p className="text-sm leading-relaxed text-on-surface whitespace-pre-wrap">{stripEmojis(selectedQuestionText)}</p>
           <div className="flex justify-end pt-4 border-t border-outline-variant/20">
             <button
               onClick={() => setSelectedQuestionText(null)}

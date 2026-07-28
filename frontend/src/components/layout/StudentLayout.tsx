@@ -9,6 +9,7 @@ const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: "dashboard" },
   { to: "/dashboard/practice", label: "Practice Questions", icon: "fitness_center" },
   { to: "/dashboard/sat-tests", label: "Digital SAT Practice Tests", icon: "school" },
+  { to: "/dashboard/vocabulary", label: "Vocab Mastery", icon: "spellcheck" },
   { to: "/dashboard/history", label: "Test History", icon: "history" },
   { to: "/dashboard/analytics", label: "Analytics", icon: "insights" },
   { to: "/dashboard/leaderboard", label: "Leaderboard", icon: "emoji_events" },

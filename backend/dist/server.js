@@ -62,6 +62,7 @@ const payment_routes_1 = __importDefault(require("./routes/payment.routes"));
 const study_material_routes_1 = __importDefault(require("./routes/study-material.routes"));
 const report_routes_1 = __importDefault(require("./routes/report.routes"));
 const live_class_routes_1 = __importDefault(require("./routes/live-class.routes"));
+const vocabulary_routes_1 = __importDefault(require("./routes/vocabulary.routes"));
 app.use("/api/auth", auth_routes_1.default);
 app.use("/api/users", user_routes_1.default);
 app.use("/api/subscriptions", subscription_routes_1.default);
@@ -83,6 +84,7 @@ app.use("/api/payment", payment_routes_1.default);
 app.use("/api/study-materials", study_material_routes_1.default);
 app.use("/api/reports", report_routes_1.default);
 app.use("/api/live-classes", live_class_routes_1.default);
+app.use("/api/vocabulary", vocabulary_routes_1.default);
 // Serve uploaded files with cross-origin headers so images load from any network origin
 const path_1 = __importDefault(require("path"));
 app.use("/uploads", (req, res, next) => {

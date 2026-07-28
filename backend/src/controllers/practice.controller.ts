@@ -6,6 +6,13 @@ import { AuthRequest } from "../middleware/auth.middleware";
 import { checkAnswerCorrectness } from "../utils/grading";
 import SATTest from "../models/SATTest";
 import SATTestAttempt from "../models/SATTestAttempt";
+import QuestionCategory from "../models/QuestionCategory";
+import { stripEmojis } from "../utils/text";
+
+const CUSTOM_TEST_CATEGORY_NAMES = {
+  MATH: ["SAT Advanced Math", "SAT Algebra", "SAT Data & Statistics", "SAT Geometry"],
+  READING_WRITING: ["SAT Grammar & Writing", "SAT Reading & Writing", "SAT Vocabulary", "SAT Reading Comprehension"],
+} as const;
 
 export const submitPracticeAnswer = async (req: AuthRequest, res: Response) => {
   try {
@@ -68,7 +75,7 @@ export const submitPracticeAnswer = async (req: AuthRequest, res: Response) => {
       result: {
         isCorrect,
         correctAnswer: question.correctAnswer,
-        explanation: question.explanation,
+        explanation: stripEmojis(question.explanation),
         sessionId: session._id,
       },
     });
@@ -120,12 +127,29 @@ export const createCustomTest = async (req: AuthRequest, res: Response) => {
     const totalNeeded = subject === "READING_WRITING" ? 54 : 44;
     const timeLimitMinutes = subject === "READING_WRITING" ? 32 : 35;
 
-    const matchCriteria: any = { section: subject };
+    const allowedNames = CUSTOM_TEST_CATEGORY_NAMES[subject as keyof typeof CUSTOM_TEST_CATEGORY_NAMES];
+    if (!allowedNames) {
+      return res.status(400).json({ success: false, error: "Invalid custom test subject." });
+    }
+
+    const allowedCategoryDocs = await QuestionCategory.find({ name: { $in: allowedNames } }).select("_id");
+    const allowedCategoryIds = allowedCategoryDocs.map((item) => item._id);
+    if (allowedCategoryIds.length === 0) {
+      return res.status(400).json({ success: false, error: "No approved custom-test categories are available." });
+    }
+
+    const requestedCategoryIds = Array.isArray(categories) ? categories.map(String) : [];
+    const selectedCategoryIds = requestedCategoryIds.length
+      ? allowedCategoryIds.filter((id) => requestedCategoryIds.includes(id.toString()))
+      : allowedCategoryIds;
+
+    if (selectedCategoryIds.length === 0) {
+      return res.status(400).json({ success: false, error: "Select at least one approved custom-test category." });
+    }
+
+    const matchCriteria: any = { section: subject, category: { $in: selectedCategoryIds } };
     if (difficulties && difficulties.length > 0) {
       matchCriteria.difficulty = { $in: difficulties };
-    }
-    if (categories && categories.length > 0) {
-      matchCriteria.category = { $in: categories };
     }
 
     let questions = await Question.aggregate([
@@ -138,7 +162,7 @@ export const createCustomTest = async (req: AuthRequest, res: Response) => {
       const remaining = totalNeeded - questions.length;
       
       const fallbackQuestions = await Question.aggregate([
-        { $match: { section: subject, _id: { $nin: existingIds } } },
+        { $match: { ...matchCriteria, _id: { $nin: existingIds } } },
         { $sample: { size: remaining } },
       ]);
       

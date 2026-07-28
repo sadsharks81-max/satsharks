@@ -44,7 +44,7 @@ const LiveClassSchema = new mongoose_1.Schema({
         enum: ["SCHEDULED", "LIVE", "COMPLETED", "CANCELLED"],
         default: "SCHEDULED",
     },
-    roomName: { type: String, required: true },
+    meetLink: { type: String, default: null },
     teacher: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
     createdBy: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
 }, { timestamps: true });

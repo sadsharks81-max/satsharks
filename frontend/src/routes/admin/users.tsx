@@ -46,6 +46,18 @@ function AdminUsers() {
     }
   };
 
+  const updateAccessDates = async (userRow: any) => {
+    const res = await api.put(`/api/users/${userRow._id}/access-dates`, {
+      portalAccessStart: userRow.portalAccessStart || null,
+      portalAccessEnd: userRow.portalAccessEnd || null,
+    });
+    if (res.success) {
+      setUsersList((prev) => prev.map((item) => item._id === userRow._id ? res.user : item));
+    } else {
+      alert(res.error || "Could not update access dates.");
+    }
+  };
+
   return (
     <AdminLayout activeItem="/admin/users">
       <h1 className="text-3xl font-bold mb-8">User Management</h1>
@@ -58,6 +70,7 @@ function AdminUsers() {
               <th className="p-4 font-semibold">Country</th>
               <th className="p-4 font-semibold">Tier</th>
               <th className="p-4 font-semibold">Status</th>
+              <th className="p-4 font-semibold">Portal Access</th>
               <th className="p-4 font-semibold">Actions</th>
             </tr>
           </thead>
@@ -81,6 +94,15 @@ function AdminUsers() {
                 </td>
                 <td className="p-4">
                   <Badge variant={u.status === "ACTIVE" ? "success" : "error"}>{u.status}</Badge>
+                </td>
+                <td className="p-4">
+                  {u.role === "STUDENT" ? (
+                    <div className="flex min-w-[230px] flex-col gap-2">
+                      <input type="date" value={u.portalAccessStart?.slice(0, 10) || ""} onChange={(e) => setUsersList((prev) => prev.map((item) => item._id === u._id ? { ...item, portalAccessStart: e.target.value } : item))} className="rounded-lg border border-outline-variant bg-surface px-2 py-1 text-xs" />
+                      <input type="date" value={u.portalAccessEnd?.slice(0, 10) || ""} onChange={(e) => setUsersList((prev) => prev.map((item) => item._id === u._id ? { ...item, portalAccessEnd: e.target.value } : item))} className="rounded-lg border border-outline-variant bg-surface px-2 py-1 text-xs" />
+                      <button onClick={() => updateAccessDates(u)} className="rounded-lg bg-primary px-3 py-1 text-xs font-bold text-on-primary">Save Dates</button>
+                    </div>
+                  ) : <span className="text-xs text-on-surface-variant">Not applicable</span>}
                 </td>
                 <td className="p-4">
                   {u.role !== "ADMIN" && (

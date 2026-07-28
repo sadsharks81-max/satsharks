@@ -5,12 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllQuestionsAdmin = exports.bulkCreateQuestions = exports.deleteQuestion = exports.updateQuestion = exports.createQuestion = exports.getQuestion = exports.getQuestions = void 0;
 const Question_1 = __importDefault(require("../models/Question"));
+const text_1 = require("../utils/text");
 const getQuestions = async (req, res) => {
     try {
-        const { category, difficulty, section, status, search, page = "1", limit = "20" } = req.query;
+        const { category, difficulty, section, status, search, excludeCategories, page = "1", limit = "20" } = req.query;
         const filter = {};
         if (category)
             filter.category = category;
+        if (!category && excludeCategories) {
+            const excluded = String(excludeCategories).split(",").filter(Boolean);
+            if (excluded.length > 0)
+                filter.category = { $nin: excluded };
+        }
         if (difficulty)
             filter.difficulty = difficulty;
         if (section)
@@ -34,7 +40,10 @@ const getQuestions = async (req, res) => {
         ]);
         res.status(200).json({
             success: true,
-            questions,
+            questions: questions.map((question) => ({
+                ...question.toObject(),
+                explanation: (0, text_1.stripEmojis)(question.explanation),
+            })),
             pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
         });
     }
@@ -48,7 +57,10 @@ const getQuestion = async (req, res) => {
         const question = await Question_1.default.findById(req.params.id).populate("category", "name section");
         if (!question)
             return res.status(404).json({ success: false, error: "Question not found" });
-        res.status(200).json({ success: true, question });
+        res.status(200).json({
+            success: true,
+            question: { ...question.toObject(), explanation: (0, text_1.stripEmojis)(question.explanation) },
+        });
     }
     catch (error) {
         res.status(500).json({ success: false, error: error.message });
@@ -59,7 +71,7 @@ const createQuestion = async (req, res) => {
     try {
         const { text, options, correctAnswer, explanation, category, difficulty, section, tags, imageUrl } = req.body;
         const question = await Question_1.default.create({
-            text, options, correctAnswer, explanation, category, difficulty, section,
+            text, options, correctAnswer, explanation: (0, text_1.stripEmojis)(explanation), category, difficulty, section,
             tags: tags || [],
             imageUrl: imageUrl || null,
             source: "MANUAL",
@@ -77,7 +89,7 @@ const updateQuestion = async (req, res) => {
     try {
         const { id } = req.params;
         const { text, options, correctAnswer, explanation, category, difficulty, section, tags, status, imageUrl } = req.body;
-        const question = await Question_1.default.findByIdAndUpdate(id, { text, options, correctAnswer, explanation, category, difficulty, section, tags, status, imageUrl }, { new: true, runValidators: true });
+        const question = await Question_1.default.findByIdAndUpdate(id, { text, options, correctAnswer, explanation: (0, text_1.stripEmojis)(explanation), category, difficulty, section, tags, status, imageUrl }, { new: true, runValidators: true });
         if (!question)
             return res.status(404).json({ success: false, error: "Question not found" });
         res.status(200).json({ success: true, question });
@@ -104,6 +116,7 @@ const bulkCreateQuestions = async (req, res) => {
         const { questions } = req.body;
         const docs = questions.map((q) => ({
             ...q,
+            explanation: (0, text_1.stripEmojis)(q.explanation),
             source: q.source || "MANUAL",
             status: q.status || "PUBLISHED",
             createdBy: req.user?.userId,
@@ -143,7 +156,10 @@ const getAllQuestionsAdmin = async (req, res) => {
         ]);
         res.status(200).json({
             success: true,
-            questions,
+            questions: questions.map((question) => ({
+                ...question.toObject(),
+                explanation: (0, text_1.stripEmojis)(question.explanation),
+            })),
             pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
         });
     }

@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
 import Question from "../models/Question";
 import { AuthRequest } from "../middleware/auth.middleware";
+import { stripEmojis } from "../utils/text";
 
 export const getQuestions = async (req: Request, res: Response) => {
   try {
-    const { category, difficulty, section, status, search, page = "1", limit = "20" } = req.query;
+    const { category, difficulty, section, status, search, excludeCategories, page = "1", limit = "20" } = req.query;
     const filter: any = {};
 
     if (category) filter.category = category;
+    if (!category && excludeCategories) {
+      const excluded = String(excludeCategories).split(",").filter(Boolean);
+      if (excluded.length > 0) filter.category = { $nin: excluded };
+    }
     if (difficulty) filter.difficulty = difficulty;
     if (section) filter.section = section;
     if (status) filter.status = status;
@@ -29,7 +34,10 @@ export const getQuestions = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      questions,
+      questions: questions.map((question) => ({
+        ...question.toObject(),
+        explanation: stripEmojis(question.explanation),
+      })),
       pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
     });
   } catch (error: any) {
@@ -41,7 +49,10 @@ export const getQuestion = async (req: Request, res: Response) => {
   try {
     const question = await Question.findById(req.params.id).populate("category", "name section");
     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
-    res.status(200).json({ success: true, question });
+    res.status(200).json({
+      success: true,
+      question: { ...question.toObject(), explanation: stripEmojis(question.explanation) },
+    });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -51,7 +62,7 @@ export const createQuestion = async (req: AuthRequest, res: Response) => {
   try {
     const { text, options, correctAnswer, explanation, category, difficulty, section, tags, imageUrl } = req.body;
     const question = await Question.create({
-      text, options, correctAnswer, explanation, category, difficulty, section,
+      text, options, correctAnswer, explanation: stripEmojis(explanation), category, difficulty, section,
       tags: tags || [],
       imageUrl: imageUrl || null,
       source: "MANUAL",
@@ -70,7 +81,7 @@ export const updateQuestion = async (req: Request, res: Response) => {
     const { text, options, correctAnswer, explanation, category, difficulty, section, tags, status, imageUrl } = req.body;
     const question = await Question.findByIdAndUpdate(
       id,
-      { text, options, correctAnswer, explanation, category, difficulty, section, tags, status, imageUrl },
+      { text, options, correctAnswer, explanation: stripEmojis(explanation), category, difficulty, section, tags, status, imageUrl },
       { new: true, runValidators: true }
     );
     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
@@ -95,6 +106,7 @@ export const bulkCreateQuestions = async (req: AuthRequest, res: Response) => {
     const { questions } = req.body;
     const docs = questions.map((q: any) => ({
       ...q,
+      explanation: stripEmojis(q.explanation),
       source: q.source || "MANUAL",
       status: q.status || "PUBLISHED",
       createdBy: req.user?.userId,
@@ -132,7 +144,10 @@ export const getAllQuestionsAdmin = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      questions,
+      questions: questions.map((question) => ({
+        ...question.toObject(),
+        explanation: stripEmojis(question.explanation),
+      })),
       pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
     });
   } catch (error: any) {

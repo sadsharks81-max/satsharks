@@ -12,4 +12,5 @@ router.get("/", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdm
 router.put("/:id/subscription", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), user_controller_1.updateUserSubscription);
 router.put("/:id/status", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), user_controller_1.updateUserStatus);
 router.put("/:id/role", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), user_controller_1.updateUserRole);
+router.put("/:id/access-dates", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdmin)(), user_controller_1.updateUserAccessDates);
 exports.default = router;

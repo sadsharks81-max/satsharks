@@ -72,7 +72,7 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/contact" className="hover:text-accent transition-colors duration-300">
-                  Counseling
+                  Contact Us
                 </Link>
               </li>
             </ul>

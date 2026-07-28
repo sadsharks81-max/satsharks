@@ -35,6 +35,9 @@ export const getCurrentUser = async (req: AuthRequest, res: Response) => {
         country: user.country,
         region: user.region,
         subscription: user.subscription,
+        subscriptionExpiry: user.subscriptionExpiry,
+        portalAccessStart: user.portalAccessStart,
+        portalAccessEnd: user.portalAccessEnd,
         status: user.status,
         targetScore: user.targetScore ?? 1400,
         streakCount: user.streakCount ?? 0,
@@ -155,6 +158,25 @@ export const updateUserRole = async (req: Request, res: Response) => {
     const user = await User.findByIdAndUpdate(id, { role }, { new: true }).select("-password");
     if (!user) return res.status(404).json({ success: false, error: "User not found" });
 
+    res.status(200).json({ success: true, user });
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const updateUserAccessDates = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { portalAccessStart, portalAccessEnd } = req.body;
+    const start = portalAccessStart ? new Date(portalAccessStart) : null;
+    const end = portalAccessEnd ? new Date(portalAccessEnd) : null;
+    if (start && end && end <= start) {
+      return res.status(400).json({ success: false, error: "The ending date must be after the starting date." });
+    }
+    const update: any = { portalAccessStart: start, portalAccessEnd: end, subscriptionExpiry: end };
+    if (end) update.subscription = end > new Date() ? "PAID" : "FREE";
+    const user = await User.findByIdAndUpdate(id, update, { new: true }).select("-password");
+    if (!user) return res.status(404).json({ success: false, error: "User not found" });
     res.status(200).json({ success: true, user });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });

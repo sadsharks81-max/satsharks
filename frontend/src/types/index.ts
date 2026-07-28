@@ -10,6 +10,9 @@ export interface User {
   subscription: "FREE" | "PAID";
   status: "ACTIVE" | "SUSPENDED";
   hasPendingPayment?: boolean;
+  subscriptionExpiry?: string;
+  portalAccessStart?: string;
+  portalAccessEnd?: string;
 }
 
 export interface SubscriptionPlan {
@@ -119,6 +122,7 @@ export interface PracticeTestUpload {
   fileUrl: string;
   fileSize: number;
   mimeType: string;
+  uploadType?: "FULL_TEST" | "PRACTICE_QUESTIONS";
   uploadedBy: { name: string; email: string } | string;
   status: "UPLOADED" | "PROCESSING" | "EXTRACTED" | "REVIEWED" | "PUBLISHED" | "FAILED";
   extractedQuestions: ExtractedQuestion[];
@@ -145,6 +149,9 @@ export interface PredictedScore {
 export interface DashboardStats {
   totalTests: number;
   practiceCount: number;
+  practiceCorrect: number;
+  practiceIncorrect: number;
+  practiceAccuracy: number;
   avgScore: number;
   bestScore: number;
 }

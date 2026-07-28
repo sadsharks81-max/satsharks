@@ -40,6 +40,12 @@ const PracticeTestUploadSchema = new mongoose_1.Schema({
     fileUrl: { type: String, required: true },
     fileSize: { type: Number, required: true },
     mimeType: { type: String, required: true },
+    uploadType: {
+        type: String,
+        enum: ["FULL_TEST", "PRACTICE_QUESTIONS"],
+        default: "FULL_TEST",
+        required: true,
+    },
     uploadedBy: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
     status: {
         type: String,

@@ -21,6 +21,7 @@ function AdminUploads() {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [activeType, setActiveType] = useState<"FULL_TEST" | "PRACTICE_QUESTIONS">("FULL_TEST");
 
   const fetchUploads = async () => {
     const res = await api.get("/api/uploads");
@@ -42,7 +43,8 @@ function AdminUploads() {
 
     try {
       const token = localStorage.getItem("accessToken");
-      const res = await fetch(`${getBackendUrl()}/api/uploads/practice-test`, {
+      const endpoint = activeType === "FULL_TEST" ? "practice-test" : "practice-questions";
+      const res = await fetch(`${getBackendUrl()}/api/uploads/${endpoint}`, {
         method: "POST",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: formData,
@@ -91,17 +93,21 @@ function AdminUploads() {
     <AdminLayout activeItem="/admin/uploads">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Upload Management</h1>
-          <p className="text-on-surface-variant text-sm mt-1">Upload practice test PDFs and extract questions with AI</p>
+          <h1 className="text-3xl font-bold">Test & Practice Question Uploads</h1>
+          <p className="text-on-surface-variant text-sm mt-1">Manage full-test PDF uploads and separate practice-question imports.</p>
         </div>
         <button onClick={() => { setModalOpen(true); setError(""); }} className="btn-shimmer inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-on-primary shark-shadow hover:bg-accent transition-all cursor-pointer">
-          <Icon name="upload_file" className="text-lg" /> Upload PDF
+          <Icon name="upload_file" className="text-lg" /> Upload {activeType === "FULL_TEST" ? "Test" : "Questions"}
         </button>
+      </div>
+      <div className="mb-6 flex gap-2 rounded-2xl bg-surface-container-low p-1.5">
+        <button onClick={() => setActiveType("FULL_TEST")} className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-bold ${activeType === "FULL_TEST" ? "bg-primary text-on-primary shadow" : "text-on-surface-variant"}`}>Full Test Uploads</button>
+        <button onClick={() => setActiveType("PRACTICE_QUESTIONS")} className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-bold ${activeType === "PRACTICE_QUESTIONS" ? "bg-primary text-on-primary shadow" : "text-on-surface-variant"}`}>Practice Question Uploads</button>
       </div>
 
       {loading ? (
         <div className="text-center py-12 text-on-surface-variant">Loading...</div>
-      ) : uploads.length === 0 ? (
+      ) : uploads.filter((item) => (item.uploadType || "FULL_TEST") === activeType).length === 0 ? (
         <EmptyState icon="upload_file" title="No uploads yet" description="Upload a practice test PDF to get started" />
       ) : (
         <div className="rounded-xl bg-surface-container-lowest border border-outline-variant/40 overflow-hidden shark-shadow">
@@ -117,7 +123,7 @@ function AdminUploads() {
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant/20">
-              {uploads.map((u) => (
+              {uploads.filter((item) => (item.uploadType || "FULL_TEST") === activeType).map((u) => (
                 <tr key={u._id} className="hover:bg-surface-container-low/50 transition-colors">
                   <td className="p-4 font-semibold text-sm">{u.title}</td>
                   <td className="p-4 text-sm text-on-surface-variant">
@@ -145,7 +151,7 @@ function AdminUploads() {
         </div>
       )}
 
-      <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Upload Practice Test" icon="upload_file">
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={activeType === "FULL_TEST" ? "Upload Full Practice Test" : "Import Practice Questions"} icon="upload_file">
         {error && (
           <div className="mb-4 p-3 bg-error/15 text-error rounded-xl text-sm border border-error/25 flex items-center gap-2">
             <Icon name="error" className="shrink-0" /><span>{error}</span>

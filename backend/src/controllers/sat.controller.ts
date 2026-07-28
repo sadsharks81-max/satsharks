@@ -87,6 +87,13 @@ export const startSATTest = async (req: AuthRequest, res: Response) => {
     });
     if (existing) {
       // Resume existing attempt
+      const currentModule = existing.moduleAttempts[existing.currentModuleIndex];
+      if (currentModule) {
+        currentModule.startedAt = new Date();
+        currentModule.completedAt = null;
+      }
+      existing.startedAt = new Date();
+      await existing.save();
       const populatedTest = await SATTest.findById(test._id).populate("modules.questions");
       return res.status(200).json({ success: true, attempt: existing, test: populatedTest, resumed: true });
     }
@@ -440,7 +447,7 @@ export const getMySATAttempts = async (req: AuthRequest, res: Response) => {
 // --- Admin: list all SAT tests ---
 export const getAllSATTestsAdmin = async (req: Request, res: Response) => {
   try {
-    const tests = await SATTest.find().populate("modules.questions").sort({ year: -1, testNumber: 1 });
+    const tests = await SATTest.find({ year: { $ne: 9999 } }).populate("modules.questions").sort({ year: -1, testNumber: 1 });
     res.status(200).json({ success: true, tests });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });

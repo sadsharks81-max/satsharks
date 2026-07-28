@@ -8,10 +8,12 @@ import { api } from "../../services/api";
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: "dashboard" },
   { to: "/admin/users", label: "Users", icon: "group" },
+  { to: "/admin/student-progress", label: "Student Progress", icon: "monitoring" },
   { to: "/admin/payments", label: "Payments", icon: "payments" },
   { to: "/admin/tests", label: "Tests", icon: "quiz" },
   { to: "/admin/questions", label: "Questions", icon: "help_center" },
-  { to: "/admin/uploads", label: "Uploads", icon: "upload_file" },
+  { to: "/admin/vocabulary", label: "Vocabulary", icon: "spellcheck" },
+  { to: "/admin/uploads", label: "Test & Question Uploads", icon: "upload_file" },
   { to: "/admin/success-stories", label: "Success Stories", icon: "social_leaderboard" },
   { to: "/admin/contact-requests", label: "Queries", icon: "mail" },
   { to: "/admin/essays", label: "Essays", icon: "edit_note" },

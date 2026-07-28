@@ -17,6 +17,7 @@ export interface IPracticeTestUpload extends Document {
   fileUrl: string;
   fileSize: number;
   mimeType: string;
+  uploadType: "FULL_TEST" | "PRACTICE_QUESTIONS";
   uploadedBy: mongoose.Types.ObjectId;
   status: "UPLOADED" | "PROCESSING" | "EXTRACTED" | "REVIEWED" | "PUBLISHED" | "FAILED";
   extractedQuestions: IExtractedQuestion[];
@@ -34,6 +35,12 @@ const PracticeTestUploadSchema: Schema = new Schema(
     fileUrl: { type: String, required: true },
     fileSize: { type: Number, required: true },
     mimeType: { type: String, required: true },
+    uploadType: {
+      type: String,
+      enum: ["FULL_TEST", "PRACTICE_QUESTIONS"],
+      default: "FULL_TEST",
+      required: true,
+    },
     uploadedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     status: {
       type: String,

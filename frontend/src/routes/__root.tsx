@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   ScrollRestoration,
@@ -16,6 +17,7 @@ import faviconUrl from "../assets/favicon.svg?url";
 import { reportAppError } from "../lib/error-reporting";
 import { Toaster } from "../components/ui/sonner";
 import { FloatingWhatsApp } from "../components/common/FloatingWhatsApp";
+import { PortalAccessCountdown } from "../components/common/PortalAccessCountdown";
 
 function NotFoundComponent() {
   return (
@@ -139,11 +141,19 @@ import { AuthProvider } from "../contexts/AuthContext";
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const hideWhatsApp = [
+    "/dashboard/practice",
+    "/dashboard/vocabulary",
+    "/dashboard/sat-runner",
+  ].some((path) => pathname.startsWith(path));
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Outlet />
-        <FloatingWhatsApp />
+        {!hideWhatsApp && <FloatingWhatsApp />}
+        {!hideWhatsApp && <PortalAccessCountdown />}
       </AuthProvider>
     </QueryClientProvider>
   );

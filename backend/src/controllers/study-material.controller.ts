@@ -5,7 +5,8 @@ import path from "path";
 
 export const getStudyMaterials = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const materials = await StudyMaterial.find()
+    const filter = req.query.category ? { category: req.query.category } : {};
+    const materials = await StudyMaterial.find(filter)
       .populate("uploadedBy", "name email")
       .sort({ createdAt: -1 });
 
@@ -20,7 +21,7 @@ export const getStudyMaterials = async (req: Request, res: Response, next: NextF
 
 export const uploadStudyMaterial = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { title, description } = req.body;
+    const { title, description, category } = req.body;
     const file = req.file;
 
     if (!title) {
@@ -29,6 +30,9 @@ export const uploadStudyMaterial = async (req: Request, res: Response, next: Nex
 
     if (!file) {
       return res.status(400).json({ success: false, error: "PDF file is required" });
+    }
+    if (!["MATH", "READING_WRITING"].includes(category)) {
+      return res.status(400).json({ success: false, error: "Choose Math or Reading & Writing." });
     }
 
     const fileUrl = `/uploads/${file.filename}`;
@@ -39,6 +43,7 @@ export const uploadStudyMaterial = async (req: Request, res: Response, next: Nex
       fileUrl,
       fileName: file.originalname,
       fileSize: file.size,
+      category,
       uploadedBy: (req as any).user.userId,
     });
 

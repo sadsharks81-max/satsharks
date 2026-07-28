@@ -66,6 +66,8 @@ const UserSchema = new mongoose_1.Schema({
     subscriptionExpiry: {
         type: Date,
     },
+    portalAccessStart: { type: Date },
+    portalAccessEnd: { type: Date },
     status: {
         type: String,
         enum: ["ACTIVE", "SUSPENDED"],

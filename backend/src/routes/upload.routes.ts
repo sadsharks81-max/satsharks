@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import path from "path";
-import { uploadPracticeTest, getUploads, getUpload, triggerExtraction, reviewUpload, publishUpload, deleteUpload, uploadImage } from "../controllers/upload.controller";
+import { uploadPracticeTest, uploadPracticeQuestions, getUploads, getUpload, triggerExtraction, reviewUpload, publishUpload, deleteUpload, uploadImage } from "../controllers/upload.controller";
 import { authenticate } from "../middleware/auth.middleware";
 import { requireAdmin } from "../middleware/role.middleware";
 
@@ -42,6 +42,7 @@ const router = Router();
 router.get("/", authenticate, requireAdmin(), getUploads);
 router.get("/:id", authenticate, requireAdmin(), getUpload);
 router.post("/practice-test", authenticate, requireAdmin(), upload.single("file"), uploadPracticeTest);
+router.post("/practice-questions", authenticate, requireAdmin(), upload.single("file"), uploadPracticeQuestions);
 router.post("/image", authenticate, requireAdmin(), imageUpload.single("image"), uploadImage);
 router.post("/:id/extract", authenticate, requireAdmin(), triggerExtraction);
 router.put("/:id/review", authenticate, requireAdmin(), reviewUpload);

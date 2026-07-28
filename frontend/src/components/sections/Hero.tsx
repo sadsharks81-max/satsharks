@@ -121,12 +121,12 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            {user?.role === "ADMIN" ? (
+            {user?.role === "ADMIN" || user?.role === "TEACHER" ? (
               <Link
-                to="/admin"
+                to={user.role === "ADMIN" ? "/admin" : "/teacher"}
                 className="btn-shimmer inline-flex items-center gap-3 rounded-xl bg-primary px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-on-primary shark-shadow hover:bg-accent transition-all duration-300"
               >
-                Go to the dashboard <Icon name="dashboard" className="text-[16px]" />
+                Go to the {user.role === "TEACHER" ? "teacher " : ""}dashboard <Icon name="dashboard" className="text-[16px]" />
               </Link>
             ) : (
               <>
