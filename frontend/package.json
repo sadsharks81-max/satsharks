@@ -30,7 +30,6 @@
   "devDependencies": {
     "@eslint/js": "^9.32.0",
     "@lovable.dev/vite-tanstack-config": "^2.1.1",
-    "@tanstack/router-devtools": "^1.167.0",
     "@types/katex": "^0.16.7",
     "@types/node": "^22.16.5",
     "@types/react": "^19.2.0",

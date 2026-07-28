@@ -10,7 +10,6 @@ import {
   ScrollRestoration,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import appCss from "../styles.css?url";
 import faviconUrl from "../assets/favicon.svg?url";
