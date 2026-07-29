@@ -9,6 +9,7 @@ import { Textarea } from "../../components/ui/Textarea";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { api, getBackendUrl, resolveImageUrl } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
+import { ImageCropModal } from "../../components/ui/ImageCropModal";
 
 export const Route = createFileRoute("/admin/success-stories")({
   component: AdminSuccessStories,
@@ -36,6 +37,7 @@ function AdminSuccessStories() {
   });
   const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cropFile, setCropFile] = useState<File | null>(null);
 
   // Hero feature banner student state
   const [heroFeature, setHeroFeature] = useState<any>(null);
@@ -100,9 +102,15 @@ function AdminSuccessStories() {
     }
   };
 
-  const handleStoryImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStoryImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setCropFile(file);
+    e.target.value = "";
+  };
+
+  const handleCroppedStoryImage = async (file: File) => {
+    setCropFile(null);
     const url = await uploadImageFile(file);
     if (url) {
       setFormData(prev => ({ ...prev, imageUrl: url }));
@@ -260,10 +268,10 @@ function AdminSuccessStories() {
                       <img
                         src={resolveImageUrl(story.imageUrl)}
                         alt={story.name}
-                        className="w-12 h-12 rounded-xl object-cover border border-outline-variant/50 shadow-sm shrink-0"
+                        className="w-14 h-14 rounded-full object-cover border border-outline-variant/50 shadow-sm shrink-0"
                       />
                     ) : (
-                      <div className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary font-display text-sm font-bold shrink-0">
+                      <div className="grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary font-display text-sm font-bold shrink-0">
                         {story.name.charAt(0)}
                       </div>
                     )}
@@ -344,6 +352,11 @@ function AdminSuccessStories() {
           </div>
         </form>
       </Modal>
+      <ImageCropModal
+        file={cropFile}
+        onCancel={() => setCropFile(null)}
+        onCrop={handleCroppedStoryImage}
+      />
 
       {/* Hero Feature Edit Modal */}
       <Modal open={isHeroModalOpen} onClose={() => setIsHeroModalOpen(false)} title="Edit Hero Featured Student" icon="edit">

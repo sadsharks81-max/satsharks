@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Question from "../models/Question";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { stripEmojis } from "../utils/text";
+import { deleteManagedImage, deleteReplacedManagedImage } from "../utils/managed-image";
 
 export const getQuestions = async (req: Request, res: Response) => {
   try {
@@ -79,12 +80,15 @@ export const updateQuestion = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { text, options, correctAnswer, explanation, category, difficulty, section, tags, status, imageUrl } = req.body;
-    const question = await Question.findByIdAndUpdate(
-      id,
-      { text, options, correctAnswer, explanation: stripEmojis(explanation), category, difficulty, section, tags, status, imageUrl },
-      { new: true, runValidators: true }
-    );
-    if (!question) return res.status(404).json({ success: false, error: "Question not found" });
+    const existingQuestion = await Question.findById(id);
+    if (!existingQuestion) return res.status(404).json({ success: false, error: "Question not found" });
+    const previousImageUrl = existingQuestion.imageUrl;
+    Object.assign(existingQuestion, {
+      text, options, correctAnswer, explanation: stripEmojis(explanation),
+      category, difficulty, section, tags, status, imageUrl,
+    });
+    const question = await existingQuestion.save();
+    await deleteReplacedManagedImage(previousImageUrl, question.imageUrl);
     res.status(200).json({ success: true, question });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
@@ -95,6 +99,7 @@ export const deleteQuestion = async (req: Request, res: Response) => {
   try {
     const question = await Question.findByIdAndDelete(req.params.id);
     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
+    await deleteManagedImage(question.imageUrl);
     res.status(200).json({ success: true, message: "Question deleted" });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });

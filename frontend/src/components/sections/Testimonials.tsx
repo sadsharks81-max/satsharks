@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Icon } from "../common/Icon";
 import { useState, useEffect } from "react";
-import { api, resolveImageUrl } from "../../services/api";
+import { resolveImageUrl } from "../../services/api";
 import { Link } from "@tanstack/react-router";
+import { getHomepageSuccessContent } from "../../services/publicContent";
 
 export function Testimonials() {
   const [stories, setStories] = useState<any[]>([]);
@@ -12,7 +13,7 @@ export function Testimonials() {
 
   useEffect(() => {
     setIsLoading(true);
-    api.get("/api/success-stories")
+    getHomepageSuccessContent()
       .then((res) => {
         if (res.success && res.stories && res.stories.length > 0) {
           setStories(res.stories.slice(0, 3));
@@ -52,7 +53,7 @@ export function Testimonials() {
     <div className="relative rounded-2xl bg-surface p-8 md:p-10 shark-shadow border border-outline-variant/40 flex flex-col items-center text-center justify-between min-h-[420px] animate-pulse">
       <div className="flex flex-col items-center w-full">
         {/* Avatar skeleton */}
-        <div className="h-36 w-full rounded-xl bg-surface-container-high mb-5" />
+        <div className="h-40 w-40 rounded-full bg-surface-container-high mb-5" />
         {/* Name skeleton */}
         <div className="h-4 w-24 bg-surface-container-high rounded mb-2" />
         {/* Score skeleton */}
@@ -115,9 +116,8 @@ export function Testimonials() {
 
         <motion.div 
           variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          initial={false}
+          animate="show"
           className="mt-20 grid gap-8 md:grid-cols-3 items-start"
         >
           {isLoading ? (
@@ -140,10 +140,12 @@ export function Testimonials() {
                     <img
                       src={resolveImageUrl(t.imageUrl)}
                       alt={t.name}
-                      className="h-40 w-full rounded-xl object-cover object-center border-2 border-primary/20 shadow-md mb-5"
+                      loading="lazy"
+                      decoding="async"
+                      className="h-40 w-40 shrink-0 rounded-full object-cover object-center border-2 border-primary/20 shadow-md mb-5"
                     />
                   ) : (
-                    <div className="grid h-40 w-full place-items-center rounded-xl bg-primary text-accent font-display text-5xl font-bold border-2 border-accent/30 shadow-md mb-5">
+                    <div className="grid h-40 w-40 shrink-0 place-items-center rounded-full bg-primary text-accent font-display text-5xl font-bold border-2 border-accent/30 shadow-md mb-5">
                       {t.name.charAt(0)}
                     </div>
                   )}

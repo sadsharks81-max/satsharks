@@ -5,7 +5,10 @@ import {
   updateSuccessStory, 
   deleteSuccessStory,
   getHeroFeature,
-  updateHeroFeature
+  updateHeroFeature,
+  getHomepageSuccessContent,
+  getSuccessStoryImage,
+  getHeroFeatureImage,
 } from "../controllers/success-stories.controller";
 import { authenticate } from "../middleware/auth.middleware";
 import { requireAdmin } from "../middleware/role.middleware";
@@ -13,7 +16,10 @@ import { requireAdmin } from "../middleware/role.middleware";
 const router = Router();
 
 router.get("/", getSuccessStories);
+router.get("/homepage", getHomepageSuccessContent);
 router.get("/featured", getHeroFeature);
+router.get("/featured/image", getHeroFeatureImage);
+router.get("/image/:id", getSuccessStoryImage);
 router.put("/featured", authenticate, requireAdmin(), updateHeroFeature);
 
 router.post("/", authenticate, requireAdmin(), createSuccessStory);

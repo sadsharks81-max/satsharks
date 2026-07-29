@@ -12,6 +12,18 @@ const productionFrontendOrigins = new Set(
     "https://satsharks-frontend.vercel.app",
   ].map((origin) => origin.replace(/\/$/, "")),
 );
+const isAllowedProductionOrigin = (origin: string) => {
+  const normalized = origin.replace(/\/$/, "");
+  if (productionFrontendOrigins.has(normalized)) return true;
+  try {
+    const hostname = new URL(normalized).hostname;
+    return hostname === "satsharks.com" ||
+      hostname === "www.satsharks.com" ||
+      /^satsharks-frontend(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(hostname);
+  } catch {
+    return false;
+  }
+};
 
 // Stripe webhook must come BEFORE express.json() because it needs the raw body
 import { stripeWebhook } from "./controllers/payment.controller";
@@ -27,7 +39,7 @@ app.use(cors({
       return callback(null, true);
     }
     // In production, allow the configured site and the canonical Vercel domain.
-    if (!origin || productionFrontendOrigins.has(origin.replace(/\/$/, ""))) {
+    if (!origin || isAllowedProductionOrigin(origin)) {
       return callback(null, true);
     }
     return callback(new Error("Not allowed by CORS"));

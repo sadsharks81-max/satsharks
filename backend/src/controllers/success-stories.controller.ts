@@ -2,6 +2,48 @@ import { Request, Response } from "express";
 import SuccessStory from "../models/SuccessStory";
 import { env } from "../config/env";
 import { phaseOneSuccessStories } from "../data/phaseOne";
+import { deleteManagedImage, deleteReplacedManagedImage } from "../utils/managed-image";
+
+const publicImageUrl = (story: any) => {
+  if (!story.imageUrl?.startsWith("data:")) return story.imageUrl;
+  const version = story.updatedAt ? new Date(story.updatedAt).getTime() : Date.now();
+  return `/api/success-stories/image/${story._id}?v=${version}`;
+};
+
+const serializeStory = (story: any) => {
+  const value = typeof story.toObject === "function" ? story.toObject() : story;
+  if (value.imageUrl === "__DATA_IMAGE__") {
+    const version = value.updatedAt ? new Date(value.updatedAt).getTime() : Date.now();
+    return { ...value, imageUrl: `/api/success-stories/image/${value._id}?v=${version}` };
+  }
+  return { ...value, imageUrl: publicImageUrl(value) };
+};
+
+const lightweightStoryProjection = {
+  name: 1,
+  score: 1,
+  quote: 1,
+  university: 1,
+  videoUrl: 1,
+  category: 1,
+  createdAt: 1,
+  updatedAt: 1,
+  imageUrl: {
+    $cond: [
+      { $regexMatch: { input: { $ifNull: ["$imageUrl", ""] }, regex: /^data:/ } },
+      "__DATA_IMAGE__",
+      "$imageUrl",
+    ],
+  },
+};
+
+const sendDataImage = (res: Response, dataUrl?: string | null) => {
+  const match = dataUrl?.match(/^data:(image\/[\w.+-]+);base64,(.+)$/);
+  if (!match) return res.status(404).end();
+  res.setHeader("Content-Type", match[1]);
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  return res.send(Buffer.from(match[2], "base64"));
+};
 
 export const getSuccessStories = async (req: Request, res: Response) => {
   try {
@@ -18,10 +60,25 @@ export const getSuccessStories = async (req: Request, res: Response) => {
       filter.category = category;
     }
 
-    const stories = await SuccessStory.find(filter).sort({ createdAt: -1 });
-    res.status(200).json({ success: true, stories });
+    const stories = await SuccessStory.aggregate([
+      { $match: filter },
+      { $sort: { createdAt: -1 } },
+      { $project: lightweightStoryProjection },
+    ]);
+    res.setHeader("Cache-Control", "public, max-age=30, s-maxage=300, stale-while-revalidate=600");
+    res.status(200).json({ success: true, stories: stories.map(serializeStory) });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const getSuccessStoryImage = async (req: Request, res: Response) => {
+  try {
+    if (!env.isDatabaseConfigured) return res.status(404).end();
+    const story = await SuccessStory.findById(req.params.id).select("imageUrl").lean();
+    return sendDataImage(res, story?.imageUrl);
+  } catch {
+    return res.status(404).end();
   }
 };
 
@@ -65,15 +122,14 @@ export const updateSuccessStory = async (req: Request, res: Response) => {
       return res.status(503).json({ success: false, error: "Database is not configured" });
     }
 
-    const story = await SuccessStory.findByIdAndUpdate(
-      id,
-      { name, score, quote, university, imageUrl, videoUrl, category },
-      { new: true, runValidators: true }
-    );
-
+    const story = await SuccessStory.findById(id);
     if (!story) {
       return res.status(404).json({ success: false, error: "Story not found" });
     }
+    const previousImageUrl = story.imageUrl;
+    Object.assign(story, { name, score, quote, university, imageUrl, videoUrl, category });
+    await story.save();
+    await deleteReplacedManagedImage(previousImageUrl, story.imageUrl);
 
     res.status(200).json({ success: true, story });
   } catch (error: any) {
@@ -91,6 +147,7 @@ export const deleteSuccessStory = async (req: Request, res: Response) => {
 
     const story = await SuccessStory.findByIdAndDelete(id);
     if (!story) return res.status(404).json({ success: false, error: "Story not found" });
+    await deleteManagedImage(story.imageUrl);
 
     res.status(200).json({ success: true, message: "Story deleted" });
   } catch (error: any) {
@@ -130,9 +187,56 @@ export const getHeroFeature = async (req: Request, res: Response) => {
         }
       });
     }
-    res.status(200).json({ success: true, feature });
+    const serialized = serializeStory(feature);
+    if (feature.imageUrl?.startsWith("data:")) {
+      serialized.imageUrl = `/api/success-stories/featured/image?v=${new Date(feature.updatedAt).getTime()}`;
+    }
+    res.setHeader("Cache-Control", "public, max-age=30, s-maxage=300, stale-while-revalidate=600");
+    res.status(200).json({ success: true, feature: serialized });
   } catch (error: any) {
     res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+export const getHeroFeatureImage = async (_req: Request, res: Response) => {
+  try {
+    if (!env.isDatabaseConfigured) return res.status(404).end();
+    const feature = await HeroFeature.findOne().select("imageUrl").lean();
+    return sendDataImage(res, feature?.imageUrl);
+  } catch {
+    return res.status(404).end();
+  }
+};
+
+export const getHomepageSuccessContent = async (_req: Request, res: Response) => {
+  try {
+    if (!env.isDatabaseConfigured) {
+      return res.status(200).json({
+        success: true,
+        feature: mockHeroFeature,
+        stories: phaseOneSuccessStories.slice(0, 3),
+      });
+    }
+    const [feature, stories] = await Promise.all([
+      HeroFeature.findOne().lean(),
+      SuccessStory.aggregate([
+        { $sort: { createdAt: -1 } },
+        { $limit: 3 },
+        { $project: lightweightStoryProjection },
+      ]),
+    ]);
+    const serializedFeature = feature ? serializeStory(feature) : mockHeroFeature;
+    if (feature?.imageUrl?.startsWith("data:")) {
+      serializedFeature.imageUrl = `/api/success-stories/featured/image?v=${new Date(feature.updatedAt).getTime()}`;
+    }
+    res.setHeader("Cache-Control", "public, max-age=30, s-maxage=300, stale-while-revalidate=600");
+    return res.status(200).json({
+      success: true,
+      feature: serializedFeature,
+      stories: stories.map(serializeStory),
+    });
+  } catch (error: any) {
+    return res.status(500).json({ success: false, error: error.message });
   }
 };
 
@@ -153,6 +257,7 @@ export const updateHeroFeature = async (req: Request, res: Response) => {
     }
 
     let feature = await HeroFeature.findOne();
+    const previousImageUrl = feature?.imageUrl;
     if (!feature) {
       feature = await HeroFeature.create({
         studentName,
@@ -171,6 +276,7 @@ export const updateHeroFeature = async (req: Request, res: Response) => {
       feature.imageUrl = imageUrl !== undefined ? imageUrl : feature.imageUrl;
       await feature.save();
     }
+    await deleteReplacedManagedImage(previousImageUrl, feature.imageUrl);
 
     res.status(200).json({ success: true, feature });
   } catch (error: any) {

@@ -32,6 +32,23 @@ const getUrl = (url: string) => url.startsWith("http") ? url : `${API_BASE_URL}$
 
 // simple API wrapper with auth token injection and error handling
 export const api = {
+  async publicGet(url: string) {
+    try {
+      const res = await fetch(getUrl(url), {
+        headers: { Accept: "application/json" },
+        cache: "default",
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        return { success: false, error: data?.error || `HTTP error! status: ${res.status}` };
+      }
+      return data || { success: true };
+    } catch (e: any) {
+      console.error("Public API GET failed:", e);
+      return { success: false, error: "Network error: Connection to server failed." };
+    }
+  },
+
   async get(url: string) {
     try {
       const token = localStorage.getItem("accessToken");

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllQuestionsAdmin = exports.bulkCreateQuestions = exports.deleteQuestion = exports.updateQuestion = exports.createQuestion = exports.getQuestion = exports.getQuestions = void 0;
 const Question_1 = __importDefault(require("../models/Question"));
 const text_1 = require("../utils/text");
+const managed_image_1 = require("../utils/managed-image");
 const getQuestions = async (req, res) => {
     try {
         const { category, difficulty, section, status, search, excludeCategories, page = "1", limit = "20" } = req.query;
@@ -89,9 +90,16 @@ const updateQuestion = async (req, res) => {
     try {
         const { id } = req.params;
         const { text, options, correctAnswer, explanation, category, difficulty, section, tags, status, imageUrl } = req.body;
-        const question = await Question_1.default.findByIdAndUpdate(id, { text, options, correctAnswer, explanation: (0, text_1.stripEmojis)(explanation), category, difficulty, section, tags, status, imageUrl }, { new: true, runValidators: true });
-        if (!question)
+        const existingQuestion = await Question_1.default.findById(id);
+        if (!existingQuestion)
             return res.status(404).json({ success: false, error: "Question not found" });
+        const previousImageUrl = existingQuestion.imageUrl;
+        Object.assign(existingQuestion, {
+            text, options, correctAnswer, explanation: (0, text_1.stripEmojis)(explanation),
+            category, difficulty, section, tags, status, imageUrl,
+        });
+        const question = await existingQuestion.save();
+        await (0, managed_image_1.deleteReplacedManagedImage)(previousImageUrl, question.imageUrl);
         res.status(200).json({ success: true, question });
     }
     catch (error) {
@@ -104,6 +112,7 @@ const deleteQuestion = async (req, res) => {
         const question = await Question_1.default.findByIdAndDelete(req.params.id);
         if (!question)
             return res.status(404).json({ success: false, error: "Question not found" });
+        await (0, managed_image_1.deleteManagedImage)(question.imageUrl);
         res.status(200).json({ success: true, message: "Question deleted" });
     }
     catch (error) {

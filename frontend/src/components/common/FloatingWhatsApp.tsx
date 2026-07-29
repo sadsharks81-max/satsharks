@@ -9,11 +9,11 @@ export function FloatingWhatsApp() {
       rel="noopener noreferrer"
       aria-label="Chat with SAT Sharks on WhatsApp"
       title="Chat with us on WhatsApp"
-      className="fixed bottom-5 right-5 z-[90] grid h-14 w-14 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_8px_28px_rgba(37,211,102,0.4)] transition-transform hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/30 md:bottom-6 md:right-6 md:h-16 md:w-16"
+      className="fixed bottom-5 right-5 z-[90] grid h-11 w-11 place-items-center rounded-full bg-[#25D366] text-white shadow-[0_6px_20px_rgba(37,211,102,0.32)] transition-transform hover:scale-105 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/30 md:bottom-6 md:right-6 md:h-12 md:w-12"
     >
       <svg
-        width="28"
-        height="28"
+        width="22"
+        height="22"
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden="true"

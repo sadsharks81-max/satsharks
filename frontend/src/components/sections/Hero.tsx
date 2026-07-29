@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 import { Icon } from "../common/Icon";
 import studentHero from "../../assets/student_hero.png";
 import { Link } from "@tanstack/react-router";
-import { api, resolveImageUrl } from "../../services/api";
+import { resolveImageUrl } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
+import { getHomepageSuccessContent } from "../../services/publicContent";
 
 const DEFAULT_FEATURE = {
   studentName: "Admitted Student",
@@ -20,73 +21,22 @@ const resolveHeroImageUrl = (url: string) => {
   return resolveImageUrl(url);
 };
 
-const CollageSkeleton = () => (
-  <div className="relative mx-auto max-w-[420px]">
-    {/* Background Luxury Frame Layer */}
-    <div className="absolute -inset-4 rounded-2xl border border-accent/15 -z-10 animate-pulse" />
-    <div className="absolute -inset-2 rounded-2xl border border-accent/25 -z-10 translate-x-1.5 translate-y-1.5 animate-pulse" />
-
-    {/* Main Student Portrait Placeholder */}
-    <div className="w-full aspect-[4/5] bg-surface-container-low rounded-xl border border-outline-variant/30 animate-pulse" />
-
-    {/* Floating Badge 1: Stanford Acceptance Placeholder */}
-    <div className="absolute -left-8 top-12 bg-surface/85 backdrop-blur-md p-4 rounded-xl w-[200px] border border-outline-variant/30 flex items-center gap-2">
-      <div className="h-8 w-8 rounded-full bg-surface-container-high shrink-0 animate-pulse" />
-      <div className="flex-grow space-y-2">
-        <div className="h-3 bg-surface-container-high rounded w-3/4 animate-pulse" />
-        <div className="h-2 bg-surface-container-high rounded w-1/2 animate-pulse" />
-      </div>
-    </div>
-
-    {/* Floating Badge 2: SAT Score card Placeholder */}
-    <div className="absolute -right-8 bottom-12 bg-surface/85 backdrop-blur-md p-4 rounded-xl w-[190px] border border-outline-variant/30 flex items-center gap-3">
-      <div className="h-6 w-10 bg-surface-container-high rounded shrink-0 animate-pulse" />
-      <div className="flex-grow space-y-2">
-        <div className="h-3 bg-surface-container-high rounded w-1/2 animate-pulse" />
-        <div className="h-2 bg-surface-container-high rounded w-3/4 animate-pulse" />
-      </div>
-    </div>
-  </div>
-);
-
 export function Hero() {
   const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
-  const [feature, setFeature] = useState<any>({
-    studentName: "Admitted Student",
-    university: "Stanford University '28",
-    score: "1580",
-    improvement: "+210 Improvement",
-    tag: "Top 1% Worldwide",
-    imageUrl: ""
-  });
+  const [feature, setFeature] = useState<any>(DEFAULT_FEATURE);
 
   useEffect(() => {
-    api.get("/api/success-stories/featured")
+    getHomepageSuccessContent()
       .then((res) => {
         if (res.success && res.feature) {
-          const imgUrl = resolveHeroImageUrl(res.feature.imageUrl);
-
-          // Preload image before completing load state so it renders immediately
-          const img = new Image();
-          img.src = imgUrl;
-          img.onload = () => {
-            setFeature(res.feature);
-            setIsLoading(false);
-          };
-          img.onerror = () => {
-            setFeature(res.feature);
-            setIsLoading(false);
-          };
+          setFeature(res.feature);
         } else {
           setFeature(DEFAULT_FEATURE);
-          setIsLoading(false);
         }
       })
       .catch((err) => {
         console.error("Error fetching featured success story:", err);
         setFeature(DEFAULT_FEATURE);
-        setIsLoading(false);
       });
   }, []);
 
@@ -152,9 +102,7 @@ export function Hero() {
 
         {/* Right Side: Multi-layered Creative Collage */}
         <div className="lg:col-span-5 relative mt-8 lg:mt-0">
-          {isLoading || !feature ? (
-            <CollageSkeleton />
-          ) : (
+          {feature && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -177,6 +125,8 @@ export function Hero() {
                 width={420}
                 height={525}
                 fetchPriority="high"
+                loading="eager"
+                decoding="async"
                 style={{ aspectRatio: "4/5" }}
                 className="w-full h-auto object-cover rounded-xl shark-shadow border border-outline-variant/60"
               />
