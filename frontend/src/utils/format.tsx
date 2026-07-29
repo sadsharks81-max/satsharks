@@ -1,6 +1,20 @@
 import React from "react";
 import katex from "katex";
 
+const QUESTION_TYPE_TAG_PATTERN =
+  /\[\s*(multiple\s*choice|mcq|spr(?:\s*[-–—]\s*grid[-\s]?in)?|grid[-\s]?in|fill[-\s]in[-\s]the[-\s]blank)\s*\]/i;
+
+export function stripQuestionTypeTags(value: string | undefined | null): string {
+  if (!value) return "";
+  const globalPattern = new RegExp(QUESTION_TYPE_TAG_PATTERN.source, "gi");
+  return value
+    .split("\n")
+    .filter((line) => !new RegExp(`^\\s*${QUESTION_TYPE_TAG_PATTERN.source}\\s*$`, "i").test(line))
+    .map((line) => line.replace(globalPattern, "").trim())
+    .join("\n")
+    .trim();
+}
+
 export function stripEmojis(value: string | undefined | null): string {
   if (!value) return "";
   return value
@@ -132,6 +146,7 @@ function renderPlainTextMath(text: string): React.ReactNode[] {
 
 export function renderFormattedText(text: string | undefined | null): React.ReactNode {
   if (!text) return "";
+  text = stripQuestionTypeTags(text);
   text = stripEmojis(text);
   
   // Split by $$ (block math) and $ (inline math)

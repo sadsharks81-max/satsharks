@@ -5,6 +5,7 @@ import { Badge } from "../../components/ui/Badge";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { Icon } from "../../components/common/Icon";
 import { api } from "../../services/api";
+import { stripQuestionTypeTags } from "../../utils/format";
 
 export const Route = createFileRoute("/dashboard/history")({ component: TestHistory });
 
@@ -55,7 +56,7 @@ function TestHistory() {
                 <Icon name={item.kind === "FULL" ? "quiz" : item.kind === "PRACTICE" ? "exercise" : "spellcheck"} className="text-2xl text-primary" />
                 <div className="min-w-0 flex-1">
                   <div className="font-bold">{item.test?.title || item.title}</div>
-                  {item.question && <div className="mt-1 line-clamp-1 text-xs text-on-surface-variant">{item.question}</div>}
+                  {item.question && <div className="mt-1 line-clamp-1 text-xs text-on-surface-variant">{stripQuestionTypeTags(item.question)}</div>}
                   <div className="mt-1 text-xs text-on-surface-variant">{new Date(item.date).toLocaleString()}</div>
                 </div>
                 <Badge variant={percentage >= 70 ? "success" : percentage >= 50 ? "warning" : "error"}>{correct}/{total}, {percentage}%</Badge>

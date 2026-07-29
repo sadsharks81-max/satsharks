@@ -143,6 +143,12 @@ function AdminClasses() {
     }
   };
 
+  // Joinable classes (LIVE / SCHEDULED) first, completed/cancelled sessions at the end
+  const statusOrder: Record<string, number> = { LIVE: 0, SCHEDULED: 1, CANCELLED: 2, COMPLETED: 3 };
+  const sortedClasses = [...classes].sort(
+    (a, b) => (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4)
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -185,7 +191,7 @@ function AdminClasses() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant/20">
-                {classes.map((c) => (
+                {sortedClasses.map((c) => (
                   <tr key={c._id} className="hover:bg-surface-container-low/40 transition-colors">
                     <td className="p-4">
                       <div className="font-semibold text-on-surface text-sm">{c.title}</div>

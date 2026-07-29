@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { StudentLayout } from "../../components/layout/StudentLayout";
 import { Badge } from "../../components/ui/Badge";
 import { Icon } from "../../components/common/Icon";
@@ -12,7 +12,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { SecurityWrapper } from "../../components/common/SecurityWrapper";
 import { ReportIssueModal } from "../../components/common/ReportIssueModal";
 import type { Question, QuestionCategory } from "../../types";
-import { renderFormattedText } from "../../utils/format";
+import { renderFormattedText, stripQuestionTypeTags } from "../../utils/format";
 
 export const Route = createFileRoute("/dashboard/practice")({
   component: Practice,
@@ -45,6 +45,10 @@ const CUSTOM_TEST_CATEGORY_NAMES = {
 };
 
 const normalizedCategoryName = (name: string) => name.trim().toLowerCase();
+
+// Generic top-level "Math" category has no questions tagged directly to it
+// (only its subcategories do) — hide it from the practice filter options.
+const BLOCKED_CATEGORY_NAMES = ["math", "sat math"];
 
 function Practice() {
   const { user } = useAuth();
@@ -117,12 +121,30 @@ function Practice() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState("");
 
+  // Refs mirror the latest state so the timer's setTimeout/setInterval callbacks
+  // (created inside an effect closure) never finish the session with stale counts.
+  const statsRef = useRef(stats);
+  const attemptedAnswersRef = useRef(attemptedAnswers);
+  const timeSpentRef = useRef(timeSpent);
+
+  useEffect(() => {
+    statsRef.current = stats;
+  }, [stats]);
+
+  useEffect(() => {
+    attemptedAnswersRef.current = attemptedAnswers;
+  }, [attemptedAnswers]);
+
+  useEffect(() => {
+    timeSpentRef.current = timeSpent;
+  }, [timeSpent]);
+
   const finishPracticeSession = () => {
     setSessionSummary({
-      total: stats.total,
-      correct: stats.correct,
-      timeSpent,
-      answers: [...attemptedAnswers],
+      total: statsRef.current.total,
+      correct: statsRef.current.correct,
+      timeSpent: timeSpentRef.current,
+      answers: [...attemptedAnswersRef.current],
     });
     setIsPracticeMode(false);
     setShowCalculator(false);
@@ -172,7 +194,7 @@ function Practice() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isPracticeMode, isTimerRunning, stats, attemptedAnswers, timeSpent]);
+  }, [isPracticeMode, isTimerRunning]);
 
   const formatTime = (secs: number) => {
     const m = Math.floor(secs / 60);
@@ -192,7 +214,8 @@ function Practice() {
           const name = normalizedCategoryName(item.name);
           return Object.values(CUSTOM_TEST_CATEGORY_NAMES).flat().includes(name)
             || name === "simple algebra"
-            || name === "algebra";
+            || name === "algebra"
+            || BLOCKED_CATEGORY_NAMES.includes(name);
         })
         .map((item) => item._id);
       if (excludedCategoryIds.length) params.set("excludeCategories", excludedCategoryIds.join(","));
@@ -294,6 +317,7 @@ function Practice() {
     return !allCustomCategoryNames.includes(name)
       && name !== "simple algebra"
       && name !== "algebra"
+      && !BLOCKED_CATEGORY_NAMES.includes(name)
       && (!section || item.section === section);
   });
   const availableCustomCategories = categories.filter((item) =>
@@ -1339,7 +1363,7 @@ function Practice() {
               ) : sessionSummary.answers.map((answer, index) => (
                 <div key={`${answer.questionId}-${index}`} className="rounded-xl border border-outline-variant/40 p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm font-semibold">{index + 1}. {answer.question}</p>
+                    <p className="text-sm font-semibold">{index + 1}. {stripQuestionTypeTags(answer.question)}</p>
                     <Badge variant={answer.isCorrect ? "success" : "error"}>
                       {answer.isCorrect ? "Correct" : "Incorrect"}
                     </Badge>

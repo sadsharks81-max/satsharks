@@ -21,7 +21,7 @@ export function Footer() {
               From SAT to the Ivy League 🦈<br/>
               Elite Admissions Strategy Experts<br/>
               SAT Mastery | Personal Statements + ECs<br/>
-              LUMS to Ivy League | Bachelors + Masters
+              Ivy League | Bachelors + Masters
             </p>
           </div>
 

@@ -22,6 +22,7 @@ function LeaderboardPage() {
   const { user } = useAuth();
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [poppedRank, setPoppedRank] = useState<number | null>(null);
 
   useEffect(() => {
     api.get("/api/analytics/leaderboard").then((res) => {
@@ -52,6 +53,17 @@ function LeaderboardPage() {
 
   // User stats
   const userRank = leaderboard.find((e) => e.id === user?.id);
+
+  const handlePodiumClick = (rank: number) => {
+    setPoppedRank(rank);
+    window.setTimeout(() => setPoppedRank(null), 650);
+  };
+
+  const podiumAnimationClass = (rank: number) => {
+    if (poppedRank === rank) return "animate-podium-pop";
+    if (poppedRank !== null && poppedRank !== 1 && rank === 1) return "animate-podium-nudge";
+    return "";
+  };
 
   return (
     <StudentLayout activeItem="/dashboard/leaderboard">
@@ -95,10 +107,14 @@ function LeaderboardPage() {
       {/* Podium Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end mb-10 select-none">
         
-        {/* Rank 2 (Left) */}
+        {/* Rank 2 (Left) - Silver */}
         <div className="order-2 md:order-1 flex flex-col items-center">
           {rank2 ? (
-            <div className="w-full max-w-[240px] bg-surface rounded-2xl p-6 border border-outline-variant/40 shark-shadow text-center flex flex-col items-center gap-4 transition-all hover:scale-[1.02]">
+            <div
+              onClick={() => handlePodiumClick(2)}
+              className={`w-full max-w-[240px] bg-surface rounded-2xl p-6 border border-outline-variant/40 shark-shadow text-center flex flex-col items-center gap-4 transition-all hover:scale-[1.02] cursor-pointer ${podiumAnimationClass(2)}`}
+            >
+              <div className="text-3xl leading-none select-none" role="img" aria-label="Silver medal">🥈</div>
               <div className="relative">
                 <span className="absolute -top-3.5 -right-3.5 h-7 w-7 rounded-full bg-slate-300 text-slate-800 text-xs font-mono font-bold flex items-center justify-center border border-white shadow-sm">2</span>
                 <div className="h-16 w-16 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center font-display text-xl font-bold border-2 border-slate-300">
@@ -120,14 +136,18 @@ function LeaderboardPage() {
           <div className="hidden md:block w-full max-w-[240px] h-10 bg-slate-200/50 rounded-b-2xl border-t border-slate-300/40" />
         </div>
 
-        {/* Rank 1 (Center) */}
+        {/* Rank 1 (Center) - Gold */}
         <div className="order-1 md:order-2 flex flex-col items-center">
           {rank1 ? (
-            <div className="w-full max-w-[260px] bg-surface rounded-2xl p-8 border-2 border-accent shark-shadow text-center flex flex-col items-center gap-5 relative overflow-visible transition-all hover:scale-[1.03]">
+            <div
+              onClick={() => handlePodiumClick(1)}
+              className={`w-full max-w-[260px] bg-surface rounded-2xl p-8 border-2 border-accent shark-shadow text-center flex flex-col items-center gap-5 relative overflow-visible transition-all hover:scale-[1.03] cursor-pointer ${podiumAnimationClass(1)}`}
+            >
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-accent bg-[#0B1929] px-3.5 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest flex items-center gap-1 shadow-md border border-accent/30 animate-bounce">
                 <Icon name="workspace_premium" className="text-xs" /> Leader
               </div>
-              <div className="relative mt-2">
+              <div className="text-4xl leading-none select-none mt-2" role="img" aria-label="Gold medal">🥇</div>
+              <div className="relative">
                 <span className="absolute -top-3.5 -right-3.5 h-8 w-8 rounded-full bg-accent text-primary text-sm font-mono font-bold flex items-center justify-center border-2 border-white shadow-sm">1</span>
                 <div className="h-20 w-20 bg-accent/10 text-[#B07A15] rounded-full flex items-center justify-center font-display text-2xl font-bold border-2 border-accent">
                   {rank1.name.charAt(0)}
@@ -148,10 +168,14 @@ function LeaderboardPage() {
           <div className="hidden md:block w-full max-w-[260px] h-16 bg-accent/20 rounded-b-2xl border-t border-accent/30" />
         </div>
 
-        {/* Rank 3 (Right) */}
+        {/* Rank 3 (Right) - Bronze */}
         <div className="order-3 flex flex-col items-center">
           {rank3 ? (
-            <div className="w-full max-w-[240px] bg-surface rounded-2xl p-6 border border-outline-variant/40 shark-shadow text-center flex flex-col items-center gap-4 transition-all hover:scale-[1.02]">
+            <div
+              onClick={() => handlePodiumClick(3)}
+              className={`w-full max-w-[240px] bg-surface rounded-2xl p-6 border border-outline-variant/40 shark-shadow text-center flex flex-col items-center gap-4 transition-all hover:scale-[1.02] cursor-pointer ${podiumAnimationClass(3)}`}
+            >
+              <div className="text-3xl leading-none select-none" role="img" aria-label="Bronze medal">🥉</div>
               <div className="relative">
                 <span className="absolute -top-3.5 -right-3.5 h-7 w-7 rounded-full bg-amber-600 text-white text-xs font-mono font-bold flex items-center justify-center border border-white shadow-sm">3</span>
                 <div className="h-16 w-16 bg-amber-50 text-amber-800 rounded-full flex items-center justify-center font-display text-xl font-bold border-2 border-amber-600">

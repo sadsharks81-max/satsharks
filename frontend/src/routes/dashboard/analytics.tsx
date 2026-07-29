@@ -10,7 +10,7 @@ import { Modal } from "../../components/ui/Modal";
 import { api } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
 import type { PerformanceDataPoint, CategoryBreakdown, PredictedScore, DashboardStats } from "../../types";
-import { stripEmojis } from "../../utils/format";
+import { stripEmojis, stripQuestionTypeTags } from "../../utils/format";
 
 export const Route = createFileRoute("/dashboard/analytics")({
   component: Analytics,
@@ -333,7 +333,7 @@ function Analytics() {
                       className={`mt-0.5 text-xl ${entry.isCorrect ? "text-success" : "text-error"}`}
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="line-clamp-2 text-sm font-semibold text-on-surface">{entry.question}</div>
+                      <div className="line-clamp-2 text-sm font-semibold text-on-surface">{stripQuestionTypeTags(entry.question)}</div>
                       <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-on-surface-variant">
                         <span>{entry.category}</span>
                         <span>{entry.difficulty}</span>
@@ -608,7 +608,7 @@ function Analytics() {
       {/* Question Details / Explanation Modal */}
       <Modal open={selectedQuestionText !== null} onClose={() => setSelectedQuestionText(null)} title="Question Details" icon="menu_book" maxWidth="max-w-2xl">
         <div className="p-1 space-y-4">
-          <p className="text-sm leading-relaxed text-on-surface whitespace-pre-wrap">{stripEmojis(selectedQuestionText)}</p>
+          <p className="text-sm leading-relaxed text-on-surface whitespace-pre-wrap">{stripEmojis(stripQuestionTypeTags(selectedQuestionText))}</p>
           <div className="flex justify-end pt-4 border-t border-outline-variant/20">
             <button
               onClick={() => setSelectedQuestionText(null)}

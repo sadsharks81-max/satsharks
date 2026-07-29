@@ -179,7 +179,7 @@ function SuccessStories() {
                       <div className="h-[1px] w-full bg-outline-variant/30 my-4" />
   
                       {/* Testimonial Quote */}
-                      <blockquote className="text-on-surface/90 leading-relaxed text-[16px] italic font-normal">
+                      <blockquote className="text-on-surface/90 leading-relaxed text-[16px] italic font-normal text-justify">
                         "{item.quote}"
                       </blockquote>
                     </div>

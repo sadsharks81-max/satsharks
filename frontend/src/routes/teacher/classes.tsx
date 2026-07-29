@@ -130,6 +130,12 @@ function TeacherClasses() {
     }
   };
 
+  // Joinable classes (LIVE / SCHEDULED) first, completed/cancelled sessions at the end
+  const statusOrder: Record<string, number> = { LIVE: 0, SCHEDULED: 1, CANCELLED: 2, COMPLETED: 3 };
+  const sortedClasses = [...classes].sort(
+    (a, b) => (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4)
+  );
+
   return (
     <TeacherLayout activeItem="/teacher/classes">
       <div className="flex items-center justify-between mb-8">
@@ -160,7 +166,7 @@ function TeacherClasses() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {classes.map((c) => (
+          {sortedClasses.map((c) => (
             <div
               key={c._id}
               className="bg-surface-container-lowest border border-outline-variant/35 rounded-2xl p-6 shark-shadow flex flex-col justify-between"
