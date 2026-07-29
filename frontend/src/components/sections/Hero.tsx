@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "../common/Icon";
-import studentHero from "../../assets/student_hero.png";
 import { Link } from "@tanstack/react-router";
 import { resolveImageUrl } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
@@ -17,25 +16,28 @@ const DEFAULT_FEATURE = {
 };
 
 const resolveHeroImageUrl = (url: string) => {
-  if (!url) return studentHero;
-  return resolveImageUrl(url);
+  return url ? resolveImageUrl(url) : "";
 };
 
 export function Hero() {
   const { user } = useAuth();
   const [feature, setFeature] = useState<any>(DEFAULT_FEATURE);
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
 
   useEffect(() => {
     getHomepageSuccessContent()
       .then((res) => {
         if (res.success && res.feature) {
+          setHeroImageLoaded(!res.feature.imageUrl);
           setFeature(res.feature);
         } else {
+          setHeroImageLoaded(true);
           setFeature(DEFAULT_FEATURE);
         }
       })
       .catch((err) => {
         console.error("Error fetching featured success story:", err);
+        setHeroImageLoaded(true);
         setFeature(DEFAULT_FEATURE);
       });
   }, []);
@@ -119,17 +121,33 @@ export function Hero() {
               <div className="absolute -inset-6 rounded-2xl bg-linear-to-br from-accent/20 via-transparent to-primary/30 blur-2xl -z-10" />
 
               {/* Main Student Portrait */}
-              <img
-                src={resolveHeroImageUrl(feature.imageUrl)}
-                alt={feature.studentName}
-                width={420}
-                height={525}
-                fetchPriority="high"
-                loading="eager"
-                decoding="async"
-                style={{ aspectRatio: "4/5" }}
-                className="w-full h-auto object-cover rounded-xl shark-shadow border border-outline-variant/60"
-              />
+              <div className="relative w-full aspect-[4/5] overflow-hidden rounded-xl border border-outline-variant/60 bg-surface shark-shadow">
+                {!heroImageLoaded && (
+                  <div
+                    aria-label="Loading featured student image"
+                    className="absolute inset-0 animate-pulse bg-surface-container-high"
+                  />
+                )}
+                {feature.imageUrl && (
+                  <img
+                    src={resolveHeroImageUrl(feature.imageUrl)}
+                    alt={feature.studentName}
+                    width={420}
+                    height={525}
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
+                    onLoad={() => setHeroImageLoaded(true)}
+                    onError={(event) => {
+                      event.currentTarget.style.display = "none";
+                      setHeroImageLoaded(true);
+                    }}
+                    className={`h-full w-full object-cover transition-opacity duration-300 ${
+                      heroImageLoaded ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                )}
+              </div>
 
               {/* Floating Badge 1: Stanford Acceptance */}
               <motion.div
