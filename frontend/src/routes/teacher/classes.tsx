@@ -1,14 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { TeacherLayout } from "../../components/layout/TeacherLayout";
 import { useState, useEffect } from "react";
 import { api } from "../../services/api";
+import { liveClassApi } from "../../services/liveClassApi";
 import { Icon } from "../../components/common/Icon";
 import { Badge } from "../../components/ui/Badge";
 import { Modal } from "../../components/ui/Modal";
 import { Input } from "../../components/ui/Input";
 import { Textarea } from "../../components/ui/Textarea";
 import { useAuth } from "../../hooks/useAuth";
-import { isValidHttpsUrl, looksLikeGoogleMeetLink } from "../../utils/meetLink";
 
 export const Route = createFileRoute("/teacher/classes")({
   component: TeacherClasses,
@@ -16,12 +16,13 @@ export const Route = createFileRoute("/teacher/classes")({
 
 function TeacherClasses() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [classes, setClasses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
-  console.log("TeacherClasses Render - User Context:", user);
+  const [startingId, setStartingId] = useState<string | null>(null);
+  const [participantCounts, setParticipantCounts] = useState<Record<string, number>>({});
 
   // Form State
   const [form, setForm] = useState({
@@ -29,14 +30,8 @@ function TeacherClasses() {
     description: "",
     scheduledAt: "",
     duration: 60,
-    meetLink: "",
+    maxStudents: 50,
   });
-
-  // Meet link edit modal state
-  const [linkModalOpen, setLinkModalOpen] = useState(false);
-  const [linkModalClassId, setLinkModalClassId] = useState<string | null>(null);
-  const [linkModalValue, setLinkModalValue] = useState("");
-  const [linkSubmitting, setLinkSubmitting] = useState(false);
 
   const fetchClasses = () => {
     setLoading(true);
@@ -54,22 +49,32 @@ function TeacherClasses() {
     fetchClasses();
   }, []);
 
+  // Poll "Students Joined" for every currently-live class card.
+  useEffect(() => {
+    const liveClassIds = classes.filter((c) => c.status === "LIVE").map((c) => c._id);
+    if (liveClassIds.length === 0) return;
+
+    const poll = () => {
+      liveClassIds.forEach((id) => {
+        liveClassApi.getParticipantCount(id).then((res) => {
+          if (res.success) setParticipantCounts((prev) => ({ ...prev, [id]: res.count }));
+        }).catch(() => {});
+      });
+    };
+    poll();
+    const interval = setInterval(poll, 10000);
+    return () => clearInterval(interval);
+  }, [classes]);
+
   const handleCreateClass = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.title || !form.scheduledAt) return;
 
-    if (form.meetLink && !isValidHttpsUrl(form.meetLink)) {
-      alert("Google Meet link must be a valid https:// URL.");
-      return;
-    }
-
     setSubmitting(true);
-    console.log("Create Class Submission - User Context:", user);
     try {
       const teacherId = user?.id || user?._id || user?.userId;
-      console.log("Resolved Teacher ID:", teacherId);
       if (!teacherId) {
-        alert("Teacher profile not loaded. Please re-login. (Details: " + JSON.stringify(user) + ")");
+        alert("Teacher profile not loaded. Please re-login.");
         return;
       }
       const res = await api.post("/api/live-classes", {
@@ -79,7 +84,7 @@ function TeacherClasses() {
       if (res.success) {
         fetchClasses();
         setModalOpen(false);
-        setForm({ title: "", description: "", scheduledAt: "", duration: 60, meetLink: "" });
+        setForm({ title: "", description: "", scheduledAt: "", duration: 60, maxStudents: 50 });
       } else {
         alert(res.error || "Failed to create class session.");
       }
@@ -90,44 +95,26 @@ function TeacherClasses() {
     }
   };
 
-  const openLinkModal = (c: any) => {
-    setLinkModalClassId(c._id);
-    setLinkModalValue(c.meetLink || "");
-    setLinkModalOpen(true);
-  };
-
-  const handleSaveMeetLink = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!linkModalValue || !isValidHttpsUrl(linkModalValue)) {
-      alert("Please enter a valid https:// Google Meet link.");
-      return;
-    }
-
-    setLinkSubmitting(true);
-    try {
-      const res = await api.put(`/api/live-classes/${linkModalClassId}/meet-link`, { meetLink: linkModalValue });
-      if (res.success) {
-        fetchClasses();
-        setLinkModalOpen(false);
-      } else {
-        alert(res.error || "Failed to save Meet link.");
-      }
-    } catch (err) {
-      alert("Error saving Meet link.");
-    } finally {
-      setLinkSubmitting(false);
-    }
-  };
-
   const handleUpdateStatus = async (id: string, status: string) => {
     try {
       const res = await api.put(`/api/live-classes/${id}/status`, { status });
       if (res.success) {
         fetchClasses();
+        return true;
       }
+      alert(res.error || "Failed to update status.");
+      return false;
     } catch (err) {
       alert("Failed to update status.");
+      return false;
     }
+  };
+
+  const handleStartClass = async (c: any) => {
+    setStartingId(c._id);
+    const ok = await handleUpdateStatus(c._id, "LIVE");
+    setStartingId(null);
+    if (ok) navigate({ to: `/classroom/${c.roomName || c._id}` });
   };
 
   // Joinable classes (LIVE / SCHEDULED) first, completed/cancelled sessions at the end
@@ -142,7 +129,7 @@ function TeacherClasses() {
         <div>
           <h1 className="text-3xl font-display font-bold text-on-background mb-2">My Live Classes</h1>
           <p className="text-on-surface-variant text-sm">
-            Launch live sessions, schedule upcoming ones, and review completed sessions.
+            Launch live classroom sessions, schedule upcoming ones, and review completed sessions.
           </p>
         </div>
         <button
@@ -178,7 +165,7 @@ function TeacherClasses() {
                       c.status === "LIVE"
                         ? "success"
                         : c.status === "COMPLETED"
-                        ? "neutral"
+                        ? "default"
                         : c.status === "CANCELLED"
                         ? "error"
                         : "info"
@@ -186,6 +173,12 @@ function TeacherClasses() {
                   >
                     {c.status}
                   </Badge>
+                  {c.status === "LIVE" && (
+                    <span className="inline-flex items-center gap-1 text-xs font-bold text-on-surface-variant">
+                      <Icon name="groups" className="text-[14px] text-primary" />
+                      {participantCounts[c._id] ?? 0} / {c.maxStudents ?? 50} joined
+                    </span>
+                  )}
                 </div>
 
                 <h3 className="text-lg font-bold text-on-surface mb-1.5">{c.title}</h3>
@@ -207,24 +200,15 @@ function TeacherClasses() {
               </div>
 
               <div className="flex items-center gap-3">
-                {(c.status === "SCHEDULED" || c.status === "LIVE") && (
-                  <button
-                    onClick={() => openLinkModal(c)}
-                    className="px-4 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-xs font-bold text-on-surface-variant transition-colors cursor-pointer flex items-center gap-1.5"
-                  >
-                    <Icon name="link" />
-                    {c.meetLink ? "Edit Link" : "Set Link"}
-                  </button>
-                )}
-
                 {c.status === "SCHEDULED" && (
                   <>
                     <button
-                      onClick={() => handleUpdateStatus(c._id, "LIVE")}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-accent transition-colors cursor-pointer border-none"
+                      onClick={() => handleStartClass(c)}
+                      disabled={startingId === c._id}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-accent transition-colors cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Icon name="play_arrow" />
-                      Start Class
+                      {startingId === c._id ? "Starting..." : "Start Class"}
                     </button>
                     <button
                       onClick={() => handleUpdateStatus(c._id, "CANCELLED")}
@@ -238,12 +222,11 @@ function TeacherClasses() {
                 {c.status === "LIVE" && (
                   <>
                     <button
-                      onClick={() => c.meetLink && window.open(c.meetLink, "_blank", "noopener,noreferrer")}
-                      disabled={!c.meetLink}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-success text-white rounded-xl text-xs font-bold hover:opacity-90 transition-opacity cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => navigate({ to: `/classroom/${c.roomName || c._id}` })}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-success text-white rounded-xl text-xs font-bold hover:opacity-90 transition-opacity cursor-pointer border-none"
                     >
                       <Icon name="video_call" />
-                      Open Meet
+                      Join Classroom
                     </button>
                     <button
                       onClick={() => handleUpdateStatus(c._id, "COMPLETED")}
@@ -307,20 +290,15 @@ function TeacherClasses() {
             />
           </div>
 
-          <div>
-            <Input
-              type="url"
-              label="Google Meet Link (optional)"
-              value={form.meetLink}
-              onChange={(e) => setForm({ ...form, meetLink: e.target.value })}
-              placeholder="https://meet.google.com/xxx-xxxx-xxx"
-            />
-            {form.meetLink && isValidHttpsUrl(form.meetLink) && !looksLikeGoogleMeetLink(form.meetLink) && (
-              <p className="mt-1.5 text-xs text-accent">
-                This doesn't look like a Google Meet link, double check before saving.
-              </p>
-            )}
-          </div>
+          <Input
+            type="number"
+            label="Maximum Students"
+            value={form.maxStudents}
+            onChange={(e) => setForm({ ...form, maxStudents: parseInt(e.target.value) || 50 })}
+            min={1}
+            max={500}
+            required
+          />
 
           <div className="flex justify-end gap-3 mt-6">
             <button
@@ -336,41 +314,6 @@ function TeacherClasses() {
               className="px-6 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-sm hover:bg-accent transition-colors disabled:opacity-50 cursor-pointer border-none"
             >
               {submitting ? "Scheduling..." : "Schedule"}
-            </button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* Meet Link Modal */}
-      <Modal open={linkModalOpen} onClose={() => setLinkModalOpen(false)} title="Set Google Meet Link">
-        <form onSubmit={handleSaveMeetLink} className="space-y-4">
-          <Input
-            type="url"
-            label="Google Meet Link *"
-            value={linkModalValue}
-            onChange={(e) => setLinkModalValue(e.target.value)}
-            placeholder="https://meet.google.com/xxx-xxxx-xxx"
-            required
-          />
-          {linkModalValue && isValidHttpsUrl(linkModalValue) && !looksLikeGoogleMeetLink(linkModalValue) && (
-            <p className="text-xs text-accent">
-              This doesn't look like a Google Meet link, double check before saving.
-            </p>
-          )}
-          <div className="flex justify-end gap-3 mt-6">
-            <button
-              type="button"
-              onClick={() => setLinkModalOpen(false)}
-              className="px-6 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-sm font-semibold transition-colors cursor-pointer"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={linkSubmitting}
-              className="px-6 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-sm hover:bg-accent transition-colors disabled:opacity-50 cursor-pointer border-none"
-            >
-              {linkSubmitting ? "Saving..." : "Save Link"}
             </button>
           </div>
         </form>

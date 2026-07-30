@@ -29,6 +29,10 @@ const isAllowedProductionOrigin = (origin: string) => {
 import { stripeWebhook } from "./controllers/payment.controller";
 app.post("/api/payment/webhook/stripe", express.raw({ type: "application/json" }), stripeWebhook);
 
+// LiveKit webhook must also come BEFORE express.json() - signature verification needs the raw body
+import { liveKitWebhook } from "./controllers/live-class.controller";
+app.post("/api/live-classes/webhook", express.raw({ type: "application/json" }), liveKitWebhook);
+
 // Middleware
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));

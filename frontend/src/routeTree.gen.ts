@@ -35,6 +35,7 @@ import { Route as DashboardLeaderboardRouteImport } from './routes/dashboard/lea
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard/history'
 import { Route as DashboardEssaysRouteImport } from './routes/dashboard/essays'
 import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard/analytics'
+import { Route as ClassroomRoomIdRouteImport } from './routes/classroom.$roomId'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
@@ -190,6 +191,11 @@ const DashboardAnalyticsRoute = DashboardAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => DashboardRoute,
 } as any)
+const ClassroomRoomIdRoute = ClassroomRoomIdRouteImport.update({
+  id: '/classroom/$roomId',
+  path: '/classroom/$roomId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
   id: '/auth/reset-password',
   path: '/auth/reset-password',
@@ -343,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
+  '/classroom/$roomId': typeof ClassroomRoomIdRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/essays': typeof DashboardEssaysRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -393,6 +400,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
+  '/classroom/$roomId': typeof ClassroomRoomIdRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/essays': typeof DashboardEssaysRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -446,6 +454,7 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
+  '/classroom/$roomId': typeof ClassroomRoomIdRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/essays': typeof DashboardEssaysRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -500,6 +509,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
+    | '/classroom/$roomId'
     | '/dashboard/analytics'
     | '/dashboard/essays'
     | '/dashboard/history'
@@ -550,6 +560,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
+    | '/classroom/$roomId'
     | '/dashboard/analytics'
     | '/dashboard/essays'
     | '/dashboard/history'
@@ -602,6 +613,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/register'
     | '/auth/reset-password'
+    | '/classroom/$roomId'
     | '/dashboard/analytics'
     | '/dashboard/essays'
     | '/dashboard/history'
@@ -655,6 +667,7 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
+  ClassroomRoomIdRoute: typeof ClassroomRoomIdRoute
   PaymentCancelRoute: typeof PaymentCancelRoute
   PaymentSuccessRoute: typeof PaymentSuccessRoute
   TeacherClassesRoute: typeof TeacherClassesRoute
@@ -848,6 +861,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/analytics'
       preLoaderRoute: typeof DashboardAnalyticsRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/classroom/$roomId': {
+      id: '/classroom/$roomId'
+      path: '/classroom/$roomId'
+      fullPath: '/classroom/$roomId'
+      preLoaderRoute: typeof ClassroomRoomIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/auth/reset-password': {
       id: '/auth/reset-password'
@@ -1097,6 +1117,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
+  ClassroomRoomIdRoute: ClassroomRoomIdRoute,
   PaymentCancelRoute: PaymentCancelRoute,
   PaymentSuccessRoute: PaymentSuccessRoute,
   TeacherClassesRoute: TeacherClassesRoute,

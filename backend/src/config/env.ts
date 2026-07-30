@@ -24,4 +24,8 @@ export const env = {
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
   payproClientId: process.env.PAYPRO_CLIENT_ID || "",
   payproSecretKey: process.env.PAYPRO_SECRET_KEY || "",
+  livekitUrl: process.env.LIVEKIT_URL || "",
+  livekitApiKey: process.env.LIVEKIT_API_KEY || "",
+  livekitApiSecret: process.env.LIVEKIT_API_SECRET || "",
+  isLiveKitConfigured: Boolean(process.env.LIVEKIT_URL && process.env.LIVEKIT_API_KEY && process.env.LIVEKIT_API_SECRET),
 };

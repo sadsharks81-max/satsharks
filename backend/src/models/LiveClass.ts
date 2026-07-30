@@ -6,7 +6,10 @@ export interface ILiveClass extends Document {
   scheduledAt: Date;
   duration: number; // in minutes
   status: "SCHEDULED" | "LIVE" | "COMPLETED" | "CANCELLED";
-  meetLink?: string | null;
+  roomName: string;
+  maxStudents: number;
+  startedAt?: Date | null;
+  endedAt?: Date | null;
   teacher: mongoose.Schema.Types.ObjectId;
   createdBy: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
@@ -24,7 +27,11 @@ const LiveClassSchema: Schema = new Schema(
       enum: ["SCHEDULED", "LIVE", "COMPLETED", "CANCELLED"],
       default: "SCHEDULED",
     },
-    meetLink: { type: String, default: null },
+    // LiveKit room name. Set to the document's own _id (unique, URL-safe) right after creation.
+    roomName: { type: String, required: true, unique: true },
+    maxStudents: { type: Number, default: 50 },
+    startedAt: { type: Date, default: null },
+    endedAt: { type: Date, default: null },
     teacher: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },
