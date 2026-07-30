@@ -8,6 +8,7 @@ import { SidePanel, type PanelKind } from "./SidePanelTabs";
 import { WhiteboardPlaceholder } from "./WhiteboardPlaceholder";
 import { CHAT_TOPIC_MESSAGE } from "./chatTopics";
 import type { LiveClassDetails } from "./useClassStatusPoll";
+import { Icon } from "../../components/common/Icon";
 
 interface ClassroomExperienceProps {
   liveClass: LiveClassDetails;
@@ -87,57 +88,51 @@ export function ClassroomExperience({ liveClass, classId, currentUserId, canMode
   ]);
   const isScreenSharing = tracks.some((t) => t.source === Track.Source.ScreenShare);
 
-  const [controlsVisible, setControlsVisible] = useState(true);
-
-  useEffect(() => {
-    if (!isScreenSharing) {
-      setControlsVisible(true);
-      return;
-    }
-
-    let timeout: number;
-    const handleMouseMove = () => {
-      setControlsVisible(true);
-      window.clearTimeout(timeout);
-      timeout = window.setTimeout(() => {
-        setControlsVisible(false);
-      }, 3000);
-    };
-
-    handleMouseMove();
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("click", handleMouseMove);
-
-    return () => {
-      window.clearTimeout(timeout);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("click", handleMouseMove);
-    };
-  }, [isScreenSharing]);
+  const [topBarVisible, setTopBarVisible] = useState(true);
+  const [bottomBarVisible, setBottomBarVisible] = useState(true);
 
   if (isScreenSharing) {
     return (
       <div
         ref={containerRef}
-        className={`relative h-full w-full bg-[#0B1120] overflow-hidden ${
-          !controlsVisible ? "cursor-none" : ""
-        }`}
+        className="relative h-full w-full bg-[#0B1120] overflow-hidden"
       >
         {/* TopBar Overlay */}
         <div
           className={`absolute top-0 left-0 right-0 z-30 transition-all duration-300 ${
-            controlsVisible
+            topBarVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0 pointer-events-none"
           }`}
         >
-          <TopBar title={liveClass.title} startedAt={liveClass.startedAt} durationMinutes={liveClass.duration} onLeave={onLeave} />
+          <div className="relative">
+            <TopBar title={liveClass.title} startedAt={liveClass.startedAt} durationMinutes={liveClass.duration} onLeave={onLeave} />
+            <button
+              type="button"
+              onClick={() => setTopBarVisible(false)}
+              className="absolute bottom-[-24px] left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-b border-x border-white/10 rounded-b-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center"
+              title="Collapse Top Bar"
+            >
+              <Icon name="keyboard_arrow_up" className="text-base" />
+            </button>
+          </div>
         </div>
+
+        {/* Floating expand arrow when TopBar is collapsed */}
+        {!topBarVisible && (
+          <button
+            type="button"
+            onClick={() => setTopBarVisible(true)}
+            className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-b border-x border-white/10 rounded-b-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center animate-bounce"
+            title="Expand Top Bar"
+          >
+            <Icon name="keyboard_arrow_down" className="text-base" />
+          </button>
+        )}
 
         {/* Full-bleed Video Stage */}
         <div className="h-full w-full">
-          <VideoStage teacherIdentity={liveClass.teacher?._id} controlsVisible={controlsVisible} />
+          <VideoStage teacherIdentity={liveClass.teacher?._id} controlsVisible={topBarVisible} />
         </div>
 
         {/* Side Panel overlay */}
@@ -158,23 +153,45 @@ export function ClassroomExperience({ liveClass, classId, currentUserId, canMode
         {/* BottomToolbar Overlay */}
         <div
           className={`absolute bottom-0 left-0 right-0 z-30 transition-all duration-300 ${
-            controlsVisible
+            bottomBarVisible
               ? "translate-y-0 opacity-100"
               : "translate-y-full opacity-0 pointer-events-none"
           }`}
         >
-          <BottomToolbar
-            activePanel={activePanel}
-            onTogglePanel={handleTogglePanel}
-            unreadChatCount={unreadChat}
-            handRaised={handRaised}
-            onToggleRaiseHand={handleToggleRaiseHand}
-            onOpenWhiteboard={() => setWhiteboardOpen(true)}
-            isFullscreen={isFullscreen}
-            onToggleFullscreen={handleToggleFullscreen}
-            onLeave={onLeave}
-          />
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setBottomBarVisible(false)}
+              className="absolute top-[-24px] left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-t border-x border-white/10 rounded-t-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center"
+              title="Collapse Toolbar"
+            >
+              <Icon name="keyboard_arrow_down" className="text-base" />
+            </button>
+            <BottomToolbar
+              activePanel={activePanel}
+              onTogglePanel={handleTogglePanel}
+              unreadChatCount={unreadChat}
+              handRaised={handRaised}
+              onToggleRaiseHand={handleToggleRaiseHand}
+              onOpenWhiteboard={() => setWhiteboardOpen(true)}
+              isFullscreen={isFullscreen}
+              onToggleFullscreen={handleToggleFullscreen}
+              onLeave={onLeave}
+            />
+          </div>
         </div>
+
+        {/* Floating expand arrow when BottomToolbar is collapsed */}
+        {!bottomBarVisible && (
+          <button
+            type="button"
+            onClick={() => setBottomBarVisible(true)}
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-t border-x border-white/10 rounded-t-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center animate-bounce"
+            title="Expand Toolbar"
+          >
+            <Icon name="keyboard_arrow_up" className="text-base" />
+          </button>
+        )}
 
         <WhiteboardPlaceholder open={whiteboardOpen} onClose={() => setWhiteboardOpen(false)} />
       </div>
