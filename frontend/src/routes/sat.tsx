@@ -220,6 +220,45 @@ function SATPrepPage() {
     }
   }, [tab]);
 
+  const [dbPricing, setDbPricing] = useState<any>(null);
+
+  useEffect(() => {
+    api.get("/api/homepage-stats")
+      .then((res) => {
+        if (res.success && res.stats) {
+          setDbPricing(res.stats);
+        }
+      })
+      .catch((err) => console.error("Error loading pricing:", err));
+  }, []);
+
+  const getSatPrice = (plan: "portal" | "group" | "oneOnOne") => {
+    if (region === "pk") {
+      if (plan === "portal") return dbPricing?.satPortalPk || "Rs 15,000";
+      if (plan === "group") return dbPricing?.satGroupPk || "Rs 40,000";
+      return dbPricing?.satOneOnOnePk || "Rs 100,000";
+    } else {
+      if (plan === "portal") return dbPricing?.satPortalIntl || "$70";
+      if (plan === "group") return dbPricing?.satGroupIntl || "$300";
+      return dbPricing?.satOneOnOneIntl || "$500";
+    }
+  };
+
+  const getLumsPrice = (plan: "guided" | "complete") => {
+    if (region === "pk") {
+      return plan === "guided" ? (dbPricing?.lumsGuidedPk || "Rs. 30,000") : (dbPricing?.lumsCompletePk || "Rs. 60,000");
+    } else {
+      return plan === "guided" ? (dbPricing?.lumsGuidedIntl || "$300") : (dbPricing?.lumsCompleteIntl || "$550");
+    }
+  };
+
+  const getAdmissionPrice = (country: any, type: "guided" | "complete") => {
+    const isIntl = region === "intl";
+    if (!dbPricing) return country[type === "guided" ? "t1" : "t2"];
+    const key = `adm${type === "guided" ? "Guided" : "Complete"}${country.id.charAt(0).toUpperCase() + country.id.slice(1)}${isIntl ? "Intl" : "Pk"}`;
+    return dbPricing[key] || country[type === "guided" ? "t1" : "t2"];
+  };
+
   // Country Selection for Admissions
   const [selectedCountry, setSelectedCountry] = useState<string>("usa");
 
@@ -430,15 +469,11 @@ function SATPrepPage() {
                         Self study at your own pace with the most powerful SAT prep platform available.
                       </p>
                       <div className="pl-10 mb-4 flex flex-wrap items-center gap-3">
-                        {prices ? (
-                          <PriceBadge amount={prices.portal.amount} period={prices.portal.period} accent="blue" />
-                        ) : (
-                          <LoadingSkeleton />
-                        )}
+                        <PriceBadge amount={getSatPrice("portal")} period="/ month" accent="blue" />
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleSelectPlan("portal", "Portal Only", prices?.portal.amount || "Rs 15,000");
+                            handleSelectPlan("portal", "Portal Only", getSatPrice("portal"));
                           }}
                           className="py-2 px-3.5 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold text-xs transition-all shadow-sm cursor-pointer border border-transparent whitespace-nowrap"
                         >
@@ -482,15 +517,11 @@ function SATPrepPage() {
                         Learn alongside peers in a structured, high-intensity program designed to push everyone forward.
                       </p>
                       <div className="pl-10 mb-4 flex flex-wrap items-center gap-3">
-                        {prices ? (
-                          <PriceBadge amount={prices.group.amount} period={prices.group.period} accent="blue" />
-                        ) : (
-                          <LoadingSkeleton />
-                        )}
+                        <PriceBadge amount={getSatPrice("group")} period="/ full course" accent="blue" />
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleSelectPlan("group", "Group Sessions", prices?.group.amount || "Rs 40,000");
+                            handleSelectPlan("group", "Group Sessions", getSatPrice("group"));
                           }}
                           className="py-2 px-3.5 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold text-xs transition-all shadow-sm cursor-pointer border border-transparent whitespace-nowrap"
                         >
@@ -537,15 +568,11 @@ function SATPrepPage() {
                         Every session is built around you, your weaknesses, your pace, your target score.
                       </p>
                       <div className="pl-10 mb-4 flex flex-wrap items-center gap-3">
-                        {prices ? (
-                          <PriceBadge amount={prices.oneOnOne.amount} period={prices.oneOnOne.period} accent="gold" />
-                        ) : (
-                          <LoadingSkeleton />
-                        )}
+                        <PriceBadge amount={getSatPrice("oneOnOne")} period="/ month" accent="gold" />
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleSelectPlan("oneOnOne", "1-on-1 Sessions", prices?.oneOnOne.amount || "Rs 100,000");
+                            handleSelectPlan("oneOnOne", "1-on-1 Sessions", getSatPrice("oneOnOne"));
                           }}
                           className="py-2 px-3.5 rounded-xl bg-accent hover:bg-accent/95 text-white font-bold text-xs transition-all shadow-sm cursor-pointer border border-transparent whitespace-nowrap"
                         >
@@ -641,7 +668,7 @@ function SATPrepPage() {
                             We guide, you write, with expert eyes on every draft.
                           </p>
                           <div className="pl-10 mb-6">
-                            <div className="text-2xl font-extrabold text-primary font-mono">{c.t1l ? `Rs. ${c.t1}` : c.t1}</div>
+                            <div className="text-2xl font-extrabold text-primary font-mono">{c.t1l ? `Rs. ${getAdmissionPrice(c, "guided")}` : getAdmissionPrice(c, "guided")}</div>
                             <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
                               {c.t1l ? `${c.t1l} PKR` : "USD"}
                             </span>
@@ -655,7 +682,7 @@ function SATPrepPage() {
 
                         <div className="mt-8 pt-4 flex flex-col sm:flex-row gap-2.5">
                           <button
-                            onClick={() => openInterestModal("admission", `Guided Support (${c.name})`, c.t1)}
+                            onClick={() => openInterestModal("admission", `Guided Support (${c.name})`, getAdmissionPrice(c, "guided"))}
                             className="flex-1 py-3 rounded-xl bg-primary text-white hover:bg-primary/95 text-xs font-bold shadow-sm transition-all"
                           >
                             Register Now
@@ -686,7 +713,7 @@ function SATPrepPage() {
                             We handle everything. You just show up and get accepted.
                           </p>
                           <div className="pl-10 mb-6">
-                            <div className="text-2xl font-extrabold text-accent font-mono">{c.t2l ? `Rs. ${c.t2}` : c.t2}</div>
+                            <div className="text-2xl font-extrabold text-accent font-mono">{c.t2l ? `Rs. ${getAdmissionPrice(c, "complete")}` : getAdmissionPrice(c, "complete")}</div>
                             <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
                               {c.t2l ? `${c.t2l} PKR` : "USD"}
                             </span>
@@ -700,7 +727,7 @@ function SATPrepPage() {
 
                         <div className="mt-8 pt-4 flex flex-col sm:flex-row gap-2.5">
                           <button
-                            onClick={() => openInterestModal("admission", `Complete Package (${c.name})`, c.t2)}
+                            onClick={() => openInterestModal("admission", `Complete Package (${c.name})`, getAdmissionPrice(c, "complete"))}
                             className="flex-1 py-3 rounded-xl bg-accent hover:bg-accent/95 text-primary font-bold text-xs shadow-sm transition-all"
                           >
                             Register Now
@@ -816,7 +843,7 @@ function SATPrepPage() {
                         We work alongside you to build an application that's authentically yours.
                       </p>
                       <div className="pl-10 mb-6">
-                        <div className="text-2xl font-extrabold text-primary font-mono">{region === "pk" ? "Rs. 30,000" : "$300"}</div>
+                        <div className="text-2xl font-extrabold text-primary font-mono">{getLumsPrice("guided")}</div>
                         <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
                           {region === "pk" ? "PKR" : "USD"}
                         </span>
@@ -830,7 +857,7 @@ function SATPrepPage() {
 
                     <div className="mt-8 pt-4 flex flex-col sm:flex-row gap-2.5">
                       <button
-                        onClick={() => openInterestModal("lums", "LUMS Guided Support", region === "pk" ? "Rs. 30,000" : "$300")}
+                        onClick={() => openInterestModal("lums", "LUMS Guided Support", getLumsPrice("guided"))}
                         className="flex-1 py-3 rounded-xl bg-primary text-white hover:bg-primary/95 text-xs font-bold shadow-sm transition-all"
                       >
                         Register Now
@@ -861,7 +888,7 @@ function SATPrepPage() {
                         We handle everything, from essays to competitions LUMS cares about.
                       </p>
                       <div className="pl-10 mb-6">
-                        <div className="text-2xl font-extrabold text-accent font-mono">{region === "pk" ? "Rs. 60,000" : "$550"}</div>
+                        <div className="text-2xl font-extrabold text-accent font-mono">{getLumsPrice("complete")}</div>
                         <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
                           {region === "pk" ? "PKR" : "USD"}
                         </span>
@@ -875,7 +902,7 @@ function SATPrepPage() {
 
                     <div className="mt-8 pt-4 flex flex-col sm:flex-row gap-2.5">
                       <button
-                        onClick={() => openInterestModal("lums", "LUMS Complete Package", region === "pk" ? "Rs. 60,000" : "$550")}
+                        onClick={() => openInterestModal("lums", "LUMS Complete Package", getLumsPrice("complete"))}
                         className="flex-1 py-3 rounded-xl bg-accent hover:bg-accent/95 text-primary font-bold text-xs shadow-sm transition-all"
                       >
                         Register Now

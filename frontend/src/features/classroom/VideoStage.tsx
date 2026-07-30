@@ -13,9 +13,10 @@ const gridColumnsFor = (count: number) => {
 
 interface VideoStageProps {
   teacherIdentity?: string;
+  controlsVisible?: boolean;
 }
 
-export function VideoStage({ teacherIdentity }: VideoStageProps) {
+export function VideoStage({ teacherIdentity, controlsVisible = true }: VideoStageProps) {
   const tracks = useTracks([
     { source: Track.Source.Camera, withPlaceholder: true },
     { source: Track.Source.ScreenShare, withPlaceholder: false },
@@ -27,7 +28,7 @@ export function VideoStage({ teacherIdentity }: VideoStageProps) {
   if (screenShareTrack) {
     const teacherCameraTrack = cameraTracks.find((t) => t.participant.identity === teacherIdentity);
     return (
-      <div className="relative h-full w-full p-4 min-h-0 bg-[#0B1120]">
+      <div className="relative h-full w-full p-0 min-h-0 bg-[#0B1120]">
         {/* Full-bleed Screen Share */}
         <div className="h-full w-full">
           <ParticipantTile
@@ -39,7 +40,7 @@ export function VideoStage({ teacherIdentity }: VideoStageProps) {
         
         {/* Floating Teacher Picture-in-Picture Tile (Top-Right) */}
         {teacherCameraTrack && (
-          <div className="absolute top-8 right-8 z-20 w-48 aspect-video rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl bg-[#0B1120]/90">
+          <div className={`absolute right-8 z-20 w-48 aspect-video rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl bg-[#0B1120]/90 transition-all duration-300 ${controlsVisible ? "top-20" : "top-8"}`}>
             <ParticipantTile trackRef={teacherCameraTrack} isTeacher={true} />
           </div>
         )}

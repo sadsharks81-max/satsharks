@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocalParticipant, useDataChannel, useParticipantAttributes } from "@livekit/components-react";
+import { useLocalParticipant, useDataChannel, useParticipantAttributes, useTracks } from "@livekit/components-react";
+import { Track } from "livekit-client";
 import { TopBar } from "./TopBar";
 import { VideoStage } from "./VideoStage";
 import { BottomToolbar } from "./BottomToolbar";
@@ -80,6 +81,105 @@ export function ClassroomExperience({ liveClass, classId, currentUserId, canMode
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [activePanel, handleToggleRaiseHand, handleToggleFullscreen]);
+
+  const tracks = useTracks([
+    { source: Track.Source.ScreenShare, withPlaceholder: false },
+  ]);
+  const isScreenSharing = tracks.some((t) => t.source === Track.Source.ScreenShare);
+
+  const [controlsVisible, setControlsVisible] = useState(true);
+
+  useEffect(() => {
+    if (!isScreenSharing) {
+      setControlsVisible(true);
+      return;
+    }
+
+    let timeout: number;
+    const handleMouseMove = () => {
+      setControlsVisible(true);
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => {
+        setControlsVisible(false);
+      }, 3000);
+    };
+
+    handleMouseMove();
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("click", handleMouseMove);
+
+    return () => {
+      window.clearTimeout(timeout);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("click", handleMouseMove);
+    };
+  }, [isScreenSharing]);
+
+  if (isScreenSharing) {
+    return (
+      <div
+        ref={containerRef}
+        className={`relative h-full w-full bg-[#0B1120] overflow-hidden ${
+          !controlsVisible ? "cursor-none" : ""
+        }`}
+      >
+        {/* TopBar Overlay */}
+        <div
+          className={`absolute top-0 left-0 right-0 z-30 transition-all duration-300 ${
+            controlsVisible
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-full opacity-0 pointer-events-none"
+          }`}
+        >
+          <TopBar title={liveClass.title} startedAt={liveClass.startedAt} durationMinutes={liveClass.duration} onLeave={onLeave} />
+        </div>
+
+        {/* Full-bleed Video Stage */}
+        <div className="h-full w-full">
+          <VideoStage teacherIdentity={liveClass.teacher?._id} controlsVisible={controlsVisible} />
+        </div>
+
+        {/* Side Panel overlay */}
+        {activePanel && (
+          <div className="absolute right-0 top-16 bottom-20 z-40 w-80 bg-[#111827] border-l border-white/10 shadow-2xl">
+            <SidePanel
+              activePanel={activePanel}
+              onChangeTab={handleTogglePanel}
+              onClose={() => setActivePanel(null)}
+              classId={classId}
+              currentUserId={currentUserId}
+              teacherIdentity={liveClass.teacher?._id}
+              canModerate={canModerate}
+            />
+          </div>
+        )}
+
+        {/* BottomToolbar Overlay */}
+        <div
+          className={`absolute bottom-0 left-0 right-0 z-30 transition-all duration-300 ${
+            controlsVisible
+              ? "translate-y-0 opacity-100"
+              : "translate-y-full opacity-0 pointer-events-none"
+          }`}
+        >
+          <BottomToolbar
+            activePanel={activePanel}
+            onTogglePanel={handleTogglePanel}
+            unreadChatCount={unreadChat}
+            handRaised={handRaised}
+            onToggleRaiseHand={handleToggleRaiseHand}
+            onOpenWhiteboard={() => setWhiteboardOpen(true)}
+            isFullscreen={isFullscreen}
+            onToggleFullscreen={handleToggleFullscreen}
+            onLeave={onLeave}
+          />
+        </div>
+
+        <WhiteboardPlaceholder open={whiteboardOpen} onClose={() => setWhiteboardOpen(false)} />
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className="flex h-full w-full flex-col bg-[#0B1120]">
