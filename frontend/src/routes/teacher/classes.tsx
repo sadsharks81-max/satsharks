@@ -79,6 +79,7 @@ function TeacherClasses() {
       }
       const res = await api.post("/api/live-classes", {
         ...form,
+        scheduledAt: new Date(form.scheduledAt).toISOString(),
         teacherId,
       });
       if (res.success) {

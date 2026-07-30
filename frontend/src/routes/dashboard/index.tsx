@@ -8,6 +8,7 @@ import { Icon } from "../../components/common/Icon";
 import { api } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
 import type { DashboardStats, TestAttempt, PredictedScore } from "../../types";
+import { PortalAccessCountdown } from "../../components/common/PortalAccessCountdown";
 
 export const Route = createFileRoute("/dashboard/")({
   component: DashboardHome,
@@ -198,6 +199,7 @@ function DashboardHome() {
           </div>
         </>
       )}
+      <PortalAccessCountdown />
     </StudentLayout>
   );
 }

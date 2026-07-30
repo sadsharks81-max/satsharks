@@ -16,7 +16,6 @@ import faviconUrl from "../assets/favicon.svg?url";
 import { reportAppError } from "../lib/error-reporting";
 import { Toaster } from "../components/ui/sonner";
 import { FloatingWhatsApp } from "../components/common/FloatingWhatsApp";
-import { PortalAccessCountdown } from "../components/common/PortalAccessCountdown";
 
 function NotFoundComponent() {
   return (
@@ -145,6 +144,7 @@ function RootComponent() {
     "/dashboard/practice",
     "/dashboard/vocabulary",
     "/dashboard/sat-runner",
+    "/classroom",
   ].some((path) => pathname.startsWith(path));
 
   return (
@@ -152,7 +152,6 @@ function RootComponent() {
       <AuthProvider>
         <Outlet />
         {!hideWhatsApp && <FloatingWhatsApp />}
-        {!hideWhatsApp && <PortalAccessCountdown />}
       </AuthProvider>
     </QueryClientProvider>
   );

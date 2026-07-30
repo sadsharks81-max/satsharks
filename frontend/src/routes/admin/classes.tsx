@@ -63,7 +63,10 @@ function AdminClasses() {
 
     setSubmitting(true);
     try {
-      const res = await api.post("/api/live-classes", form);
+      const res = await api.post("/api/live-classes", {
+        ...form,
+        scheduledAt: new Date(form.scheduledAt).toISOString(),
+      });
       if (res.success) {
         fetchClassesAndTeachers();
         setModalOpen(false);
