@@ -56,12 +56,12 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5 font-body text-sm font-medium">
               <li>
-                <Link to="/consulting" className="hover:text-accent transition-colors duration-300">
+                <Link to="/sat?tab=lums#pricing" className="hover:text-accent transition-colors duration-300">
                   LUMS Counseling
                 </Link>
               </li>
               <li>
-                <Link to="/counseling-abroad" className="hover:text-accent transition-colors duration-300">
+                <Link to="/sat?tab=admission#pricing" className="hover:text-accent transition-colors duration-300">
                   Admission Counseling
                 </Link>
               </li>

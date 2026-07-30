@@ -102,7 +102,6 @@ const getUnifiedHistory = async (req, res) => {
             PracticeSession_1.default.find({ student: studentId })
                 .populate({ path: "question", select: "text category difficulty", populate: { path: "category", select: "name" } })
                 .sort({ createdAt: -1 })
-                .limit(100)
                 .lean(),
             VocabularyProgress_1.default.findOne({ student: studentId }).lean(),
         ]);

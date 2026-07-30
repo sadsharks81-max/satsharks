@@ -9,10 +9,10 @@ import { useAuth } from "../../hooks/useAuth";
 import type { SATTest } from "../../types";
 
 export const Route = createFileRoute("/dashboard/sat-tests")({
-  component: SATTestList,
+  component: SATTestListWrapper,
 });
 
-function SATTestList() {
+export function SATTestList() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [tests, setTests] = useState<SATTest[]>([]);
@@ -50,7 +50,7 @@ function SATTestList() {
   }
 
   return (
-    <StudentLayout activeItem="/dashboard/sat-tests">
+    <div className="w-full animate-fade-in">
       <div className="mb-8 rounded-2xl bg-surface-container-low p-6 border border-outline-variant/20 flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
         <div>
           <h1 className="text-3xl font-bold mb-2">Digital SAT Practice Tests</h1>
@@ -160,6 +160,14 @@ function SATTestList() {
           })}
         </div>
       )}
+    </div>
+  );
+}
+
+export function SATTestListWrapper() {
+  return (
+    <StudentLayout activeItem="/dashboard/sat-tests">
+      <SATTestList />
     </StudentLayout>
   );
 }

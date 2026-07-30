@@ -25,22 +25,22 @@ export function VideoStage({ teacherIdentity }: VideoStageProps) {
   const cameraTracks = tracks.filter((t) => t.source === Track.Source.Camera);
 
   if (screenShareTrack) {
+    const teacherCameraTrack = cameraTracks.find((t) => t.participant.identity === teacherIdentity);
     return (
-      <div className="flex h-full w-full flex-col gap-3 p-4 min-h-0">
-        <div className="flex-1 min-h-0">
+      <div className="relative h-full w-full p-4 min-h-0 bg-[#0B1120]">
+        {/* Full-bleed Screen Share */}
+        <div className="h-full w-full">
           <ParticipantTile
             trackRef={screenShareTrack}
             isTeacher={screenShareTrack.participant.identity === teacherIdentity}
             spotlight
           />
         </div>
-        {cameraTracks.length > 0 && (
-          <div className="flex gap-3 h-28 shrink-0 overflow-x-auto pb-1">
-            {cameraTracks.map((t) => (
-              <div key={t.participant.identity} className="h-full aspect-video shrink-0">
-                <ParticipantTile trackRef={t} isTeacher={t.participant.identity === teacherIdentity} />
-              </div>
-            ))}
+        
+        {/* Floating Teacher Picture-in-Picture Tile (Top-Right) */}
+        {teacherCameraTrack && (
+          <div className="absolute top-8 right-8 z-20 w-48 aspect-video rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl bg-[#0B1120]/90">
+            <ParticipantTile trackRef={teacherCameraTrack} isTeacher={true} />
           </div>
         )}
       </div>

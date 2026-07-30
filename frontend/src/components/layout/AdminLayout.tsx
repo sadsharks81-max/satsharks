@@ -22,11 +22,13 @@ const navItems = [
   { to: "/admin/study-materials", label: "Study Materials", icon: "menu_book" },
   { to: "/admin/reports", label: "Reported Issues", icon: "report_problem" },
   { to: "/admin/classes", label: "Live Classes", icon: "video_camera_front" },
+  { to: "/admin/settings", label: "Site Settings", icon: "settings" },
 ];
 
 export function AdminLayout({ children, activeItem }: { children: ReactNode; activeItem: string }) {
   const { user, isLoading } = useAuth();
   const [reportCount, setReportCount] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (user?.role === "ADMIN") {
@@ -51,6 +53,43 @@ export function AdminLayout({ children, activeItem }: { children: ReactNode; act
   return (
     <div className="min-h-screen bg-background text-on-background flex flex-col">
       <Header />
+      {/* Mobile Navigation Trigger */}
+      <div className="md:hidden border-b border-outline-variant/30 bg-surface px-6 py-3 flex items-center justify-between">
+        <span className="font-bold text-xs uppercase tracking-widest text-on-surface-variant">Admin Menu</span>
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold rounded-lg border border-outline-variant/30"
+        >
+          <Icon name={mobileMenuOpen ? "close" : "menu"} className="text-[16px]" />
+          {navItems.find(item => activeItem === item.to)?.label || "Menu"}
+        </button>
+      </div>
+      {mobileMenuOpen && (
+        <nav className="md:hidden border-b border-outline-variant/30 bg-surface-container-lowest p-4 space-y-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-colors ${
+                activeItem === item.to
+                  ? "bg-primary/10 text-primary font-semibold"
+                  : "hover:bg-surface-container-low text-on-surface-variant"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Icon name={item.icon} className="text-[20px]" />
+                {item.label}
+              </div>
+              {item.to === "/admin/reports" && reportCount > 0 && (
+                <span className="bg-error text-on-error text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                  {reportCount}
+                </span>
+              )}
+            </Link>
+          ))}
+        </nav>
+      )}
       <main className="flex-1 flex max-w-[1400px] mx-auto w-full">
         <aside className="w-64 border-r border-outline-variant/30 p-6 hidden md:block">
           <h2 className="font-bold mb-6 text-on-surface-variant uppercase tracking-widest text-xs">

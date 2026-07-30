@@ -44,7 +44,11 @@ const LiveClassSchema = new mongoose_1.Schema({
         enum: ["SCHEDULED", "LIVE", "COMPLETED", "CANCELLED"],
         default: "SCHEDULED",
     },
-    meetLink: { type: String, default: null },
+    // LiveKit room name. Set to the document's own _id (unique, URL-safe) right after creation.
+    roomName: { type: String, required: true, unique: true },
+    maxStudents: { type: Number, default: 50 },
+    startedAt: { type: Date, default: null },
+    endedAt: { type: Date, default: null },
     teacher: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
     createdBy: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "User", required: true },
 }, { timestamps: true });

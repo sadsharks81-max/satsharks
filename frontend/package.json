@@ -24,6 +24,7 @@
     "livekit-client": "^2.21.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "sonner": "^2.0.7",
     "tailwindcss": "^4.2.1",
     "tw-animate-css": "^1.3.4",
     "vite-tsconfig-paths": "^6.0.2",

@@ -23,6 +23,8 @@ import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as TeacherStudyMaterialsRouteImport } from './routes/teacher/study-materials'
 import { Route as TeacherStudentProgressRouteImport } from './routes/teacher/student-progress'
+import { Route as TeacherSatTestsRouteImport } from './routes/teacher/sat-tests'
+import { Route as TeacherPracticeRouteImport } from './routes/teacher/practice'
 import { Route as TeacherClassesRouteImport } from './routes/teacher/classes'
 import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
 import { Route as PaymentCancelRouteImport } from './routes/payment.cancel'
@@ -48,6 +50,7 @@ import { Route as AdminTestsRouteImport } from './routes/admin/tests'
 import { Route as AdminSuccessStoriesRouteImport } from './routes/admin/success-stories'
 import { Route as AdminStudyMaterialsRouteImport } from './routes/admin/study-materials'
 import { Route as AdminStudentProgressRouteImport } from './routes/admin/student-progress'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminQuestionsRouteImport } from './routes/admin/questions'
 import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
@@ -129,6 +132,16 @@ const TeacherStudyMaterialsRoute = TeacherStudyMaterialsRouteImport.update({
 const TeacherStudentProgressRoute = TeacherStudentProgressRouteImport.update({
   id: '/teacher/student-progress',
   path: '/teacher/student-progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherSatTestsRoute = TeacherSatTestsRouteImport.update({
+  id: '/teacher/sat-tests',
+  path: '/teacher/sat-tests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherPracticeRoute = TeacherPracticeRouteImport.update({
+  id: '/teacher/practice',
+  path: '/teacher/practice',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeacherClassesRoute = TeacherClassesRouteImport.update({
@@ -256,6 +269,11 @@ const AdminStudentProgressRoute = AdminStudentProgressRouteImport.update({
   path: '/admin/student-progress',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminReportsRoute = AdminReportsRouteImport.update({
   id: '/admin/reports',
   path: '/admin/reports',
@@ -337,6 +355,7 @@ export interface FileRoutesByFullPath {
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/student-progress': typeof AdminStudentProgressRoute
   '/admin/study-materials': typeof AdminStudyMaterialsRoute
   '/admin/success-stories': typeof AdminSuccessStoriesRoute
@@ -362,6 +381,8 @@ export interface FileRoutesByFullPath {
   '/payment/cancel': typeof PaymentCancelRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/teacher/classes': typeof TeacherClassesRoute
+  '/teacher/practice': typeof TeacherPracticeRoute
+  '/teacher/sat-tests': typeof TeacherSatTestsRoute
   '/teacher/student-progress': typeof TeacherStudentProgressRoute
   '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
   '/admin/': typeof AdminIndexRoute
@@ -388,6 +409,7 @@ export interface FileRoutesByTo {
   '/admin/essays': typeof AdminEssaysRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/student-progress': typeof AdminStudentProgressRoute
   '/admin/study-materials': typeof AdminStudyMaterialsRoute
   '/admin/success-stories': typeof AdminSuccessStoriesRoute
@@ -413,6 +435,8 @@ export interface FileRoutesByTo {
   '/payment/cancel': typeof PaymentCancelRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/teacher/classes': typeof TeacherClassesRoute
+  '/teacher/practice': typeof TeacherPracticeRoute
+  '/teacher/sat-tests': typeof TeacherSatTestsRoute
   '/teacher/student-progress': typeof TeacherStudentProgressRoute
   '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
   '/admin': typeof AdminIndexRoute
@@ -442,6 +466,7 @@ export interface FileRoutesById {
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/student-progress': typeof AdminStudentProgressRoute
   '/admin/study-materials': typeof AdminStudyMaterialsRoute
   '/admin/success-stories': typeof AdminSuccessStoriesRoute
@@ -467,6 +492,8 @@ export interface FileRoutesById {
   '/payment/cancel': typeof PaymentCancelRoute
   '/payment/success': typeof PaymentSuccessRoute
   '/teacher/classes': typeof TeacherClassesRoute
+  '/teacher/practice': typeof TeacherPracticeRoute
+  '/teacher/sat-tests': typeof TeacherSatTestsRoute
   '/teacher/student-progress': typeof TeacherStudentProgressRoute
   '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
   '/admin/': typeof AdminIndexRoute
@@ -497,6 +524,7 @@ export interface FileRouteTypes {
     | '/admin/payments'
     | '/admin/questions'
     | '/admin/reports'
+    | '/admin/settings'
     | '/admin/student-progress'
     | '/admin/study-materials'
     | '/admin/success-stories'
@@ -522,6 +550,8 @@ export interface FileRouteTypes {
     | '/payment/cancel'
     | '/payment/success'
     | '/teacher/classes'
+    | '/teacher/practice'
+    | '/teacher/sat-tests'
     | '/teacher/student-progress'
     | '/teacher/study-materials'
     | '/admin/'
@@ -548,6 +578,7 @@ export interface FileRouteTypes {
     | '/admin/essays'
     | '/admin/payments'
     | '/admin/questions'
+    | '/admin/settings'
     | '/admin/student-progress'
     | '/admin/study-materials'
     | '/admin/success-stories'
@@ -573,6 +604,8 @@ export interface FileRouteTypes {
     | '/payment/cancel'
     | '/payment/success'
     | '/teacher/classes'
+    | '/teacher/practice'
+    | '/teacher/sat-tests'
     | '/teacher/student-progress'
     | '/teacher/study-materials'
     | '/admin'
@@ -601,6 +634,7 @@ export interface FileRouteTypes {
     | '/admin/payments'
     | '/admin/questions'
     | '/admin/reports'
+    | '/admin/settings'
     | '/admin/student-progress'
     | '/admin/study-materials'
     | '/admin/success-stories'
@@ -626,6 +660,8 @@ export interface FileRouteTypes {
     | '/payment/cancel'
     | '/payment/success'
     | '/teacher/classes'
+    | '/teacher/practice'
+    | '/teacher/sat-tests'
     | '/teacher/student-progress'
     | '/teacher/study-materials'
     | '/admin/'
@@ -655,6 +691,7 @@ export interface RootRouteChildren {
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminQuestionsRoute: typeof AdminQuestionsRoute
   AdminReportsRoute: typeof AdminReportsRouteWithChildren
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminStudentProgressRoute: typeof AdminStudentProgressRoute
   AdminStudyMaterialsRoute: typeof AdminStudyMaterialsRoute
   AdminSuccessStoriesRoute: typeof AdminSuccessStoriesRoute
@@ -671,6 +708,8 @@ export interface RootRouteChildren {
   PaymentCancelRoute: typeof PaymentCancelRoute
   PaymentSuccessRoute: typeof PaymentSuccessRoute
   TeacherClassesRoute: typeof TeacherClassesRoute
+  TeacherPracticeRoute: typeof TeacherPracticeRoute
+  TeacherSatTestsRoute: typeof TeacherSatTestsRoute
   TeacherStudentProgressRoute: typeof TeacherStudentProgressRoute
   TeacherStudyMaterialsRoute: typeof TeacherStudyMaterialsRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -776,6 +815,20 @@ declare module '@tanstack/react-router' {
       path: '/teacher/student-progress'
       fullPath: '/teacher/student-progress'
       preLoaderRoute: typeof TeacherStudentProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/sat-tests': {
+      id: '/teacher/sat-tests'
+      path: '/teacher/sat-tests'
+      fullPath: '/teacher/sat-tests'
+      preLoaderRoute: typeof TeacherSatTestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/practice': {
+      id: '/teacher/practice'
+      path: '/teacher/practice'
+      fullPath: '/teacher/practice'
+      preLoaderRoute: typeof TeacherPracticeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/teacher/classes': {
@@ -953,6 +1006,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminStudentProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/reports': {
       id: '/admin/reports'
       path: '/admin/reports'
@@ -1105,6 +1165,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminQuestionsRoute: AdminQuestionsRoute,
   AdminReportsRoute: AdminReportsRouteWithChildren,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminStudentProgressRoute: AdminStudentProgressRoute,
   AdminStudyMaterialsRoute: AdminStudyMaterialsRoute,
   AdminSuccessStoriesRoute: AdminSuccessStoriesRoute,
@@ -1121,6 +1182,8 @@ const rootRouteChildren: RootRouteChildren = {
   PaymentCancelRoute: PaymentCancelRoute,
   PaymentSuccessRoute: PaymentSuccessRoute,
   TeacherClassesRoute: TeacherClassesRoute,
+  TeacherPracticeRoute: TeacherPracticeRoute,
+  TeacherSatTestsRoute: TeacherSatTestsRoute,
   TeacherStudentProgressRoute: TeacherStudentProgressRoute,
   TeacherStudyMaterialsRoute: TeacherStudyMaterialsRoute,
   AdminIndexRoute: AdminIndexRoute,

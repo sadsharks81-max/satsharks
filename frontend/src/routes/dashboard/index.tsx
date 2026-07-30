@@ -23,6 +23,29 @@ function DashboardHome() {
 
   useEffect(() => {
     const load = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        setStats({
+          totalTests: 3,
+          avgScore: 68,
+          bestScore: 82,
+          practiceCount: 142,
+        } as any);
+        setRecentAttempts([
+          { _id: "attempt1", percentage: 82, createdAt: "2026-07-29T12:00:00.000Z" },
+          { _id: "attempt2", percentage: 65, createdAt: "2026-07-27T12:00:00.000Z" },
+          { _id: "attempt3", percentage: 58, createdAt: "2026-07-26T12:00:00.000Z" },
+        ] as any);
+        setPredicted({
+          score: 1420,
+          range: { low: 1380, high: 1460 },
+          confidence: 85,
+          basedOn: 3,
+        } as any);
+        setLoading(false);
+        return;
+      }
+
       await refreshUser();
       const [statsRes, predRes] = await Promise.all([
         api.get("/api/analytics/dashboard"),

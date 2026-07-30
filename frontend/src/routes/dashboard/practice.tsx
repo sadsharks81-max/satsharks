@@ -50,7 +50,7 @@ const normalizedCategoryName = (name: string) => name.trim().toLowerCase();
 // (only its subcategories do) — hide it from the practice filter options.
 const BLOCKED_CATEGORY_NAMES = ["math", "sat math"];
 
-function Practice() {
+export function PracticeContent() {
   const { user } = useAuth();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [categories, setCategories] = useState<QuestionCategory[]>([]);
@@ -936,7 +936,7 @@ function Practice() {
 }
 
   return (
-    <StudentLayout activeItem="/dashboard/practice">
+    <div className="w-full animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold mb-1">Practice Questions</h1>
@@ -1378,6 +1378,14 @@ function Practice() {
           </div>
         )}
       </Modal>
+    </div>
+  );
+}
+
+export function Practice() {
+  return (
+    <StudentLayout activeItem="/dashboard/practice">
+      <PracticeContent />
     </StudentLayout>
   );
 }

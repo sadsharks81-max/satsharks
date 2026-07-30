@@ -12,7 +12,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import faviconUrl from "../assets/favicon.svg?url";
+import faviconUrl from "../assets/favicon.png?url";
 import { reportAppError } from "../lib/error-reporting";
 import { Toaster } from "../components/ui/sonner";
 import { FloatingWhatsApp } from "../components/common/FloatingWhatsApp";
@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "icon", type: "image/svg+xml", href: faviconUrl },
+      { rel: "icon", type: "image/png", href: faviconUrl },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },

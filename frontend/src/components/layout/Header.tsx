@@ -29,7 +29,7 @@ export function Header() {
     { to: "/university-matcher", hash: undefined, label: "University Matcher" },
     { to: "/sat", hash: "pricing", label: "Pricing" },
     { to: "/contact", hash: undefined, label: "Contact" },
-    ...(user?.role === "STUDENT" ? [{ to: "/dashboard/", hash: undefined, label: "Dashboard" }] : []),
+    ...((!user || user.role === "STUDENT") ? [{ to: "/dashboard/", hash: undefined, label: "Dashboard" }] : []),
     ...(user?.role === "ADMIN" ? [{ to: "/admin", hash: undefined, label: "Admin Panel" }] : []),
     ...(user?.role === "TEACHER" ? [{ to: "/teacher", hash: undefined, label: "Teacher Panel" }] : []),
   ];

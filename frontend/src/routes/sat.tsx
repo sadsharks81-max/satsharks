@@ -20,6 +20,11 @@ import {
 } from "../utils/pricingData";
 
 export const Route = createFileRoute("/sat")({
+  validateSearch: (search: Record<string, unknown>): { tab?: "sat" | "admission" | "lums" } => {
+    return {
+      tab: (search.tab as "sat" | "admission" | "lums") || undefined,
+    };
+  },
   component: SATPrepPage,
 });
 
@@ -204,12 +209,16 @@ function LoadingSkeleton() {
 function SATPrepPage() {
   const { user } = useAuth();
   const region = useRegion();
-  const [portalExpanded, setPortalExpanded] = useState(false);
-  const [groupExpanded, setGroupExpanded] = useState(false);
-  const [oneOnOneExpanded, setOneOnOneExpanded] = useState(false);
+  const { tab } = Route.useSearch();
 
   // Tab State
   const [pricingTab, setPricingTab] = useState<"sat" | "admission" | "lums">("sat");
+
+  useEffect(() => {
+    if (tab === "sat" || tab === "admission" || tab === "lums") {
+      setPricingTab(tab);
+    }
+  }, [tab]);
 
   // Country Selection for Admissions
   const [selectedCountry, setSelectedCountry] = useState<string>("usa");
@@ -381,9 +390,6 @@ function SATPrepPage() {
                     key={tab.id}
                     onClick={() => {
                       setPricingTab(tab.id as any);
-                      setPortalExpanded(false);
-                      setGroupExpanded(false);
-                      setOneOnOneExpanded(false);
                     }}
                     className={`flex items-center gap-2 py-3 px-6 rounded-2xl cursor-pointer text-sm font-semibold border-2 transition-all duration-300 ${
                       isActive
@@ -411,10 +417,7 @@ function SATPrepPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start pb-12">
                   {/* Portal Only */}
                   <div
-                    onClick={() => setPortalExpanded(!portalExpanded)}
-                    className={`bg-surface-container-lowest rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2 shadow-sm hover:shadow-md flex flex-col justify-between ${
-                      portalExpanded ? "border-primary" : "border-outline-variant/30 hover:border-primary/50"
-                    }`}
+                    className="bg-surface-container-lowest rounded-2xl p-6 border-2 border-outline-variant/30 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center gap-2.5 mb-3">
@@ -443,20 +446,14 @@ function SATPrepPage() {
                         </button>
                       </div>
 
-                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${portalExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
-                        <div className="border-t border-outline-variant/40 pt-4 mt-2">
-                          {PORTAL_FEATURES.map((f, i) => (
-                            <FeatureBlock key={i} heading={f.cat} bullets={f.items} IconComp={() => <CheckIcon color="#3B7DD8" />} />
-                          ))}
-                        </div>
+                      <div className="border-t border-outline-variant/40 pt-4 mt-2">
+                        {PORTAL_FEATURES.map((f, i) => (
+                          <FeatureBlock key={i} heading={f.cat} bullets={f.items} IconComp={() => <CheckIcon color="#3B7DD8" />} />
+                        ))}
                       </div>
                     </div>
 
                     <div className="mt-4 pt-3 flex flex-col gap-2">
-                      <div className="flex items-center justify-center gap-1 text-xs font-bold text-primary">
-                        {portalExpanded ? "Tap to collapse" : "See platform details"}
-                        <Icon name="expand_more" className={`transition-transform duration-300 ${portalExpanded ? "rotate-180" : ""}`} />
-                      </div>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -472,10 +469,7 @@ function SATPrepPage() {
 
                   {/* Group Sessions */}
                   <div
-                    onClick={() => setGroupExpanded(!groupExpanded)}
-                    className={`bg-surface-container-lowest rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2 shadow-sm hover:shadow-md flex flex-col justify-between ${
-                      groupExpanded ? "border-primary" : "border-outline-variant/30 hover:border-primary/50"
-                    }`}
+                    className="bg-surface-container-lowest rounded-2xl p-6 border-2 border-outline-variant/30 hover:border-primary/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center gap-2.5 mb-3">
@@ -504,20 +498,14 @@ function SATPrepPage() {
                         </button>
                       </div>
 
-                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${groupExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
-                        <div className="border-t border-outline-variant/40 pt-4 mt-2">
-                          {groupFeatures.map((f, i) => (
-                            <FeatureBlock key={i} heading={f.heading} bullets={f.bullets} IconComp={() => <CheckIcon color="#3B7DD8" />} />
-                          ))}
-                        </div>
+                      <div className="border-t border-outline-variant/40 pt-4 mt-2">
+                        {groupFeatures.map((f, i) => (
+                          <FeatureBlock key={i} heading={f.heading} bullets={f.bullets} IconComp={() => <CheckIcon color="#3B7DD8" />} />
+                        ))}
                       </div>
                     </div>
 
                     <div className="mt-4 pt-3 flex flex-col gap-2">
-                      <div className="flex items-center justify-center gap-1 text-xs font-bold text-primary">
-                        {groupExpanded ? "Tap to collapse" : "See course details"}
-                        <Icon name="expand_more" className={`transition-transform duration-300 ${groupExpanded ? "rotate-180" : ""}`} />
-                      </div>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -533,10 +521,7 @@ function SATPrepPage() {
 
                   {/* One on One */}
                   <div
-                    onClick={() => setOneOnOneExpanded(!oneOnOneExpanded)}
-                    className={`bg-surface-container-lowest rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2 shadow-sm hover:shadow-md flex flex-col justify-between relative overflow-visible ${
-                      oneOnOneExpanded ? "border-accent" : "border-outline-variant/30 hover:border-accent/50"
-                    }`}
+                    className="bg-surface-container-lowest rounded-2xl p-6 border-2 border-outline-variant/30 hover:border-accent/50 transition-all duration-300 shadow-sm hover:shadow-md flex flex-col justify-between relative overflow-visible"
                   >
                     <div className="absolute -top-3 right-6 bg-accent text-primary text-[10px] font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm z-10">
                       Maximum Results
@@ -568,20 +553,14 @@ function SATPrepPage() {
                         </button>
                       </div>
 
-                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${oneOnOneExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
-                        <div className="border-t border-outline-variant/40 pt-4 mt-2">
-                          {oneOnOneFeatures.map((f, i) => (
-                            <FeatureBlock key={i} heading={f.heading} bullets={f.bullets} IconComp={FireIcon} />
-                          ))}
-                        </div>
+                      <div className="border-t border-outline-variant/40 pt-4 mt-2">
+                        {oneOnOneFeatures.map((f, i) => (
+                          <FeatureBlock key={i} heading={f.heading} bullets={f.bullets} IconComp={FireIcon} />
+                        ))}
                       </div>
                     </div>
 
                     <div className="mt-4 pt-3 flex flex-col gap-2">
-                      <div className="flex items-center justify-center gap-1 text-xs font-bold text-accent">
-                        {oneOnOneExpanded ? "Tap to collapse" : "See tutor details"}
-                        <Icon name="expand_more" className={`transition-transform duration-300 ${oneOnOneExpanded ? "rotate-180" : ""}`} />
-                      </div>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

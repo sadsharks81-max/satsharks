@@ -1,11 +1,30 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { api } from "../../services/api";
 
 export function Stats() {
+  const [data, setData] = useState({
+    successRate: "98%",
+    studentsMentored: "1,500+",
+    eliteAdmissions: "250+",
+    avgSatGain: "+220"
+  });
+
+  useEffect(() => {
+    api.get("/api/homepage-stats")
+      .then(res => {
+        if (res.success && res.stats) {
+          setData(res.stats);
+        }
+      })
+      .catch(err => console.error("Error loading stats:", err));
+  }, []);
+
   const stats = [
-    { v: "98%", l: "Success Rate" },
-    { v: "1,500+", l: "Students Mentored" },
-    { v: "250+", l: "Elite Admissions" },
-    { v: "+220", l: "Average SAT Gain" },
+    { v: data.successRate, l: "Success Rate" },
+    { v: data.studentsMentored, l: "Students Mentored" },
+    { v: data.eliteAdmissions, l: "Elite Admissions" },
+    { v: data.avgSatGain, l: "Average SAT Gain" },
   ];
 
   const container = {

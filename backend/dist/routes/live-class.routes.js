@@ -16,8 +16,18 @@ router.get("/:id", auth_middleware_1.authenticate, live_class_controller_1.getLi
 router.post("/", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.createLiveClass);
 // Update status (only admins or teacher assigned to the class)
 router.put("/:id/status", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.updateLiveClassStatus);
-// Set/update the Google Meet link (only admins or teacher assigned to the class)
-router.put("/:id/meet-link", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.updateMeetLink);
 // Delete class (only creator or admin)
 router.delete("/:id", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.deleteLiveClass);
+// Issue a LiveKit join token - role/paid/schedule/capacity checks happen inside the controller,
+// since admin, teacher, and student all hit this same endpoint with different rules.
+router.post("/:id/token", auth_middleware_1.authenticate, live_class_controller_1.generateJoinToken);
+// Live "Students Joined" count for dashboard cards
+router.get("/:id/participants", auth_middleware_1.authenticate, live_class_controller_1.getLiveClassParticipants);
+// Moderation (teacher of the class, or admin)
+router.post("/:id/participants/:identity/mute", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.muteParticipant);
+router.post("/:id/participants/:identity/remove", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.removeParticipantFromClass);
+// Chat (persisted history backing LiveKit's realtime data channel)
+router.get("/:id/chat", auth_middleware_1.authenticate, live_class_controller_1.getChatHistory);
+router.post("/:id/chat", auth_middleware_1.authenticate, live_class_controller_1.postChatMessage);
+router.delete("/:id/chat/:messageId", auth_middleware_1.authenticate, (0, role_middleware_1.requireAdminOrTeacher)(), live_class_controller_1.deleteChatMessage);
 exports.default = router;

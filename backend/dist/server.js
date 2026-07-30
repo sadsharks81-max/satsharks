@@ -31,6 +31,9 @@ const isAllowedProductionOrigin = (origin) => {
 // Stripe webhook must come BEFORE express.json() because it needs the raw body
 const payment_controller_1 = require("./controllers/payment.controller");
 app.post("/api/payment/webhook/stripe", express_1.default.raw({ type: "application/json" }), payment_controller_1.stripeWebhook);
+// LiveKit webhook must also come BEFORE express.json() - signature verification needs the raw body
+const live_class_controller_1 = require("./controllers/live-class.controller");
+app.post("/api/live-classes/webhook", express_1.default.raw({ type: "application/json" }), live_class_controller_1.liveKitWebhook);
 // Middleware
 app.use(express_1.default.json({ limit: "50mb" }));
 app.use(express_1.default.urlencoded({ limit: "50mb", extended: true }));
@@ -80,6 +83,7 @@ const study_material_routes_1 = __importDefault(require("./routes/study-material
 const report_routes_1 = __importDefault(require("./routes/report.routes"));
 const live_class_routes_1 = __importDefault(require("./routes/live-class.routes"));
 const vocabulary_routes_1 = __importDefault(require("./routes/vocabulary.routes"));
+const homepage_stats_routes_1 = __importDefault(require("./routes/homepage-stats.routes"));
 app.use("/api/auth", auth_routes_1.default);
 app.use("/api/users", user_routes_1.default);
 app.use("/api/subscriptions", subscription_routes_1.default);
@@ -102,6 +106,7 @@ app.use("/api/study-materials", study_material_routes_1.default);
 app.use("/api/reports", report_routes_1.default);
 app.use("/api/live-classes", live_class_routes_1.default);
 app.use("/api/vocabulary", vocabulary_routes_1.default);
+app.use("/api/homepage-stats", homepage_stats_routes_1.default);
 // Serve uploaded files with cross-origin headers so images load from any network origin
 const path_1 = __importDefault(require("path"));
 app.use("/uploads", (req, res, next) => {
