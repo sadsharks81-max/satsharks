@@ -5,7 +5,7 @@ import { Footer } from "../components/layout/Footer";
 import { useAuth } from "../hooks/useAuth";
 import { Modal } from "../components/ui/Modal";
 import { Icon } from "../components/common/Icon";
-import { getBackendUrl } from "../services/api";
+import { api, getBackendUrl } from "../services/api";
 import {
   PORTAL_FEATURES,
   LUMS_SCHOLARSHIPS,
@@ -212,7 +212,9 @@ function SATPrepPage() {
   const { tab } = Route.useSearch();
 
   // Tab State
-  const [pricingTab, setPricingTab] = useState<"sat" | "admission" | "lums">("sat");
+  const [pricingTab, setPricingTab] = useState<"sat" | "admission" | "lums">(
+    tab === "admission" || tab === "lums" ? tab : "sat"
+  );
 
   useEffect(() => {
     if (tab === "sat" || tab === "admission" || tab === "lums") {

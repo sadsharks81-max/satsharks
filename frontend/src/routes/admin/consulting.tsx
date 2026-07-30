@@ -218,7 +218,7 @@ function ReviewReqModal({ req, onClose, onSuccess }: { req: ConsultingRequest, o
               </label>
               <select 
                 value={status} 
-                onChange={(e) => setStatus(e.target.value)} 
+                onChange={(e) => setStatus(e.target.value as typeof status)}
                 className="w-full rounded-xl border border-outline-variant bg-surface-container-low px-4 py-3 text-sm outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 appearance-none"
               >
                 <option value="PENDING">Pending</option>

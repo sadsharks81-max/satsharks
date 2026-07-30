@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TeacherLayout } from "../../components/layout/TeacherLayout";
-import { SATTestList } from "../dashboard/sat-tests";
+import { SATTestList } from "../../components/dashboard/SATTestList";
 
 export const Route = createFileRoute("/teacher/sat-tests")({
   component: TeacherSATTestList,

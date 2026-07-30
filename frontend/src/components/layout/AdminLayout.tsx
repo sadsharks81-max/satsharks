@@ -25,7 +25,7 @@ const navItems = [
   { to: "/admin/settings", label: "Site Settings", icon: "settings" },
 ];
 
-export function AdminLayout({ children, activeItem }: { children: ReactNode; activeItem: string }) {
+export function AdminLayout({ children, activeItem = "" }: { children: ReactNode; activeItem?: string }) {
   const { user, isLoading } = useAuth();
   const [reportCount, setReportCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

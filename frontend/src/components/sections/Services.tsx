@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Icon } from "../common/Icon";
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "../../hooks/useAuth";
 
 export function Services() {
+  const { user } = useAuth();
   const services = [
     {
       icon: "menu_book",
@@ -43,7 +45,7 @@ export function Services() {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       },
     },
   };
@@ -76,6 +78,16 @@ export function Services() {
           className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
         >
           {services.map((s) => (
+            (() => {
+              const destination: { to: string; search?: { tab: string }; hash?: string } =
+                s.title === "Admission Counseling"
+                  ? { to: "/sat", search: { tab: "admission" }, hash: "pricing" }
+                  : s.title === "LUMS Counseling"
+                    ? { to: "/sat", search: { tab: "lums" }, hash: "pricing" }
+                    : s.title === "Premium Essay Advisory"
+                      ? { to: user ? "/dashboard/essays" : "/auth/login" }
+                      : { to: "/sat" };
+              return (
             <motion.article
               key={s.title}
               variants={cardItem}
@@ -98,7 +110,9 @@ export function Services() {
               {/* Bottom Call to Action */}
               <div className="pt-6 mt-6 border-t border-outline-variant/30">
                 <Link
-                  to={s.title === "Admission Counseling" ? "/sat?tab=admission#pricing" : s.title === "LUMS Counseling" ? "/sat?tab=lums#pricing" : s.title === "SAT Prep & Mastery" ? "/sat" : s.title === "Premium Essay Advisory" ? "/dashboard/essays" : "/booking"}
+                  to={destination.to as any}
+                  search={destination.search as any}
+                  hash={destination.hash}
                   className="inline-flex items-center gap-2 font-body text-[11px] font-bold uppercase tracking-[0.1em] text-accent group-hover:text-primary transition-all duration-300"
                 >
                   Request Details 
@@ -106,6 +120,8 @@ export function Services() {
                 </Link>
               </div>
             </motion.article>
+              );
+            })()
           ))}
         </motion.div>
       </div>

@@ -159,7 +159,7 @@ function DashboardHome() {
                   {recentAttempts.map((a: any) => (
                     <Link
                       key={a._id}
-                      to={`/dashboard/sat-result/${a._id}`}
+                      to={`/dashboard/sat-result/${a._id}` as any}
                       className="flex items-center justify-between p-4 rounded-xl border border-outline-variant/30 hover:bg-surface-container-low transition-colors group"
                     >
                       <div>

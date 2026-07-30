@@ -13,6 +13,10 @@ export interface User {
   subscriptionExpiry?: string;
   portalAccessStart?: string;
   portalAccessEnd?: string;
+  targetScore?: number;
+  dailyGoal?: number;
+  streakCount?: number;
+  leaderboardPoints?: number;
 }
 
 export interface SubscriptionPlan {

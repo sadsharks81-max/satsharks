@@ -4,9 +4,10 @@ import { Icon } from "../common/Icon";
 interface ZoomableImageProps {
   src: string;
   alt?: string;
+  className?: string;
 }
 
-export function ZoomableImage({ src, alt = "Question Reference" }: ZoomableImageProps) {
+export function ZoomableImage({ src, alt = "Question Reference", className = "" }: ZoomableImageProps) {
   const [zoom, setZoom] = useState(100);
   
   const handleZoomIn = () => setZoom(z => Math.min(z + 20, 300));
@@ -14,7 +15,7 @@ export function ZoomableImage({ src, alt = "Question Reference" }: ZoomableImage
   const handleReset = () => setZoom(100);
 
   return (
-    <div className="w-full flex flex-col border border-outline-variant/50 rounded-xl overflow-hidden bg-surface-container-lowest shadow-sm mb-6">
+    <div className={`w-full flex flex-col border border-outline-variant/50 rounded-xl overflow-hidden bg-surface-container-lowest shadow-sm mb-6 ${className}`}>
       {/* Toolbar */}
       <div className="bg-surface-container-low px-4 py-1.5 flex items-center justify-center gap-3 border-b border-outline-variant/30 text-[13px] text-on-surface font-medium select-none">
         <button onClick={handleZoomIn} className="p-1 hover:text-primary transition-colors cursor-pointer" title="Zoom In">
