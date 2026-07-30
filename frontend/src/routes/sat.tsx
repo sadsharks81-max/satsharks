@@ -204,8 +204,9 @@ function LoadingSkeleton() {
 function SATPrepPage() {
   const { user } = useAuth();
   const region = useRegion();
-  const [activeTier, setActiveTier] = useState<number | null>(null);
-  const [hoveredTier, setHoveredTier] = useState<number | null>(null);
+  const [portalExpanded, setPortalExpanded] = useState(false);
+  const [groupExpanded, setGroupExpanded] = useState(false);
+  const [oneOnOneExpanded, setOneOnOneExpanded] = useState(false);
 
   // Tab State
   const [pricingTab, setPricingTab] = useState<"sat" | "admission" | "lums">("sat");
@@ -248,6 +249,11 @@ function SATPrepPage() {
   };
 
   const prices = region === "loading" ? null : PRICING[region as keyof typeof PRICING];
+
+  // Counseling pricing configuration variables
+  const waRecipient = "923164514334";
+  const countriesData = region === "pk" ? ADMISSION_COUNTRIES_PK : ADMISSION_COUNTRIES_INTL;
+  const c = countriesData.find((co) => co.id === selectedCountry) || countriesData[0];
 
   // Payment proof states
   const [selectedPlan, setSelectedPlan] = useState<{ id: string; name: string; amount: string } | null>(null);
@@ -375,7 +381,9 @@ function SATPrepPage() {
                     key={tab.id}
                     onClick={() => {
                       setPricingTab(tab.id as any);
-                      setActiveTier(null);
+                      setPortalExpanded(false);
+                      setGroupExpanded(false);
+                      setOneOnOneExpanded(false);
                     }}
                     className={`flex items-center gap-2 py-3 px-6 rounded-2xl cursor-pointer text-sm font-semibold border-2 transition-all duration-300 ${
                       isActive
@@ -400,17 +408,17 @@ function SATPrepPage() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch pb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start pb-12">
                   {/* Portal Only */}
                   <div
-                    onClick={() => setActiveTier(activeTier === 0 ? null : 0)}
+                    onClick={() => setPortalExpanded(!portalExpanded)}
                     className={`bg-surface-container-lowest rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2 shadow-sm hover:shadow-md flex flex-col justify-between ${
-                      activeTier === 0 ? "border-sky-500" : "border-outline-variant/30 hover:border-sky-400/50"
+                      portalExpanded ? "border-primary" : "border-outline-variant/30 hover:border-primary/50"
                     }`}
                   >
                     <div>
                       <div className="flex items-center gap-2.5 mb-3">
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-sky-100 text-sky-500">
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10 text-primary">
                           <Icon name="computer" className="text-lg" />
                         </div>
                         <h3 className="text-lg font-bold text-on-surface">Portal Only</h3>
@@ -429,25 +437,25 @@ function SATPrepPage() {
                             e.stopPropagation();
                             handleSelectPlan("portal", "Portal Only", prices?.portal.amount || "Rs 15,000");
                           }}
-                          className="py-2 px-3.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs transition-all shadow-sm cursor-pointer border border-transparent whitespace-nowrap"
+                          className="py-2 px-3.5 rounded-xl bg-primary hover:bg-primary/95 text-white font-bold text-xs transition-all shadow-sm cursor-pointer border border-transparent whitespace-nowrap"
                         >
                           Select Plan
                         </button>
                       </div>
 
-                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${activeTier === 0 ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${portalExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
                         <div className="border-t border-outline-variant/40 pt-4 mt-2">
                           {PORTAL_FEATURES.map((f, i) => (
-                            <FeatureBlock key={i} heading={f.cat} bullets={f.items} IconComp={() => <CheckIcon color="#0ea5e9" />} />
+                            <FeatureBlock key={i} heading={f.cat} bullets={f.items} IconComp={() => <CheckIcon color="#3B7DD8" />} />
                           ))}
                         </div>
                       </div>
                     </div>
 
                     <div className="mt-4 pt-3 flex flex-col gap-2">
-                      <div className="flex items-center justify-center gap-1 text-xs font-bold text-sky-500">
-                        {activeTier === 0 ? "Tap to collapse" : "See platform details"}
-                        <Icon name="expand_more" className={`transition-transform duration-300 ${activeTier === 0 ? "rotate-180" : ""}`} />
+                      <div className="flex items-center justify-center gap-1 text-xs font-bold text-primary">
+                        {portalExpanded ? "Tap to collapse" : "See platform details"}
+                        <Icon name="expand_more" className={`transition-transform duration-300 ${portalExpanded ? "rotate-180" : ""}`} />
                       </div>
                       <button
                         onClick={(e) => {
@@ -464,9 +472,9 @@ function SATPrepPage() {
 
                   {/* Group Sessions */}
                   <div
-                    onClick={() => setActiveTier(activeTier === 1 ? null : 1)}
+                    onClick={() => setGroupExpanded(!groupExpanded)}
                     className={`bg-surface-container-lowest rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2 shadow-sm hover:shadow-md flex flex-col justify-between ${
-                      activeTier === 1 ? "border-primary" : "border-outline-variant/30 hover:border-primary/50"
+                      groupExpanded ? "border-primary" : "border-outline-variant/30 hover:border-primary/50"
                     }`}
                   >
                     <div>
@@ -496,7 +504,7 @@ function SATPrepPage() {
                         </button>
                       </div>
 
-                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${activeTier === 1 ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${groupExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
                         <div className="border-t border-outline-variant/40 pt-4 mt-2">
                           {groupFeatures.map((f, i) => (
                             <FeatureBlock key={i} heading={f.heading} bullets={f.bullets} IconComp={() => <CheckIcon color="#3B7DD8" />} />
@@ -507,8 +515,8 @@ function SATPrepPage() {
 
                     <div className="mt-4 pt-3 flex flex-col gap-2">
                       <div className="flex items-center justify-center gap-1 text-xs font-bold text-primary">
-                        {activeTier === 1 ? "Tap to collapse" : "See course details"}
-                        <Icon name="expand_more" className={`transition-transform duration-300 ${activeTier === 1 ? "rotate-180" : ""}`} />
+                        {groupExpanded ? "Tap to collapse" : "See course details"}
+                        <Icon name="expand_more" className={`transition-transform duration-300 ${groupExpanded ? "rotate-180" : ""}`} />
                       </div>
                       <button
                         onClick={(e) => {
@@ -525,9 +533,9 @@ function SATPrepPage() {
 
                   {/* One on One */}
                   <div
-                    onClick={() => setActiveTier(activeTier === 2 ? null : 2)}
+                    onClick={() => setOneOnOneExpanded(!oneOnOneExpanded)}
                     className={`bg-surface-container-lowest rounded-2xl p-6 cursor-pointer transition-all duration-300 border-2 shadow-sm hover:shadow-md flex flex-col justify-between relative overflow-visible ${
-                      activeTier === 2 ? "border-accent" : "border-outline-variant/30 hover:border-accent/50"
+                      oneOnOneExpanded ? "border-accent" : "border-outline-variant/30 hover:border-accent/50"
                     }`}
                   >
                     <div className="absolute -top-3 right-6 bg-accent text-primary text-[10px] font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm z-10">
@@ -560,7 +568,7 @@ function SATPrepPage() {
                         </button>
                       </div>
 
-                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${activeTier === 2 ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
+                      <div className={`overflow-hidden transition-all duration-500 ease-in-out ${oneOnOneExpanded ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"}`}>
                         <div className="border-t border-outline-variant/40 pt-4 mt-2">
                           {oneOnOneFeatures.map((f, i) => (
                             <FeatureBlock key={i} heading={f.heading} bullets={f.bullets} IconComp={FireIcon} />
@@ -571,8 +579,8 @@ function SATPrepPage() {
 
                     <div className="mt-4 pt-3 flex flex-col gap-2">
                       <div className="flex items-center justify-center gap-1 text-xs font-bold text-accent">
-                        {activeTier === 2 ? "Tap to collapse" : "See tutor details"}
-                        <Icon name="expand_more" className={`transition-transform duration-300 ${activeTier === 2 ? "rotate-180" : ""}`} />
+                        {oneOnOneExpanded ? "Tap to collapse" : "See tutor details"}
+                        <Icon name="expand_more" className={`transition-transform duration-300 ${oneOnOneExpanded ? "rotate-180" : ""}`} />
                       </div>
                       <button
                         onClick={(e) => {
