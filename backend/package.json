@@ -9,6 +9,7 @@
     "dev": "tsx watch src/server.ts",
     "seed:phase1": "tsx src/scripts/seedPhaseOne.ts",
     "seed:phase2": "tsx src/scripts/seedPhaseTwo.ts",
+    "import:universities": "tsx src/scripts/importUniversities.ts",
     "import:sat": "tsx src/scripts/importSAT.ts",
     "import:sat:all": "tsx src/scripts/importAllSAT.ts",
     "import:practice": "tsx src/scripts/importPracticeQuestions.ts",
