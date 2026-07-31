@@ -637,7 +637,7 @@ async function main() {
   const uploadsDir = path.resolve(__dirname, "../../uploads/sat");
   if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
-  const digitalsatpapers2Dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const digitalsatpapers2Dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
 
   for (const cfg of testConfigs) {
     const tNum = cfg.testNumber;

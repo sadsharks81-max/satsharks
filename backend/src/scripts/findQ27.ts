@@ -4,7 +4,7 @@ import path from "path";
 import * as pdfjsLegacy from "pdfjs-dist/legacy/build/pdf.mjs";
 
 async function main() {
-  const dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   const qPath = path.join(dir, `SAT Practice Test 12 - Standardized.pdf`);
   const data = new Uint8Array(fs.readFileSync(qPath));
   const pdf = await pdfjsLegacy.getDocument({ data }).promise;

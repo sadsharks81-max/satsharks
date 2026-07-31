@@ -130,7 +130,7 @@ function parseSolutionsList(text: string): { num: number; answer: string; explan
 }
 
 async function main() {
-  const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   const sPdfPath = path.join(dir, `SAT Practice Test 9 Answer Key.pdf`);
   const sText = await extractLayoutText(sPdfPath);
   const solutions = parseSolutionsList(sText);

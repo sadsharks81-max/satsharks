@@ -374,7 +374,7 @@ function parseSolutionsFromPages(pages: { text: string; pageNum: number }[]) {
 }
 
 async function runTest(cfg: TestConfig) {
-  const dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   const qPath = path.join(dir, `SAT Practice Test ${cfg.testNumber} - Standardized.pdf`);
   const sPath = path.join(dir, `SAT Practice Test ${cfg.testNumber} - Standardized Answer Key.pdf`);
   

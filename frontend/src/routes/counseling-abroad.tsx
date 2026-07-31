@@ -4,6 +4,16 @@ import { Header } from "../components/layout/Header";
 import { Footer } from "../components/layout/Footer";
 
 export const Route = createFileRoute("/counseling-abroad")({
+  head: () => ({
+    meta: [
+      { title: "Global College Admission Counseling & Profile Building | SAT Sharks" },
+      {
+        name: "description",
+        content: "Strategic guidance for university applications to USA, Canada, UK, Germany, and more. Milestone-based payments and custom profile-building support.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "/counseling-abroad" }],
+  }),
   component: SATSharksTiers,
 });
 

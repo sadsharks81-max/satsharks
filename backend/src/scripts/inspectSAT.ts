@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { PDFParse } from "pdf-parse";
 import path from "path";
 
-const pdfDir = path.resolve(__dirname, "../../../satpapers");
+const pdfDir = path.resolve(__dirname, "../../../reference_data/satpapers");
 const files = ["SAT2.pdf", "SAT3.pdf", "SAT4.pdf", "SAT5.pdf", "SAT8.pdf"];
 
 function normalizeLine(line: string) {

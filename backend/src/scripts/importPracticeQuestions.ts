@@ -539,8 +539,8 @@ async function main() {
   const deleteResult = await Question.deleteMany({ tags: "practice-question" });
   console.log(`Cleared ${deleteResult.deletedCount} old practice questions.`);
 
-  const practicequestionsDir = path.resolve(__dirname, "../../../practicequestions");
-  const practicequestions2Dir = path.resolve(__dirname, "../../../practicequestions2");
+  const practicequestionsDir = path.resolve(__dirname, "../../../reference_data/practicequestions");
+  const practicequestions2Dir = path.resolve(__dirname, "../../../reference_data/practicequestions2");
 
   // Compile all items to import
   const itemsToImport: {

@@ -40,7 +40,7 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const pdfjsLegacy = __importStar(require("pdfjs-dist/legacy/build/pdf.mjs"));
 async function main() {
-    const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+    const dir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
     const p = path_1.default.join(dir, "SAT Practice Test 10 Answer Key.pdf");
     if (!fs_1.default.existsSync(p)) {
         console.log("File not found:", p);

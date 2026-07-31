@@ -89,7 +89,7 @@ async function inspect(pdfPath, name) {
     }
 }
 async function main() {
-    const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+    const dir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
     await inspect(path_1.default.join(dir, "SAT Practice Test 11.pdf"), "Test 11 Questions");
     await inspect(path_1.default.join(dir, "SAT Practice Test 12.pdf"), "Test 12 Questions");
 }

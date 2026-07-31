@@ -27,7 +27,7 @@ async function extractText(filePath: string, type: "pdf" | "docx" | "md"): Promi
 }
 
 async function run() {
-  const dir = "s:\\github\\my-daily-compass\\practicequestions2";
+  const dir = path.resolve(__dirname, "../../../reference_data/practicequestions2");
   const files = fs.readdirSync(dir).filter(f => !f.includes("(1)"));
   
   // Group files by prefix to inspect different files

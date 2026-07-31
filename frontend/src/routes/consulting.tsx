@@ -4,6 +4,16 @@ import { Header } from "../components/layout/Header";
 import { Footer } from "../components/layout/Footer";
 
 export const Route = createFileRoute("/consulting")({
+  head: () => ({
+    meta: [
+      { title: "LUMS Admissions Counseling & Profile Building | SAT Sharks" },
+      {
+        name: "description",
+        content: "Proven admissions counseling specifically designed for LUMS applicants. Gain an extracurricular edge and craft a compelling application story.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "/consulting" }],
+  }),
   component: LUMSCounselling,
 });
 

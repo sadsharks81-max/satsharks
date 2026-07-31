@@ -513,8 +513,8 @@ function cleanCategoryName(qFile: string): string {
 async function run() {
   console.log("=== DRY RUN PARSING PRACTICE QUESTIONS ===");
   
-  const practiceDir = path.resolve(__dirname, "../../../practicequestions");
-  const practiceDir2 = path.resolve(__dirname, "../../../practicequestions2");
+  const practiceDir = path.resolve(__dirname, "../../../reference_data/practicequestions");
+  const practiceDir2 = path.resolve(__dirname, "../../../reference_data/practicequestions2");
   
   let totalErrors = 0;
   

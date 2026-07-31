@@ -24,8 +24,8 @@ function findHeaders(filePath: string) {
 }
 
 async function main() {
-  findHeaders("s:\\github\\my-daily-compass\\qText_10.txt");
-  findHeaders("s:\\github\\my-daily-compass\\sText_10.txt");
+  findHeaders(path.resolve(__dirname, "../../../reference_data/qText_10.txt"));
+  findHeaders(path.resolve(__dirname, "../../../reference_data/sText_10.txt"));
 }
 
 main().catch(console.error);

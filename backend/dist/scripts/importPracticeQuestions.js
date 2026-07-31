@@ -491,8 +491,8 @@ async function main() {
     // Delete previously imported practice questions
     const deleteResult = await Question_1.default.deleteMany({ tags: "practice-question" });
     console.log(`Cleared ${deleteResult.deletedCount} old practice questions.`);
-    const practicequestionsDir = path_1.default.resolve(__dirname, "../../../practicequestions");
-    const practicequestions2Dir = path_1.default.resolve(__dirname, "../../../practicequestions2");
+    const practicequestionsDir = path_1.default.resolve(__dirname, "../../../reference_data/practicequestions");
+    const practicequestions2Dir = path_1.default.resolve(__dirname, "../../../reference_data/practicequestions2");
     // Compile all items to import
     const itemsToImport = [];
     // 1. ORIGINAL FOLDER 1 (Reading & Writing)

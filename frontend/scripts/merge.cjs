@@ -1,6 +1,7 @@
+const path = require('path');
 const fs = require('fs');
 
-const clientCode = fs.readFileSync('D:/github/my-daily-compass/Clienttierrequirments/sat_sharks_lums.jsx', 'utf-8');
+const clientCode = fs.readFileSync(path.resolve(__dirname, '../../reference_data/Clienttierrequirments/sat_sharks_lums.jsx'), 'utf-8');
 
 let newCode = clientCode.replace('export default function LUMSCounselling()', 'function LUMSCounsellingContent()');
 
@@ -33,5 +34,5 @@ function LUMSCounselling() {
 
 newCode += wrapperCode;
 
-fs.writeFileSync('D:/github/my-daily-compass/frontend/src/routes/consulting.tsx', newCode);
+fs.writeFileSync(path.resolve(__dirname, '../src/routes/consulting.tsx'), newCode);
 console.log('Successfully updated consulting.tsx');

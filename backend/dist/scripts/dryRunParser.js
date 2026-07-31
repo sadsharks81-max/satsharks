@@ -15,7 +15,7 @@ async function extractText(filePath) {
     return result.text;
 }
 async function main() {
-    const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+    const dir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
     const qPath = path_1.default.join(dir, "SAT Practice Test 10.pdf");
     const sPath = path_1.default.join(dir, "SAT Practice Test 10 Answer Key.pdf");
     if (!fs_1.default.existsSync(qPath) || !fs_1.default.existsSync(sPath)) {
@@ -27,8 +27,8 @@ async function main() {
     console.log("QText length:", qText.length);
     console.log("SText length:", sText.length);
     // Let's write the raw texts to temp files so we can inspect their layout
-    fs_1.default.writeFileSync("s:\\github\\my-daily-compass\\qText_10.txt", qText, "utf-8");
-    fs_1.default.writeFileSync("s:\\github\\my-daily-compass\\sText_10.txt", sText, "utf-8");
+    fs_1.default.writeFileSync(path_1.default.resolve(__dirname, "../../../reference_data/qText_10.txt"), qText, "utf-8");
+    fs_1.default.writeFileSync(path_1.default.resolve(__dirname, "../../../reference_data/sText_10.txt"), sText, "utf-8");
     console.log("Raw text saved to qText_10.txt and sText_10.txt");
 }
 main().catch(console.error);

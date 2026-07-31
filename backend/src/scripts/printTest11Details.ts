@@ -55,7 +55,7 @@ async function extractPagesText(pdfPath: string): Promise<{ text: string; pageNu
 }
 
 async function main() {
-  const dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   
   const qPath = path.join(dir, `SAT Practice Test 11 - Standardized.pdf`);
   const sPath = path.join(dir, `SAT Practice Test 11 - Standardized Answer Key.pdf`);

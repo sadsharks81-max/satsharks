@@ -965,8 +965,8 @@ async function main() {
   const deletedDiagnostics = await DiagnosticTest.deleteMany({ title: /SAT Practice Test/i });
   console.log(`Deleted ${deletedDiagnostics.deletedCount} legacy SAT diagnostic tests.`);
 
-  const digitalsatpapersDir = path.resolve(__dirname, "../../../digitalsatpapers");
-  const digitalsatpapers2Dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const digitalsatpapersDir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers");
+  const digitalsatpapers2Dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   
   const categoryMap = await ensureCategories();
 

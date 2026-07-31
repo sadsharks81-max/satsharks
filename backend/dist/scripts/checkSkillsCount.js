@@ -76,7 +76,7 @@ async function extractLayoutText(pdfPath) {
     return fullText;
 }
 async function main() {
-    const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+    const dir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
     const files = fs_1.default.readdirSync(dir).filter(f => f.endsWith(".pdf") && !f.includes("Answer Key")).sort();
     for (const f of files) {
         const testNum = f.match(/\d+/)[0];

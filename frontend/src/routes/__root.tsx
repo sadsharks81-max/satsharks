@@ -95,6 +95,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "SAT Sharks" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "geo.region", content: "PK-PB" },
+      { name: "geo.placename", content: "Lahore" },
+      { name: "geo.position", content: "31.5204;74.3587" },
+      { name: "ICBM", content: "31.5204, 74.3587" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: faviconUrl },

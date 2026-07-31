@@ -466,8 +466,8 @@ function cleanCategoryName(qFile) {
 }
 async function run() {
     console.log("=== DRY RUN PARSING PRACTICE QUESTIONS ===");
-    const practiceDir = path_1.default.resolve(__dirname, "../../../practicequestions");
-    const practiceDir2 = path_1.default.resolve(__dirname, "../../../practicequestions2");
+    const practiceDir = path_1.default.resolve(__dirname, "../../../reference_data/practicequestions");
+    const practiceDir2 = path_1.default.resolve(__dirname, "../../../reference_data/practicequestions2");
     let totalErrors = 0;
     // 1. Process folder 1 (original)
     console.log("\n--- FOLDER 1: practicequestions ---");

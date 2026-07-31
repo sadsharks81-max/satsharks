@@ -8,7 +8,7 @@ const pdf_parse_1 = require("pdf-parse");
 const importAllSAT_1 = require("./importAllSAT");
 const path_1 = __importDefault(require("path"));
 async function main() {
-    const pdfDir = path_1.default.resolve(__dirname, "../../../satpapers");
+    const pdfDir = path_1.default.resolve(__dirname, "../../../reference_data/satpapers");
     for (let i = 1; i <= 8; i++) {
         const file = `SAT${i}.pdf`;
         const pdfPath = path_1.default.join(pdfDir, file);

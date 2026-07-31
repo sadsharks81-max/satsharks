@@ -894,8 +894,8 @@ async function main() {
     console.log(`Deleted ${deletedTests.deletedCount} legacy SAT tests.`);
     const deletedDiagnostics = await DiagnosticTest_1.default.deleteMany({ title: /SAT Practice Test/i });
     console.log(`Deleted ${deletedDiagnostics.deletedCount} legacy SAT diagnostic tests.`);
-    const digitalsatpapersDir = path_1.default.resolve(__dirname, "../../../digitalsatpapers");
-    const digitalsatpapers2Dir = path_1.default.resolve(__dirname, "../../../digitalsatpapers2");
+    const digitalsatpapersDir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers");
+    const digitalsatpapers2Dir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
     const categoryMap = await ensureCategories();
     const uploadsDir = path_1.default.resolve(__dirname, "../../uploads/sat");
     if (!fs_1.default.existsSync(uploadsDir))

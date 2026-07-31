@@ -26,7 +26,7 @@ interface ParsedModule {
   questions: ParsedQuestion[];
 }
 
-const PDF_DIRECTORY = path.resolve(__dirname, "../../../satpapers");
+const PDF_DIRECTORY = path.resolve(__dirname, "../../../reference_data/satpapers");
 const PDF_FILE_REGEX = /^SAT(\d+)\.pdf$/i;
 
 function normalizePdfText(text: string): string {

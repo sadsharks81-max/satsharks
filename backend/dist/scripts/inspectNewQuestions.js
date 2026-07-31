@@ -24,7 +24,7 @@ async function extractText(filePath, type) {
     }
 }
 async function run() {
-    const dir = "s:\\github\\my-daily-compass\\practicequestions2";
+    const dir = path_1.default.resolve(__dirname, "../../../reference_data/practicequestions2");
     const files = fs_1.default.readdirSync(dir);
     console.log(`Found ${files.length} files.`);
     // Let's inspect a DOCX file

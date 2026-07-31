@@ -8,6 +8,16 @@ import { Button } from "../components/ui/Button";
 import { api } from "../services/api";
 
 export const Route = createFileRoute("/contact")({
+  head: () => ({
+    meta: [
+      { title: "Contact SAT Sharks | Get in Touch for Elite Counseling" },
+      {
+        name: "description",
+        content: "Have questions about our SAT preparation programs or college counseling services? Contact the SAT Sharks team today.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "/contact" }],
+  }),
   component: Contact,
 });
 

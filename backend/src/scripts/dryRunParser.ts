@@ -12,7 +12,7 @@ async function extractText(filePath: string): Promise<string> {
 }
 
 async function main() {
-  const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   const qPath = path.join(dir, "SAT Practice Test 10.pdf");
   const sPath = path.join(dir, "SAT Practice Test 10 Answer Key.pdf");
 
@@ -28,8 +28,8 @@ async function main() {
   console.log("SText length:", sText.length);
 
   // Let's write the raw texts to temp files so we can inspect their layout
-  fs.writeFileSync("s:\\github\\my-daily-compass\\qText_10.txt", qText, "utf-8");
-  fs.writeFileSync("s:\\github\\my-daily-compass\\sText_10.txt", sText, "utf-8");
+  fs.writeFileSync(path.resolve(__dirname, "../../../reference_data/qText_10.txt"), qText, "utf-8");
+  fs.writeFileSync(path.resolve(__dirname, "../../../reference_data/sText_10.txt"), sText, "utf-8");
   console.log("Raw text saved to qText_10.txt and sText_10.txt");
 }
 

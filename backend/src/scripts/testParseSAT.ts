@@ -4,7 +4,7 @@ import { parseSATText } from "./importAllSAT";
 import path from "path";
 
 async function main() {
-  const pdfDir = path.resolve(__dirname, "../../../satpapers");
+  const pdfDir = path.resolve(__dirname, "../../../reference_data/satpapers");
   for (let i = 1; i <= 8; i++) {
     const file = `SAT${i}.pdf`;
     const pdfPath = path.join(pdfDir, file);

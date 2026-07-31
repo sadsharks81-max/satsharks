@@ -32,7 +32,7 @@ async function extractPageFirstLine(pdfPath: string, pageNum: number): Promise<s
 }
 
 async function main() {
-  const dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   const qPath = path.join(dir, `SAT Practice Test 11 - Standardized.pdf`);
   
   const data = new Uint8Array(fs.readFileSync(qPath));

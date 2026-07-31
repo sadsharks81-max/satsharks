@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_fs_1 = require("node:fs");
 const pdf_parse_1 = require("pdf-parse");
 const path_1 = __importDefault(require("path"));
-const pdfDir = path_1.default.resolve(__dirname, "../../../satpapers");
+const pdfDir = path_1.default.resolve(__dirname, "../../../reference_data/satpapers");
 const files = ["SAT2.pdf", "SAT3.pdf", "SAT4.pdf", "SAT5.pdf", "SAT8.pdf"];
 function normalizeLine(line) {
     return line.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();

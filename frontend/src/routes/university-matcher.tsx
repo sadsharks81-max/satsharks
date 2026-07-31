@@ -8,6 +8,16 @@ import { Icon } from "../components/common/Icon";
 import { useAuth } from "../hooks/useAuth";
 
 export const Route = createFileRoute("/university-matcher")({
+  head: () => ({
+    meta: [
+      { title: "AI-Powered University Matcher | SAT Sharks" },
+      {
+        name: "description",
+        content: "Find the best global universities matching your academic profile, SAT/IELTS scores, and budget preferences.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "/university-matcher" }],
+  }),
   component: UniversityMatcherRoute,
 });
 

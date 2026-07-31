@@ -616,7 +616,7 @@ async function main() {
   console.log(`SAFE IMPORTING ONLY DSAT TEST #${tNum}`);
   console.log(`=========================================`);
 
-  const digitalsatpapers2Dir = path.resolve(__dirname, "../../../digitalsatpapers2");
+  const digitalsatpapers2Dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   
   const qPdfPath = path.join(digitalsatpapers2Dir, "SAT Practice Test 9 - Standardized.pdf");
   const sPdfPath = path.join(digitalsatpapers2Dir, "SAT Practice Test 9 - Standardized Answer Key.pdf");

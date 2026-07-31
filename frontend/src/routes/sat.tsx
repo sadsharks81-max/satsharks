@@ -25,6 +25,16 @@ export const Route = createFileRoute("/sat")({
       tab: (search.tab as "sat" | "admission" | "lums") || undefined,
     };
   },
+  head: () => ({
+    meta: [
+      { title: "Elite SAT Prep & Admissions Counseling Pricing | SAT Sharks" },
+      {
+        name: "description",
+        content: "Affordable, milestone-based pricing for SAT prep, LUMS admissions counseling, and global university admissions counseling.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "/sat" }],
+  }),
   component: SATPrepPage,
 });
 

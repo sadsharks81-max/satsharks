@@ -14,7 +14,7 @@ const Question_1 = __importDefault(require("../models/Question"));
 const SATTest_1 = __importDefault(require("../models/SATTest"));
 const DiagnosticTest_1 = __importDefault(require("../models/DiagnosticTest"));
 const pdf_parse_1 = require("pdf-parse");
-const PDF_DIRECTORY = path_1.default.resolve(__dirname, "../../../satpapers");
+const PDF_DIRECTORY = path_1.default.resolve(__dirname, "../../../reference_data/satpapers");
 const PDF_FILE_REGEX = /^SAT(\d+)\.pdf$/i;
 function normalizePdfText(text) {
     return text

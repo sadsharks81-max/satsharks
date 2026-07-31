@@ -52,7 +52,7 @@ async function extractLayoutText(pdfPath: string): Promise<string> {
 }
 
 async function main() {
-  const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+  const dir = path.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
   const p13 = path.join(dir, "SAT Practice Test 13 Answer Key.pdf");
   const p14 = path.join(dir, "SAT Practice Test 14 Answer Key.pdf");
   

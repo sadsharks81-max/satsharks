@@ -139,7 +139,7 @@ function parseSolutionsList(text) {
     return solutions;
 }
 async function main() {
-    const dir = "s:\\github\\my-daily-compass\\digitalsatpapers2";
+    const dir = path_1.default.resolve(__dirname, "../../../reference_data/digitalsatpapers2");
     const p = path_1.default.join(dir, "SAT Practice Test 17 Answer Key.pdf");
     if (fs_1.default.existsSync(p)) {
         const text = await extractLayoutText(p);
