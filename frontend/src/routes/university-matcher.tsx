@@ -12,7 +12,7 @@ import gradingSystemsData from "./gradingSystems.json";
 export const Route = createFileRoute("/university-matcher")({
   head: () => ({
     meta: [
-      { title: "AI-Powered University Matcher | SAT Sharks" },
+      { title: "SatSharks University Matcher | SAT Sharks" },
       {
         name: "description",
         content: "Find the best global universities matching your academic profile, SAT scores, and budget preferences using officially verified boundaries.",
@@ -379,6 +379,8 @@ function UniversityMatcherContent() {
   const [budget, setBudget] = useState(45000);
   const [query, setQuery] = useState("");
   const [selectedSheet, setSelectedSheet] = useState("Verified Database");
+  const [selectedCountry, setSelectedCountry] = useState("ALL");
+  const [selectedQsRange, setSelectedQsRange] = useState("ALL");
 
   const [selectedUnisMap, setSelectedUnisMap] = useState<Record<string, any>>({});
   const [isApplying, setIsApplying] = useState(false);
@@ -441,12 +443,26 @@ function UniversityMatcherContent() {
     return Array.from(names);
   }, [UNIVERSITIES]);
 
+  const countries = useMemo<string[]>(() => {
+    const list = new Set<string>((UNIVERSITIES as any[]).map((u: any) => u.country as string).filter(Boolean));
+    return Array.from(list).sort();
+  }, [UNIVERSITIES]);
+
   const results = useMemo(() => {
     if (UNIVERSITIES.length === 0) return { Safety: [], Target: [], Reach: [] };
 
     let filtered = UNIVERSITIES;
     if (selectedSheet !== "ALL") {
       filtered = UNIVERSITIES.filter((u: any) => u.sheetName === selectedSheet);
+    }
+
+    if (selectedCountry !== "ALL") {
+      filtered = filtered.filter((u: any) => u.country === selectedCountry);
+    }
+
+    if (selectedQsRange !== "ALL") {
+      const maxRank = parseInt(selectedQsRange, 10);
+      filtered = filtered.filter((u: any) => u.ranking && u.ranking <= maxRank);
     }
 
     if (query) {
@@ -467,7 +483,7 @@ function UniversityMatcherContent() {
       Target: scored.filter(x => x.matchType === "Target"),
       Reach: scored.filter(x => x.matchType === "Reach")
     };
-  }, [UNIVERSITIES, selectedSheet, query, gpa, satNum, budget, ecScore]);
+  }, [UNIVERSITIES, selectedSheet, selectedCountry, selectedQsRange, query, gpa, satNum, budget, ecScore]);
 
   const sysOptions = Object.entries(GRADING_SYSTEMS)
     .filter(([code]) => !EARLIER_ONLY.has(code))
@@ -512,7 +528,7 @@ function UniversityMatcherContent() {
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-[#EAF0F7] flex items-center justify-center md:justify-start gap-3">
             <span style={{ color: C.teal }} className="material-symbols-outlined text-4xl">school</span>
-            AI-Powered University Matcher
+            SatSharks University Matcher
           </h1>
           <p className="text-[#8DA0B9] mt-2 font-medium">
             Search {UNIVERSITIES.length} universities using officially verified boundaries.
@@ -638,6 +654,22 @@ function UniversityMatcherContent() {
 
           <label style={{ fontSize: 13, color: C.mist }}>Search university or program</label>
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder="e.g. Computer Science" style={selStyle} />
+
+          <label style={{ fontSize: 13, color: C.mist }}>Country</label>
+          <select value={selectedCountry} onChange={e => setSelectedCountry(e.target.value)} style={selStyle}>
+            <option value="ALL">All Countries</option>
+            {countries.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+
+          <label style={{ fontSize: 13, color: C.mist }}>QS World Ranking</label>
+          <select value={selectedQsRange} onChange={e => setSelectedQsRange(e.target.value)} style={selStyle}>
+            <option value="ALL">All Rankings</option>
+            <option value="50">Top 50</option>
+            <option value="100">Top 100</option>
+            <option value="200">Top 200</option>
+            <option value="500">Top 500</option>
+            <option value="1000">Top 1000</option>
+          </select>
         </aside>
 
         {/* RESULTS GRID */}
