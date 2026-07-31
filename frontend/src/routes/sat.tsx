@@ -79,6 +79,14 @@ const StarIcon = () => (
   </svg>
 );
 
+const TrophyIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="flex-shrink-0">
+    <path d="M8 21H16M12 17V21M6 3H18V7C18 10.31 15.31 13 12 13C8.69 13 6 10.31 6 7V3Z" stroke="#F5A623" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 7H3V8C3 9.66 4.34 11 6 11V7Z" stroke="#F5A623" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 7H21V8C21 9.66 19.66 11 18 11V7Z" stroke="#F5A623" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 const groupFeatures = [
   {
     heading: "Intensive Weekly Schedule",
@@ -385,35 +393,108 @@ function SATPrepPage() {
         <div className="bg-surface-container-low min-h-screen font-body text-on-surface">
           {/* Hero */}
           <div className="bg-gradient-to-br from-[#0B1929] via-[#162D4D] to-[#1A3558] py-10 px-6 text-center">
-            <div className="max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
-                <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">SAT Preparation</span>
-              </div>
-              <h1 className="font-display text-4xl font-extrabold text-white leading-tight mb-4 tracking-tight md:text-5xl">
-                Stop Guessing.<br />
-                <span className="text-[#5BA3F5]">Start Scoring.</span>
-              </h1>
-              <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
-                6 live sessions a week. Actual past papers every week. Desmos mastery. Shortcuts that save minutes. Everything you need, nothing you don't.
-              </p>
+            <div key={pricingTab} className="max-w-2xl mx-auto animate-in fade-in duration-500">
+              {pricingTab === "sat" && (
+                <>
+                  <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
+                    <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">SAT Preparation</span>
+                  </div>
+                  <h1 className="font-display text-4xl font-extrabold text-white leading-tight mb-4 tracking-tight md:text-5xl">
+                    Stop Guessing.<br />
+                    <span className="text-[#5BA3F5]">Start Scoring.</span>
+                  </h1>
+                  <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                    6 live sessions a week. Actual past papers every week. Desmos mastery. Shortcuts that save minutes. Everything you need, nothing you don't.
+                  </p>
+                </>
+              )}
+              {pricingTab === "admission" && (
+                <>
+                  <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
+                    <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">Admission Counseling</span>
+                  </div>
+                  <h1 className="font-display text-4xl font-extrabold text-white leading-tight mb-4 tracking-tight md:text-5xl">
+                    Your Application Should<br />
+                    <span className="text-[#5BA3F5]">Tell a Story Worth Reading</span>
+                  </h1>
+                  <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                    Most students submit applications that blend in. We make sure yours stands out, with a narrative admissions committees actually remember.
+                  </p>
+                </>
+              )}
+              {pricingTab === "lums" && (
+                <>
+                  <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
+                    <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">LUMS Admissions Counselling</span>
+                  </div>
+                  <h1 className="font-display text-4xl font-extrabold text-white leading-tight mb-4 tracking-tight md:text-5xl">
+                    LUMS Doesn't Pick<br />
+                    <span className="text-[#5BA3F5]">The Loudest Applicant.</span>
+                  </h1>
+                  <p className="text-sm md:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                    They pick the one with the clearest story. We help you find yours and write it in a way the admissions committee won't forget.
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
-          {/* Stat strip */}
-          <div className="bg-[#0F1B2D] border-b border-[#3B7DD8]/15">
-            <div className="max-w-2xl mx-auto flex justify-center gap-8 md:gap-16 py-4 px-6">
-              {[
-                ["6", "Live Sessions / Week"],
-                ["23", "Sessions / Month"],
-                ["7", "Practice Tests / Month"],
-              ].map(([num, label], i) => (
-                <div key={i} className="text-center">
-                  <div className="font-body text-2xl md:text-3xl font-extrabold text-accent tracking-tight">{num}</div>
-                  <div className="font-mono text-[10px] md:text-xs text-slate-400 font-bold tracking-widest uppercase mt-1">{label}</div>
+          {/* Stat strip / Track record strip */}
+          {pricingTab === "lums" ? (
+            <div className="bg-[#0F1B2D] border-b border-[#3B7DD8]/15">
+              <div className="max-w-4xl mx-auto py-4 px-6 text-center">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <TrophyIcon />
+                  <span className="font-mono text-xs font-bold text-accent tracking-widest uppercase">Our Students' Track Record</span>
                 </div>
-              ))}
+                <div className="flex flex-wrap justify-center gap-2">
+                  {[
+                    "International Math Olympiad medalists",
+                    "National Science competition winners",
+                    "International debate & MUN champions",
+                    "National level hackathon finalists",
+                  ].map((w, i) => (
+                    <span
+                      key={i}
+                      className="text-xs font-medium text-slate-300 bg-[#3B7DD8]/8 border border-[#3B7DD8]/12 rounded-full px-3.5 py-1.5"
+                    >
+                      {w}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
+          ) : pricingTab === "admission" ? (
+            <div className="bg-[#0F1B2D] border-b border-[#3B7DD8]/15">
+              <div className="max-w-2xl mx-auto flex justify-center gap-8 md:gap-16 py-4 px-6">
+                {[
+                  ["12+", "Global Destinations"],
+                  ["1-on-1", "Expert Counseling"],
+                  ["100%", "Milestone-Based Payments"],
+                ].map(([num, label], i) => (
+                  <div key={i} className="text-center">
+                    <div className="font-body text-2xl md:text-3xl font-extrabold text-accent tracking-tight">{num}</div>
+                    <div className="font-mono text-[10px] md:text-xs text-slate-400 font-bold tracking-widest uppercase mt-1">{label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="bg-[#0F1B2D] border-b border-[#3B7DD8]/15">
+              <div className="max-w-2xl mx-auto flex justify-center gap-8 md:gap-16 py-4 px-6">
+                {[
+                  ["6", "Live Sessions / Week"],
+                  ["23", "Sessions / Month"],
+                  ["7", "Practice Tests / Month"],
+                ].map(([num, label], i) => (
+                  <div key={i} className="text-center">
+                    <div className="font-body text-2xl md:text-3xl font-extrabold text-accent tracking-tight">{num}</div>
+                    <div className="font-mono text-[10px] md:text-xs text-slate-400 font-bold tracking-widest uppercase mt-1">{label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Cards */}
           <div id="pricing" className="max-w-6xl mx-auto px-6">
@@ -818,18 +899,8 @@ function SATPrepPage() {
               </div>
             )}
 
-            {/* TAB CONTENT: LUMS COUNSELING */}
             {pricingTab === "lums" && (
               <div className="animate-in fade-in duration-300 space-y-8">
-                <div className="text-center">
-                  <span className="inline-block text-xs font-bold bg-[#F5A623]/10 border border-[#F5A623]/25 text-[#D4911E] rounded-full px-4 py-1.5 mb-2 uppercase tracking-wide">
-                    LUMS Admissions Counselling
-                  </span>
-                  <h2 className="text-2xl font-extrabold text-on-surface">LUMS Doesn't Pick The Loudest Applicant.</h2>
-                  <p className="text-sm text-on-surface-variant max-w-lg mx-auto leading-relaxed mt-1">
-                    They pick the one with the clearest story. We help you find yours and write it in a way the admissions committee won't forget.
-                  </p>
-                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                   {/* Guided Support Card */}
