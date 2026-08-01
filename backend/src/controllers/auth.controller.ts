@@ -49,6 +49,7 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const sessionId = crypto.randomUUID();
     const user = await User.create({
       name,
       email,
@@ -58,6 +59,7 @@ export const register = async (req: Request, res: Response) => {
       region,
       subscription,
       status,
+      sessionId,
     });
 
     const tokens = generateTokens(
@@ -66,6 +68,7 @@ export const register = async (req: Request, res: Response) => {
       user.region,
       user.subscription,
       user.status,
+      sessionId,
     );
     res
       .status(201)
@@ -148,12 +151,17 @@ export const login = async (req: Request, res: Response) => {
         .json({ success: false, error: "Invalid credentials" });
     }
 
+    const sessionId = crypto.randomUUID();
+    user.sessionId = sessionId;
+    await user.save();
+
     const tokens = generateTokens(
       user.id,
       user.role,
       user.region,
       user.subscription,
       user.status,
+      sessionId,
     );
     res
       .status(200)

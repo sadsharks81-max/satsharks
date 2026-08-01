@@ -42,6 +42,7 @@ const register = async (req, res) => {
                 .json({ success: false, error: "Email already in use" });
         }
         const hashedPassword = await bcrypt_1.default.hash(password, 10);
+        const sessionId = crypto_1.default.randomUUID();
         const user = await User_1.default.create({
             name,
             email,
@@ -51,8 +52,9 @@ const register = async (req, res) => {
             region,
             subscription,
             status,
+            sessionId,
         });
-        const tokens = (0, jwt_1.generateTokens)(user.id, user.role, user.region, user.subscription, user.status);
+        const tokens = (0, jwt_1.generateTokens)(user.id, user.role, user.region, user.subscription, user.status, sessionId);
         res
             .status(201)
             .json({
@@ -124,7 +126,10 @@ const login = async (req, res) => {
                 .status(401)
                 .json({ success: false, error: "Invalid credentials" });
         }
-        const tokens = (0, jwt_1.generateTokens)(user.id, user.role, user.region, user.subscription, user.status);
+        const sessionId = crypto_1.default.randomUUID();
+        user.sessionId = sessionId;
+        await user.save();
+        const tokens = (0, jwt_1.generateTokens)(user.id, user.role, user.region, user.subscription, user.status, sessionId);
         res
             .status(200)
             .json({

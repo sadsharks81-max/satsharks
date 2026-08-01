@@ -30,6 +30,15 @@ export const getBackendUrl = (): string => {
 
 const getUrl = (url: string) => url.startsWith("http") ? url : `${API_BASE_URL}${url}`;
 
+const checkUnauthorized = (res: Response) => {
+  if (res.status === 401) {
+    localStorage.removeItem("accessToken");
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("unauthorized"));
+    }
+  }
+};
+
 // simple API wrapper with auth token injection and error handling
 export const api = {
   async publicGet(url: string) {
@@ -58,6 +67,7 @@ export const api = {
       const res = await fetch(getUrl(url), { headers });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
+        checkUnauthorized(res);
         return { success: false, error: data?.error || `HTTP error! status: ${res.status}` };
       }
       return data || { success: true };
@@ -80,6 +90,7 @@ export const api = {
       });
       const dataJson = await res.json().catch(() => null);
       if (!res.ok) {
+        checkUnauthorized(res);
         return { success: false, error: dataJson?.error || `HTTP error! status: ${res.status}` };
       }
       return dataJson || { success: true };
@@ -102,6 +113,7 @@ export const api = {
       });
       const dataJson = await res.json().catch(() => null);
       if (!res.ok) {
+        checkUnauthorized(res);
         return { success: false, error: dataJson?.error || `HTTP error! status: ${res.status}` };
       }
       return dataJson || { success: true };
@@ -123,6 +135,7 @@ export const api = {
       });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
+        checkUnauthorized(res);
         return { success: false, error: data?.error || `HTTP error! status: ${res.status}` };
       }
       return data || { success: true };

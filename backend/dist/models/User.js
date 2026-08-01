@@ -74,6 +74,10 @@ const UserSchema = new mongoose_1.Schema({
         required: true,
         default: "ACTIVE",
     },
+    sessionId: {
+        type: String,
+        default: null,
+    },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date },
     targetScore: { type: Number, default: 1400 },

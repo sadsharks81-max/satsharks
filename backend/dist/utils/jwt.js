@@ -7,8 +7,8 @@ exports.verifyRefreshToken = exports.verifyAccessToken = exports.generateTokens 
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_here";
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "your_jwt_refresh_secret_here";
-const generateTokens = (userId, role, region, subscription, status) => {
-    const payload = { userId, role, region, subscription, status };
+const generateTokens = (userId, role, region, subscription, status, sessionId) => {
+    const payload = { userId, role, region, subscription, status, sessionId };
     const accessToken = jsonwebtoken_1.default.sign(payload, JWT_SECRET, {
         expiresIn: "15m",
     });

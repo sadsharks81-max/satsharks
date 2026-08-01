@@ -13,6 +13,7 @@ export interface IUser extends Document {
   portalAccessStart?: Date;
   portalAccessEnd?: Date;
   status: "ACTIVE" | "SUSPENDED";
+  sessionId?: string;
   resetToken?: string;
   resetTokenExpiry?: Date;
   targetScore: number;
@@ -65,6 +66,10 @@ const UserSchema: Schema = new Schema(
       enum: ["ACTIVE", "SUSPENDED"],
       required: true,
       default: "ACTIVE",
+    },
+    sessionId: {
+      type: String,
+      default: null,
     },
     resetToken: { type: String },
     resetTokenExpiry: { type: Date },

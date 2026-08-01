@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { StudentLayout } from "../../components/layout/StudentLayout";
 import { Icon } from "../../components/common/Icon";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { Modal } from "../../components/ui/Modal";
 import { api, getBackendUrl } from "../../services/api";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Route = createFileRoute("/dashboard/study-materials")({
   component: StudyMaterialsPage,
@@ -55,6 +56,36 @@ function StudyMaterialsPage() {
       <StudentLayout activeItem="/dashboard/study-materials">
         <div className="flex items-center justify-center py-24">
           <Icon name="hourglass_top" className="text-4xl text-primary animate-spin" />
+        </div>
+      </StudentLayout>
+    );
+  }
+
+  const { user } = useAuth();
+  const isPaid = user?.subscription === "PAID" || user?.role === "ADMIN";
+
+  if (!isPaid) {
+    return (
+      <StudentLayout activeItem="/dashboard/study-materials">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-1">Study Materials</h1>
+          <p className="text-on-surface-variant text-sm font-medium">Browse, view, and read study materials and notes shared by your instructors</p>
+        </div>
+        <div className="max-w-md mx-auto my-12 text-center bg-surface border border-outline-variant/40 rounded-2xl p-8 shadow-md">
+          <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-6">
+            <Icon name="workspace_premium" className="text-3xl" />
+          </div>
+          <h2 className="text-xl font-bold text-on-surface mb-2">Premium Feature Locked</h2>
+          <p className="text-xs text-on-surface-variant leading-relaxed mb-6">
+            Study Materials are only available for Premium users. Upgrade to access all PDF notes, cheat sheets, and class slides.
+          </p>
+          <Link
+            to="/sat"
+            hash="pricing"
+            className="inline-block w-full py-3 text-center bg-primary hover:bg-accent text-on-primary hover:text-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md font-semibold"
+          >
+            Upgrade to Premium
+          </Link>
         </div>
       </StudentLayout>
     );

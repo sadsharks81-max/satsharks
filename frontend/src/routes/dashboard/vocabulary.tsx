@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { StudentLayout } from "../../components/layout/StudentLayout";
 import { Icon } from "../../components/common/Icon";
 import { api } from "../../services/api";
 import { stripEmojis } from "../../utils/format";
+import { useAuth } from "../../hooks/useAuth";
 
 export const Route = createFileRoute("/dashboard/vocabulary")({
   component: VocabularyMastery,
@@ -173,6 +174,38 @@ function VocabularyMastery() {
       <StudentLayout activeItem="/dashboard/vocabulary">
         <div className="flex justify-center py-24">
           <Icon name="hourglass_top" className="animate-spin text-4xl text-primary" />
+        </div>
+      </StudentLayout>
+    );
+  }
+
+  const { user } = useAuth();
+  const isPaid = user?.subscription === "PAID" || user?.role === "ADMIN";
+
+  if (!isPaid) {
+    return (
+      <StudentLayout activeItem="/dashboard/vocabulary">
+        <div className="mb-8">
+          <h1 className="font-display text-3xl font-bold text-on-surface md:text-4xl">Vocab Mastery</h1>
+          <p className="mt-2 text-sm text-on-surface-variant">
+            Build a stronger SAT vocabulary through active recall, quick quizzes, and focused review.
+          </p>
+        </div>
+        <div className="max-w-md mx-auto my-12 text-center bg-surface border border-outline-variant/40 rounded-2xl p-8 shadow-md">
+          <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-6">
+            <Icon name="workspace_premium" className="text-3xl" />
+          </div>
+          <h2 className="text-xl font-bold text-on-surface mb-2">Premium Feature Locked</h2>
+          <p className="text-xs text-on-surface-variant leading-relaxed mb-6">
+            Vocabulary Mastery games, flashcards, and quizzes are only available for Premium users. Upgrade to premium to access these tools.
+          </p>
+          <Link
+            to="/sat"
+            hash="pricing"
+            className="inline-block w-full py-3 text-center bg-primary hover:bg-accent text-on-primary hover:text-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md font-semibold"
+          >
+            Upgrade to Premium
+          </Link>
         </div>
       </StudentLayout>
     );

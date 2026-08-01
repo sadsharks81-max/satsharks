@@ -37,6 +37,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      logout();
+      alert("Your session has expired (you may have logged in from another device). Please log in again.");
+      window.location.href = "/auth/login";
+    };
+    window.addEventListener("unauthorized", handleUnauthorized);
+    return () => {
+      window.removeEventListener("unauthorized", handleUnauthorized);
+    };
+  }, []);
+
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     const res = await api.post("/api/auth/login", { email, password });
