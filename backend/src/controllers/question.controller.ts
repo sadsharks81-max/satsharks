@@ -67,7 +67,7 @@ export const createQuestion = async (req: AuthRequest, res: Response) => {
       tags: tags || [],
       imageUrl: imageUrl || null,
       source: "MANUAL",
-      status: "PUBLISHED",
+      status: imageUrl ? "UPDATED" : "PUBLISHED",
       createdBy: req.user?.userId,
     });
     res.status(201).json({ success: true, question });
@@ -83,10 +83,20 @@ export const updateQuestion = async (req: Request, res: Response) => {
     const existingQuestion = await Question.findById(id);
     if (!existingQuestion) return res.status(404).json({ success: false, error: "Question not found" });
     const previousImageUrl = existingQuestion.imageUrl;
-    Object.assign(existingQuestion, {
-      text, options, correctAnswer, explanation: stripEmojis(explanation),
-      category, difficulty, section, tags, status, imageUrl,
-    });
+
+    if (text !== undefined) existingQuestion.text = text;
+    if (options !== undefined) existingQuestion.options = options;
+    if (correctAnswer !== undefined) existingQuestion.correctAnswer = correctAnswer;
+    if (explanation !== undefined) existingQuestion.explanation = stripEmojis(explanation);
+    if (category !== undefined) existingQuestion.category = category;
+    if (difficulty !== undefined) existingQuestion.difficulty = difficulty;
+    if (section !== undefined) existingQuestion.section = section;
+    if (tags !== undefined) existingQuestion.tags = tags;
+    if (imageUrl !== undefined) existingQuestion.imageUrl = imageUrl;
+    if (status !== undefined) {
+      existingQuestion.status = (status === "DRAFT" ? "UPLOADED" : status) as any;
+    }
+
     const question = await existingQuestion.save();
     await deleteReplacedManagedImage(previousImageUrl, question.imageUrl);
     res.status(200).json({ success: true, question });

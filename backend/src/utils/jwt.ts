@@ -7,7 +7,7 @@ export const generateTokens = (userId: string, role: string, region?: string, su
   const payload = { userId, role, region, subscription, status, sessionId };
   
   const accessToken = jwt.sign(payload, JWT_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "7d",
   });
   
   const refreshToken = jwt.sign(payload, JWT_REFRESH_SECRET, {

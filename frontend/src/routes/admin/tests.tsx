@@ -218,7 +218,11 @@ function AdminTests() {
       }
     }
     setQuestionSubmitting(true);
-    const body = {
+    const mod = activeTestForQuestions?.modules[selectedModuleIndex];
+    const currentQ = mod?.questions.find((x: any) => x._id === qId);
+    const isImageChanged = currentQ && questionForm.imageUrl !== (currentQ.imageUrl || "");
+
+    const body: any = {
       text: questionForm.text,
       options: questionType === "MCQ" ? [
         { label: "A", text: questionForm.optA },
@@ -230,6 +234,10 @@ function AdminTests() {
       explanation: questionForm.explanation,
       imageUrl: questionForm.imageUrl,
     };
+
+    if (isImageChanged) {
+      body.status = "UPDATED";
+    }
 
     const res = await api.put(`/api/questions/${qId}`, body);
     if (res.success) {

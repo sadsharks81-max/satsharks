@@ -38,14 +38,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const handleUnauthorized = () => {
+    const handleUnauthorized = (e: Event) => {
+      const errorText = (e as CustomEvent).detail?.error;
       logout();
-      alert("Your session has expired (you may have logged in from another device). Please log in again.");
+      if (errorText === "Session expired: logged in from another device") {
+        alert("Your session has expired because this account was logged in from another device.");
+      } else {
+        alert("Your session has expired. Please log in again.");
+      }
       window.location.href = "/auth/login";
     };
-    window.addEventListener("unauthorized", handleUnauthorized);
+    window.addEventListener("unauthorized", handleUnauthorized as EventListener);
     return () => {
-      window.removeEventListener("unauthorized", handleUnauthorized);
+      window.removeEventListener("unauthorized", handleUnauthorized as EventListener);
     };
   }, []);
 

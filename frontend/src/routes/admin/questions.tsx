@@ -208,7 +208,7 @@ function AdminQuestions() {
       }
     }
     setSubmitting(true);
-    const body = {
+    const body: any = {
       text: form.text,
       options: questionType === "MCQ" ? [
         { label: "A", text: form.optA }, { label: "B", text: form.optB },
@@ -222,6 +222,16 @@ function AdminQuestions() {
       imageUrl: form.imageUrl,
       tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
     };
+
+    if (editingQ) {
+      if (form.imageUrl !== (editingQ.imageUrl || "")) {
+        body.status = "UPDATED";
+      } else {
+        body.status = editingQ.status;
+      }
+    } else {
+      body.status = form.imageUrl ? "UPDATED" : "PUBLISHED";
+    }
 
     const res = editingQ
       ? await api.put(`/api/questions/${editingQ._id}`, body)
@@ -302,7 +312,7 @@ function AdminQuestions() {
         </div>
         <Select value={sectionFilter} onChange={(e) => { setSectionFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Sections" }, { value: "MATH", label: "Math" }, { value: "READING_WRITING", label: "Reading & Writing" }]} className="!w-auto !py-2" />
         <Select value={difficultyFilter} onChange={(e) => { setDifficultyFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Difficulties" }, { value: "EASY", label: "Easy" }, { value: "MEDIUM", label: "Medium" }, { value: "HARD", label: "Hard" }]} className="!w-auto !py-2" />
-        <Select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Statuses" }, { value: "PUBLISHED", label: "Published" }, { value: "DRAFT", label: "Draft" }, { value: "REVIEW", label: "Review" }]} className="!w-auto !py-2" />
+        <Select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Statuses" }, { value: "PUBLISHED", label: "Published" }, { value: "UPLOADED", label: "Uploaded" }, { value: "UPDATED", label: "Updated" }, { value: "REVIEW", label: "Review" }]} className="!w-auto !py-2" />
       </div>
 
       {loading ? (
@@ -342,7 +352,9 @@ function AdminQuestions() {
                       <Badge variant={q.difficulty === "EASY" ? "success" : q.difficulty === "HARD" ? "error" : "warning"}>{q.difficulty}</Badge>
                     </td>
                     <td className="p-4">
-                      <Badge variant={q.status === "PUBLISHED" ? "success" : q.status === "DRAFT" ? "default" : "warning"}>{q.status}</Badge>
+                      <Badge variant={q.status === "PUBLISHED" ? "success" : q.status === "UPLOADED" ? "default" : q.status === "UPDATED" ? "accent" : "warning"}>
+                        {q.status}
+                      </Badge>
                     </td>
                     <td className="p-4">
                       <div className="flex gap-2">

@@ -54,7 +54,7 @@ export interface Question {
   section: "READING_WRITING" | "MATH";
   tags: string[];
   source: "MANUAL" | "AI_EXTRACTED" | "SAT";
-  status: "DRAFT" | "REVIEW" | "PUBLISHED";
+  status: "UPLOADED" | "REVIEW" | "PUBLISHED" | "UPDATED";
   imageUrl?: string;
   createdBy: string;
   createdAt: string;

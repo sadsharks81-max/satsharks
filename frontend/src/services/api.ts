@@ -30,11 +30,12 @@ export const getBackendUrl = (): string => {
 
 const getUrl = (url: string) => url.startsWith("http") ? url : `${API_BASE_URL}${url}`;
 
-const checkUnauthorized = (res: Response) => {
+const checkUnauthorized = (res: Response, data?: any) => {
   if (res.status === 401) {
     localStorage.removeItem("accessToken");
     if (typeof window !== "undefined") {
-      window.dispatchEvent(new Event("unauthorized"));
+      const errorMsg = data?.error || "";
+      window.dispatchEvent(new CustomEvent("unauthorized", { detail: { error: errorMsg } }));
     }
   }
 };
@@ -67,7 +68,7 @@ export const api = {
       const res = await fetch(getUrl(url), { headers });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
-        checkUnauthorized(res);
+        checkUnauthorized(res, data);
         return { success: false, error: data?.error || `HTTP error! status: ${res.status}` };
       }
       return data || { success: true };
@@ -90,7 +91,7 @@ export const api = {
       });
       const dataJson = await res.json().catch(() => null);
       if (!res.ok) {
-        checkUnauthorized(res);
+        checkUnauthorized(res, dataJson);
         return { success: false, error: dataJson?.error || `HTTP error! status: ${res.status}` };
       }
       return dataJson || { success: true };
@@ -113,7 +114,7 @@ export const api = {
       });
       const dataJson = await res.json().catch(() => null);
       if (!res.ok) {
-        checkUnauthorized(res);
+        checkUnauthorized(res, dataJson);
         return { success: false, error: dataJson?.error || `HTTP error! status: ${res.status}` };
       }
       return dataJson || { success: true };
@@ -135,7 +136,7 @@ export const api = {
       });
       const data = await res.json().catch(() => null);
       if (!res.ok) {
-        checkUnauthorized(res);
+        checkUnauthorized(res, data);
         return { success: false, error: data?.error || `HTTP error! status: ${res.status}` };
       }
       return data || { success: true };

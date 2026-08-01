@@ -16,13 +16,13 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
   try {
     const decoded: any = verifyAccessToken(token);
     
-    // Enforce single-device login
+    // Enforce single-device login for STUDENTS only
     if (decoded.sessionId && process.env.DATABASE_URL) {
       const user = await User.findById(decoded.userId);
       if (!user) {
         return res.status(401).json({ success: false, error: "User not found" });
       }
-      if (user.sessionId && user.sessionId !== decoded.sessionId) {
+      if (user.role === "STUDENT" && user.sessionId && user.sessionId !== decoded.sessionId) {
         return res.status(401).json({ success: false, error: "Session expired: logged in from another device" });
       }
     }
@@ -46,7 +46,7 @@ export const optionalAuthenticate = async (req: AuthRequest, res: Response, next
     
     if (decoded.sessionId && process.env.DATABASE_URL) {
       const user = await User.findById(decoded.userId);
-      if (user && user.sessionId && user.sessionId !== decoded.sessionId) {
+      if (user && user.role === "STUDENT" && user.sessionId && user.sessionId !== decoded.sessionId) {
         return next();
       }
     }
