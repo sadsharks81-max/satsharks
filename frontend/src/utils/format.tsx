@@ -27,8 +27,7 @@ export function stripEmojis(value: string | undefined | null): string {
     .trim();
 }
 
-const FRACTION_PATTERN =
-  /(?<![\wπ/])(-?[A-Za-z0-9π]+°?)\/([A-Za-z0-9π]+°?)(?![\wπ/])/g;
+const FRACTION_PATTERN = /(?<![\wπ/])(-?[A-Za-z0-9π]+°?)\/([A-Za-z0-9π]+°?)(?![\wπ/])/g;
 
 function normalizeRoots(formula: string): string {
   let result = "";
@@ -74,9 +73,11 @@ function normalizeRoots(formula: string): string {
 }
 
 function normalizeMath(formula: string): string {
-  return normalizeRoots(formula)
-    // Convert simple slash fractions while leaving existing LaTeX commands untouched.
-    .replace(FRACTION_PATTERN, String.raw`\frac{$1}{$2}`);
+  return (
+    normalizeRoots(formula)
+      // Convert simple slash fractions while leaving existing LaTeX commands untouched.
+      .replace(FRACTION_PATTERN, String.raw`\frac{$1}{$2}`)
+  );
 }
 
 /**
@@ -177,7 +178,7 @@ export function renderFormattedText(text: string | undefined | null): React.Reac
   if (!text) return "";
   text = stripQuestionTypeTags(text);
   text = stripEmojis(text);
-  
+
   // Split by $$ (block math) and $ (inline math)
   const mathParts = text.split(/(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$)/g);
 
@@ -197,21 +198,25 @@ export function renderFormattedText(text: string | undefined | null): React.Reac
             );
           } catch (err) {
             console.error("KaTeX error:", err);
-            return <code key={index} className="text-error">{part}</code>;
+            return (
+              <code key={index} className="text-error">
+                {part}
+              </code>
+            );
           }
         } else if (part.startsWith("$") && part.endsWith("$")) {
           const formula = part.slice(1, -1).trim();
-          
+
           // Prevent standard currency strings ($3 for the first hour and $) from being parsed as inline math.
           // Inline LaTeX math typically doesn't contain multiple regular English words without math symbols.
           const wordCount = formula.split(/\s+/).length;
           const hasMathSymbol = /[=+\-*\/\\^{}()<>_]/.test(formula) || /^[a-zA-Z]$/.test(formula);
           const isCurrency = wordCount > 2 && !hasMathSymbol;
-          
+
           if (isCurrency) {
             return part;
           }
-          
+
           try {
             const html = renderMath(formula, false);
             return (
@@ -223,7 +228,11 @@ export function renderFormattedText(text: string | undefined | null): React.Reac
             );
           } catch (err) {
             console.error("KaTeX error:", err);
-            return <code key={index} className="text-error">{part}</code>;
+            return (
+              <code key={index} className="text-error">
+                {part}
+              </code>
+            );
           }
         } else {
           // Exponent parsing for regular text parts
@@ -232,24 +241,24 @@ export function renderFormattedText(text: string | undefined | null): React.Reac
             .replace(/³/g, "^3")
             .replace(/⁴/g, "^4")
             .replace(/<sup>(.*?)<\/sup>/gi, "^$1");
-            
+
           const subParts = normalized.split(/(\^[a-zA-Z0-9\-+]+)/g);
-          
+
           return (
             <React.Fragment key={index}>
               {subParts.map((subPart, subIdx) => {
                 if (subPart.startsWith("^")) {
                   const exponent = subPart.slice(1);
                   return (
-                    <sup 
-                      key={subIdx} 
-                      style={{ 
-                        fontSize: "0.95em", 
-                        fontWeight: "normal", 
-                        position: "relative", 
-                        top: "-0.3em", 
+                    <sup
+                      key={subIdx}
+                      style={{
+                        fontSize: "0.95em",
+                        fontWeight: "normal",
+                        position: "relative",
+                        top: "-0.3em",
                         margin: "0 0.05em",
-                        display: "inline-block"
+                        display: "inline-block",
                       }}
                     >
                       {exponent}

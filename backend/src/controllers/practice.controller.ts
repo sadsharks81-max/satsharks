@@ -96,7 +96,7 @@ export const getPracticeHistory = async (req: AuthRequest, res: Response) => {
 
     const [sessions, total] = await Promise.all([
       PracticeSession.find({ student: studentId })
-        .populate("question", "text category difficulty section")
+        .populate("question", "text category difficulty section imageUrl")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limitNum),

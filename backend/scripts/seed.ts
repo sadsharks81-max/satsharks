@@ -17,6 +17,16 @@ const users = [
     status: "ACTIVE",
   },
   {
+    name: "Admin 2",
+    email: "admin2@satsharks.com",
+    password: "password123",
+    role: "ADMIN",
+    country: "USA",
+    region: "INTERNATIONAL",
+    subscription: "PAID",
+    status: "ACTIVE",
+  },
+  {
     name: "Student 1",
     email: "localfree@test.com",
     password: "password123",

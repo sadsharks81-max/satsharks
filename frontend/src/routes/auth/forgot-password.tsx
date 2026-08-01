@@ -51,10 +51,13 @@ function ForgotPassword() {
                 <span className="material-symbols-outlined text-[32px]">mark_email_read</span>
               </div>
               <p className="text-sm text-on-surface">
-                If an account exists for <strong>{email}</strong>, you will receive password reset instructions.
+                If an account exists for <strong>{email}</strong>, you will receive password reset
+                instructions.
               </p>
               <Link to="/auth/login" className="block w-full">
-                <Button variant="outline" className="w-full">Return to Login</Button>
+                <Button variant="outline" className="w-full">
+                  Return to Login
+                </Button>
               </Link>
             </div>
           ) : (

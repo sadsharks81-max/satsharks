@@ -391,10 +391,10 @@ export const getSATAttempt = async (req: AuthRequest, res: Response) => {
         path: "test",
         populate: {
           path: "modules.questions",
-          select: "text options correctAnswer explanation difficulty category"
+          select: "text options correctAnswer explanation difficulty category imageUrl"
         }
       })
-      .populate({ path: "moduleAttempts.answers.question", select: "text options correctAnswer explanation difficulty category" });
+      .populate({ path: "moduleAttempts.answers.question", select: "text options correctAnswer explanation difficulty category imageUrl" });
 
     if (!attempt) return res.status(404).json({ success: false, error: "Attempt not found" });
 

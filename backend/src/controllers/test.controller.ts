@@ -35,7 +35,7 @@ export const getTests = async (req: AuthRequest, res: Response) => {
 export const getTest = async (req: Request, res: Response) => {
   try {
     const test = await DiagnosticTest.findById(req.params.id)
-      .populate({ path: "questions", select: "text options section difficulty category" });
+      .populate({ path: "questions", select: "text options section difficulty category imageUrl" });
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, test });
   } catch (error) {
@@ -100,7 +100,7 @@ export const getAllTestsAdmin = async (req: Request, res: Response) => {
 export const startTest = async (req: AuthRequest, res: Response) => {
   try {
     const test = await DiagnosticTest.findById(req.params.id)
-      .populate({ path: "questions", select: "text options section difficulty category" });
+      .populate({ path: "questions", select: "text options section difficulty category imageUrl" });
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     if (!test.isActive) return res.status(400).json({ success: false, error: "Test is not active" });
 
@@ -174,7 +174,7 @@ export const getAttempt = async (req: AuthRequest, res: Response) => {
       student: req.user?.userId,
     })
       .populate({ path: "test", select: "title section timeLimit" })
-      .populate({ path: "answers.question", select: "text options correctAnswer explanation category difficulty" });
+      .populate({ path: "answers.question", select: "text options correctAnswer explanation category difficulty imageUrl" });
 
     if (!attempt) return res.status(404).json({ success: false, error: "Attempt not found" });
     res.status(200).json({ success: true, attempt });

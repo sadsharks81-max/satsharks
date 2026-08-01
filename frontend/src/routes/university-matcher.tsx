@@ -12,7 +12,7 @@ import gradingSystemsData from "./gradingSystems.json";
 export const Route = createFileRoute("/university-matcher")({
   head: () => ({
     meta: [
-      { title: "SatSharks University Matcher | SAT Sharks" },
+      { title: "SAT Sharks University Matcher | SAT Sharks" },
       {
         name: "description",
         content: "Find the best global universities matching your academic profile, SAT scores, and budget preferences using officially verified boundaries.",
@@ -535,7 +535,7 @@ function UniversityMatcherContent() {
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold text-[#EAF0F7] flex items-center justify-center md:justify-start gap-3">
             <span style={{ color: C.teal }} className="material-symbols-outlined text-4xl">school</span>
-            SatSharks University Matcher
+            SAT Sharks University Matcher
           </h1>
           <p className="text-[#8DA0B9] mt-2 font-medium">
             Search {UNIVERSITIES.length} universities using officially verified boundaries.
