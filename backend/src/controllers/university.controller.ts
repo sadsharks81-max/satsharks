@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import University from "../models/University";
+import { sendError } from "../utils/http";
 
 export const getAllUniversities = async (req: Request, res: Response) => {
   try {
-    const universities = await University.find();
+    // Public, unauthenticated endpoint: lean() avoids hydrating full Mongoose
+    // documents for a payload that is only ever serialised straight to JSON.
+    const universities = await University.find().lean();
     return res.status(200).json({ success: true, data: universities });
   } catch (error: any) {
     console.error("Get All Universities Error:", error);
@@ -32,8 +35,9 @@ export const syncUniversities = async (req: Request, res: Response) => {
     const inserted = await University.insertMany(universitiesWithSheet);
 
     return res.status(200).json({ success: true, data: inserted, message: `Universities synced successfully for sheet "${sheetName}".` });
-  } catch (error: any) {
-    console.error("Sync Universities Error:", error);
-    return res.status(500).json({ success: false, error: error.message || "Server Error", details: error.errors });
+  } catch (error) {
+    // `details: error.errors` exposed Mongoose's internal validation tree
+    // (schema paths, cast failures) to the caller.
+    return sendError(res, error, "university.syncUniversities");
   }
 };

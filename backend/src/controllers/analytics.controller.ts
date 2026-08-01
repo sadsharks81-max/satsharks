@@ -4,6 +4,7 @@ import PracticeSession from "../models/PracticeSession";
 import VocabularyProgress from "../models/VocabularyProgress";
 import User from "../models/User";
 import { AuthRequest } from "../middleware/auth.middleware";
+import { sendError } from "../utils/http";
 
 export const getDashboardStats = async (req: AuthRequest, res: Response) => {
   try {
@@ -61,8 +62,8 @@ export const getDashboardStats = async (req: AuthRequest, res: Response) => {
         createdAt: session.createdAt,
       })),
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getDashboardStats");
   }
 };
 
@@ -88,8 +89,8 @@ export const getTestHistory = async (req: AuthRequest, res: Response) => {
       attempts,
       pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getTestHistory");
   }
 };
 
@@ -128,8 +129,8 @@ export const getUnifiedHistory = async (req: AuthRequest, res: Response) => {
         updatedAt: vocabulary.updatedAt,
       }] : [],
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getUnifiedHistory");
   }
 };
 
@@ -151,8 +152,8 @@ export const getPerformanceData = async (req: AuthRequest, res: Response) => {
     }));
 
     res.status(200).json({ success: true, performance: data });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getPerformanceData");
   }
 };
 
@@ -192,8 +193,8 @@ export const getCategoryBreakdown = async (req: AuthRequest, res: Response) => {
     }));
 
     res.status(200).json({ success: true, breakdown });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getCategoryBreakdown");
   }
 };
 
@@ -266,8 +267,8 @@ export const getPredictedScore = async (req: AuthRequest, res: Response) => {
         },
       },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getPredictedScore");
   }
 };
 
@@ -328,8 +329,8 @@ export const getErrorAnalysis = async (req: AuthRequest, res: Response) => {
       // Limit to 20 most recent mistakes
       incorrectQuestions: incorrectQuestionsList.slice(0, 20),
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getErrorAnalysis");
   }
 };
 
@@ -419,8 +420,8 @@ export const getTimingAnalysis = async (req: AuthRequest, res: Response) => {
       },
       slowQuestions: slowQuestions.slice(0, 15),
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getTimingAnalysis");
   }
 };
 
@@ -443,8 +444,8 @@ export const getLeaderboard = async (req: AuthRequest, res: Response) => {
       success: true,
       leaderboard: data,
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getLeaderboard");
   }
 };
 
@@ -515,7 +516,7 @@ export const getStudentProgressReports = async (req: AuthRequest, res: Response)
       });
     }
     res.status(200).json({ success: true, reports, daily, range: { start, end } });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "analytics.getStudentProgressReports");
   }
 };

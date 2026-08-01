@@ -8,6 +8,7 @@ import SATTest from "../models/SATTest";
 import SATTestAttempt from "../models/SATTestAttempt";
 import QuestionCategory from "../models/QuestionCategory";
 import { stripEmojis } from "../utils/text";
+import { sendError } from "../utils/http";
 
 const CUSTOM_TEST_CATEGORY_NAMES = {
   MATH: ["SAT Advanced Math", "SAT Algebra", "SAT Data & Statistics", "SAT Geometry"],
@@ -79,8 +80,8 @@ export const submitPracticeAnswer = async (req: AuthRequest, res: Response) => {
         sessionId: session._id,
       },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "practice.submitPracticeAnswer");
   }
 };
 
@@ -110,8 +111,8 @@ export const getPracticeHistory = async (req: AuthRequest, res: Response) => {
       stats: { total, correct, accuracy: total > 0 ? Math.round((correct / total) * 100) : 0 },
       pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "practice.getPracticeHistory");
   }
 };
 

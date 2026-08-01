@@ -3,6 +3,7 @@ import Inquiry from "../models/Inquiry";
 import Notification from "../models/Notification";
 import User from "../models/User";
 import { env } from "../config/env";
+import { sendError } from "../utils/http";
 
 export const submitInquiry = async (req: Request, res: Response) => {
   try {
@@ -36,8 +37,8 @@ export const submitInquiry = async (req: Request, res: Response) => {
     }
 
     res.status(201).json({ success: true, message: "Inquiry submitted successfully", inquiryId: inquiry.id });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "contact.submitInquiry");
   }
 };
 
@@ -49,8 +50,8 @@ export const getInquiries = async (req: Request, res: Response) => {
 
     const inquiries = await Inquiry.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, inquiries });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "contact.getInquiries");
   }
 };
 
@@ -86,7 +87,7 @@ export const updateInquiryStatus = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({ success: true, inquiry });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "contact.updateInquiryStatus");
   }
 };

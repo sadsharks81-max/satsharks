@@ -5,6 +5,7 @@ import Question from "../models/Question";
 import User from "../models/User";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { checkAnswerCorrectness } from "../utils/grading";
+import { sendError } from "../utils/http";
 
 // --- Student: list available SAT tests ---
 export const getSATTests = async (req: AuthRequest, res: Response) => {
@@ -64,10 +65,26 @@ export const getSATTests = async (req: AuthRequest, res: Response) => {
     );
 
     res.status(200).json({ success: true, tests: testsWithMeta });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.getSATTests");
   }
 };
+
+/**
+ * Loads a test for an in-progress attempt with the answer key removed.
+ *
+ * `populate("modules.questions")` returned whole Question documents, so starting
+ * a test shipped `correctAnswer` and `explanation` for every question in it to
+ * the browser. The exam runner never reads those fields , it renders only
+ * `text`, `options`, and `imageUrl` , and the post-submission review screen gets
+ * them from getSATAttempt(), which populates them deliberately. Withholding them
+ * here removes the answer key from the live exam payload without changing any UI.
+ */
+const loadTestForTaking = (testId: unknown) =>
+  SATTest.findById(testId).populate({
+    path: "modules.questions",
+    select: "-correctAnswer -explanation",
+  });
 
 // --- Student: start a SAT test ---
 export const startSATTest = async (req: AuthRequest, res: Response) => {
@@ -94,7 +111,7 @@ export const startSATTest = async (req: AuthRequest, res: Response) => {
       }
       existing.startedAt = new Date();
       await existing.save();
-      const populatedTest = await SATTest.findById(test._id).populate("modules.questions");
+      const populatedTest = await loadTestForTaking(test._id);
       return res.status(200).json({ success: true, attempt: existing, test: populatedTest, resumed: true });
     }
 
@@ -127,11 +144,11 @@ export const startSATTest = async (req: AuthRequest, res: Response) => {
       startedAt: new Date(),
     });
 
-    const populatedTest = await SATTest.findById(test._id).populate("modules.questions");
+    const populatedTest = await loadTestForTaking(test._id);
 
     res.status(201).json({ success: true, attempt, test: populatedTest });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.startSATTest");
   }
 };
 
@@ -162,8 +179,8 @@ export const saveSATProgress = async (req: AuthRequest, res: Response) => {
 
     await attempt.save();
     res.status(200).json({ success: true, message: "Progress saved" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.saveSATProgress");
   }
 };
 
@@ -258,8 +275,8 @@ export const completeModule = async (req: AuthRequest, res: Response) => {
 
     await attempt.save();
     res.status(200).json({ success: true, attempt });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.completeModule");
   }
 };
 
@@ -282,8 +299,8 @@ export const endBreak = async (req: AuthRequest, res: Response) => {
 
     await attempt.save();
     res.status(200).json({ success: true, attempt });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.endBreak");
   }
 };
 
@@ -299,8 +316,8 @@ export const submitSATTest = async (req: AuthRequest, res: Response) => {
     if (!attempt) return res.status(404).json({ success: false, error: "Attempt not found" });
 
     return finalizeAttempt(attempt, res);
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.submitSATTest");
   }
 };
 
@@ -424,8 +441,8 @@ export const getSATAttempt = async (req: AuthRequest, res: Response) => {
     }
 
     res.status(200).json({ success: true, attempt: attemptObj });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.getSATAttempt");
   }
 };
 
@@ -439,8 +456,8 @@ export const getMySATAttempts = async (req: AuthRequest, res: Response) => {
       .sort({ completedAt: -1 });
 
     res.status(200).json({ success: true, attempts });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.getMySATAttempts");
   }
 };
 
@@ -449,8 +466,8 @@ export const getAllSATTestsAdmin = async (req: Request, res: Response) => {
   try {
     const tests = await SATTest.find({ year: { $ne: 9999 } }).populate("modules.questions").sort({ year: -1, testNumber: 1 });
     res.status(200).json({ success: true, tests });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.getAllSATTestsAdmin");
   }
 };
 
@@ -472,8 +489,8 @@ export const updateSATTestAdmin = async (req: Request, res: Response) => {
     const test = await SATTest.findByIdAndUpdate(req.params.id, update, { new: true });
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, test });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.updateSATTestAdmin");
   }
 };
 
@@ -483,7 +500,7 @@ export const deleteSATTestAdmin = async (req: Request, res: Response) => {
     const test = await SATTest.findByIdAndDelete(req.params.id);
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, message: "Test deleted" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "sat.deleteSATTestAdmin");
   }
 };

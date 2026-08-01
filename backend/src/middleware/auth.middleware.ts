@@ -1,66 +1,145 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyAccessToken } from "../utils/jwt";
+import { verifyAccessToken, type TokenPayload } from "../utils/jwt";
 import User from "../models/User";
+import { env } from "../config/env";
+import { requireAdmin } from "./role.middleware";
 
-export interface AuthRequest extends Request {
-  user?: any;
+export interface AuthUser extends TokenPayload {
+  userId: string;
+  role: string;
 }
 
-export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export interface AuthRequest extends Request {
+  user?: AuthUser;
+}
+
+const extractBearerToken = (req: Request): string | null => {
   const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith("Bearer ")) {
+  if (!authHeader?.startsWith("Bearer ")) return null;
+  const token = authHeader.slice("Bearer ".length).trim();
+  return token.length > 0 ? token : null;
+};
+
+/**
+ * Resolves the caller against current database state.
+ *
+ * Access tokens live for days, so the `role`, `status`, and `subscription` baked
+ * into a token go stale: a suspended, demoted, or downgraded account previously
+ * kept its old privileges until the token expired, because every authorization
+ * middleware read those claims. Authoritative values are re-read from the user
+ * record and overwrite the claims before any authorization check sees them.
+ *
+ * The projection is narrow and lean so this per-request lookup stays cheap , it
+ * previously loaded the entire user document on every authenticated call.
+ */
+const resolveLiveUser = async (decoded: TokenPayload) => {
+  const user = await User.findById(decoded.userId)
+    .select("role status subscription region sessionId")
+    .lean<{
+      role: string;
+      status: string;
+      subscription: string;
+      region: string;
+      sessionId?: string | null;
+    } | null>();
+
+  if (!user) return { error: "User not found" as const };
+
+  // Single-device login, enforced for students only (unchanged behaviour).
+  if (
+    decoded.sessionId &&
+    user.role === "STUDENT" &&
+    user.sessionId &&
+    user.sessionId !== decoded.sessionId
+  ) {
+    return { error: "Session expired: logged in from another device" as const };
+  }
+
+  return {
+    error: undefined,
+    user: {
+      ...decoded,
+      role: user.role,
+      status: user.status,
+      subscription: user.subscription,
+      region: user.region,
+    } as AuthUser,
+  };
+};
+
+export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  const token = extractBearerToken(req);
+  if (!token) {
     return res.status(401).json({ success: false, error: "Unauthorized" });
   }
 
-  const token = authHeader.split(" ")[1];
+  let decoded: TokenPayload;
   try {
-    const decoded: any = verifyAccessToken(token);
-    
-    // Enforce single-device login for STUDENTS only
-    if (decoded.sessionId && process.env.DATABASE_URL) {
-      const user = await User.findById(decoded.userId);
-      if (!user) {
-        return res.status(401).json({ success: false, error: "User not found" });
-      }
-      if (user.role === "STUDENT" && user.sessionId && user.sessionId !== decoded.sessionId) {
-        return res.status(401).json({ success: false, error: "Session expired: logged in from another device" });
-      }
-    }
-    
-    req.user = decoded;
-    next();
+    decoded = verifyAccessToken(token);
   } catch {
-    res.status(401).json({ success: false, error: "Invalid token" });
+    return res.status(401).json({ success: false, error: "Invalid token" });
   }
-};
 
-export const optionalAuthenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith("Bearer ")) {
+  if (!decoded.userId) {
+    return res.status(401).json({ success: false, error: "Invalid token" });
+  }
+
+  // Mock mode (no database configured) keeps working off token claims alone.
+  if (!env.isDatabaseConfigured) {
+    req.user = decoded as AuthUser;
     return next();
   }
 
-  const token = authHeader.split(" ")[1];
   try {
-    const decoded: any = verifyAccessToken(token);
-    
-    if (decoded.sessionId && process.env.DATABASE_URL) {
-      const user = await User.findById(decoded.userId);
-      if (user && user.role === "STUDENT" && user.sessionId && user.sessionId !== decoded.sessionId) {
-        return next();
-      }
+    const resolved = await resolveLiveUser(decoded);
+    if (resolved.error) {
+      return res.status(401).json({ success: false, error: resolved.error });
     }
-    
-    req.user = decoded;
+    req.user = resolved.user;
     next();
-  } catch {
-    next();
+  } catch (error) {
+    // A database blip must not read as a valid session, nor as a bad token.
+    console.error("[error] auth.authenticate:", error);
+    res.status(503).json({ success: false, error: "Authentication temporarily unavailable" });
   }
 };
 
-export const isAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
-  if (req.user?.role !== "ADMIN") {
-    return res.status(403).json({ success: false, error: "Forbidden: Admin access required" });
+/**
+ * Attaches the user when a valid token is present, otherwise continues
+ * anonymously. Never fails the request , public endpoints rely on that to
+ * personalise their response when a caller happens to be logged in.
+ */
+export const optionalAuthenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  const token = extractBearerToken(req);
+  if (!token) return next();
+
+  let decoded: TokenPayload;
+  try {
+    decoded = verifyAccessToken(token);
+  } catch {
+    return next();
+  }
+
+  if (!decoded.userId) return next();
+
+  if (!env.isDatabaseConfigured) {
+    req.user = decoded as AuthUser;
+    return next();
+  }
+
+  try {
+    const resolved = await resolveLiveUser(decoded);
+    if (!resolved.error) req.user = resolved.user;
+  } catch (error) {
+    console.error("[error] auth.optionalAuthenticate:", error);
   }
   next();
 };
+
+/**
+ * Kept as a named export because report.routes and university.routes already
+ * import it. It now delegates to role.middleware's requireAdmin() instead of
+ * being a second, independently maintained copy of the same rule , the two
+ * copies could drift and leave one route family enforcing a weaker check.
+ */
+export const isAdmin = requireAdmin();

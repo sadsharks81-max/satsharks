@@ -4,7 +4,8 @@
   "private": true,
   "main": "dist/server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "seed:phase1": "tsx src/scripts/seedPhaseOne.ts",
@@ -23,6 +24,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",
+    "express-rate-limit": "^8.6.1",
     "express-validator": "^7.2.1",
     "googleapis": "^173.0.0",
     "helmet": "^8.0.0",

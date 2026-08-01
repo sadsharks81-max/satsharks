@@ -4,19 +4,41 @@ import { env } from "../config/env";
 import User from "../models/User";
 import SubscriptionPlan from "../models/SubscriptionPlan";
 import { phaseOneSubscriptionPlans } from "../data/phaseOne";
+import { generateRandomPassword, hashPassword } from "../utils/password";
+import { sendError } from "../utils/http";
 
 const stripe = new Stripe(env.stripeSecretKey || "sk_test_dummy", {
   apiVersion: "2024-12-18.acacia" as any, // using as any since we don't know the exact string, but typically you just omit it or use any
 });
+
+/**
+ * Converts a display price ("$199", "$1,299", "$29.99") to Stripe's integer
+ * cents. The previous `parseInt(price.replace(/[^0-9]/g,"")) * 100` stripped the
+ * decimal point, so "$29.99" became 2999 dollars , a 100x overcharge , and a
+ * non-string price threw inside the request handler.
+ */
+export const parsePriceToCents = (price: unknown): number | null => {
+  if (typeof price === "number") {
+    return Number.isFinite(price) && price > 0 ? Math.round(price * 100) : null;
+  }
+  if (typeof price !== "string") return null;
+
+  const match = price.replace(/,/g, "").match(/\d+(?:\.\d+)?/);
+  if (!match) return null;
+
+  const amount = Number.parseFloat(match[0]);
+  if (!Number.isFinite(amount) || amount <= 0) return null;
+  return Math.round(amount * 100);
+};
 
 export const createCheckoutSession = async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user?.userId;
     const { planId, region } = req.body;
 
-    let user: any = null;
+    let user: { region?: string } | null = null;
     if (userId) {
-      user = await User.findById(userId);
+      user = await User.findById(userId).select("region").lean<{ region: string } | null>();
       if (!user) {
         return res.status(404).json({ success: false, error: "User not found" });
       }
@@ -54,10 +76,9 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       });
     }
 
-    // Format price: $199 -> 19900 (Stripe takes cents)
-    // If plan.price is "$199", parse the number. If it's "$0" or "Free", throw error.
-    const numericPrice = parseInt(plan.price.replace(/[^0-9]/g, ""));
-    if (isNaN(numericPrice) || numericPrice === 0) {
+    // Format price: "$199" -> 19900 (Stripe takes cents)
+    const unitAmount = parsePriceToCents(plan.price);
+    if (unitAmount === null) {
       return res.status(400).json({ success: false, error: "Cannot process payment for free plan" });
     }
 
@@ -71,7 +92,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
               name: plan.name,
               description: plan.description || "Subscription plan",
             },
-            unit_amount: numericPrice * 100, // in cents
+            unit_amount: unitAmount, // already in cents
           },
           quantity: 1,
         },
@@ -86,14 +107,23 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json({ success: true, gateway: "stripe", url: session.url });
-  } catch (error: any) {
-    console.error("Stripe Checkout Error:", error);
-    return res.status(500).json({ success: false, error: error.message || "Server Error" });
+  } catch (error) {
+    // Stripe error messages can echo account/config details, so they are logged
+    // rather than returned to the caller.
+    return sendError(res, error, "payment.createCheckoutSession");
   }
 };
 
 export const stripeWebhook = async (req: Request, res: Response) => {
   const sig = req.headers["stripe-signature"] as string;
+
+  // Without a configured secret, constructEvent cannot authenticate the caller.
+  // Reject explicitly rather than relying on it to throw, so a misconfigured
+  // deployment can never be coaxed into trusting forged subscription upgrades.
+  if (!env.stripeWebhookSecret) {
+    console.error("[error] payment.stripeWebhook: STRIPE_WEBHOOK_SECRET is not configured");
+    return res.status(503).send("Webhook not configured");
+  }
 
   let event: Stripe.Event;
 
@@ -101,11 +131,13 @@ export const stripeWebhook = async (req: Request, res: Response) => {
     event = stripe.webhooks.constructEvent(
       req.body, // IMPORTANT: requires raw body parser
       sig,
-      env.stripeWebhookSecret
+      env.stripeWebhookSecret,
     );
-  } catch (err: any) {
-    console.error(`Webhook Error: ${err.message}`);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+  } catch (err) {
+    // Logged in full, but the response body does not echo the verification
+    // detail back to an unauthenticated caller.
+    console.error("[error] payment.stripeWebhook signature verification failed:", err);
+    return res.status(400).send("Invalid signature");
   }
 
   // Handle the event
@@ -135,12 +167,18 @@ export const stripeWebhook = async (req: Request, res: Response) => {
 
       if (!userId && email) {
         // Guest checkout - check if user exists by email
-        let user = await User.findOne({ email: email.toLowerCase() });
+        const normalizedEmail = email.toLowerCase();
+        const user = await User.findOne({ email: normalizedEmail }).select("_id").lean();
         if (!user) {
-          // Create new user for the guest
-          user = await User.create({
-            email: email.toLowerCase(),
-            password: Math.random().toString(36).slice(-10) + "A1!", // Dummy password
+          // The placeholder password is bcrypt-hashed and generated from a CSPRNG.
+          // Previously a Math.random() string was written straight into the
+          // password field: a plaintext credential at rest, and because
+          // bcrypt.compare() can never match a non-hash, the account it created
+          // was permanently impossible to log into. The holder recovers access
+          // through the password reset flow.
+          await User.create({
+            email: normalizedEmail,
+            password: await hashPassword(generateRandomPassword()),
             name: session.customer_details?.name || "Guest Student",
             role: "STUDENT",
             region: "INTERNATIONAL",
@@ -148,14 +186,19 @@ export const stripeWebhook = async (req: Request, res: Response) => {
             subscriptionPlan: plan?.name || "Premium",
             subscriptionExpiry: expiry,
           });
-          console.log(`Created new user from guest checkout: ${email}`);
+          console.log(`Created new user from guest checkout: ${normalizedEmail}`);
         } else {
-          // Update existing user
-          user.subscription = "PAID";
-          user.subscriptionPlan = plan?.name || "Premium";
-          user.subscriptionExpiry = expiry;
-          await user.save();
-          console.log(`Updated existing user from guest checkout: ${email}`);
+          await User.updateOne(
+            { _id: user._id },
+            {
+              $set: {
+                subscription: "PAID",
+                subscriptionPlan: plan?.name || "Premium",
+                subscriptionExpiry: expiry,
+              },
+            },
+          );
+          console.log(`Updated existing user from guest checkout: ${normalizedEmail}`);
         }
       } else if (userId) {
         await User.findByIdAndUpdate(userId, {

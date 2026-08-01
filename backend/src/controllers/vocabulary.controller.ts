@@ -5,6 +5,7 @@ import User from "../models/User";
 import VocabularyProgress from "../models/VocabularyProgress";
 import VocabularyWord from "../models/VocabularyWord";
 import { seedVocabularyWords } from "../data/vocabularyWords";
+import { sendError } from "../utils/http";
 
 const POINTS_PER_CORRECT_ANSWER = 5;
 const DAILY_VOCAB_POINTS_LIMIT = 100;
@@ -74,7 +75,7 @@ export const getVocabularyGame = async (req: AuthRequest, res: Response) => {
       },
     });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
+    return sendError(res, error, "vocabulary.getVocabularyGame");
   }
 };
 
@@ -159,7 +160,7 @@ export const recordVocabularyAnswer = async (req: AuthRequest, res: Response) =>
       },
     });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
+    return sendError(res, error, "vocabulary.recordVocabularyAnswer");
   }
 };
 
@@ -178,7 +179,7 @@ export const resetVocabularyProgress = async (req: AuthRequest, res: Response) =
     );
     return res.status(200).json({ success: true });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
+    return sendError(res, error, "vocabulary.resetVocabularyProgress");
   }
 };
 
@@ -188,7 +189,7 @@ export const getAdminVocabularyWords = async (_req: AuthRequest, res: Response) 
     const words = await VocabularyWord.find().sort({ frequency: -1, word: 1 }).lean();
     return res.status(200).json({ success: true, words });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
+    return sendError(res, error, "vocabulary.getAdminVocabularyWords");
   }
 };
 
@@ -246,6 +247,6 @@ export const deleteVocabularyWord = async (req: AuthRequest, res: Response) => {
     });
     return res.status(200).json({ success: true });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
+    return sendError(res, error, "vocabulary.deleteVocabularyWord");
   }
 };

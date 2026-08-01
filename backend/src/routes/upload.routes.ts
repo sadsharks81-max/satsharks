@@ -1,41 +1,11 @@
 import { Router } from "express";
-import multer from "multer";
-import path from "path";
 import { uploadPracticeTest, uploadPracticeQuestions, getUploads, getUpload, triggerExtraction, reviewUpload, publishUpload, deleteUpload, uploadImage } from "../controllers/upload.controller";
 import { authenticate } from "../middleware/auth.middleware";
 import { requireAdmin } from "../middleware/role.middleware";
-
-const storage = multer.diskStorage({
-  destination: path.resolve(__dirname, "../../uploads"),
-  filename: (_req, file, cb) => {
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    cb(null, `${unique}${path.extname(file.originalname)}`);
-  },
-});
-
-const upload = multer({
-  storage,
-  fileFilter: (_req, file, cb) => {
-    if (file.mimetype === "application/pdf") cb(null, true);
-    else cb(new Error("Only PDF files are allowed"));
-  },
-  limits: { fileSize: 50 * 1024 * 1024 },
-});
-
-const memoryStorage = multer.memoryStorage();
-
-const imageUpload = multer({
-  storage: memoryStorage,
-  fileFilter: (_req, file, cb) => {
-    const allowedMimeTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp", "image/gif"];
-    if (allowedMimeTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error("Only PNG, JPG, JPEG, WEBP, and GIF images are allowed"));
-    }
-  },
-  limits: { fileSize: 10 * 1024 * 1024 },
-});
+import {
+  memoryImageUpload as imageUpload,
+  practiceTestUpload as upload,
+} from "../middleware/upload.middleware";
 
 const router = Router();
 

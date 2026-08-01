@@ -6,6 +6,7 @@ import SATTestAttempt from "../models/SATTestAttempt";
 import PracticeTestUpload from "../models/PracticeTestUpload";
 import Inquiry from "../models/Inquiry";
 import SuccessStory from "../models/SuccessStory";
+import { sendError } from "../utils/http";
 
 export const getAdminOverview = async (req: Request, res: Response) => {
   try {
@@ -48,7 +49,7 @@ export const getAdminOverview = async (req: Request, res: Response) => {
         totalStories,
       },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "admin-analytics.getAdminOverview");
   }
 };

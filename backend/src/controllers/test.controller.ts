@@ -4,6 +4,7 @@ import TestAttempt from "../models/TestAttempt";
 import Question from "../models/Question";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { checkAnswerCorrectness } from "../utils/grading";
+import { sendError } from "../utils/http";
 
 export const getTests = async (req: AuthRequest, res: Response) => {
   try {
@@ -26,8 +27,8 @@ export const getTests = async (req: AuthRequest, res: Response) => {
     );
 
     res.status(200).json({ success: true, tests: testsWithCount });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.getTests");
   }
 };
 
@@ -37,8 +38,8 @@ export const getTest = async (req: Request, res: Response) => {
       .populate({ path: "questions", select: "text options section difficulty category" });
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, test });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.getTest");
   }
 };
 
@@ -52,8 +53,8 @@ export const createTest = async (req: AuthRequest, res: Response) => {
       createdBy: req.user?.userId,
     });
     res.status(201).json({ success: true, test });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.createTest");
   }
 };
 
@@ -72,8 +73,8 @@ export const updateTest = async (req: Request, res: Response) => {
     const test = await DiagnosticTest.findByIdAndUpdate(req.params.id, update, { new: true });
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, test });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.updateTest");
   }
 };
 
@@ -82,8 +83,8 @@ export const deleteTest = async (req: Request, res: Response) => {
     const test = await DiagnosticTest.findByIdAndDelete(req.params.id);
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, message: "Test deleted" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.deleteTest");
   }
 };
 
@@ -91,8 +92,8 @@ export const getAllTestsAdmin = async (req: Request, res: Response) => {
   try {
     const tests = await DiagnosticTest.find().sort({ createdAt: 1 });
     res.status(200).json({ success: true, tests });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.getAllTestsAdmin");
   }
 };
 
@@ -115,8 +116,8 @@ export const startTest = async (req: AuthRequest, res: Response) => {
     });
 
     res.status(201).json({ success: true, attempt, test });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.startTest");
   }
 };
 
@@ -161,8 +162,8 @@ export const submitTest = async (req: AuthRequest, res: Response) => {
     await attempt.save();
 
     res.status(200).json({ success: true, attempt });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.submitTest");
   }
 };
 
@@ -177,7 +178,7 @@ export const getAttempt = async (req: AuthRequest, res: Response) => {
 
     if (!attempt) return res.status(404).json({ success: false, error: "Attempt not found" });
     res.status(200).json({ success: true, attempt });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "test.getAttempt");
   }
 };

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ReportedIssue } from "../models/ReportedIssue";
 import { AuthRequest } from "../middleware/auth.middleware";
+import { asFilterString, getPagination } from "../utils/query";
 
 export const createReport = async (req: AuthRequest, res: Response) => {
   try {
@@ -27,14 +28,19 @@ export const createReport = async (req: AuthRequest, res: Response) => {
 
 export const getReports = async (req: AuthRequest, res: Response) => {
   try {
-    const { status } = req.query;
-    let query: any = {};
+    // Constrained to the schema's enum so `?status[$ne]=RESOLVED` cannot inject
+    // a query operator.
+    const status = asFilterString(req.query.status);
+    const query: Record<string, unknown> = {};
     if (status) query.status = status;
 
+    const { limit, skip } = getPagination(req.query, 200, 500);
     const reports = await ReportedIssue.find(query)
       .populate("question")
       .populate("reportedBy", "name email")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({ success: true, reports });
   } catch (error) {

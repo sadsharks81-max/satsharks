@@ -4,19 +4,31 @@ import { Header } from "../../components/layout/Header";
 import { Footer } from "../../components/layout/Footer";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
+import { api } from "../../services/api";
 
 export const Route = createFileRoute("/auth/reset-password")({
   component: ResetPassword,
+  // The emailed link carries ?token=...; validate lazily so a missing token
+  // produces an inline message rather than a route-level crash.
+  validateSearch: (search: Record<string, unknown>) => ({
+    token: typeof search.token === "string" ? search.token : "",
+  }),
 });
 
 function ResetPassword() {
+  const { token } = Route.useSearch();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // This handler previously navigated straight to /auth/login without calling
+  // anything, so the password was never actually changed.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -25,8 +37,22 @@ function ResetPassword() {
       setError("Password must be at least 8 characters");
       return;
     }
-    // Simulate reset
-    navigate({ to: "/auth/login" });
+    if (!token) {
+      setError("This reset link is invalid. Please request a new one.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const res = await api.post("/api/auth/reset-password/confirm", { token, password });
+      if (!res.success) {
+        setError(res.error || "Unable to update your password. Please request a new link.");
+        return;
+      }
+      navigate({ to: "/auth/login" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -66,8 +92,8 @@ function ResetPassword() {
               error={error}
               required
             />
-            <Button type="submit" className="w-full">
-              Update Password
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Updating..." : "Update Password"}
             </Button>
           </form>
           <p className="mt-6 text-center text-sm text-on-surface-variant">

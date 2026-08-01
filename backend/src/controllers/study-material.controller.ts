@@ -2,13 +2,20 @@ import { Request, Response, NextFunction } from "express";
 import StudyMaterial from "../models/StudyMaterial";
 import fs from "fs";
 import path from "path";
+import { asFilterString, getPagination } from "../utils/query";
 
 export const getStudyMaterials = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const filter = req.query.category ? { category: req.query.category } : {};
+    // `?category[$ne]=x` previously reached the filter as a Mongo operator.
+    const category = asFilterString(req.query.category);
+    const filter = category ? { category } : {};
+    const { limit, skip } = getPagination(req.query, 200, 500);
     const materials = await StudyMaterial.find(filter)
       .populate("uploadedBy", "name email")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
 
     return res.status(200).json({
       success: true,

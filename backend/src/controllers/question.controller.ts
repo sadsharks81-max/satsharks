@@ -1,61 +1,110 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import Question from "../models/Question";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { stripEmojis } from "../utils/text";
 import { deleteManagedImage, deleteReplacedManagedImage } from "../utils/managed-image";
+import { sendError } from "../utils/http";
+import { asEnumValue, asObjectId, buildSearchFilter, getPagination } from "../utils/query";
+
+const DIFFICULTIES = ["EASY", "MEDIUM", "HARD"] as const;
+const SECTIONS = ["READING_WRITING", "MATH"] as const;
+const STATUSES = ["UPLOADED", "REVIEW", "PUBLISHED", "UPDATED"] as const;
+
+/**
+ * Builds a Question filter from untrusted query params.
+ *
+ * Two problems this closes:
+ *  - every value was previously copied straight from req.query, so
+ *    `?status[$ne]=PUBLISHED` injected a Mongo operator and revealed unpublished
+ *    questions to any logged-in student.
+ *  - `search` was interpolated into $regex unescaped, making
+ *    `?search=(a+)+$` a catastrophic-backtracking DoS against an unindexed field.
+ */
+const buildQuestionFilter = (query: Record<string, unknown>) => {
+  const filter: Record<string, unknown> = {};
+  const category = asObjectId(query.category);
+  if (category) filter.category = category;
+
+  const difficulty = asEnumValue(query.difficulty, DIFFICULTIES);
+  if (difficulty) filter.difficulty = difficulty;
+
+  const section = asEnumValue(query.section, SECTIONS);
+  if (section) filter.section = section;
+
+  const search = buildSearchFilter(query.search);
+  if (search) filter.text = search;
+
+  return { filter, category };
+};
 
 export const getQuestions = async (req: Request, res: Response) => {
   try {
-    const { category, difficulty, section, status, search, excludeCategories, page = "1", limit = "20" } = req.query;
-    const filter: any = {};
+    const { filter, category } = buildQuestionFilter(req.query as Record<string, unknown>);
 
-    if (category) filter.category = category;
-    if (!category && excludeCategories) {
-      const excluded = String(excludeCategories).split(",").filter(Boolean);
+    if (!category && req.query.excludeCategories) {
+      const excluded = String(req.query.excludeCategories)
+        .split(",")
+        .map((value) => value.trim())
+        .filter((value) => mongoose.Types.ObjectId.isValid(value));
       if (excluded.length > 0) filter.category = { $nin: excluded };
     }
-    if (difficulty) filter.difficulty = difficulty;
-    if (section) filter.section = section;
-    if (status) filter.status = status;
-    else filter.status = "PUBLISHED";
-    if (search) filter.text = { $regex: search, $options: "i" };
 
-    const pageNum = Math.max(1, parseInt(page as string));
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit as string)));
-    const skip = (pageNum - 1) * limitNum;
+    // This route is reachable by any authenticated student, so the status filter
+    // is fixed rather than caller-controlled: allowing `?status=` here exposed
+    // draft and under-review questions.
+    filter.status = "PUBLISHED";
 
+    const { page, limit, skip } = getPagination(req.query as Record<string, unknown>);
+
+    // Answers and explanations are withheld from the question bank listing.
+    // This endpoint is open to every authenticated student and previously
+    // returned `correctAnswer` and `explanation` for every question , the whole
+    // bank's answer key was one request away, and the practice UI could be read
+    // straight out of the network tab. Grading already happens server-side in
+    // POST /api/practice/answer, which returns the answer and explanation once
+    // the student has committed to a choice, so no screen regresses.
     const [questions, total] = await Promise.all([
       Question.find(filter)
+        .select("-correctAnswer -explanation")
         .populate("category", "name section")
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limitNum),
+        .limit(limit)
+        .lean(),
       Question.countDocuments(filter),
     ]);
 
     res.status(200).json({
       success: true,
-      questions: questions.map((question) => ({
-        ...question.toObject(),
-        explanation: stripEmojis(question.explanation),
-      })),
-      pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
+      questions,
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.getQuestions");
   }
 };
 
-export const getQuestion = async (req: Request, res: Response) => {
+export const getQuestion = async (req: AuthRequest, res: Response) => {
   try {
-    const question = await Question.findById(req.params.id).populate("category", "name section");
+    // Any authenticated user can reach this route, so the answer key is exposed
+    // only to staff. A student fetching a question by id used to receive
+    // `correctAnswer` directly.
+    const isStaff = req.user?.role === "ADMIN" || req.user?.role === "TEACHER";
+    const query = Question.findById(req.params.id).populate("category", "name section");
+    if (!isStaff) query.select("-correctAnswer -explanation");
+
+    const question = await query.lean();
     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
+
     res.status(200).json({
       success: true,
-      question: { ...question.toObject(), explanation: stripEmojis(question.explanation) },
+      question: isStaff
+        ? { ...question, explanation: stripEmojis(question.explanation) }
+        : question,
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.getQuestion");
   }
 };
 
@@ -71,8 +120,8 @@ export const createQuestion = async (req: AuthRequest, res: Response) => {
       createdBy: req.user?.userId,
     });
     res.status(201).json({ success: true, question });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.controller");
   }
 };
 
@@ -100,8 +149,8 @@ export const updateQuestion = async (req: Request, res: Response) => {
     const question = await existingQuestion.save();
     await deleteReplacedManagedImage(previousImageUrl, question.imageUrl);
     res.status(200).json({ success: true, question });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.controller");
   }
 };
 
@@ -111,8 +160,8 @@ export const deleteQuestion = async (req: Request, res: Response) => {
     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
     await deleteManagedImage(question.imageUrl);
     res.status(200).json({ success: true, message: "Question deleted" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.controller");
   }
 };
 
@@ -128,44 +177,39 @@ export const bulkCreateQuestions = async (req: AuthRequest, res: Response) => {
     }));
     const created = await Question.insertMany(docs);
     res.status(201).json({ success: true, count: created.length, questions: created });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.controller");
   }
 };
 
 export const getAllQuestionsAdmin = async (req: Request, res: Response) => {
   try {
-    const { category, difficulty, section, status, search, page = "1", limit = "20" } = req.query;
-    const filter: any = {};
-
-    if (category) filter.category = category;
-    if (difficulty) filter.difficulty = difficulty;
-    if (section) filter.section = section;
+    const { filter } = buildQuestionFilter(req.query as Record<string, unknown>);
+    // Admins may legitimately filter by any status, but only by a known value.
+    const status = asEnumValue(req.query.status, STATUSES);
     if (status) filter.status = status;
-    if (search) filter.text = { $regex: search, $options: "i" };
 
-    const pageNum = Math.max(1, parseInt(page as string));
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit as string)));
-    const skip = (pageNum - 1) * limitNum;
+    const { page, limit, skip } = getPagination(req.query as Record<string, unknown>);
 
     const [questions, total] = await Promise.all([
       Question.find(filter)
         .populate("category", "name section")
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limitNum),
+        .limit(limit)
+        .lean(),
       Question.countDocuments(filter),
     ]);
 
     res.status(200).json({
       success: true,
       questions: questions.map((question) => ({
-        ...question.toObject(),
+        ...question,
         explanation: stripEmojis(question.explanation),
       })),
-      pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
+      pagination: { page, limit, total, pages: Math.ceil(total / limit) },
     });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "question.getAllQuestionsAdmin");
   }
 };

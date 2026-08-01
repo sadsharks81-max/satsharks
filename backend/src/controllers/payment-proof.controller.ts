@@ -6,6 +6,7 @@ import Notification from "../models/Notification";
 import { env } from "../config/env";
 import path from "path";
 import fs from "fs";
+import { sendError } from "../utils/http";
 
 // Submit a new manual payment proof (Student)
 export const uploadPaymentProof = async (req: AuthRequest, res: Response) => {
@@ -85,7 +86,7 @@ export const uploadPaymentProof = async (req: AuthRequest, res: Response) => {
       const filePath = path.resolve(__dirname, "../../uploads", req.file.filename);
       if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     }
-    return res.status(500).json({ success: false, error: error.message || "Server Error" });
+    return sendError(res, error, "payment-proof.uploadPaymentProof");
   }
 };
 
@@ -128,7 +129,7 @@ export const getPaymentProofs = async (req: AuthRequest, res: Response) => {
 
     return res.status(200).json({ success: true, proofs });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message || "Server Error" });
+    return sendError(res, error, "payment-proof.getPaymentProofs");
   }
 };
 
@@ -200,7 +201,7 @@ export const approvePaymentProof = async (req: AuthRequest, res: Response) => {
       message: "Payment proof approved. User upgraded and proof file deleted."
     });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message || "Server Error" });
+    return sendError(res, error, "payment-proof.approvePaymentProof");
   }
 };
 
@@ -239,6 +240,6 @@ export const rejectPaymentProof = async (req: AuthRequest, res: Response) => {
       message: "Payment proof rejected and file deleted."
     });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message || "Server Error" });
+    return sendError(res, error, "payment-proof.rejectPaymentProof");
   }
 };

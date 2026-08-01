@@ -79,11 +79,40 @@ function normalizeMath(formula: string): string {
     .replace(FRACTION_PATTERN, String.raw`\frac{$1}{$2}`);
 }
 
+/**
+ * Cache of rendered KaTeX output.
+ *
+ * `renderFormattedText` is called inline in JSX, so every re-render of a question
+ * re-ran katex.renderToString for every formula on screen. In the SAT runner and
+ * practice views that is dozens of full LaTeX parses per keystroke or timer tick.
+ * The inputs are pure (formula + displayMode → HTML string), so the results are
+ * safely cacheable. Bounded so a long session cannot grow it without limit.
+ *
+ * KaTeX escapes its input and runs with `trust` disabled by default, so the HTML
+ * it emits contains no author-controlled markup , which is what makes the
+ * dangerouslySetInnerHTML usages below safe.
+ */
+const MATH_CACHE_LIMIT = 500;
+const mathCache = new Map<string, string>();
+
 function renderMath(formula: string, displayMode: boolean): string {
-  return katex.renderToString(normalizeMath(formula), {
+  const key = `${displayMode ? "b" : "i"}:${formula}`;
+  const cached = mathCache.get(key);
+  if (cached !== undefined) return cached;
+
+  const html = katex.renderToString(normalizeMath(formula), {
     displayMode,
     throwOnError: false,
   });
+
+  if (mathCache.size >= MATH_CACHE_LIMIT) {
+    // Simple FIFO eviction , cheaper than tracking recency and sufficient here,
+    // since a given screen reuses the same small set of formulas.
+    const oldestKey = mathCache.keys().next().value;
+    if (oldestKey !== undefined) mathCache.delete(oldestKey);
+  }
+  mathCache.set(key, html);
+  return html;
 }
 
 function renderPlainTextMath(text: string): React.ReactNode[] {

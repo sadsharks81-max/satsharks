@@ -4,6 +4,7 @@ import { Header } from "../../components/layout/Header";
 import { Footer } from "../../components/layout/Footer";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
+import { api } from "../../services/api";
 
 export const Route = createFileRoute("/auth/forgot-password")({
   component: ForgotPassword,
@@ -12,11 +13,21 @@ export const Route = createFileRoute("/auth/forgot-password")({
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // This form previously only flipped `submitted` locally and never called the
+  // API, so no reset email was ever requested and users had no way to recover an
+  // account. The success panel is still shown regardless of the outcome, matching
+  // the backend's deliberately non-committal response (no account enumeration).
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      // Simulate sending email
+    if (!email || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      await api.post("/api/auth/forgot-password", { email });
+    } finally {
+      setIsSubmitting(false);
       setSubmitted(true);
     }
   };
@@ -56,8 +67,8 @@ function ForgotPassword() {
                 placeholder="you@example.com"
                 required
               />
-              <Button type="submit" className="w-full">
-                Send Reset Link
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send Reset Link"}
               </Button>
             </form>
           )}

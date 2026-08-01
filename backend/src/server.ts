@@ -2,28 +2,55 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "path";
 import { env } from "./config/env";
 import { connectDB } from "./config/db";
+import { apiRateLimiter } from "./middleware/rate-limit.middleware";
 
 const app = express();
+
+// Railway/Vercel terminate TLS upstream. Without this, req.ip is the proxy's
+// address for every caller, which would collapse all rate-limit buckets into one,
+// and req.secure is always false.
+app.set("trust proxy", 1);
+// Nothing downstream reads an implicit "X-Powered-By: Express" fingerprint.
+app.disable("x-powered-by");
+
 const productionFrontendOrigins = new Set(
-  [
-    env.frontendUrl,
-    "https://satsharks-frontend.vercel.app",
-  ].map((origin) => origin.replace(/\/$/, "")),
+  [env.frontendUrl, "https://satsharks-frontend.vercel.app", ...env.extraCorsOrigins].map((origin) =>
+    origin.replace(/\/$/, ""),
+  ),
 );
+
+/**
+ * Allowlist check for browser origins.
+ *
+ * The previous implementation also accepted anything matching
+ * /^satsharks-frontend(-[a-z0-9-]+)?\.vercel\.app$/ . Vercel subdomains are
+ * first-come-first-served, so an attacker could register
+ * `satsharks-frontend-x.vercel.app`, host a page there, and , because
+ * `credentials: true` is set , read authenticated API responses from any logged
+ * in visitor. Preview deployments are now listed explicitly via
+ * CORS_ALLOWED_ORIGINS instead of being pattern matched.
+ */
 const isAllowedProductionOrigin = (origin: string) => {
   const normalized = origin.replace(/\/$/, "");
   if (productionFrontendOrigins.has(normalized)) return true;
   try {
-    const hostname = new URL(normalized).hostname;
-    return hostname === "satsharks.com" ||
-      hostname === "www.satsharks.com" ||
-      /^satsharks-frontend(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(hostname);
+    const hostname = new URL(normalized).hostname.toLowerCase();
+    return hostname === "satsharks.com" || hostname === "www.satsharks.com";
   } catch {
     return false;
   }
 };
+
+// Security headers first, so they also cover the webhook routes and any error
+// response produced before the router is reached.
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow images to load cross-origin
+  }),
+);
 
 // Stripe webhook must come BEFORE express.json() because it needs the raw body
 import { stripeWebhook } from "./controllers/payment.controller";
@@ -33,35 +60,41 @@ app.post("/api/payment/webhook/stripe", express.raw({ type: "application/json" }
 import { liveKitWebhook } from "./controllers/live-class.controller";
 app.post("/api/live-classes/webhook", express.raw({ type: "application/json" }), liveKitWebhook);
 
-// Middleware
-app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
-app.use(cors({
-  origin: (origin, callback) => {
-    // In dev, allow all origins (LAN IPs, localhost, etc.)
-    if (env.nodeEnv !== "production") {
-      return callback(null, true);
-    }
-    // In production, allow the configured site and the canonical Vercel domain.
-    if (!origin || isAllowedProductionOrigin(origin)) {
-      return callback(null, true);
-    }
-    return callback(new Error("Not allowed by CORS"));
-  },
-  credentials: true
-}));
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" } // Allow images to load cross-origin
-}));
-app.use(morgan("dev"));
+app.use(express.json({ limit: env.jsonBodyLimit }));
+app.use(express.urlencoded({ limit: env.urlencodedBodyLimit, extended: true }));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // In dev, allow all origins (LAN IPs, localhost, etc.)
+      if (!env.isProduction) {
+        return callback(null, true);
+      }
+      // In production, allow the configured site and any explicitly listed origin.
+      if (!origin || isAllowedProductionOrigin(origin)) {
+        return callback(null, true);
+      }
+      // Reject by omitting CORS headers rather than throwing. Throwing here
+      // surfaced as an opaque 500 through the error handler instead of the
+      // browser's own CORS failure.
+      return callback(null, false);
+    },
+    credentials: true,
+    maxAge: 86400,
+  }),
+);
+// `combined` in production so logs carry status, size, referrer and user agent.
+app.use(morgan(env.isProduction ? "combined" : "dev"));
 
 // Connect to database (or run in mock mode)
 connectDB();
 
-// Basic Route
+// Basic Route , registered before the rate limiter so uptime probes are never
+// throttled.
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok", message: "API is running" });
 });
+
+app.use("/api", apiRateLimiter);
 
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
@@ -111,19 +144,47 @@ app.use("/api/live-classes", liveClassRoutes);
 app.use("/api/vocabulary", vocabularyRoutes);
 app.use("/api/homepage-stats", homepageStatsRoutes);
 
-// Serve uploaded files with cross-origin headers so images load from any network origin
-import path from "path";
-app.use("/uploads", (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
-  next();
-}, express.static(path.resolve(__dirname, "../uploads")));
+/**
+ * Uploaded files.
+ *
+ * `nosniff` plus a non-inline disposition means a file that slipped past the
+ * mimetype filter cannot execute as HTML/JS on this origin. `dotfiles: "deny"`
+ * blocks requests for things like /uploads/.env, and `index: false` stops
+ * directory listings.
+ */
+app.use(
+  "/uploads",
+  (req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("Content-Security-Policy", "default-src 'none'; sandbox");
+    next();
+  },
+  express.static(path.resolve(__dirname, "../uploads"), {
+    dotfiles: "deny",
+    index: false,
+    maxAge: "7d",
+    setHeaders: (res, filePath) => {
+      if (!/\.(png|jpe?g|webp|gif|pdf)$/i.test(filePath)) {
+        res.setHeader("Content-Disposition", "attachment");
+      }
+    },
+  }),
+);
 
 // Dynamic Sitemap and Robots.txt
-app.get("/sitemap.xml", (req: Request, res: Response) => {
+const publicOrigin = (req: Request) => {
+  // In production the canonical host is the configured frontend URL. Deriving it
+  // from the Host header let a caller inject arbitrary hosts into the emitted
+  // sitemap (host header poisoning).
+  if (env.isProduction) return env.frontendUrl;
   const host = req.get("host") || "satsharks.com";
-  const protocol = req.secure ? "https" : "http";
-  const origin = `${protocol}://${host}`;
+  return `${req.secure ? "https" : "http"}://${host}`;
+};
+
+app.get("/sitemap.xml", (req: Request, res: Response) => {
+  const origin = publicOrigin(req);
 
   const urls = [
     { loc: `${origin}/`, changefreq: "daily", priority: 1.0 },
@@ -137,22 +198,20 @@ app.get("/sitemap.xml", (req: Request, res: Response) => {
   let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
   xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   urls.forEach((url) => {
-    xml += '  <url>\n';
+    xml += "  <url>\n";
     xml += `    <loc>${url.loc}</loc>\n`;
     xml += `    <changefreq>${url.changefreq}</changefreq>\n`;
     xml += `    <priority>${url.priority}</priority>\n`;
-    xml += '  </url>\n';
+    xml += "  </url>\n";
   });
-  xml += '</urlset>';
+  xml += "</urlset>";
 
   res.header("Content-Type", "application/xml");
   res.status(200).send(xml);
 });
 
 app.get("/robots.txt", (req: Request, res: Response) => {
-  const host = req.get("host") || "satsharks.com";
-  const protocol = req.secure ? "https" : "http";
-  const origin = `${protocol}://${host}`;
+  const origin = publicOrigin(req);
 
   let robots = "User-agent: *\n";
   robots += "Allow: /\n";
@@ -164,15 +223,81 @@ app.get("/robots.txt", (req: Request, res: Response) => {
   res.status(200).send(robots);
 });
 
-// Error handling middleware
-app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({
+// Unknown API paths return JSON, not the HTML-ish default, so the frontend's
+// `res.json()` parsing behaves predictably.
+app.use("/api", (req: Request, res: Response) => {
+  res.status(404).json({ success: false, error: "Endpoint not found" });
+});
+
+/**
+ * Terminal error handler.
+ *
+ * Previously this echoed `err.message` and printed `err.stack` for every fault,
+ * which forwarded driver and filesystem detail to clients. Multer's own errors
+ * are surfaced (they are actionable and safe), everything else is logged
+ * server-side and reported generically.
+ */
+import multer from "multer";
+
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+  if (res.headersSent) return next(err);
+
+  if (err instanceof multer.MulterError) {
+    const message =
+      err.code === "LIMIT_FILE_SIZE"
+        ? "That file is too large."
+        : err.field || "That file type is not allowed.";
+    return res.status(400).json({ success: false, error: message });
+  }
+
+  if (typeof err === "object" && err !== null && "type" in err) {
+    const bodyError = err as { type?: string; status?: number };
+    if (bodyError.type === "entity.too.large") {
+      return res.status(413).json({ success: false, error: "Request payload is too large." });
+    }
+    if (bodyError.type === "entity.parse.failed") {
+      return res.status(400).json({ success: false, error: "Malformed JSON body." });
+    }
+  }
+
+  console.error("[error] unhandled:", err);
+  const status = (err as { status?: number })?.status ?? 500;
+  res.status(status >= 400 && status < 600 ? status : 500).json({
     success: false,
-    error: err.message || "Server Error"
+    error: status < 500 ? (err as Error)?.message || "Request failed" : "Server Error",
   });
 });
 
-app.listen(env.port, () => {
+const server = app.listen(env.port, () => {
   console.log(`Server running in ${env.nodeEnv} mode on port ${env.port}`);
 });
+
+/**
+ * Without these, an unhandled rejection leaves the process in an unknown state
+ * (Node's default is to terminate on unhandled rejections), and a container stop
+ * signal killed in-flight requests mid-write.
+ */
+const shutdown = (signal: string) => {
+  console.log(`${signal} received, shutting down gracefully`);
+  server.close(() => {
+    void import("mongoose").then(({ default: mongoose }) =>
+      mongoose.connection.close(false).finally(() => process.exit(0)),
+    );
+  });
+  // Backstop so a hung connection cannot block the deploy indefinitely.
+  setTimeout(() => process.exit(1), 10000).unref();
+};
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
+
+process.on("unhandledRejection", (reason) => {
+  console.error("[fatal] unhandled promise rejection:", reason);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("[fatal] uncaught exception:", error);
+  shutdown("uncaughtException");
+});
+
+export default app;

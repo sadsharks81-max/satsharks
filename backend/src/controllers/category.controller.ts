@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import QuestionCategory from "../models/QuestionCategory";
+import { sendError } from "../utils/http";
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
     const categories = await QuestionCategory.find().sort({ section: 1, name: 1 });
     res.status(200).json({ success: true, categories });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "category.getCategories");
   }
 };
 
@@ -19,8 +20,8 @@ export const createCategory = async (req: Request, res: Response) => {
     }
     const category = await QuestionCategory.create({ name, section, description });
     res.status(201).json({ success: true, category });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "category.createCategory");
   }
 };
 
@@ -35,8 +36,8 @@ export const updateCategory = async (req: Request, res: Response) => {
     );
     if (!category) return res.status(404).json({ success: false, error: "Category not found" });
     res.status(200).json({ success: true, category });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "category.updateCategory");
   }
 };
 
@@ -46,7 +47,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
     const category = await QuestionCategory.findByIdAndDelete(id);
     if (!category) return res.status(404).json({ success: false, error: "Category not found" });
     res.status(200).json({ success: true, message: "Category deleted" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "category.deleteCategory");
   }
 };

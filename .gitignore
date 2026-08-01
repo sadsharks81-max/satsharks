@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+backend/dist
 dist-ssr
 .output
 .vinxi
@@ -33,6 +34,14 @@ frontend/.env
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+
+# Generated reports and one-off logs (regenerable; do not commit)
+lhreport.json
+build-log*.txt
+history.txt
+
+# Runtime upload volume , user content, never source
+backend/uploads/
 
 # Editor directories and files
 .vscode/*

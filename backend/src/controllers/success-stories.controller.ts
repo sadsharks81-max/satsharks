@@ -47,7 +47,8 @@ const sendDataImage = (res: Response, dataUrl?: string | null) => {
 
 export const getSuccessStories = async (req: Request, res: Response) => {
   try {
-    const { category } = req.query;
+    // Coerced to a primitive so an operator object cannot enter the filter.
+    const category = asFilterString(req.query.category);
     if (!env.isDatabaseConfigured) {
       const filtered = category
         ? phaseOneSuccessStories.filter((s: any) => s.category === category)
@@ -67,8 +68,8 @@ export const getSuccessStories = async (req: Request, res: Response) => {
     ]);
     res.setHeader("Cache-Control", "public, max-age=30, s-maxage=300, stale-while-revalidate=600");
     res.status(200).json({ success: true, stories: stories.map(serializeStory) });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "success-stories.getSuccessStories");
   }
 };
 
@@ -104,8 +105,8 @@ export const createSuccessStory = async (req: Request, res: Response) => {
       category: category || "SAT",
     });
     res.status(201).json({ success: true, story });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "success-stories.createSuccessStory");
   }
 };
 
@@ -132,8 +133,8 @@ export const updateSuccessStory = async (req: Request, res: Response) => {
     await deleteReplacedManagedImage(previousImageUrl, story.imageUrl);
 
     res.status(200).json({ success: true, story });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "success-stories.updateSuccessStory");
   }
 };
 
@@ -150,13 +151,15 @@ export const deleteSuccessStory = async (req: Request, res: Response) => {
     await deleteManagedImage(story.imageUrl);
 
     res.status(200).json({ success: true, message: "Story deleted" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "success-stories.deleteSuccessStory");
   }
 };
 
 // --- Featured Hero Student Showcase ---
 import HeroFeature from "../models/HeroFeature";
+import { sendError } from "../utils/http";
+import { asFilterString } from "../utils/query";
 
 let mockHeroFeature = {
   studentName: "Admitted Student",
@@ -193,8 +196,8 @@ export const getHeroFeature = async (req: Request, res: Response) => {
     }
     res.setHeader("Cache-Control", "public, max-age=30, s-maxage=300, stale-while-revalidate=600");
     res.status(200).json({ success: true, feature: serialized });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "success-stories.getHeroFeature");
   }
 };
 
@@ -236,7 +239,7 @@ export const getHomepageSuccessContent = async (_req: Request, res: Response) =>
       stories: stories.map(serializeStory),
     });
   } catch (error: any) {
-    return res.status(500).json({ success: false, error: error.message });
+    return sendError(res, error, "success-stories.getHomepageSuccessContent");
   }
 };
 
@@ -279,7 +282,7 @@ export const updateHeroFeature = async (req: Request, res: Response) => {
     await deleteReplacedManagedImage(previousImageUrl, feature.imageUrl);
 
     res.status(200).json({ success: true, feature });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "success-stories.updateHeroFeature");
   }
 };

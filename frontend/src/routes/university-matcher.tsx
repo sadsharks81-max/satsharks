@@ -94,6 +94,8 @@ const TIER_META: Record<string, { color: string; label: string }> = {
 };
 
 // ============ MATCHING ALGORITHM ============
+type MatchTier = "Safety" | "Target" | "Reach";
+
 function scoreUniversity(uni: any, gpa: number, sat: number | null, budget: number, ec: number) {
   if (uni.minGPA == null) return null;
   const fit = gpa - uni.minGPA;
@@ -180,6 +182,8 @@ function scoreUniversity(uni: any, gpa: number, sat: number | null, budget: numb
     ecGate,
   };
 }
+
+type ScoredUniversity = NonNullable<ReturnType<typeof scoreUniversity>>;
 
 function money(n: number | null) {
   return n == null ? "—" : "$" + n.toLocaleString();
@@ -448,7 +452,10 @@ function UniversityMatcherContent() {
     return Array.from(list).sort();
   }, [UNIVERSITIES]);
 
-  const results = useMemo(() => {
+  const results = useMemo((): Record<MatchTier, ScoredUniversity[]> => {
+    // Annotated so the early return is not inferred as never[]. Without it,
+    // results[tier] widened to `never[] | ScoredUniversity[]` and TypeScript
+    // could not infer the callback parameters when mapping over it.
     if (UNIVERSITIES.length === 0) return { Safety: [], Target: [], Reach: [] };
 
     let filtered = UNIVERSITIES;

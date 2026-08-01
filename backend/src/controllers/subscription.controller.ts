@@ -3,6 +3,7 @@ import SubscriptionPlan from "../models/SubscriptionPlan";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { env } from "../config/env";
 import { phaseOneSubscriptionPlans } from "../data/phaseOne";
+import { sendError } from "../utils/http";
 
 const roleRequiredByRegion: Record<string, string[]> = {
   LOCAL: ["LOCAL_FREE", "LOCAL_PAID"],
@@ -45,7 +46,7 @@ export const getPlans = async (req: AuthRequest, res: Response) => {
     const filter = allowedRoles ? { roleRequired: { $in: allowedRoles } } : {};
     const plans = await SubscriptionPlan.find(filter);
     res.status(200).json({ success: true, plans });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "subscription.getPlans");
   }
 };

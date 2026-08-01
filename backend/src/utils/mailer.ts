@@ -1,25 +1,67 @@
 import nodemailer from "nodemailer";
+import { env } from "../config/env";
 
-// Simple mailer configuration. In production, provide these via environment variables.
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE || "gmail",
-  auth: {
-    user: process.env.EMAIL_USER || "satsharks@gmail.com",
-    pass: process.env.EMAIL_PASS || "dummy-app-password",
-  },
-});
+/**
+ * Mail transport.
+ *
+ * Credentials are no longer defaulted to a real-looking address plus
+ * "dummy-app-password": that combination made a misconfigured deployment look
+ * configured, and every send failed silently. `isMailerConfigured` makes the
+ * unconfigured state explicit so callers and logs can distinguish "not set up"
+ * from "send failed".
+ */
+export const isMailerConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS);
+
+const transporter = isMailerConfigured
+  ? nodemailer.createTransport({
+      service: process.env.EMAIL_SERVICE || "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    })
+  : null;
+
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"']/g, (char) => {
+    switch (char) {
+      case "&":
+        return "&amp;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case '"':
+        return "&quot;";
+      default:
+        return "&#39;";
+    }
+  });
 
 export const sendPasswordResetEmail = async (to: string, token: string) => {
-  const resetLink = `${process.env.FRONTEND_URL || "http://localhost:8080"}/reset-password?token=${token}`;
-  
+  // Uses the same FRONTEND_URL that env.ts validates, rather than a second
+  // independent default (this file used to fall back to :8080 while env.ts used
+  // :5173, so reset links pointed at the wrong dev origin).
+  const resetLink = `${env.frontendUrl}/auth/reset-password?token=${encodeURIComponent(token)}`;
+  const safeLink = escapeHtml(resetLink);
+
+  if (!transporter) {
+    console.warn(
+      "[warn] mailer not configured (EMAIL_USER/EMAIL_PASS unset); password reset email not sent",
+    );
+    if (!env.isProduction) console.warn(`[dev] password reset link for ${to}: ${resetLink}`);
+    return false;
+  }
+
   const mailOptions = {
-    from: process.env.EMAIL_USER || "satsharks@gmail.com",
+    from: process.env.EMAIL_USER,
     to,
     subject: "Password Reset Request",
     html: `
       <h2>Password Reset</h2>
       <p>You requested a password reset. Please click the link below to set a new password:</p>
-      <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #3B7DD8; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+      <a href="${safeLink}" style="display: inline-block; padding: 10px 20px; background-color: #3B7DD8; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+      <p>This link expires in one hour.</p>
       <p>If you didn't request this, you can safely ignore this email.</p>
     `,
   };
@@ -27,8 +69,12 @@ export const sendPasswordResetEmail = async (to: string, token: string) => {
   try {
     await transporter.sendMail(mailOptions);
     console.log(`Password reset email sent to ${to}`);
+    return true;
   } catch (error) {
-    console.error("Error sending email:", error);
-    // Even if it fails, we shouldn't crash the server. The user will be notified or it will silently fail in dev if credentials are wrong.
+    // Swallowed deliberately: the caller must return an identical response
+    // whether or not the address exists, so a send failure cannot become an
+    // account-enumeration signal. Logged loudly for operators.
+    console.error("[error] mailer.sendPasswordResetEmail:", error);
+    return false;
   }
 };

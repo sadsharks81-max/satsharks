@@ -1,0 +1,14 @@
+{
+  // Production build config.
+  //
+  // src/scripts/ holds ~32 one-off data-inspection and import utilities
+  // (inspectTest12Lines, printLogBoundaries, findQ27, ...). They are executed
+  // ad hoc with `tsx src/scripts/<name>.ts` and are never imported by the
+  // server, yet they were compiled into dist/ on every build , shipping dead
+  // code and slowing the build.
+  //
+  // They stay in the base tsconfig, so editors and `tsc --noEmit` still
+  // typecheck them; only the emitted artifact excludes them.
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "dist", "src/scripts"]
+}

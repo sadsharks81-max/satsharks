@@ -6,6 +6,7 @@ import LiveClassChatMessage from "../models/LiveClassChatMessage";
 import LiveClassAttendance from "../models/LiveClassAttendance";
 import User from "../models/User";
 import { env } from "../config/env";
+import { sendError } from "../utils/http";
 import {
   JOIN_BUFFER_MINUTES,
   LiveKitNotConfiguredError,
@@ -26,7 +27,7 @@ const handleServiceError = (res: Response, error: any) => {
   if (error instanceof LiveKitNotConfiguredError) {
     return res.status(503).json({ success: false, error: error.message });
   }
-  return res.status(500).json({ success: false, error: error.message || "Server Error" });
+  return sendError(res, error, "live-class.handler");
 };
 
 // Create a new online class session
@@ -54,8 +55,8 @@ export const createLiveClass = async (req: AuthRequest, res: Response) => {
     });
 
     res.status(201).json({ success: true, liveClass: newClass });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.createLiveClass");
   }
 };
 
@@ -82,8 +83,8 @@ export const getLiveClasses = async (req: AuthRequest, res: Response) => {
       .sort({ scheduledAt: -1 });
 
     res.status(200).json({ success: true, classes });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.getLiveClasses");
   }
 };
 
@@ -99,8 +100,8 @@ export const getLiveClassById = async (req: AuthRequest, res: Response) => {
     }
 
     res.status(200).json({ success: true, liveClass });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.getLiveClassById");
   }
 };
 
@@ -164,8 +165,8 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
     }
     await LiveClass.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, message: "Class deleted successfully" });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.deleteLiveClass");
   }
 };
 
@@ -311,8 +312,8 @@ export const getChatHistory = async (req: AuthRequest, res: Response) => {
       .sort({ createdAt: 1 })
       .limit(200);
     res.status(200).json({ success: true, messages });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.getChatHistory");
   }
 };
 
@@ -335,8 +336,8 @@ export const postChatMessage = async (req: AuthRequest, res: Response) => {
     });
 
     res.status(201).json({ success: true, message });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.postChatMessage");
   }
 };
 
@@ -354,8 +355,8 @@ export const deleteChatMessage = async (req: AuthRequest, res: Response) => {
     );
     if (!message) return res.status(404).json({ success: false, error: "Message not found" });
     res.status(200).json({ success: true, message });
-  } catch (error: any) {
-    res.status(500).json({ success: false, error: error.message });
+  } catch (error) {
+    sendError(res, error, "live-class.deleteChatMessage");
   }
 };
 
