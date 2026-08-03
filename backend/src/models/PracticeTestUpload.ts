@@ -7,6 +7,7 @@ export interface IExtractedQuestion {
   explanation: string;
   category: string;
   difficulty: string;
+  section: "READING_WRITING" | "MATH";
   confidence: number;
   approved: boolean;
 }
@@ -55,6 +56,7 @@ const PracticeTestUploadSchema: Schema = new Schema(
         explanation: String,
         category: String,
         difficulty: String,
+        section: { type: String, enum: ["READING_WRITING", "MATH"] },
         confidence: { type: Number, default: 0 },
         approved: { type: Boolean, default: false },
       },

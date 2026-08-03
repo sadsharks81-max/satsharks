@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import PracticeTestUpload from "../models/PracticeTestUpload";
+import type { IExtractedQuestion } from "../models/PracticeTestUpload";
 import Question from "../models/Question";
 import QuestionCategory from "../models/QuestionCategory";
 import { AuthRequest } from "../middleware/auth.middleware";
@@ -11,9 +12,11 @@ import { PDFParse } from "pdf-parse";
 import { stripEmojis } from "../utils/text";
 import { sendError } from "../utils/http";
 import { getPagination } from "../utils/query";
+import { parsePracticeQuestionDocument } from "../utils/practice-question-parser";
 
 const OPTION_LABELS = ["A", "B", "C", "D"] as const;
 const DIFFICULTIES = ["EASY", "MEDIUM", "HARD"] as const;
+const SECTIONS = ["READING_WRITING", "MATH"] as const;
 
 /**
  * Normalises one client-supplied extracted question. Admin input is still input:
@@ -42,6 +45,9 @@ const sanitizeExtractedQuestion = (raw: unknown) => {
     difficulty: DIFFICULTIES.includes(item.difficulty as (typeof DIFFICULTIES)[number])
       ? (item.difficulty as string)
       : "MEDIUM",
+    section: SECTIONS.includes(item.section as (typeof SECTIONS)[number])
+      ? (item.section as "READING_WRITING" | "MATH")
+      : "MATH",
     confidence: typeof item.confidence === "number" && Number.isFinite(item.confidence)
       ? Math.min(1, Math.max(0, item.confidence))
       : 0,
@@ -51,12 +57,12 @@ const sanitizeExtractedQuestion = (raw: unknown) => {
 
 const parseQuestionDocument = (text: string) => {
   const normalized = text.replace(/\r/g, "").replace(/\u00a0/g, " ");
-  const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,4})[\.\)]\s+/gi)];
+  const starts = [...normalized.matchAll(/(?:^|\n)\s*(?:Question\s*)?(\d{1,4})[.)]\s+/gi)];
   return starts.flatMap((entry, index) => {
     const block = normalized.slice(entry.index || 0, starts[index + 1]?.index || normalized.length).trim();
-    const options = [...block.matchAll(/(?:^|\n)\s*([A-D])[\.\)]\s+([\s\S]*?)(?=(?:\n\s*[A-D][\.\)]\s+)|(?:\n\s*(?:Answer|Correct Answer)\s*:)|$)/g)];
+    const options = [...block.matchAll(/(?:^|\n)\s*([A-D])[.)]\s+([\s\S]*?)(?=(?:\n\s*[A-D][.)]\s+)|(?:\n\s*(?:Answer|Correct Answer)\s*:)|$)/g)];
     if (options.length < 2 || options[0].index === undefined) return [];
-    const question = block.slice(0, options[0].index).replace(/^(?:Question\s*)?\d{1,4}[\.\)]\s*/i, "").trim();
+    const question = block.slice(0, options[0].index).replace(/^(?:Question\s*)?\d{1,4}[.)]\s*/i, "").trim();
     const answer = block.match(/(?:Answer|Correct Answer)\s*:\s*([A-D])/i)?.[1]?.toUpperCase() || "";
     if (!question) return [];
     return [{
@@ -66,6 +72,7 @@ const parseQuestionDocument = (text: string) => {
       explanation: stripEmojis(block.match(/(?:Explanation|Rationale)\s*:\s*([\s\S]+)$/i)?.[1]?.trim() || ""),
       category: "SAT Math",
       difficulty: "MEDIUM",
+      section: "MATH" as const,
       confidence: answer ? 0.9 : 0.65,
       approved: false,
     }];
@@ -185,14 +192,65 @@ export const triggerExtraction = async (req: AuthRequest, res: Response) => {
       // Runs even when getText() throws, so the parser's buffers are always freed.
       await parser.destroy();
     }
-    const extractedQuestions = parseQuestionDocument(parsedText);
+    let extractedQuestions: IExtractedQuestion[];
+    let extractionErrors: string[] = [];
+
+    if (upload.uploadType === "PRACTICE_QUESTIONS") {
+      const parsed = parsePracticeQuestionDocument(parsedText);
+      extractionErrors = parsed.errors;
+
+      if (extractionErrors.length === 0) {
+        const categories = await QuestionCategory.find()
+          .select("name section")
+          .lean<Array<{ name: string; section: "READING_WRITING" | "MATH" }>>();
+        const categoryMap = new Map(categories.map((category) => [category.name.toLowerCase(), category]));
+
+        extractedQuestions = parsed.questions.flatMap((question) => {
+          const category = categoryMap.get(question.category.toLowerCase());
+          if (!category) {
+            extractionErrors.push(
+              `Question ${question.questionNumber}: CATEGORY "${question.category}" does not exist in the question bank.`,
+            );
+            return [];
+          }
+          if (category.section !== question.section) {
+            extractionErrors.push(
+              `Question ${question.questionNumber}: CATEGORY "${category.name}" belongs to ${category.section}, not ${question.section}.`,
+            );
+            return [];
+          }
+
+          const { questionNumber: _questionNumber, ...extracted } = question;
+          return [{ ...extracted, category: category.name }];
+        });
+      } else {
+        extractedQuestions = [];
+      }
+    } else {
+      extractedQuestions = parseQuestionDocument(parsedText);
+    }
+
+    if (extractionErrors.length > 0) {
+      upload.status = "FAILED";
+      upload.errorMessage = [
+        "The practice-question PDF does not match the required format:",
+        ...extractionErrors.slice(0, 12).map((message) => `• ${message}`),
+        ...(extractionErrors.length > 12 ? [`• ${extractionErrors.length - 12} more error(s).`] : []),
+      ].join("\n");
+      await upload.save();
+      return res.status(422).json({ success: false, error: upload.errorMessage, upload });
+    }
+
     if (!extractedQuestions.length) {
       upload.status = "FAILED";
-      upload.errorMessage = "No questions were recognized. Use numbered questions, A to D options, and an Answer line.";
+      upload.errorMessage = upload.uploadType === "PRACTICE_QUESTIONS"
+        ? "No questions were recognized. Follow the practice-question PDF template exactly."
+        : "No questions were recognized. Use numbered questions, A to D options, and an Answer line.";
       await upload.save();
       return res.status(422).json({ success: false, error: upload.errorMessage, upload });
     }
     upload.extractedQuestions = extractedQuestions;
+    upload.errorMessage = "";
     upload.status = "EXTRACTED";
     await upload.save();
 
@@ -225,6 +283,9 @@ export const reviewUpload = async (req: AuthRequest, res: Response) => {
 
     const upload = await PracticeTestUpload.findById(req.params.id);
     if (!upload) return res.status(404).json({ success: false, error: "Upload not found" });
+    if (upload.status === "PUBLISHED") {
+      return res.status(409).json({ success: false, error: "Published uploads cannot be edited." });
+    }
 
     upload.extractedQuestions = extractedQuestions.map(sanitizeExtractedQuestion);
     upload.reviewNotes = typeof reviewNotes === "string" ? reviewNotes : "";
@@ -246,16 +307,19 @@ export const publishUpload = async (req: AuthRequest, res: Response) => {
   try {
     const upload = await PracticeTestUpload.findById(req.params.id);
     if (!upload) return res.status(404).json({ success: false, error: "Upload not found" });
+    if (upload.status === "PUBLISHED") {
+      return res.status(409).json({ success: false, error: "This upload has already been published." });
+    }
 
     const approved = upload.extractedQuestions.filter((q) => q.approved);
     if (approved.length === 0) {
       return res.status(400).json({ success: false, error: "No approved questions to publish" });
     }
 
-    const categories = await QuestionCategory.find().select("name").lean<
-      Array<{ _id: mongoose.Types.ObjectId; name: string }>
+    const categories = await QuestionCategory.find().select("name section").lean<
+      Array<{ _id: mongoose.Types.ObjectId; name: string; section: "READING_WRITING" | "MATH" }>
     >();
-    const categoryMap = new Map(categories.map((c) => [c.name.toLowerCase(), c._id]));
+    const categoryMap = new Map(categories.map((c) => [c.name.toLowerCase(), c]));
 
     // `category` is required on Question, so with no categories at all every
     // insert would fail mid-batch. Fail fast with a message the admin can act on.
@@ -266,18 +330,55 @@ export const publishUpload = async (req: AuthRequest, res: Response) => {
       });
     }
 
-    const questions = approved.map((q) => ({
-      text: q.text,
-      options: q.options,
-      correctAnswer: q.correctAnswer,
-      explanation: stripEmojis(q.explanation),
-      category: categoryMap.get(q.category.toLowerCase()) || categories[0]._id,
-      difficulty: q.difficulty || "MEDIUM",
-      section: "MATH" as const,
-      source: "AI_EXTRACTED" as const,
-      status: "PUBLISHED" as const,
-      createdBy: req.user?.userId,
-    }));
+    const validationErrors: string[] = [];
+    const questions = approved.flatMap((q, index) => {
+      const label = `Approved question ${index + 1}`;
+      const category = categoryMap.get(q.category.trim().toLowerCase());
+      if (!q.text.trim()) validationErrors.push(`${label}: question text is required.`);
+      if (
+        q.options.length !== 4 ||
+        q.options.some((option, optionIndex) => option.label !== OPTION_LABELS[optionIndex] || !option.text.trim())
+      ) {
+        validationErrors.push(`${label}: four non-empty options labelled A, B, C, and D are required.`);
+      }
+      if (!OPTION_LABELS.includes(q.correctAnswer as (typeof OPTION_LABELS)[number])) {
+        validationErrors.push(`${label}: correct answer must be A, B, C, or D.`);
+      }
+      if (!DIFFICULTIES.includes(q.difficulty as (typeof DIFFICULTIES)[number])) {
+        validationErrors.push(`${label}: difficulty must be EASY, MEDIUM, or HARD.`);
+      }
+      if (!SECTIONS.includes(q.section as (typeof SECTIONS)[number])) {
+        validationErrors.push(`${label}: section must be READING_WRITING or MATH.`);
+      }
+      if (!category) {
+        validationErrors.push(`${label}: category "${q.category}" does not exist.`);
+      } else if (category.section !== q.section) {
+        validationErrors.push(`${label}: category "${category.name}" does not belong to ${q.section}.`);
+      }
+
+      if (validationErrors.some((error) => error.startsWith(`${label}:`)) || !category) return [];
+
+      return [{
+        text: q.text.trim(),
+        options: q.options,
+        correctAnswer: q.correctAnswer,
+        explanation: stripEmojis(q.explanation),
+        category: category._id,
+        difficulty: q.difficulty,
+        section: q.section,
+        tags: upload.uploadType === "PRACTICE_QUESTIONS" ? ["practice-question"] : [],
+        source: "AI_EXTRACTED" as const,
+        status: "PUBLISHED" as const,
+        createdBy: req.user?.userId,
+      }];
+    });
+
+    if (validationErrors.length > 0) {
+      return res.status(400).json({
+        success: false,
+        error: `Fix the review before publishing:\n${validationErrors.join("\n")}`,
+      });
+    }
 
     await Question.insertMany(questions);
 

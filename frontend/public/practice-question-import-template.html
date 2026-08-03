@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAT Sharks Practice Question PDF Template</title>
+    <style>
+      :root { color: #151a3a; font-family: Arial, Helvetica, sans-serif; }
+      body { margin: 0; background: #f4f6fb; }
+      .toolbar { position: sticky; top: 0; z-index: 2; padding: 18px 24px; background: #fff; border-bottom: 1px solid #dfe3ee; box-shadow: 0 4px 18px #10163312; }
+      .toolbar-inner { max-width: 920px; margin: auto; }
+      h1 { margin: 0 0 8px; font-size: 24px; }
+      .help { margin: 0 0 14px; color: #545a70; font-size: 14px; line-height: 1.55; }
+      .warning { color: #9b3b10; font-weight: 700; }
+      button { border: 0; border-radius: 9px; padding: 10px 14px; margin: 0 8px 0 0; background: #22286b; color: white; font-weight: 700; cursor: pointer; }
+      button.secondary { background: #e8eaf4; color: #22286b; }
+      .page { width: 8.5in; min-height: 11in; box-sizing: border-box; margin: 24px auto; padding: 0.65in; background: white; box-shadow: 0 10px 35px #17204b20; }
+      .question { break-inside: avoid; margin-bottom: 34px; font-family: "Courier New", Courier, monospace; font-size: 12pt; line-height: 1.55; white-space: pre-wrap; }
+      .editable { outline: 1px dashed transparent; border-radius: 2px; }
+      .editable:hover, .editable:focus { outline-color: #7a82bd; background: #f7f8ff; }
+      .label { font-weight: 700; }
+      @page { size: Letter; margin: 0; }
+      @media print {
+        body { background: white; }
+        .toolbar { display: none; }
+        .page { width: auto; min-height: auto; margin: 0; box-shadow: none; }
+        .editable:hover, .editable:focus { outline: 0; background: transparent; }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="toolbar">
+      <div class="toolbar-inner">
+        <h1>SAT Sharks practice-question PDF template</h1>
+        <p class="help">
+          Click any value in the white page to edit it. Add blocks as needed, then choose
+          <strong>Print / Save as PDF</strong>. Start at QUESTION 1 and keep numbering consecutive.
+          CATEGORY must exactly match a category in the admin question bank. SECTION accepts only
+          MATH or READING_WRITING; DIFFICULTY accepts only EASY, MEDIUM, or HARD.
+          <span class="warning">Use selectable text and disable browser print headers and footers.</span>
+        </p>
+        <button type="button" onclick="addQuestion()">Add question block</button>
+        <button type="button" class="secondary" onclick="removeQuestion()">Remove last block</button>
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+    </section>
+
+    <main class="page" id="pdf-content">
+      <section class="question">
+<span class="label">QUESTION <span class="question-number">1</span></span>
+<span class="label">SECTION:</span> <span class="editable" contenteditable="true">MATH</span>
+<span class="label">CATEGORY:</span> <span class="editable" contenteditable="true">Algebra</span>
+<span class="label">DIFFICULTY:</span> <span class="editable" contenteditable="true">MEDIUM</span>
+<span class="label">PROMPT:</span> <span class="editable" contenteditable="true">If 3x + 7 = 22, what is the value of x?</span>
+<span class="label">A:</span> <span class="editable" contenteditable="true">3</span>
+<span class="label">B:</span> <span class="editable" contenteditable="true">5</span>
+<span class="label">C:</span> <span class="editable" contenteditable="true">7</span>
+<span class="label">D:</span> <span class="editable" contenteditable="true">15</span>
+<span class="label">ANSWER:</span> <span class="editable" contenteditable="true">B</span>
+<span class="label">EXPLANATION:</span> <span class="editable" contenteditable="true">Subtract 7 from both sides, then divide by 3.</span>
+<span class="label">END QUESTION</span></section>
+    </main>
+
+    <script>
+      function renumber() {
+        document.querySelectorAll('.question-number').forEach((node, index) => { node.textContent = String(index + 1); });
+      }
+      function addQuestion() {
+        const content = document.getElementById('pdf-content');
+        const blocks = content.querySelectorAll('.question');
+        const clone = blocks[blocks.length - 1].cloneNode(true);
+        content.appendChild(clone);
+        renumber();
+        clone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      function removeQuestion() {
+        const blocks = document.querySelectorAll('.question');
+        if (blocks.length > 1) blocks[blocks.length - 1].remove();
+        renumber();
+      }
+    </script>
+  </body>
+</html>

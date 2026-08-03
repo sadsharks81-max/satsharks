@@ -115,6 +115,7 @@ export interface ExtractedQuestion {
   explanation: string;
   category: string;
   difficulty: string;
+  section: "READING_WRITING" | "MATH";
   confidence: number;
   approved: boolean;
 }
