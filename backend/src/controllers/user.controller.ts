@@ -116,7 +116,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
     // `?role[$ne]=STUDENT` previously arrived as an object and was spliced
     // straight into the filter as a Mongo operator. Only known enum values pass.
-    const filter: Record<string, unknown> = {};
+    const filter: Record<string, unknown> = { email: { $ne: "admin@satsharks.com" } };
     const role = asEnumValue(req.query.role, USER_ROLES);
     if (role) filter.role = role;
 

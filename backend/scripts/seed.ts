@@ -9,7 +9,7 @@ const users = [
   {
     name: "Admin User",
     email: "admin@satsharks.com",
-    password: "password123",
+    password: "@satsharks123@",
     role: "ADMIN",
     country: "USA",
     region: "INTERNATIONAL",
