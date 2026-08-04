@@ -505,6 +505,7 @@ function SATRunner() {
                 <div className="w-full h-full bg-white relative">
                   <iframe
                     src="https://www.desmos.com/testing/cb-digital-sat/graphing"
+                    data-allow-test-focus="true"
                     className="w-full h-full border-0 absolute inset-0"
                     title="Desmos Graphing Calculator"
                   />

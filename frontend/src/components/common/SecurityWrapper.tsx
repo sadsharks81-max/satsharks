@@ -30,15 +30,24 @@ export function SecurityWrapper({ children, enabled = true }: SecurityWrapperPro
     };
     window.addEventListener("keydown", handleKeyDown);
 
-    // 3. Tab Focus / Window Blur detection
+    // 3. Tab Focus / Window Blur detection. Interacting with a cross-origin
+    // iframe also blurs the parent window, so defer the check until the browser
+    // has moved document.activeElement and allow explicitly approved test tools.
+    let blurCheckTimer: number | undefined;
     const handleBlur = () => {
-      setIsBlurred(true);
-    };
-    const handleFocus = () => {
-      // Don't auto-resolve, let user click "Resume Test" button to confirm
+      window.clearTimeout(blurCheckTimer);
+      blurCheckTimer = window.setTimeout(() => {
+        const activeElement = document.activeElement;
+        const isApprovedTestTool =
+          activeElement instanceof HTMLIFrameElement &&
+          activeElement.dataset.allowTestFocus === "true";
+
+        if (!isApprovedTestTool) {
+          setIsBlurred(true);
+        }
+      }, 0);
     };
     window.addEventListener("blur", handleBlur);
-    window.addEventListener("focus", handleFocus);
 
     // 4. Inject Print Media Blocker styles
     const styleElement = document.createElement("style");
@@ -56,7 +65,7 @@ export function SecurityWrapper({ children, enabled = true }: SecurityWrapperPro
       document.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("blur", handleBlur);
-      window.removeEventListener("focus", handleFocus);
+      window.clearTimeout(blurCheckTimer);
       const style = document.getElementById("print-prevention-style");
       if (style) style.remove();
     };
