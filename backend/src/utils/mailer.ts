@@ -10,16 +10,28 @@ import { env } from "../config/env";
  * unconfigured state explicit so callers and logs can distinguish "not set up"
  * from "send failed".
  */
-export const isMailerConfigured = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS);
+export const isMailerConfigured = Boolean(
+  (process.env.EMAIL_USER && process.env.EMAIL_PASS) || process.env.RESEND_API_KEY
+);
 
 const transporter = isMailerConfigured
-  ? nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE || "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    })
+  ? (process.env.RESEND_API_KEY
+      ? nodemailer.createTransport({
+          host: "smtp.resend.com",
+          port: 465,
+          secure: true,
+          auth: {
+            user: "resend",
+            pass: process.env.RESEND_API_KEY,
+          },
+        })
+      : nodemailer.createTransport({
+          service: process.env.EMAIL_SERVICE || "gmail",
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        }))
   : null;
 
 const escapeHtml = (value: string) =>
@@ -47,14 +59,18 @@ export const sendPasswordResetEmail = async (to: string, token: string) => {
 
   if (!transporter) {
     console.warn(
-      "[warn] mailer not configured (EMAIL_USER/EMAIL_PASS unset); password reset email not sent",
+      "[warn] mailer not configured (EMAIL_USER/EMAIL_PASS and RESEND_API_KEY unset); password reset email not sent",
     );
     if (!env.isProduction) console.warn(`[dev] password reset link for ${to}: ${resetLink}`);
     return false;
   }
 
+  const fromAddress =
+    process.env.EMAIL_FROM ||
+    (process.env.RESEND_API_KEY ? "noreply@satsharks.org" : process.env.EMAIL_USER);
+
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: fromAddress,
     to,
     subject: "Password Reset Request",
     html: `
