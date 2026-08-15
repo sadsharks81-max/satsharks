@@ -93,17 +93,38 @@ function AdminTests() {
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [imageUploadError, setImageUploadError] = useState("");
 
+  // Add Question State
+  const [isAddingQuestion, setIsAddingQuestion] = useState(false);
+  const [addQuestionType, setAddQuestionType] = useState<"MCQ" | "SPR">("MCQ");
+  const [addQuestionForm, setAddQuestionForm] = useState({
+    text: "",
+    optA: "",
+    optB: "",
+    optC: "",
+    optD: "",
+    correctAnswer: "A",
+    explanation: "",
+    imageUrl: "",
+    category: "",
+    difficulty: "MEDIUM",
+    tags: "",
+  });
+  const [categories, setCategories] = useState<any[]>([]);
+  const [mathFormType, setMathFormType] = useState<"edit" | "add">("edit");
+
   const [mathEditorOpen, setMathEditorOpen] = useState(false);
   const [mathActiveField, setMathActiveField] = useState<{ name: string; inputId: string } | null>(null);
 
-  const openVisualMathEditor = (fieldName: string, inputId: string) => {
+  const openVisualMathEditor = (fieldName: string, inputId: string, formType: "edit" | "add" = "edit") => {
+    setMathFormType(formType);
     setMathActiveField({ name: fieldName, inputId });
     setMathEditorOpen(true);
   };
 
   const handleInsertVisualMath = (latex: string) => {
     if (mathActiveField) {
-      insertLatex(latex, mathActiveField.name, setQuestionForm, mathActiveField.inputId);
+      const setter = mathFormType === "add" ? setAddQuestionForm : setQuestionForm;
+      insertLatex(latex, mathActiveField.name, setter, mathActiveField.inputId);
     }
   };
 
@@ -138,7 +159,11 @@ function AdminTests() {
       });
       const data = await res.json();
       if (data.success) {
-        setQuestionForm(p => ({ ...p, imageUrl: data.url }));
+        if (isAddingQuestion) {
+          setAddQuestionForm(p => ({ ...p, imageUrl: data.url }));
+        } else {
+          setQuestionForm(p => ({ ...p, imageUrl: data.url }));
+        }
       } else {
         setImageUploadError(data.error || "Failed to upload image.");
       }
@@ -164,8 +189,16 @@ function AdminTests() {
     setLoading(false);
   };
 
+  const fetchCategories = async () => {
+    const res = await api.get("/api/sat/admin/categories");
+    if (res.success) {
+      setCategories(res.categories || []);
+    }
+  };
+
   useEffect(() => {
     fetchSatTests();
+    fetchCategories();
   }, []);
 
   const toggleSatActive = async (id: string, current: boolean) => {
@@ -184,7 +217,73 @@ function AdminTests() {
     setSelectedModuleIndex(0);
     setEditingQuestionId(null);
     setQuestionError("");
+    setIsAddingQuestion(false);
     setQuestionsModalOpen(true);
+  };
+
+  const startAddQuestion = () => {
+    setAddQuestionForm({
+      text: "",
+      optA: "",
+      optB: "",
+      optC: "",
+      optD: "",
+      correctAnswer: "A",
+      explanation: "",
+      imageUrl: "",
+      category: "",
+      difficulty: "MEDIUM",
+      tags: "",
+    });
+    setAddQuestionType("MCQ");
+    setIsAddingQuestion(true);
+    setQuestionError("");
+  };
+
+  const handleAddQuestion = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!activeTestForQuestions) return;
+    setQuestionSubmitting(true);
+    setQuestionError("");
+
+    const tagsArray = addQuestionForm.tags
+      ? addQuestionForm.tags.split(",").map((t: string) => t.trim()).filter(Boolean)
+      : [];
+
+    const body: any = {
+      text: addQuestionForm.text,
+      correctAnswer: addQuestionForm.correctAnswer,
+      explanation: addQuestionForm.explanation,
+      imageUrl: addQuestionForm.imageUrl || undefined,
+      category: addQuestionForm.category || undefined,
+      difficulty: addQuestionForm.difficulty,
+      section: activeTestForQuestions.modules[selectedModuleIndex]?.section,
+      tags: tagsArray,
+    };
+
+    if (addQuestionType === "MCQ") {
+      body.options = [
+        { label: "A", text: addQuestionForm.optA },
+        { label: "B", text: addQuestionForm.optB },
+        { label: "C", text: addQuestionForm.optC },
+        { label: "D", text: addQuestionForm.optD },
+      ];
+    } else {
+      body.options = [];
+    }
+
+    const testId = activeTestForQuestions._id;
+    const res = await api.post(`/api/sat/admin/${testId}/modules/${selectedModuleIndex}/questions`, body);
+    setQuestionSubmitting(false);
+
+    if (res.success) {
+      const updatedTest = { ...activeTestForQuestions };
+      updatedTest.modules[selectedModuleIndex].questions.push(res.question);
+      setActiveTestForQuestions(updatedTest);
+      setIsAddingQuestion(false);
+    } else {
+      setQuestionError(res.error || "Failed to add question");
+    }
   };
 
   const startEditQuestion = (q: any) => {
@@ -443,6 +542,7 @@ function AdminTests() {
                     setSelectedModuleIndex(idx);
                     setEditingQuestionId(null);
                     setQuestionError("");
+                    setIsAddingQuestion(false);
                   }}
                   className={`w-full text-left px-4 py-3 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
                     selectedModuleIndex === idx
@@ -460,10 +560,19 @@ function AdminTests() {
 
             {/* Right side: Questions List for selected module */}
             <div className="flex-1 overflow-y-auto pl-2 pr-1 space-y-4">
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-4 border-b border-outline-variant/20 pb-3">
                 <h3 className="font-bold text-sm text-primary uppercase tracking-wider">
                   {activeTestForQuestions.modules[selectedModuleIndex]?.name}
                 </h3>
+                {!isAddingQuestion && (
+                  <button
+                    onClick={startAddQuestion}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary hover:bg-accent rounded-lg text-xs font-bold transition-all cursor-pointer shadow-sm"
+                  >
+                    <Icon name="add" className="text-sm" />
+                    <span>Add Question</span>
+                  </button>
+                )}
               </div>
 
               {questionError && (
@@ -472,7 +581,250 @@ function AdminTests() {
                 </div>
               )}
 
-              <div className="space-y-4">
+              {isAddingQuestion ? (
+                /* Add Question Form */
+                <form onSubmit={handleAddQuestion} className="space-y-4 p-5 border border-outline-variant/40 rounded-2xl bg-surface-container-lowest shadow-sm">
+                  <div className="flex items-center justify-between pb-3 border-b border-outline-variant/30">
+                    <span className="text-xs font-bold text-primary font-mono">Add New Question</span>
+                  </div>
+
+                  {/* Question Image Upload (Optional) */}
+                  <div>
+                    <label className="mb-1.5 block font-mono text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Question Image (Optional)</label>
+                    <div 
+                      className={`border-2 border-dashed rounded-xl p-4 text-center transition-colors ${isUploadingImage ? 'opacity-50 pointer-events-none' : 'hover:border-primary border-outline-variant/50 bg-surface-container-low'}`}
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={handleImageUpload}
+                    >
+                      {addQuestionForm.imageUrl ? (
+                        <div className="flex flex-col items-center gap-3">
+                          <img src={resolveImageUrl(addQuestionForm.imageUrl)} alt="Uploaded preview" className="max-h-32 rounded-lg border border-outline-variant/30" />
+                          <div className="flex gap-2">
+                            <label className="px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest rounded-lg text-[10px] font-bold transition-colors cursor-pointer text-on-surface">
+                              Change Image
+                              <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} disabled={isUploadingImage} />
+                            </label>
+                            <button type="button" onClick={() => setAddQuestionForm(p => ({ ...p, imageUrl: "" }))} className="px-3 py-1.5 bg-error/10 text-error hover:bg-error/20 rounded-lg text-[10px] font-bold transition-colors cursor-pointer">
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <label className="flex flex-col items-center justify-center cursor-pointer h-full min-h-[80px]">
+                          <Icon name="cloud_upload" className="text-2xl text-on-surface-variant/50 mb-1" />
+                          <span className="text-xs text-on-surface-variant font-semibold">
+                            {isUploadingImage ? "Uploading..." : "Drag & drop image here or click to browse"}
+                          </span>
+                          {imageUploadError && <span className="text-[10px] text-error mt-1">{imageUploadError}</span>}
+                          <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} disabled={isUploadingImage} />
+                        </label>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="flex justify-between items-end">
+                      <label className="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Question Text *</label>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 px-2.5 py-1.5 rounded-xl border border-outline-variant/30 bg-surface-container-low mb-1 overflow-x-auto max-w-full items-center">
+                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-on-surface-variant mr-1">Math Symbols:</span>
+                      <button
+                        type="button"
+                        onClick={() => openVisualMathEditor("text", "add-q-text", "add")}
+                        className="px-2 py-0.5 rounded bg-primary text-on-primary hover:bg-accent text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+                      >
+                        <Icon name="functions" className="text-[12px]" />
+                        <span>Visual Editor</span>
+                      </button>
+                      {MATH_SYMBOLS.map((sym) => (
+                        <button
+                          key={sym.label}
+                          type="button"
+                          onClick={() => insertLatex(sym.latex, "text", setAddQuestionForm, "add-q-text")}
+                          className="px-1.5 py-0.5 rounded bg-surface hover:bg-surface-container-high text-[10px] font-bold text-primary transition-colors border border-outline-variant/40 cursor-pointer"
+                          title={`Insert ${sym.label}`}
+                        >
+                          {sym.latex.replace(/\$/g, "")}
+                        </button>
+                      ))}
+                    </div>
+                    <Textarea
+                      id="add-q-text"
+                      value={addQuestionForm.text}
+                      onChange={(e) => setAddQuestionForm(p => ({ ...p, text: e.target.value }))}
+                      rows={3}
+                      required
+                      placeholder="Enter the question..."
+                    />
+                    {/* Live preview */}
+                    <div className="mt-1.5 p-3 rounded-xl border border-primary/20 bg-primary/5">
+                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-primary block mb-0.5">Live Math Preview:</span>
+                      <div className="text-xs font-medium text-on-surface whitespace-pre-wrap leading-relaxed min-h-[16px]">
+                        {renderFormattedText(addQuestionForm.text || "Type math equations wrapped in $...")}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <Select
+                      label="Question Type"
+                      value={addQuestionType}
+                      onChange={(e) => {
+                        const newType = e.target.value as "MCQ" | "SPR";
+                        setAddQuestionType(newType);
+                        if (newType === "SPR") {
+                          if (["A", "B", "C", "D"].includes(addQuestionForm.correctAnswer)) {
+                            setAddQuestionForm(p => ({ ...p, correctAnswer: "" }));
+                          }
+                        } else {
+                          if (!["A", "B", "C", "D"].includes(addQuestionForm.correctAnswer)) {
+                            setAddQuestionForm(p => ({ ...p, correctAnswer: "A" }));
+                          }
+                        }
+                      }}
+                      options={[
+                        { value: "MCQ", label: "Multiple Choice (MCQ)" },
+                        { value: "SPR", label: "Fill-in-the-blank (SPR)" }
+                      ]}
+                    />
+                  </div>
+
+                  {addQuestionType === "MCQ" ? (
+                    <div className="space-y-3 pt-2">
+                      <label className="block font-mono text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Options *</label>
+                      {(["A", "B", "C", "D"] as const).map((label) => (
+                        <div key={label} className="flex flex-col gap-1">
+                          <div className="flex items-center gap-3">
+                            <span className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold ${addQuestionForm.correctAnswer === label ? "bg-primary text-on-primary" : "bg-surface-container-high"}`}>{label}</span>
+                            <input
+                              id={`add-q-opt${label}`}
+                              type="text"
+                              value={addQuestionForm[`opt${label}`]}
+                              onChange={(e) => setAddQuestionForm(p => ({ ...p, [`opt${label}`]: e.target.value }))}
+                              placeholder={`Option ${label}`}
+                              className="flex-1 rounded-xl border border-outline-variant bg-surface-container-low px-4 py-2 text-sm outline-none focus:border-primary transition-colors"
+                              required
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setAddQuestionForm(p => ({ ...p, correctAnswer: label }))}
+                              className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${addQuestionForm.correctAnswer === label ? "bg-primary text-on-primary" : "bg-surface-container-high hover:bg-surface-container-highest"}`}
+                            >
+                              {addQuestionForm.correctAnswer === label ? "Correct" : "Set"}
+                            </button>
+                          </div>
+                          {/* Quick math symbol bar for options */}
+                          <div className="flex flex-wrap gap-1 pl-11 overflow-x-auto items-center">
+                            <button
+                              type="button"
+                              onClick={() => openVisualMathEditor(`opt${label}`, `add-q-opt${label}`, "add")}
+                              className="px-1.5 py-0.5 rounded bg-primary text-on-primary hover:bg-accent text-[9px] font-bold transition-all cursor-pointer flex items-center gap-0.5 shrink-0"
+                            >
+                              <Icon name="functions" className="text-[10px]" />
+                              <span>Visual Editor</span>
+                            </button>
+                            {MATH_SYMBOLS.map((sym) => (
+                              <button
+                                key={sym.label}
+                                type="button"
+                                onClick={() => insertLatex(sym.latex, `opt${label}`, setAddQuestionForm, `add-q-opt${label}`)}
+                                className="px-1 py-0.5 rounded bg-surface hover:bg-surface-container-high text-[9px] font-semibold text-primary transition-colors border border-outline-variant/30 cursor-pointer"
+                              >
+                                {sym.latex.replace(/\$/g, "")}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-2 pt-2">
+                      <Input
+                        label="Correct Answer *"
+                        value={addQuestionForm.correctAnswer}
+                        onChange={(e) => setAddQuestionForm(p => ({ ...p, correctAnswer: e.target.value }))}
+                        required
+                        placeholder="e.g. 5, -1/2, or 4.25 (support multiple options using 'or')"
+                      />
+                    </div>
+                  )}
+
+                  <div className="space-y-1">
+                    <label className="block text-xs font-bold text-on-surface-variant uppercase tracking-wider">Explanation</label>
+                    <div className="flex flex-wrap gap-1.5 px-2.5 py-1.5 rounded-xl border border-outline-variant/30 bg-surface-container-low mb-1 overflow-x-auto max-w-full items-center">
+                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-on-surface-variant mr-1">Math Symbols:</span>
+                      <button
+                        type="button"
+                        onClick={() => openVisualMathEditor("explanation", "add-q-expl", "add")}
+                        className="px-2 py-0.5 rounded bg-primary text-on-primary hover:bg-accent text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 shrink-0"
+                      >
+                        <Icon name="functions" className="text-[12px]" />
+                        <span>Visual Editor</span>
+                      </button>
+                      {MATH_SYMBOLS.map((sym) => (
+                        <button
+                          key={sym.label}
+                          type="button"
+                          onClick={() => insertLatex(sym.latex, "explanation", setAddQuestionForm, "add-q-expl")}
+                          className="px-1.5 py-0.5 rounded bg-surface hover:bg-surface-container-high text-[10px] font-bold text-primary transition-colors border border-outline-variant/40 cursor-pointer"
+                          title={`Insert ${sym.label}`}
+                        >
+                          {sym.latex.replace(/\$/g, "")}
+                        </button>
+                      ))}
+                    </div>
+                    <Textarea
+                      id="add-q-expl"
+                      value={addQuestionForm.explanation}
+                      onChange={(e) => setAddQuestionForm(p => ({ ...p, explanation: e.target.value }))}
+                      rows={2}
+                      placeholder="Why is this the correct answer?"
+                    />
+                    {/* Live preview */}
+                    <div className="mt-1.5 p-3 rounded-xl border border-primary/20 bg-primary/5">
+                      <span className="text-[9px] font-extrabold uppercase tracking-wider text-primary block mb-0.5">Live Math Preview:</span>
+                      <div className="text-xs font-medium text-on-surface whitespace-pre-wrap leading-relaxed min-h-[16px]">
+                        {renderFormattedText(addQuestionForm.explanation || "Type explanation math equations wrapped in $...")}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4">
+                    <Select
+                      label="Category"
+                      value={addQuestionForm.category}
+                      onChange={(e) => setAddQuestionForm(p => ({ ...p, category: e.target.value }))}
+                      options={[
+                        { value: "", label: "Select category" },
+                        ...categories
+                          .filter(c => c.section === activeTestForQuestions.modules[selectedModuleIndex]?.section)
+                          .map((c) => ({ value: c._id, label: c.name }))
+                      ]}
+                    />
+                    <Select label="Difficulty" value={addQuestionForm.difficulty} onChange={(e) => setAddQuestionForm(p => ({ ...p, difficulty: e.target.value }))} options={[{ value: "EASY", label: "Easy" }, { value: "MEDIUM", label: "Medium" }, { value: "HARD", label: "Hard" }]} />
+                    <Input label="Tags (comma separated)" value={addQuestionForm.tags} onChange={(e) => setAddQuestionForm(p => ({ ...p, tags: e.target.value }))} placeholder="algebra, equations" />
+                  </div>
+
+                  <div className="flex gap-3 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => setIsAddingQuestion(false)}
+                      className="px-4 py-2 rounded-xl border border-outline-variant hover:bg-surface-container-low text-xs font-bold cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={questionSubmitting}
+                      className="px-5 py-2 rounded-xl bg-primary text-on-primary hover:bg-accent text-xs font-bold cursor-pointer disabled:opacity-50"
+                    >
+                      {questionSubmitting ? "Saving..." : "Save Question"}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                /* Questions List */
+                <div className="space-y-4">
                 {activeTestForQuestions.modules[selectedModuleIndex]?.questions.map((q: any, qi: number) => {
                   const isEditingThis = editingQuestionId === q._id;
                   return (
@@ -759,6 +1111,7 @@ function AdminTests() {
                   <p className="text-sm text-on-surface-variant text-center py-6">No questions in this module.</p>
                 )}
               </div>
+              )}
             </div>
           </div>
         )}

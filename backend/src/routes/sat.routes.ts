@@ -11,9 +11,12 @@ import {
   getAllSATTestsAdmin,
   updateSATTestAdmin,
   deleteSATTestAdmin,
+  addQuestionToTestModule,
 } from "../controllers/sat.controller";
 import { authenticate } from "../middleware/auth.middleware";
 import { requireAdmin, requireActiveUser } from "../middleware/role.middleware";
+import { validate } from "../middleware/validate.middleware";
+import { questionValidator } from "../validators/question.validator";
 
 const router = Router();
 
@@ -31,5 +34,7 @@ router.post("/attempt/:id/submit", authenticate, submitSATTest);
 router.get("/admin/all", authenticate, requireAdmin(), getAllSATTestsAdmin);
 router.put("/admin/:id", authenticate, requireAdmin(), updateSATTestAdmin);
 router.delete("/admin/:id", authenticate, requireAdmin(), deleteSATTestAdmin);
+router.post("/admin/:testId/modules/:moduleIndex/questions", authenticate, requireAdmin(), questionValidator, validate, addQuestionToTestModule);
 
 export default router;
+

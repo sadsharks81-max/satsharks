@@ -6,6 +6,7 @@ import User from "../models/User";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { checkAnswerCorrectness } from "../utils/grading";
 import { sendError } from "../utils/http";
+import { stripEmojis } from "../utils/text";
 
 // --- Student: list available SAT tests ---
 export const getSATTests = async (req: AuthRequest, res: Response) => {
@@ -504,3 +505,42 @@ export const deleteSATTestAdmin = async (req: Request, res: Response) => {
     sendError(res, error, "sat.deleteSATTestAdmin");
   }
 };
+
+// --- Admin: add question to test module ---
+export const addQuestionToTestModule = async (req: AuthRequest, res: Response) => {
+  try {
+    const { testId, moduleIndex } = req.params;
+    const { text, options, correctAnswer, explanation, category, difficulty, section, tags, imageUrl } = req.body;
+
+    const test = await SATTest.findById(testId);
+    if (!test) return res.status(404).json({ success: false, error: "Test not found" });
+
+    const mIndex = parseInt(moduleIndex as string);
+    if (isNaN(mIndex) || mIndex < 0 || mIndex >= test.modules.length) {
+      return res.status(400).json({ success: false, error: "Invalid module index" });
+    }
+
+    const question = await Question.create({
+      text,
+      options,
+      correctAnswer,
+      explanation: stripEmojis(explanation),
+      category,
+      difficulty,
+      section,
+      tags: tags || [],
+      imageUrl: imageUrl || null,
+      source: "MANUAL",
+      status: imageUrl ? "UPDATED" : "PUBLISHED",
+      createdBy: req.user?.userId,
+    });
+
+    test.modules[mIndex].questions.push(question._id as any);
+    await test.save();
+
+    res.status(201).json({ success: true, question });
+  } catch (error) {
+    sendError(res, error, "sat.addQuestionToTestModule");
+  }
+};
+
