@@ -178,7 +178,7 @@ function AdminQuestions() {
 
   const openEdit = (q: Question) => {
     setEditingQ(q);
-    const cat = typeof q.category === "object" ? q.category._id : q.category;
+    const cat = typeof q.category === "object" && q.category !== null ? q.category._id : (typeof q.category === "string" ? q.category : "");
     const isSpr = !q.options || q.options.length === 0;
     setQuestionType(isSpr ? "SPR" : "MCQ");
     setForm({
@@ -289,6 +289,7 @@ function AdminQuestions() {
     const res = await api.delete(`/api/categories/${id}`);
     if (res.success) {
       fetchCategories();
+      fetchQuestions();
     }
   };
 
@@ -347,7 +348,7 @@ function AdminQuestions() {
                         )}
                       </div>
                     </td>
-                    <td className="p-4 text-sm">{typeof q.category === "object" ? q.category.name : ","}</td>
+                    <td className="p-4 text-sm">{typeof q.category === "object" && q.category !== null ? q.category.name : (typeof q.category === "string" ? q.category : "Uncategorized")}</td>
                     <td className="p-4">
                       <Badge variant={q.difficulty === "EASY" ? "success" : q.difficulty === "HARD" ? "error" : "warning"}>{q.difficulty}</Badge>
                     </td>

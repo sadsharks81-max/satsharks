@@ -49,7 +49,7 @@ export interface Question {
   options: QuestionOption[];
   correctAnswer: string;
   explanation: string;
-  category: QuestionCategory | string;
+  category?: QuestionCategory | string | null;
   difficulty: "EASY" | "MEDIUM" | "HARD";
   section: "READING_WRITING" | "MATH";
   tags: string[];

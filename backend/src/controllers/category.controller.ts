@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import QuestionCategory from "../models/QuestionCategory";
+import Question from "../models/Question";
 import { sendError } from "../utils/http";
 
 export const getCategories = async (req: Request, res: Response) => {
@@ -46,8 +47,10 @@ export const deleteCategory = async (req: Request, res: Response) => {
     const { id } = req.params;
     const category = await QuestionCategory.findByIdAndDelete(id);
     if (!category) return res.status(404).json({ success: false, error: "Category not found" });
+    await Question.updateMany({ category: id }, { $unset: { category: 1 } });
     res.status(200).json({ success: true, message: "Category deleted" });
   } catch (error) {
     sendError(res, error, "category.deleteCategory");
   }
 };
+

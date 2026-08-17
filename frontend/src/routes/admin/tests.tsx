@@ -190,7 +190,7 @@ function AdminTests() {
   };
 
   const fetchCategories = async () => {
-    const res = await api.get("/api/sat/admin/categories");
+    const res = await api.get("/api/categories");
     if (res.success) {
       setCategories(res.categories || []);
     }
@@ -222,6 +222,10 @@ function AdminTests() {
   };
 
   const startAddQuestion = () => {
+    const currentSection = activeTestForQuestions?.modules?.[selectedModuleIndex]?.section;
+    const matchingCategories = categories.filter((c) => !currentSection || c.section === currentSection);
+    const defaultCatId = matchingCategories[0]?._id || categories[0]?._id || "";
+
     setAddQuestionForm({
       text: "",
       optA: "",
@@ -231,7 +235,7 @@ function AdminTests() {
       correctAnswer: "A",
       explanation: "",
       imageUrl: "",
-      category: "",
+      category: defaultCatId,
       difficulty: "MEDIUM",
       tags: "",
     });
@@ -243,6 +247,29 @@ function AdminTests() {
   const handleAddQuestion = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!activeTestForQuestions) return;
+
+    if (!addQuestionForm.text.trim()) {
+      setQuestionError("Question text is required.");
+      return;
+    }
+
+    if (!addQuestionForm.category) {
+      setQuestionError("Please select a category for this question.");
+      return;
+    }
+
+    if (addQuestionType === "MCQ") {
+      if (!addQuestionForm.optA.trim() || !addQuestionForm.optB.trim() || !addQuestionForm.optC.trim() || !addQuestionForm.optD.trim()) {
+        setQuestionError("Question text and all four options are required for multiple choice questions.");
+        return;
+      }
+    } else {
+      if (!addQuestionForm.correctAnswer.trim()) {
+        setQuestionError("Question text and correct answer are required.");
+        return;
+      }
+    }
+
     setQuestionSubmitting(true);
     setQuestionError("");
 
@@ -255,7 +282,7 @@ function AdminTests() {
       correctAnswer: addQuestionForm.correctAnswer,
       explanation: addQuestionForm.explanation,
       imageUrl: addQuestionForm.imageUrl || undefined,
-      category: addQuestionForm.category || undefined,
+      category: addQuestionForm.category,
       difficulty: addQuestionForm.difficulty,
       section: activeTestForQuestions.modules[selectedModuleIndex]?.section,
       tags: tagsArray,
@@ -281,6 +308,7 @@ function AdminTests() {
       updatedTest.modules[selectedModuleIndex].questions.push(res.question);
       setActiveTestForQuestions(updatedTest);
       setIsAddingQuestion(false);
+      fetchSatTests();
     } else {
       setQuestionError(res.error || "Failed to add question");
     }
