@@ -59,6 +59,7 @@ const insertLatex = (
 function AdminTests() {
   const [satTests, setSatTests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [satModalOpen, setSatModalOpen] = useState(false);
   const [editingSatTest, setEditingSatTest] = useState<any | null>(null);
   const [satForm, setSatForm] = useState({
@@ -184,9 +185,19 @@ function AdminTests() {
 
   const fetchSatTests = async () => {
     setLoading(true);
-    const res = await api.get("/api/sat/admin/all");
-    if (res.success) setSatTests(res.tests || []);
-    setLoading(false);
+    setFetchError(null);
+    try {
+      const res = await api.get("/api/sat/admin/all");
+      if (res.success && Array.isArray(res.tests)) {
+        setSatTests(res.tests);
+      } else {
+        setFetchError(res.error || "Failed to load Digital SAT practice tests.");
+      }
+    } catch (err: any) {
+      setFetchError(err.message || "Failed to connect to backend server.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchCategories = async () => {
@@ -212,13 +223,22 @@ function AdminTests() {
     fetchSatTests();
   };
 
-  const openQuestionsManager = (test: any) => {
+  const openQuestionsManager = async (test: any) => {
     setActiveTestForQuestions(test);
     setSelectedModuleIndex(0);
     setEditingQuestionId(null);
     setQuestionError("");
     setIsAddingQuestion(false);
     setQuestionsModalOpen(true);
+
+    try {
+      const res = await api.get(`/api/sat/admin/${test._id}`);
+      if (res.success && res.test) {
+        setActiveTestForQuestions(res.test);
+      }
+    } catch (e) {
+      console.error("Failed to fetch fresh test details:", e);
+    }
   };
 
   const startAddQuestion = () => {
@@ -489,6 +509,20 @@ function AdminTests() {
 
       {loading ? (
         <div className="text-center py-12 text-on-surface-variant">Loading tests...</div>
+      ) : fetchError ? (
+        <div className="p-8 text-center bg-error/10 border border-error/20 rounded-2xl max-w-lg mx-auto my-8 space-y-4">
+          <Icon name="error" className="text-4xl text-error mx-auto" />
+          <div>
+            <h3 className="text-lg font-bold text-error">Unable to Load SAT Practice Tests</h3>
+            <p className="text-xs text-on-surface-variant mt-1">{fetchError}</p>
+          </div>
+          <button
+            onClick={fetchSatTests}
+            className="px-5 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-accent transition-colors cursor-pointer shadow-sm"
+          >
+            Retry Loading Tests
+          </button>
+        </div>
       ) : satTests.length === 0 ? (
         <EmptyState icon="school" title="No Digital SAT practice tests created yet" description="Practice tests are loaded automatically via import scripts" />
       ) : (

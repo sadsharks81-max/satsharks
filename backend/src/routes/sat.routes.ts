@@ -9,6 +9,7 @@ import {
   getSATAttempt,
   getMySATAttempts,
   getAllSATTestsAdmin,
+  getSATTestAdminById,
   updateSATTestAdmin,
   deleteSATTestAdmin,
   addQuestionToTestModule,
@@ -32,6 +33,7 @@ router.post("/attempt/:id/submit", authenticate, submitSATTest);
 
 // Admin routes
 router.get("/admin/all", authenticate, requireAdmin(), getAllSATTestsAdmin);
+router.get("/admin/:id", authenticate, requireAdmin(), getSATTestAdminById);
 router.put("/admin/:id", authenticate, requireAdmin(), updateSATTestAdmin);
 router.delete("/admin/:id", authenticate, requireAdmin(), deleteSATTestAdmin);
 router.post("/admin/:testId/modules/:moduleIndex/questions", authenticate, requireAdmin(), questionValidator, validate, addQuestionToTestModule);

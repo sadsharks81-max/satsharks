@@ -465,12 +465,38 @@ export const getMySATAttempts = async (req: AuthRequest, res: Response) => {
 // --- Admin: list all SAT tests ---
 export const getAllSATTestsAdmin = async (req: Request, res: Response) => {
   try {
-    const tests = await SATTest.find({ year: { $ne: 9999 } }).populate("modules.questions").sort({ year: -1, testNumber: 1 });
+    const tests = await SATTest.find({
+      $or: [{ year: { $ne: 9999 } }, { year: { $exists: false } }],
+    })
+      .populate({
+        path: "modules.questions",
+        select: "text options correctAnswer explanation difficulty category imageUrl",
+      })
+      .sort({ year: -1, testNumber: 1 })
+      .lean();
+
     res.status(200).json({ success: true, tests });
   } catch (error) {
     sendError(res, error, "sat.getAllSATTestsAdmin");
   }
 };
+
+// --- Admin: get single SAT test by ID ---
+export const getSATTestAdminById = async (req: Request, res: Response) => {
+  try {
+    const test = await SATTest.findById(req.params.id)
+      .populate({
+        path: "modules.questions",
+        select: "text options correctAnswer explanation difficulty category imageUrl",
+      })
+      .lean();
+    if (!test) return res.status(404).json({ success: false, error: "Test not found" });
+    res.status(200).json({ success: true, test });
+  } catch (error) {
+    sendError(res, error, "sat.getSATTestAdminById");
+  }
+};
+
 
 // --- Admin: update SAT test active status / access level ---
 export const updateSATTestAdmin = async (req: Request, res: Response) => {
