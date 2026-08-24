@@ -244,6 +244,11 @@
     "wght" 400,
     "GRAD" 0,
     "opsz" 24;
+  visibility: hidden;
+}
+
+.app-fonts-ready .material-symbols-outlined {
+  visibility: visible;
 }
 
 /* Keep question equations crisp and independent of bold surrounding prompt text. */

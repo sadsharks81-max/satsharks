@@ -7,6 +7,7 @@ import { requireAdmin } from "./role.middleware";
 export interface AuthUser extends TokenPayload {
   userId: string;
   role: string;
+  email?: string;
 }
 
 export interface AuthRequest extends Request {
@@ -34,8 +35,9 @@ const extractBearerToken = (req: Request): string | null => {
  */
 const resolveLiveUser = async (decoded: TokenPayload) => {
   const user = await User.findById(decoded.userId)
-    .select("role status subscription region sessionId")
+    .select("email role status subscription region sessionId")
     .lean<{
+      email: string;
       role: string;
       status: string;
       subscription: string;
@@ -59,6 +61,7 @@ const resolveLiveUser = async (decoded: TokenPayload) => {
     error: undefined,
     user: {
       ...decoded,
+      email: user.email,
       role: user.role,
       status: user.status,
       subscription: user.subscription,

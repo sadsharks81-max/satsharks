@@ -67,6 +67,8 @@ function AdminQuestions() {
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedQuestionIds, setSelectedQuestionIds] = useState<Set<string>>(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   // Create/Edit modal
   const [modalOpen, setModalOpen] = useState(false);
@@ -155,6 +157,7 @@ function AdminQuestions() {
     if (res.success) {
       setQuestions(res.questions || []);
       setTotalPages(res.pagination?.pages || 1);
+      setSelectedQuestionIds(new Set());
     }
     setLoading(false);
   };
@@ -244,8 +247,39 @@ function AdminQuestions() {
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this question?")) return;
-    await api.delete(`/api/questions/${id}`);
-    fetchQuestions();
+    const res = await api.delete(`/api/questions/${id}`);
+    if (res.success) fetchQuestions();
+    else alert(res.error || "Failed to delete question.");
+  };
+
+  const toggleQuestionSelection = (id: string) => {
+    setSelectedQuestionIds((previous) => {
+      const next = new Set(previous);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleCurrentPageSelection = () => {
+    const currentPageIds = questions.map((question) => question._id);
+    const allSelected = currentPageIds.length > 0 && currentPageIds.every((id) => selectedQuestionIds.has(id));
+    setSelectedQuestionIds(allSelected ? new Set() : new Set(currentPageIds));
+  };
+
+  const handleBulkDelete = async () => {
+    const ids = [...selectedQuestionIds];
+    if (ids.length === 0) return;
+    if (!confirm(`Permanently delete ${ids.length} selected question(s)? This cannot be undone.`)) return;
+    setBulkDeleting(true);
+    const res = await api.post("/api/questions/bulk-delete", { questionIds: ids });
+    setBulkDeleting(false);
+    if (res.success) {
+      if (ids.length === questions.length && page > 1) setPage((current) => current - 1);
+      else fetchQuestions();
+    } else {
+      alert(res.error || "Failed to delete selected questions.");
+    }
   };
 
   const handleCreateCategory = async (e: React.FormEvent) => {
@@ -282,14 +316,17 @@ function AdminQuestions() {
     }
   };
 
-  const handleDeleteCategory = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this category? Questions under this category will need to be re-categorized.")) {
+  const handleDeleteCategory = async (category: QuestionCategory) => {
+    const questionCount = category.questionCount || 0;
+    if (!confirm(`Permanently delete "${category.name}" and all ${questionCount} question(s) inside it? This cannot be undone.`)) {
       return;
     }
-    const res = await api.delete(`/api/categories/${id}`);
+    const res = await api.delete(`/api/categories/${category._id}`);
     if (res.success) {
       fetchCategories();
       fetchQuestions();
+    } else {
+      alert(res.error || "Failed to delete category.");
     }
   };
 
@@ -314,6 +351,16 @@ function AdminQuestions() {
         <Select value={sectionFilter} onChange={(e) => { setSectionFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Sections" }, { value: "MATH", label: "Math" }, { value: "READING_WRITING", label: "Reading & Writing" }]} className="!w-auto !py-2" />
         <Select value={difficultyFilter} onChange={(e) => { setDifficultyFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Difficulties" }, { value: "EASY", label: "Easy" }, { value: "MEDIUM", label: "Medium" }, { value: "HARD", label: "Hard" }]} className="!w-auto !py-2" />
         <Select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Statuses" }, { value: "PUBLISHED", label: "Published" }, { value: "UPLOADED", label: "Uploaded" }, { value: "UPDATED", label: "Updated" }, { value: "REVIEW", label: "Review" }]} className="!w-auto !py-2" />
+        {selectedQuestionIds.size > 0 && (
+          <button
+            onClick={handleBulkDelete}
+            disabled={bulkDeleting}
+            className="inline-flex items-center gap-2 rounded-xl bg-error px-4 py-2.5 text-sm font-semibold text-white hover:bg-error/90 disabled:opacity-50"
+          >
+            <Icon name="delete_sweep" className="text-lg" />
+            {bulkDeleting ? "Deleting..." : `Delete Selected (${selectedQuestionIds.size})`}
+          </button>
+        )}
       </div>
 
       {loading ? (
@@ -326,6 +373,15 @@ function AdminQuestions() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-surface-container-low border-b border-outline-variant/40 text-xs uppercase tracking-wider text-on-surface-variant">
+                  <th className="p-4 font-semibold">
+                    <input
+                      type="checkbox"
+                      aria-label="Select all questions on this page"
+                      checked={questions.length > 0 && questions.every((question) => selectedQuestionIds.has(question._id))}
+                      onChange={toggleCurrentPageSelection}
+                      className="h-4 w-4 accent-primary"
+                    />
+                  </th>
                   <th className="p-4 font-semibold">Question</th>
                   <th className="p-4 font-semibold">Category</th>
                   <th className="p-4 font-semibold">Difficulty</th>
@@ -336,6 +392,15 @@ function AdminQuestions() {
               <tbody className="divide-y divide-outline-variant/20">
                 {questions.map((q) => (
                   <tr key={q._id} className="hover:bg-surface-container-low/50 transition-colors">
+                    <td className="p-4">
+                      <input
+                        type="checkbox"
+                        aria-label={`Select question ${q._id}`}
+                        checked={selectedQuestionIds.has(q._id)}
+                        onChange={() => toggleQuestionSelection(q._id)}
+                        className="h-4 w-4 accent-primary"
+                      />
+                    </td>
                     <td className="p-4 text-sm max-w-md">
                       <p className="line-clamp-2">{renderFormattedText(q.text)}</p>
                       <div className="flex gap-2 mt-1">
@@ -639,6 +704,7 @@ function AdminQuestions() {
                   <div className="flex items-center gap-2 min-w-0">
                     <span className="font-semibold text-sm truncate">{c.name}</span>
                     <Badge variant="info" className="shrink-0">{c.section === "MATH" ? "Math" : "R&W"}</Badge>
+                    <span className="shrink-0 text-xs text-on-surface-variant">{c.questionCount || 0} questions</span>
                   </div>
                   <div className="flex gap-2 shrink-0">
                     <button
@@ -649,7 +715,7 @@ function AdminQuestions() {
                       <Icon name="edit" className="text-base" />
                     </button>
                     <button
-                      onClick={() => handleDeleteCategory(c._id)}
+                      onClick={() => handleDeleteCategory(c)}
                       className="p-1 hover:bg-error/10 rounded transition-colors text-error cursor-pointer"
                       title="Delete Category"
                     >

@@ -13,6 +13,22 @@ export const requireAdmin = () => {
   };
 };
 
+export const requirePrimaryAdmin = () => {
+  return (req: AuthRequest, res: Response, next: NextFunction) => {
+    if (
+      !req.user ||
+      req.user.role !== "ADMIN" ||
+      req.user.email?.trim().toLowerCase() !== "admin@satsharks.com"
+    ) {
+      return res.status(403).json({
+        success: false,
+        error: "Forbidden: Payment records are restricted to the primary administrator",
+      });
+    }
+    next();
+  };
+};
+
 export const requireStudent = () => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     if (!req.user || req.user.role !== "STUDENT") {

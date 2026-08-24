@@ -28,8 +28,8 @@ frontend/.vercel
 backend/.env
 frontend/.env
 !.env.example
-!backend/.env.example
-!frontend/.env.example
+backend/.env.example
+frontend/.env.example
 
 # Wrangler / Cloudflare
 .wrangler/

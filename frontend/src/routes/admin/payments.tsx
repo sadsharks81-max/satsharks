@@ -3,12 +3,53 @@ import { useEffect, useState } from "react";
 import { AdminLayout } from "../../components/layout/AdminLayout";
 import { Badge } from "../../components/ui/Badge";
 import { Icon } from "../../components/common/Icon";
-import { api, resolveImageUrl } from "../../services/api";
+import { api, resolveImageUrlCandidates } from "../../services/api";
 import { EmptyState } from "../../components/ui/EmptyState";
 
 export const Route = createFileRoute("/admin/payments")({
   component: AdminPayments,
 });
+
+function ReceiptImage({
+  url,
+  alt,
+  className,
+}: {
+  url: string;
+  alt: string;
+  className: string;
+}) {
+  const candidates = resolveImageUrlCandidates(url);
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const [unavailable, setUnavailable] = useState(false);
+
+  useEffect(() => {
+    setCandidateIndex(0);
+    setUnavailable(false);
+  }, [url]);
+
+  if (unavailable || candidates.length === 0) {
+    return (
+      <div className="flex min-h-16 w-full flex-col items-center justify-center gap-1 p-3 text-center text-error">
+        <Icon name="broken_image" className="text-2xl" />
+        <span className="text-[11px] font-semibold">Receipt image unavailable</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={candidates[candidateIndex]}
+      alt={alt}
+      className={className}
+      referrerPolicy="no-referrer"
+      onError={() => {
+        if (candidateIndex + 1 < candidates.length) setCandidateIndex((index) => index + 1);
+        else setUnavailable(true);
+      }}
+    />
+  );
+}
 
 function AdminPayments() {
   const [proofs, setProofs] = useState<any[]>([]);
@@ -58,7 +99,7 @@ function AdminPayments() {
     try {
       const res = await api.put(`/api/payment/proofs/${id}/reject`);
       if (res.success) {
-        setMessage({ type: "success", text: "Payment proof rejected and deleted." });
+        setMessage({ type: "success", text: "Payment declined and its proof image was deleted." });
         setProofs((prev) => prev.filter((p) => p._id !== id));
       } else {
         setMessage({ type: "error", text: res.error || "Failed to reject payment." });
@@ -135,14 +176,10 @@ function AdminPayments() {
                       className="w-16 h-16 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low cursor-pointer hover:opacity-80 hover:border-primary transition-all flex items-center justify-center relative group"
                       title="Click to view full image"
                     >
-                      <img 
-                        src={resolveImageUrl(p.screenshotUrl)} 
+                      <ReceiptImage
+                        url={p.screenshotUrl}
                         alt="Receipt proof"
                         className="w-full h-full object-cover"
-                        onError={(e) => {
-                          // Fallback if image doesn't load
-                          (e.target as HTMLElement).style.display = 'none';
-                        }}
                       />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <Icon name="zoom_in" className="text-white text-lg" />
@@ -194,8 +231,8 @@ function AdminPayments() {
               <Icon name="close" className="text-xl" />
             </button>
             <div className="overflow-auto flex items-center justify-center bg-slate-900 rounded-xl max-h-[85vh]">
-              <img 
-                src={resolveImageUrl(selectedImage)} 
+              <ReceiptImage
+                url={selectedImage}
                 alt="Receipt Full View" 
                 className="max-w-full max-h-[80vh] object-contain"
               />

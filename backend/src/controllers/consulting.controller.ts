@@ -140,3 +140,16 @@ export const updateConsultingRequest = async (req: AuthRequest, res: Response) =
     return res.status(500).json({ success: false, error: "Server Error" });
   }
 };
+
+export const deleteConsultingRequest = async (req: AuthRequest, res: Response) => {
+  try {
+    const request = await ConsultingRequest.findByIdAndDelete(req.params.id);
+    if (!request) {
+      return res.status(404).json({ success: false, error: "Request not found" });
+    }
+    return res.status(200).json({ success: true, message: "Consulting request deleted." });
+  } catch (error) {
+    console.error("Delete Consulting Request Error:", error);
+    return res.status(500).json({ success: false, error: "Server Error" });
+  }
+};

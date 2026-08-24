@@ -24,6 +24,25 @@ function AdminConsulting() {
     },
   });
 
+  const deleteRequest = useMutation({
+    mutationFn: async (request: ConsultingRequest) => {
+      const res = await api.delete(`/api/consulting/admin/${request._id}`);
+      if (!res.success) throw new Error(res.error || "Failed to delete consulting request.");
+      return request._id;
+    },
+    onSuccess: (deletedId) => {
+      if (selectedReq?._id === deletedId) setSelectedReq(null);
+      queryClient.invalidateQueries({ queryKey: ["admin-consulting"] });
+    },
+    onError: (error) => alert(error instanceof Error ? error.message : "Failed to delete consulting request."),
+  });
+
+  const handleDeleteRequest = (request: ConsultingRequest) => {
+    const studentName = (request.student as any)?.name || "this student";
+    if (!confirm(`Permanently delete the consulting request from ${studentName}? This cannot be undone.`)) return;
+    deleteRequest.mutate(request);
+  };
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "PENDING":
@@ -91,9 +110,19 @@ function AdminConsulting() {
                     <td className="px-6 py-4">{getStatusBadge(req.status)}</td>
                     <td className="px-6 py-4 text-on-surface-variant">{new Date(req.createdAt).toLocaleDateString()}</td>
                     <td className="px-6 py-4 text-right">
-                      <Button variant="outline" onClick={() => setSelectedReq(req)} className="h-8 px-3 text-xs">
-                        View
-                      </Button>
+                      <div className="flex justify-end gap-2">
+                        <Button variant="outline" onClick={() => setSelectedReq(req)} className="h-8 px-3 text-xs">
+                          View
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => handleDeleteRequest(req)}
+                          disabled={deleteRequest.isPending && deleteRequest.variables?._id === req._id}
+                          className="h-8 border-error/30 px-3 text-xs text-error hover:bg-error/10"
+                        >
+                          {deleteRequest.isPending && deleteRequest.variables?._id === req._id ? "Deleting..." : "Delete"}
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))

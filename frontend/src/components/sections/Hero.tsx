@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Icon } from "../common/Icon";
 import { Link } from "@tanstack/react-router";
@@ -19,10 +19,15 @@ const resolveHeroImageUrl = (url: string) => {
   return url ? resolveImageUrl(url) : "";
 };
 
-export function Hero() {
+interface HeroProps {
+  onReady?: () => void;
+}
+
+export function Hero({ onReady }: HeroProps) {
   const { user } = useAuth();
-  const [feature, setFeature] = useState<any>(DEFAULT_FEATURE);
+  const [feature, setFeature] = useState<any>(null);
   const [heroImageLoaded, setHeroImageLoaded] = useState(false);
+  const readyNotified = useRef(false);
 
   useEffect(() => {
     getHomepageSuccessContent()
@@ -41,6 +46,25 @@ export function Hero() {
         setFeature(DEFAULT_FEATURE);
       });
   }, []);
+
+  useEffect(() => {
+    if (!feature || !heroImageLoaded || readyNotified.current) return;
+
+    const notifyReady = async () => {
+      if (typeof document !== "undefined" && document.fonts) {
+        await Promise.allSettled([
+          document.fonts.load('400 16px "Material Symbols Outlined"'),
+          document.fonts.load('600 16px "League Spartan"'),
+        ]);
+      }
+      if (!readyNotified.current) {
+        readyNotified.current = true;
+        onReady?.();
+      }
+    };
+
+    void notifyReady();
+  }, [feature, heroImageLoaded, onReady]);
 
   return (
     <section id="top" className="relative pt-4 pb-28 md:pt-8 md:pb-40 overflow-hidden bg-background">

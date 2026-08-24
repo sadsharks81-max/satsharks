@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import Question from "../models/Question";
+import DiagnosticTest from "../models/DiagnosticTest";
+import SATTest from "../models/SATTest";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { stripEmojis } from "../utils/text";
 import { deleteManagedImage, deleteReplacedManagedImage } from "../utils/managed-image";
@@ -156,12 +158,65 @@ export const updateQuestion = async (req: Request, res: Response) => {
 
 export const deleteQuestion = async (req: Request, res: Response) => {
   try {
-    const question = await Question.findByIdAndDelete(req.params.id);
+    const question = await Question.findById(req.params.id);
     if (!question) return res.status(404).json({ success: false, error: "Question not found" });
+
+    const [satTestReferences, diagnosticReferences] = await Promise.all([
+      SATTest.countDocuments({ "modules.questions": question._id }),
+      DiagnosticTest.countDocuments({ questions: question._id }),
+    ]);
+    if (satTestReferences > 0 || diagnosticReferences > 0) {
+      return res.status(409).json({
+        success: false,
+        error: `This question is used by ${satTestReferences} SAT test(s) and ${diagnosticReferences} diagnostic test(s). Remove it from those tests first.`,
+      });
+    }
+
+    await question.deleteOne();
     await deleteManagedImage(question.imageUrl);
     res.status(200).json({ success: true, message: "Question deleted" });
   } catch (error) {
     sendError(res, error, "question.controller");
+  }
+};
+
+export const bulkDeleteQuestions = async (req: Request, res: Response) => {
+  try {
+    if (!Array.isArray(req.body.questionIds) || req.body.questionIds.length === 0) {
+      return res.status(400).json({ success: false, error: "Select at least one question." });
+    }
+
+    const rawQuestionIds = req.body.questionIds as unknown[];
+    const questionIds: string[] = [...new Set(rawQuestionIds.map((id) => String(id)))];
+    if (questionIds.length > 500 || questionIds.some((id) => !mongoose.Types.ObjectId.isValid(id))) {
+      return res.status(400).json({ success: false, error: "Invalid question selection." });
+    }
+
+    const questions = await Question.find({ _id: { $in: questionIds } }).select("_id imageUrl");
+    if (questions.length === 0) {
+      return res.status(404).json({ success: false, error: "No selected questions were found." });
+    }
+    const existingIds = questions.map((question) => question._id);
+    const [satTestReferences, diagnosticReferences] = await Promise.all([
+      SATTest.countDocuments({ "modules.questions": { $in: existingIds } }),
+      DiagnosticTest.countDocuments({ questions: { $in: existingIds } }),
+    ]);
+    if (satTestReferences > 0 || diagnosticReferences > 0) {
+      return res.status(409).json({
+        success: false,
+        error: `The selection contains questions used by ${satTestReferences} SAT test(s) and ${diagnosticReferences} diagnostic test(s). Remove those test references first.`,
+      });
+    }
+
+    const result = await Question.deleteMany({ _id: { $in: existingIds } });
+    await Promise.allSettled(questions.map((question) => deleteManagedImage(question.imageUrl)));
+    res.status(200).json({
+      success: true,
+      deletedCount: result.deletedCount,
+      message: `${result.deletedCount} question(s) deleted.`,
+    });
+  } catch (error) {
+    sendError(res, error, "question.bulkDeleteQuestions");
   }
 };
 

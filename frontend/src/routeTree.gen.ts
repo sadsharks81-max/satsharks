@@ -54,6 +54,7 @@ import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminQuestionsRouteImport } from './routes/admin/questions'
 import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
+import { Route as AdminPaymentHistoryRouteImport } from './routes/admin/payment-history'
 import { Route as AdminEssaysRouteImport } from './routes/admin/essays'
 import { Route as AdminContactRequestsRouteImport } from './routes/admin/contact-requests'
 import { Route as AdminConsultingRouteImport } from './routes/admin/consulting'
@@ -289,6 +290,11 @@ const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
   path: '/admin/payments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPaymentHistoryRoute = AdminPaymentHistoryRouteImport.update({
+  id: '/admin/payment-history',
+  path: '/admin/payment-history',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminEssaysRoute = AdminEssaysRouteImport.update({
   id: '/admin/essays',
   path: '/admin/essays',
@@ -352,6 +358,7 @@ export interface FileRoutesByFullPath {
   '/admin/consulting': typeof AdminConsultingRoute
   '/admin/contact-requests': typeof AdminContactRequestsRoute
   '/admin/essays': typeof AdminEssaysRoute
+  '/admin/payment-history': typeof AdminPaymentHistoryRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
@@ -407,6 +414,7 @@ export interface FileRoutesByTo {
   '/admin/consulting': typeof AdminConsultingRoute
   '/admin/contact-requests': typeof AdminContactRequestsRoute
   '/admin/essays': typeof AdminEssaysRoute
+  '/admin/payment-history': typeof AdminPaymentHistoryRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/settings': typeof AdminSettingsRoute
@@ -463,6 +471,7 @@ export interface FileRoutesById {
   '/admin/consulting': typeof AdminConsultingRoute
   '/admin/contact-requests': typeof AdminContactRequestsRoute
   '/admin/essays': typeof AdminEssaysRoute
+  '/admin/payment-history': typeof AdminPaymentHistoryRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
@@ -521,6 +530,7 @@ export interface FileRouteTypes {
     | '/admin/consulting'
     | '/admin/contact-requests'
     | '/admin/essays'
+    | '/admin/payment-history'
     | '/admin/payments'
     | '/admin/questions'
     | '/admin/reports'
@@ -576,6 +586,7 @@ export interface FileRouteTypes {
     | '/admin/consulting'
     | '/admin/contact-requests'
     | '/admin/essays'
+    | '/admin/payment-history'
     | '/admin/payments'
     | '/admin/questions'
     | '/admin/settings'
@@ -631,6 +642,7 @@ export interface FileRouteTypes {
     | '/admin/consulting'
     | '/admin/contact-requests'
     | '/admin/essays'
+    | '/admin/payment-history'
     | '/admin/payments'
     | '/admin/questions'
     | '/admin/reports'
@@ -688,6 +700,7 @@ export interface RootRouteChildren {
   AdminConsultingRoute: typeof AdminConsultingRoute
   AdminContactRequestsRoute: typeof AdminContactRequestsRoute
   AdminEssaysRoute: typeof AdminEssaysRoute
+  AdminPaymentHistoryRoute: typeof AdminPaymentHistoryRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminQuestionsRoute: typeof AdminQuestionsRoute
   AdminReportsRoute: typeof AdminReportsRouteWithChildren
@@ -1034,6 +1047,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPaymentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/payment-history': {
+      id: '/admin/payment-history'
+      path: '/admin/payment-history'
+      fullPath: '/admin/payment-history'
+      preLoaderRoute: typeof AdminPaymentHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/essays': {
       id: '/admin/essays'
       path: '/admin/essays'
@@ -1162,6 +1182,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminConsultingRoute: AdminConsultingRoute,
   AdminContactRequestsRoute: AdminContactRequestsRoute,
   AdminEssaysRoute: AdminEssaysRoute,
+  AdminPaymentHistoryRoute: AdminPaymentHistoryRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminQuestionsRoute: AdminQuestionsRoute,
   AdminReportsRoute: AdminReportsRouteWithChildren,

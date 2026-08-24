@@ -5,7 +5,8 @@ import {
   getReports,
   getReportCount,
   getReportById,
-  resolveReport
+  resolveReport,
+  deleteResolvedReport,
 } from "../controllers/report.controller";
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get("/", authenticate, isAdmin, getReports);
 router.get("/count", authenticate, isAdmin, getReportCount);
 router.get("/:id", authenticate, isAdmin, getReportById);
 router.put("/:id/resolve", authenticate, isAdmin, resolveReport);
+router.delete("/:id", authenticate, isAdmin, deleteResolvedReport);
 
 export default router;

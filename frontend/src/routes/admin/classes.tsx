@@ -24,6 +24,7 @@ function AdminClasses() {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [deletingClassId, setDeletingClassId] = useState<string | null>(null);
 
   // Form State
   const [form, setForm] = useState({
@@ -95,7 +96,8 @@ function AdminClasses() {
   };
 
   const handleDeleteClass = async (id: string) => {
-    if (!confirm("Are you sure you want to permanently delete this class session?")) return;
+    if (!confirm("Permanently delete this class session, its attendance, and its chat history? This cannot be undone.")) return;
+    setDeletingClassId(id);
     try {
       const res = await api.delete(`/api/live-classes/${id}`);
       if (res.success) {
@@ -105,6 +107,8 @@ function AdminClasses() {
       }
     } catch (err) {
       alert("Error deleting class.");
+    } finally {
+      setDeletingClassId(null);
     }
   };
 
@@ -220,12 +224,16 @@ function AdminClasses() {
                             </button>
                           </>
                         )}
-                        <button
-                          onClick={() => handleDeleteClass(c._id)}
-                          className="px-3 py-1.5 bg-error/10 text-error hover:bg-error/20 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none"
-                        >
-                          <Icon name="delete" className="text-[14px]" /> Delete
-                        </button>
+                        {c.status !== "LIVE" && (
+                          <button
+                            onClick={() => handleDeleteClass(c._id)}
+                            disabled={deletingClassId === c._id}
+                            className="px-3 py-1.5 bg-error/10 text-error hover:bg-error/20 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none disabled:opacity-50"
+                          >
+                            <Icon name="delete" className="text-[14px]" />
+                            {deletingClassId === c._id ? "Deleting..." : "Delete"}
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

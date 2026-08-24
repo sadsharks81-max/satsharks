@@ -5,11 +5,19 @@ import { useAuth } from "../../hooks/useAuth";
 import { Icon } from "../common/Icon";
 import { api } from "../../services/api";
 
+interface AdminNavItem {
+  to: string;
+  label: string;
+  icon: string;
+  primaryOnly?: boolean;
+}
+
 const navItems = [
   { to: "/admin", label: "Dashboard", icon: "dashboard" },
   { to: "/admin/users", label: "Users", icon: "group" },
   { to: "/admin/student-progress", label: "Student Progress", icon: "monitoring" },
   { to: "/admin/payments", label: "Payments", icon: "payments" },
+  { to: "/admin/payment-history", label: "Payment Records", icon: "receipt_long", primaryOnly: true },
   { to: "/admin/tests", label: "Tests", icon: "quiz" },
   { to: "/admin/questions", label: "Questions", icon: "help_center" },
   { to: "/admin/vocabulary", label: "Vocabulary", icon: "spellcheck" },
@@ -23,12 +31,18 @@ const navItems = [
   { to: "/admin/reports", label: "Reported Issues", icon: "report_problem" },
   { to: "/admin/classes", label: "Live Classes", icon: "video_camera_front" },
   { to: "/admin/settings", label: "Site Settings", icon: "settings" },
-];
+] as const satisfies readonly AdminNavItem[];
 
 export function AdminLayout({ children, activeItem = "" }: { children: ReactNode; activeItem?: string }) {
   const { user, isLoading } = useAuth();
   const [reportCount, setReportCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const visibleNavItems = navItems.filter(
+    (item) =>
+      !("primaryOnly" in item) ||
+      !item.primaryOnly ||
+      user?.email?.trim().toLowerCase() === "admin@satsharks.com",
+  );
 
   useEffect(() => {
     if (user?.role === "ADMIN") {
@@ -61,12 +75,12 @@ export function AdminLayout({ children, activeItem = "" }: { children: ReactNode
           className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface text-xs font-semibold rounded-lg border border-outline-variant/30"
         >
           <Icon name={mobileMenuOpen ? "close" : "menu"} className="text-[16px]" />
-          {navItems.find(item => activeItem === item.to)?.label || "Menu"}
+          {visibleNavItems.find(item => activeItem === item.to)?.label || "Menu"}
         </button>
       </div>
       {mobileMenuOpen && (
         <nav className="md:hidden border-b border-outline-variant/30 bg-surface-container-lowest p-4 space-y-1">
-          {navItems.map((item) => (
+          {visibleNavItems.map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -96,7 +110,7 @@ export function AdminLayout({ children, activeItem = "" }: { children: ReactNode
             Admin Panel
           </h2>
           <nav className="space-y-1">
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}

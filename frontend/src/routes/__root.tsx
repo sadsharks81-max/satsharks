@@ -151,6 +151,28 @@ function RootComponent() {
     "/classroom",
   ].some((path) => pathname.startsWith(path));
 
+  useEffect(() => {
+    let cancelled = false;
+    const revealIcons = () => {
+      if (!cancelled) document.documentElement.classList.add("app-fonts-ready");
+    };
+    const fallback = window.setTimeout(revealIcons, 4500);
+
+    if (document.fonts) {
+      Promise.allSettled([
+        document.fonts.load('400 16px "Material Symbols Outlined"'),
+        document.fonts.load('600 16px "League Spartan"'),
+      ]).then(revealIcons);
+    } else {
+      revealIcons();
+    }
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallback);
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>

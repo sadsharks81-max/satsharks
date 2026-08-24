@@ -6,6 +6,7 @@ import {
   getMyConsultingRequests,
   getAllConsultingRequests,
   updateConsultingRequest,
+  deleteConsultingRequest,
 } from "../controllers/consulting.controller";
 
 const router = Router();
@@ -15,5 +16,6 @@ router.get("/my", authenticate, requireActiveUser(), getMyConsultingRequests);
 
 router.get("/admin/all", authenticate, requireAdmin(), getAllConsultingRequests);
 router.put("/admin/:id", authenticate, requireAdmin(), updateConsultingRequest);
+router.delete("/admin/:id", authenticate, requireAdmin(), deleteConsultingRequest);
 
 export default router;

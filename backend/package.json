@@ -14,6 +14,7 @@
     "import:sat": "tsx src/scripts/importSAT.ts",
     "import:sat:all": "tsx src/scripts/importAllSAT.ts",
     "import:practice": "tsx src/scripts/importPracticeQuestions.ts",
+    "replace:practice:english": "tsx src/scripts/replaceEnglishPracticeQuestions.ts",
     "test:practice-parser": "tsx src/scripts/testPracticeQuestionParser.ts",
     "validate:practice-pdf": "tsx src/scripts/validatePracticeQuestionPdf.ts",
     "seed": "tsx scripts/seed.ts",

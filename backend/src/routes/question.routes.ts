@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getQuestions, getQuestion, createQuestion, updateQuestion, deleteQuestion, bulkCreateQuestions, getAllQuestionsAdmin } from "../controllers/question.controller";
+import { getQuestions, getQuestion, createQuestion, updateQuestion, deleteQuestion, bulkCreateQuestions, bulkDeleteQuestions, getAllQuestionsAdmin } from "../controllers/question.controller";
 import { authenticate } from "../middleware/auth.middleware";
 import { requireAdmin } from "../middleware/role.middleware";
 import { validate } from "../middleware/validate.middleware";
@@ -12,6 +12,7 @@ router.get("/admin", authenticate, requireAdmin(), getAllQuestionsAdmin);
 router.get("/:id", authenticate, getQuestion);
 router.post("/", authenticate, requireAdmin(), questionValidator, validate, createQuestion);
 router.post("/bulk", authenticate, requireAdmin(), bulkQuestionValidator, validate, bulkCreateQuestions);
+router.post("/bulk-delete", authenticate, requireAdmin(), bulkDeleteQuestions);
 router.put("/:id", authenticate, requireAdmin(), updateQuestion);
 router.delete("/:id", authenticate, requireAdmin(), deleteQuestion);
 

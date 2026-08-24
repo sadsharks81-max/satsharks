@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { ReportedIssue } from "../models/ReportedIssue";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { asFilterString, getPagination } from "../utils/query";
@@ -95,6 +95,25 @@ export const resolveReport = async (req: AuthRequest, res: Response) => {
     res.status(200).json({ success: true, report });
   } catch (error) {
     console.error("Error resolving report:", error);
+    res.status(500).json({ success: false, error: "Server Error" });
+  }
+};
+
+export const deleteResolvedReport = async (req: AuthRequest, res: Response) => {
+  try {
+    const report = await ReportedIssue.findById(req.params.id).select("status");
+    if (!report) return res.status(404).json({ success: false, error: "Report not found" });
+    if (report.status !== "RESOLVED") {
+      return res.status(409).json({
+        success: false,
+        error: "Only resolved issues can be deleted. Resolve this issue first.",
+      });
+    }
+
+    await report.deleteOne();
+    res.status(200).json({ success: true, message: "Resolved issue deleted." });
+  } catch (error) {
+    console.error("Error deleting report:", error);
     res.status(500).json({ success: false, error: "Server Error" });
   }
 };

@@ -13,6 +13,7 @@ function ReportsDashboard() {
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"ALL" | "OPEN" | "RESOLVED">("ALL");
+  const [deletingReportId, setDeletingReportId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -31,6 +32,19 @@ function ReportsDashboard() {
     };
     fetchReports();
   }, [filter]);
+
+  const handleDeleteResolved = async (report: any) => {
+    if (report.status !== "RESOLVED") return;
+    if (!confirm("Permanently delete this resolved issue? This cannot be undone.")) return;
+    setDeletingReportId(report._id);
+    const res = await api.delete(`/api/reports/${report._id}`);
+    setDeletingReportId(null);
+    if (res.success) {
+      setReports((previous) => previous.filter((item) => item._id !== report._id));
+    } else {
+      alert(res.error || "Failed to delete resolved issue.");
+    }
+  };
 
   return (
     <AdminLayout activeItem="/admin/reports">
@@ -100,14 +114,26 @@ function ReportsDashboard() {
                         </p>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <Link
-                          to="/admin/reports/$id"
-                          params={{ id: report._id }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary text-primary hover:bg-primary/5 transition-colors font-semibold text-xs"
-                        >
-                          <Icon name="visibility" className="text-[14px]" />
-                          Review
-                        </Link>
+                        <div className="flex justify-end gap-2">
+                          <Link
+                            to="/admin/reports/$id"
+                            params={{ id: report._id }}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-primary text-primary hover:bg-primary/5 transition-colors font-semibold text-xs"
+                          >
+                            <Icon name="visibility" className="text-[14px]" />
+                            Review
+                          </Link>
+                          {report.status === "RESOLVED" && (
+                            <button
+                              onClick={() => handleDeleteResolved(report)}
+                              disabled={deletingReportId === report._id}
+                              className="inline-flex items-center gap-1.5 rounded-lg bg-error/10 px-3 py-1.5 text-xs font-semibold text-error hover:bg-error/20 disabled:opacity-50"
+                            >
+                              <Icon name="delete" className="text-[14px]" />
+                              {deletingReportId === report._id ? "Deleting..." : "Delete"}
+                            </button>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   ))}

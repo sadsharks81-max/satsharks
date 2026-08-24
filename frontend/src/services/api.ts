@@ -21,6 +21,19 @@ export const resolveImageUrl = (url: string) => {
   return url;
 };
 
+/**
+ * Relative upload paths can come from the shared production database while an
+ * administrator is running the frontend/backend locally. In that case the
+ * local uploads folder may not contain the Railway-hosted file. Image views can
+ * try the normal URL first and then the canonical production backend.
+ */
+export const resolveImageUrlCandidates = (url: string) => {
+  if (!url) return [];
+  const primary = resolveImageUrl(url);
+  if (!url.startsWith("/")) return [primary];
+  return [...new Set([primary, `${productionApiBaseUrl}${url}`])];
+};
+
 // Returns the backend base URL prefix for raw fetch() calls (e.g. file uploads).
 // In dev: returns "" so requests stay relative and go through the Vite /api proxy.
 // In prod: returns the configured API_BASE_URL.
@@ -164,6 +177,8 @@ const request = async (url: string, options: RequestOptions = {}): Promise<ApiRe
 export const api = {
   publicGet: <T = ApiResult>(url: string) =>
     request(url, { auth: false, cache: "default" }) as Promise<T>,
+  publicGetFresh: <T = ApiResult>(url: string) =>
+    request(url, { auth: false, cache: "no-store" }) as Promise<T>,
   get: <T = ApiResult>(url: string) => request(url) as Promise<T>,
   post: <T = ApiResult>(url: string, data: unknown) =>
     request(url, { method: "POST", body: data ?? {} }) as Promise<T>,

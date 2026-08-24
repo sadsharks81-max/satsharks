@@ -1,4 +1,5 @@
 import { Response } from "express";
+import mongoose from "mongoose";
 import { AuthRequest } from "../middleware/auth.middleware";
 import PaymentProof from "../models/PaymentProof";
 import User from "../models/User";
@@ -7,6 +8,7 @@ import { env } from "../config/env";
 import path from "path";
 import fs from "fs";
 import { sendError } from "../utils/http";
+import { deleteManagedImage } from "../utils/managed-image";
 
 // Submit a new manual payment proof (Student)
 export const uploadPaymentProof = async (req: AuthRequest, res: Response) => {
@@ -66,6 +68,8 @@ export const uploadPaymentProof = async (req: AuthRequest, res: Response) => {
 
     const newProof = await PaymentProof.create({
       user: userId,
+      userName: userExists.name,
+      userEmail: userExists.email,
       planId,
       planName,
       amount,
@@ -133,23 +137,8 @@ export const getPaymentProofs = async (req: AuthRequest, res: Response) => {
   }
 };
 
-// Helper function to delete payment proof screenshot file from filesystem
-const deleteScreenshotFile = (screenshotUrl: string) => {
-  try {
-    const filename = path.basename(screenshotUrl);
-    const filePath = path.resolve(__dirname, "../../uploads", filename);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-      console.log(`Successfully deleted payment proof file: ${filename}`);
-    } else {
-      console.warn(`File not found for deletion: ${filePath}`);
-    }
-  } catch (error) {
-    console.error("Error unlinking screenshot file:", error);
-  }
-};
-
-// Approve manual payment proof, upgrade student, and delete proof/screenshot (Admin)
+// Approve manual payment proof, upgrade student, and delete only the screenshot.
+// The metadata is retained as an audit record for the primary administrator.
 export const approvePaymentProof = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
@@ -163,6 +152,14 @@ export const approvePaymentProof = async (req: AuthRequest, res: Response) => {
     if (!proof) {
       return res.status(404).json({ success: false, error: "Payment proof not found." });
     }
+    if (proof.status !== "PENDING") {
+      return res.status(409).json({ success: false, error: "This payment has already been processed." });
+    }
+
+    const student = await User.findById(proof.user).select("name email");
+    if (!student) {
+      return res.status(409).json({ success: false, error: "The student account no longer exists." });
+    }
 
     // Set expiry based on plan duration
     const expiry = new Date();
@@ -173,7 +170,7 @@ export const approvePaymentProof = async (req: AuthRequest, res: Response) => {
     }
 
     // Upgrade student user
-    await User.findByIdAndUpdate(proof.user, {
+    await User.findByIdAndUpdate(student._id, {
       subscription: "PAID",
       subscriptionPlan: proof.planName,
       subscriptionExpiry: expiry,
@@ -183,22 +180,27 @@ export const approvePaymentProof = async (req: AuthRequest, res: Response) => {
 
     // Create approval notification
     await Notification.create({
-      user: proof.user,
+      user: student._id,
       type: "PAYMENT_SUCCESS",
       title: "Subscription Approved!",
       message: `Your payment proof has been verified and your subscription is now upgraded to ${proof.planName} (PAID). Thank you!`,
       isRead: false
     });
 
-    // Clean up filesystem space: delete the uploaded screenshot file
-    deleteScreenshotFile(proof.screenshotUrl);
-
-    // Clean up database space: delete the PaymentProof document
-    await PaymentProof.findByIdAndDelete(id);
+    // The proof image is deleted immediately. Only non-sensitive payment
+    // metadata remains in the database history.
+    await deleteManagedImage(proof.screenshotUrl);
+    proof.userName = student.name;
+    proof.userEmail = student.email;
+    proof.status = "APPROVED";
+    proof.screenshotUrl = "";
+    proof.processedBy = new mongoose.Types.ObjectId(req.user!.userId);
+    proof.processedAt = new Date();
+    await proof.save();
 
     return res.status(200).json({
       success: true,
-      message: "Payment proof approved. User upgraded and proof file deleted."
+      message: "Payment approved. The proof image was deleted and the payment record was retained."
     });
   } catch (error: any) {
     return sendError(res, error, "payment-proof.approvePaymentProof");
@@ -219,27 +221,84 @@ export const rejectPaymentProof = async (req: AuthRequest, res: Response) => {
     if (!proof) {
       return res.status(404).json({ success: false, error: "Payment proof not found." });
     }
+    if (proof.status !== "PENDING") {
+      return res.status(409).json({ success: false, error: "This payment has already been processed." });
+    }
+
+    const student = await User.findById(proof.user).select("name email");
 
     // Create rejection notification
-    await Notification.create({
-      user: proof.user,
-      type: "ACCOUNT",
-      title: "Payment Proof Rejected",
-      message: `Your payment proof for ${proof.planName} could not be verified. Please check your transaction details and upload again, or nudge us on WhatsApp.`,
-      isRead: false
-    });
+    if (student) {
+      await Notification.create({
+        user: student._id,
+        type: "ACCOUNT",
+        title: "Payment Proof Rejected",
+        message: `Your payment proof for ${proof.planName} could not be verified. Please check your transaction details and upload again, or nudge us on WhatsApp.`,
+        isRead: false
+      });
+    }
 
-    // Clean up filesystem space: delete the uploaded screenshot file
-    deleteScreenshotFile(proof.screenshotUrl);
-
-    // Clean up database space: delete the PaymentProof document
-    await PaymentProof.findByIdAndDelete(id);
+    await deleteManagedImage(proof.screenshotUrl);
+    proof.userName = student?.name || proof.userName;
+    proof.userEmail = student?.email || proof.userEmail;
+    proof.status = "REJECTED";
+    proof.screenshotUrl = "";
+    proof.processedBy = new mongoose.Types.ObjectId(req.user!.userId);
+    proof.processedAt = new Date();
+    await proof.save();
 
     return res.status(200).json({
       success: true,
-      message: "Payment proof rejected and file deleted."
+      message: "Payment declined. The proof image was deleted and the payment record was retained."
     });
   } catch (error: any) {
     return sendError(res, error, "payment-proof.rejectPaymentProof");
+  }
+};
+
+export const getPaymentHistory = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!env.isDatabaseConfigured) {
+      return res.status(200).json({ success: true, records: [] });
+    }
+
+    const records = await PaymentProof.find({ status: { $in: ["APPROVED", "REJECTED"] } })
+      .select("-screenshotUrl")
+      .populate("user", "name email")
+      .populate("processedBy", "name email")
+      .sort({ processedAt: -1, updatedAt: -1 })
+      .limit(1000)
+      .lean();
+
+    return res.status(200).json({ success: true, records });
+  } catch (error) {
+    return sendError(res, error, "payment-proof.getPaymentHistory");
+  }
+};
+
+export const deletePaymentRecord = async (req: AuthRequest, res: Response) => {
+  try {
+    if (!env.isDatabaseConfigured) {
+      return res.status(200).json({ success: true, message: "Payment record deleted (mock mode)." });
+    }
+
+    const record = await PaymentProof.findById(req.params.id);
+    if (!record) {
+      return res.status(404).json({ success: false, error: "Payment record not found." });
+    }
+    if (record.status === "PENDING") {
+      return res.status(409).json({
+        success: false,
+        error: "Pending payments must be approved or declined from Payment Verification first.",
+      });
+    }
+
+    // Settled records normally have no screenshot, but this also cleans up any
+    // legacy record before deletion.
+    await deleteManagedImage(record.screenshotUrl);
+    await record.deleteOne();
+    return res.status(200).json({ success: true, message: "Payment record deleted." });
+  } catch (error) {
+    return sendError(res, error, "payment-proof.deletePaymentRecord");
   }
 };

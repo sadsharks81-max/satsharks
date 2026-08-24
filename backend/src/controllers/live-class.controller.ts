@@ -66,7 +66,7 @@ export const getLiveClasses = async (req: AuthRequest, res: Response) => {
     const role = req.user?.role;
     const userId = req.user?.userId;
 
-    let query: any = {};
+    const query: any = {};
 
     if (role === "STUDENT") {
       // Students see every scheduled/live/completed class (no roster system) - Join is gated by subscription.
@@ -155,6 +155,10 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
       return res.status(404).json({ success: false, error: "Class session not found" });
     }
 
+    if (liveClass.status === "LIVE") {
+      return res.status(409).json({ success: false, error: "End the live class before deleting it." });
+    }
+
     // Only creator/teacher/admin can delete
     if (req.user?.role !== "ADMIN" && String(liveClass.createdBy) !== String(req.user?.userId)) {
       return res.status(403).json({ success: false, error: "Unauthorized to delete this class" });
@@ -163,8 +167,17 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
     if (env.isLiveKitConfigured) {
       await deleteRoomIfExists(liveClass.roomName);
     }
-    await LiveClass.findByIdAndDelete(req.params.id);
-    res.status(200).json({ success: true, message: "Class deleted successfully" });
+    const session = await mongoose.startSession();
+    try {
+      await session.withTransaction(async () => {
+        await LiveClassAttendance.deleteMany({ liveClass: liveClass._id }, { session });
+        await LiveClassChatMessage.deleteMany({ liveClass: liveClass._id }, { session });
+        await LiveClass.deleteOne({ _id: liveClass._id }, { session });
+      });
+    } finally {
+      await session.endSession();
+    }
+    res.status(200).json({ success: true, message: "Class and its session records deleted successfully" });
   } catch (error) {
     sendError(res, error, "live-class.deleteLiveClass");
   }

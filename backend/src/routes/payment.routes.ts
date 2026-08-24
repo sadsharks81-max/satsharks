@@ -3,11 +3,13 @@ import { createCheckoutSession } from "../controllers/payment.controller";
 import {
   uploadPaymentProof,
   getPaymentProofs,
+  getPaymentHistory,
+  deletePaymentRecord,
   approvePaymentProof,
   rejectPaymentProof
 } from "../controllers/payment-proof.controller";
 import { authenticate, optionalAuthenticate } from "../middleware/auth.middleware";
-import { requireAdmin } from "../middleware/role.middleware";
+import { requireAdmin, requirePrimaryAdmin } from "../middleware/role.middleware";
 import { paymentProofUpload as upload } from "../middleware/upload.middleware";
 import { publicWriteRateLimiter } from "../middleware/rate-limit.middleware";
 
@@ -22,6 +24,8 @@ router.post("/upload-proof", authenticate, upload.single("screenshot"), uploadPa
 
 // Admin manual payment verification routes
 router.get("/proofs", authenticate, requireAdmin(), getPaymentProofs);
+router.get("/history", authenticate, requirePrimaryAdmin(), getPaymentHistory);
+router.delete("/history/:id", authenticate, requirePrimaryAdmin(), deletePaymentRecord);
 router.put("/proofs/:id/approve", authenticate, requireAdmin(), approvePaymentProof);
 router.put("/proofs/:id/reject", authenticate, requireAdmin(), rejectPaymentProof);
 

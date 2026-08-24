@@ -36,6 +36,7 @@ export interface QuestionCategory {
   name: string;
   section: "READING_WRITING" | "MATH";
   description: string;
+  questionCount?: number;
 }
 
 export interface QuestionOption {

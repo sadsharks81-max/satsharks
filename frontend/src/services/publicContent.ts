@@ -4,10 +4,12 @@ let homepageContentRequest: Promise<any> | null = null;
 
 export const getHomepageSuccessContent = () => {
   if (!homepageContentRequest) {
-    homepageContentRequest = api.publicGet("/api/success-stories/homepage").then((response) => {
-      if (!response?.success) homepageContentRequest = null;
-      return response;
-    });
+    const request = api.publicGetFresh("/api/success-stories/homepage");
+    homepageContentRequest = request;
+    const clearRequest = () => {
+      if (homepageContentRequest === request) homepageContentRequest = null;
+    };
+    void request.then(clearRequest, clearRequest);
   }
   return homepageContentRequest;
 };
