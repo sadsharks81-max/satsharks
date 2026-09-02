@@ -21,6 +21,60 @@ const extractBearerToken = (req: Request): string | null => {
   return token.length > 0 ? token : null;
 };
 
+type LiveUserRecord = {
+  email: string;
+  role: string;
+  status: string;
+  subscription: string;
+  region: string;
+  sessionId?: string | null;
+};
+
+const LIVE_USER_CACHE_TTL_MS = 5_000;
+const LIVE_USER_CACHE_MAX_ENTRIES = 5_000;
+const liveUserCache = new Map<
+  string,
+  { expiresAt: number; promise: Promise<LiveUserRecord | null> }
+>();
+
+/**
+ * Coalesce the parallel user lookup issued by pages that load several API
+ * resources together. The very short TTL preserves near-real-time suspension,
+ * role and single-device checks while removing duplicate MongoDB work.
+ */
+const getLiveUserRecord = async (
+  userId: string,
+  sessionId?: string,
+): Promise<LiveUserRecord | null> => {
+  const now = Date.now();
+  // A fresh student login gets a new session id and must bypass any record
+  // cached for the previous device/session immediately.
+  const cacheKey = `${userId}:${sessionId || "no-session"}`;
+  const cached = liveUserCache.get(cacheKey);
+  if (cached && cached.expiresAt > now) return cached.promise;
+  if (cached) liveUserCache.delete(cacheKey);
+
+  const promise = User.findById(userId)
+    .select("email role status subscription region +sessionId")
+    .lean<LiveUserRecord | null>()
+    .exec();
+
+  liveUserCache.set(cacheKey, { expiresAt: now + LIVE_USER_CACHE_TTL_MS, promise });
+
+  // Keep the per-process cache bounded even if many distinct users arrive.
+  if (liveUserCache.size > LIVE_USER_CACHE_MAX_ENTRIES) {
+    const oldestKey = liveUserCache.keys().next().value;
+    if (oldestKey) liveUserCache.delete(oldestKey);
+  }
+
+  try {
+    return await promise;
+  } catch (error) {
+    liveUserCache.delete(cacheKey);
+    throw error;
+  }
+};
+
 /**
  * Resolves the caller against current database state.
  *
@@ -34,16 +88,7 @@ const extractBearerToken = (req: Request): string | null => {
  * previously loaded the entire user document on every authenticated call.
  */
 const resolveLiveUser = async (decoded: TokenPayload) => {
-  const user = await User.findById(decoded.userId)
-    .select("email role status subscription region sessionId")
-    .lean<{
-      email: string;
-      role: string;
-      status: string;
-      subscription: string;
-      region: string;
-      sessionId?: string | null;
-    } | null>();
+  const user = await getLiveUserRecord(decoded.userId, decoded.sessionId);
 
   if (!user) return { error: "User not found" as const };
 

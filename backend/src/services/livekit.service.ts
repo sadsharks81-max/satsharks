@@ -37,10 +37,16 @@ const getWebhookReceiver = (): WebhookReceiver => {
   return webhookReceiver;
 };
 
+const MODERATOR_CAPACITY_BUFFER = 5;
+const ROOM_ENSURE_CACHE_MS = 60_000;
+const ensuredRooms = new Map<string, number>();
+const pendingRoomCreates = new Map<string, Promise<void>>();
+
 interface IssueTokenParams {
   roomName: string;
   identity: string;
   name: string;
+  role: string;
   ttlSeconds: number;
   grant: Pick<VideoGrant, "roomAdmin" | "canPublish" | "canSubscribe" | "canUpdateOwnMetadata">;
 }
@@ -49,12 +55,13 @@ interface IssueTokenParams {
  * Issues a short-lived LiveKit access token scoped to a single room.
  * The API secret never leaves the server - only the resulting JWT is returned.
  */
-export const issueRoomToken = async ({ roomName, identity, name, ttlSeconds, grant }: IssueTokenParams): Promise<string> => {
+export const issueRoomToken = async ({ roomName, identity, name, role, ttlSeconds, grant }: IssueTokenParams): Promise<string> => {
   assertConfigured();
   const at = new AccessToken(env.livekitApiKey, env.livekitApiSecret, {
     identity,
     name,
     ttl: ttlSeconds,
+    metadata: JSON.stringify({ role }),
   });
   at.addGrant({
     room: roomName,
@@ -70,16 +77,30 @@ export const issueRoomToken = async ({ roomName, identity, name, ttlSeconds, gra
  * Explicit creation lets us set maxParticipants as a hard capacity backstop.
  */
 export const ensureRoomExists = async (roomName: string, maxParticipants: number): Promise<void> => {
+  if ((ensuredRooms.get(roomName) ?? 0) > Date.now()) return;
+
+  const pending = pendingRoomCreates.get(roomName);
+  if (pending) return pending;
+
   const client = getRoomServiceClient();
-  await client.createRoom({
+  const create = client.createRoom({
     name: roomName,
-    maxParticipants,
-    // Auto-clean an empty room after 10 minutes so a forgotten "Start Class" doesn't linger.
-    emptyTimeout: 10 * 60,
+    // maxStudents describes students, not the teacher/admin seats required to
+    // run and moderate the class.
+    maxParticipants: maxParticipants + MODERATOR_CAPACITY_BUFFER,
+    // Allow a meaningful reconnect window after a temporary network outage.
+    emptyTimeout: 30 * 60,
+  }).then(() => {
+    ensuredRooms.set(roomName, Date.now() + ROOM_ENSURE_CACHE_MS);
+  }).finally(() => {
+    pendingRoomCreates.delete(roomName);
   });
+  pendingRoomCreates.set(roomName, create);
+  return create;
 };
 
 export const deleteRoomIfExists = async (roomName: string): Promise<void> => {
+  ensuredRooms.delete(roomName);
   const client = getRoomServiceClient();
   try {
     await client.deleteRoom(roomName);
@@ -89,11 +110,23 @@ export const deleteRoomIfExists = async (roomName: string): Promise<void> => {
   }
 };
 
+export const countStudentParticipants = (participants: Array<{ identity: string; metadata?: string }>, teacherId: string) =>
+  participants.filter((participant) => {
+    try {
+      const role = JSON.parse(participant.metadata || "{}")?.role;
+      if (role === "TEACHER" || role === "ADMIN") return false;
+      if (role === "STUDENT") return true;
+    } catch {
+      // Fall through for legacy participants that joined before role metadata.
+    }
+    return participant.identity !== teacherId;
+  }).length;
+
 export const listRoomParticipants = async (roomName: string) => {
   const client = getRoomServiceClient();
   try {
     return await client.listParticipants(roomName);
-  } catch (error) {
+  } catch {
     // Room not created yet (e.g. class hasn't started) - treat as empty.
     return [];
   }

@@ -58,6 +58,7 @@ export const getHomepageStats = async (_req: Request, res: Response) => {
       { $setOnInsert: {} },
       { new: true, upsert: true, setDefaultsOnInsert: true },
     ).lean();
+    res.setHeader("Cache-Control", "public, max-age=30, s-maxage=300, stale-while-revalidate=600");
     return res.status(200).json({ success: true, stats });
   } catch (error) {
     return sendError(res, error, "homepage-stats.getHomepageStats");

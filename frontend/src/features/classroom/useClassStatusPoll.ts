@@ -14,7 +14,9 @@ export interface LiveClassDetails {
   teacher: { _id: string; name: string; email: string };
 }
 
-const POLL_INTERVAL_MS = 4000;
+const WAITING_POLL_INTERVAL_MS = 4000;
+const LIVE_POLL_INTERVAL_MS = 30_000;
+const BACKGROUND_POLL_INTERVAL_MS = 60_000;
 
 /**
  * Polls a class's status - this is how the waiting room knows the teacher has
@@ -36,19 +38,28 @@ export function useClassStatusPoll(classId: string) {
     setLoading(false);
   }, [classId]);
 
+  const pollInterval =
+    liveClass?.status === "LIVE" ? LIVE_POLL_INTERVAL_MS : WAITING_POLL_INTERVAL_MS;
+
   useEffect(() => {
     let cancelled = false;
+    let timeout: number | undefined;
     const tick = async () => {
       if (cancelled) return;
       await fetchOnce();
+      if (!cancelled) {
+        timeout = window.setTimeout(
+          tick,
+          document.hidden ? BACKGROUND_POLL_INTERVAL_MS : pollInterval,
+        );
+      }
     };
-    tick();
-    const interval = window.setInterval(tick, POLL_INTERVAL_MS);
+    void tick();
     return () => {
       cancelled = true;
-      window.clearInterval(interval);
+      if (timeout !== undefined) window.clearTimeout(timeout);
     };
-  }, [fetchOnce]);
+  }, [fetchOnce, pollInterval]);
 
   return { liveClass, loading, error, refetch: fetchOnce };
 }

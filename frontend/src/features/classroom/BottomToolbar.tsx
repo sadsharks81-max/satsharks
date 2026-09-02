@@ -1,5 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { useTrackToggle, useLocalParticipant, useMediaDeviceSelect } from "@livekit/components-react";
+import {
+  useTrackToggle,
+  useLocalParticipant,
+  useMediaDeviceSelect,
+} from "@livekit/components-react";
 import { Track } from "livekit-client";
 import { Icon } from "../../components/common/Icon";
 
@@ -16,7 +20,16 @@ interface ToolbarButtonProps {
   buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
-function ToolbarButton({ id, icon, label, active, danger, badge, onClick, buttonProps }: ToolbarButtonProps) {
+function ToolbarButton({
+  id,
+  icon,
+  label,
+  active,
+  danger,
+  badge,
+  onClick,
+  buttonProps,
+}: ToolbarButtonProps) {
   return (
     <button
       id={id}
@@ -27,8 +40,8 @@ function ToolbarButton({ id, icon, label, active, danger, badge, onClick, button
         danger
           ? "bg-error border-error text-white hover:bg-error/90"
           : active
-          ? "bg-white text-[#0B1120] border-white"
-          : "bg-white/10 border-white/10 text-white hover:bg-white/20"
+            ? "bg-white text-[#0B1120] border-white"
+            : "bg-white/10 border-white/10 text-white hover:bg-white/20"
       }`}
     >
       <Icon name={icon} className="text-[20px]" />
@@ -60,7 +73,9 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
       className="absolute bottom-16 right-0 w-72 rounded-2xl border border-white/10 bg-[#101a2c] p-4 shadow-2xl space-y-4 animate-fade-in"
     >
       <div>
-        <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-white/50">Microphone</label>
+        <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+          Microphone
+        </label>
         <select
           value={mic.activeDeviceId}
           onChange={(e) => mic.setActiveMediaDevice(e.target.value)}
@@ -74,7 +89,9 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
         </select>
       </div>
       <div>
-        <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-white/50">Camera</label>
+        <label className="mb-1.5 block text-[10px] font-bold uppercase tracking-wider text-white/50">
+          Camera
+        </label>
         <select
           value={cam.activeDeviceId}
           onChange={(e) => cam.setActiveMediaDevice(e.target.value)}
@@ -115,14 +132,32 @@ export function BottomToolbar({
   onLeave,
 }: BottomToolbarProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [screenShareError, setScreenShareError] = useState("");
   const { isScreenShareEnabled } = useLocalParticipant();
 
   const mic = useTrackToggle({ source: Track.Source.Microphone });
   const cam = useTrackToggle({ source: Track.Source.Camera });
   const screenShare = useTrackToggle({ source: Track.Source.ScreenShare });
 
+  const toggleScreenShare = async () => {
+    setScreenShareError("");
+    try {
+      await screenShare.toggle();
+    } catch (error) {
+      console.error("Unable to toggle screen sharing:", error);
+      setScreenShareError(
+        "Screen sharing could not start. Check browser permission and try again.",
+      );
+    }
+  };
+
   return (
     <div className="relative flex shrink-0 items-center justify-center gap-2 sm:gap-3 border-t border-white/10 bg-[#0B1120] px-4 py-3 flex-wrap">
+      {screenShareError && (
+        <div className="absolute bottom-full mb-2 rounded-lg bg-error px-3 py-2 text-xs font-semibold text-white shadow-lg">
+          {screenShareError}
+        </div>
+      )}
       <ToolbarButton
         id="cr-toggle-mic"
         icon={mic.enabled ? "mic" : "mic_off"}
@@ -141,7 +176,8 @@ export function BottomToolbar({
         icon={isScreenShareEnabled ? "cancel_presentation" : "screen_share"}
         label={isScreenShareEnabled ? "Stop screen share" : "Share screen"}
         active={isScreenShareEnabled}
-        onClick={() => screenShare.toggle()}
+        onClick={() => void toggleScreenShare()}
+        buttonProps={{ disabled: screenShare.pending }}
       />
       <ToolbarButton
         icon="front_hand"
@@ -168,7 +204,12 @@ export function BottomToolbar({
       <ToolbarButton icon="draw" label="Whiteboard" onClick={onOpenWhiteboard} />
 
       <div className="relative">
-        <ToolbarButton icon="settings" label="Settings" active={settingsOpen} onClick={() => setSettingsOpen((v) => !v)} />
+        <ToolbarButton
+          icon="settings"
+          label="Settings"
+          active={settingsOpen}
+          onClick={() => setSettingsOpen((v) => !v)}
+        />
         {settingsOpen && <DeviceSettingsMenu onClose={() => setSettingsOpen(false)} />}
       </div>
 

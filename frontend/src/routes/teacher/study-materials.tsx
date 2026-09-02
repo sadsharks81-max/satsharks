@@ -7,6 +7,7 @@ import { Input } from "../../components/ui/Input";
 import { Textarea } from "../../components/ui/Textarea";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { api, getBackendUrl } from "../../services/api";
+import { fetchStudyMaterialPdf } from "../../services/studyMaterialFiles";
 
 export const Route = createFileRoute("/teacher/study-materials")({
   component: () => (
@@ -31,15 +32,16 @@ function TeacherStudyMaterials() {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   // Form fields
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<"MATH" | "READING_WRITING">("MATH");
   const [file, setFile] = useState<File | null>(null);
-  
+
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [openingPdfId, setOpeningPdfId] = useState<string | null>(null);
 
   const fetchMaterials = async () => {
     try {
@@ -112,6 +114,25 @@ function TeacherStudyMaterials() {
     }
   };
 
+  const handleView = async (material: Material) => {
+    const viewer = window.open("", "_blank");
+    setOpeningPdfId(material._id);
+    try {
+      const objectUrl = await fetchStudyMaterialPdf(material._id);
+      if (viewer) {
+        viewer.location.href = objectUrl;
+      } else {
+        window.location.href = objectUrl;
+      }
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+    } catch (viewError) {
+      viewer?.close();
+      alert(viewError instanceof Error ? viewError.message : "The PDF could not be opened.");
+    } finally {
+      setOpeningPdfId(null);
+    }
+  };
+
   const formatSize = (bytes: number) => {
     if (bytes === 0) return "0 Bytes";
     const k = 1024;
@@ -125,10 +146,15 @@ function TeacherStudyMaterials() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold">Study Materials</h1>
-          <p className="text-on-surface-variant text-sm mt-1">Publish notes, study documents, and sheets for students</p>
+          <p className="text-on-surface-variant text-sm mt-1">
+            Publish notes, study documents, and sheets for students
+          </p>
         </div>
         <button
-          onClick={() => { setModalOpen(true); setError(""); }}
+          onClick={() => {
+            setModalOpen(true);
+            setError("");
+          }}
           className="btn-shimmer inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-on-primary shark-shadow hover:bg-accent transition-all cursor-pointer border-none"
         >
           <Icon name="upload_file" className="text-lg" /> Upload Notes
@@ -161,7 +187,9 @@ function TeacherStudyMaterials() {
                     <td className="p-4">
                       <div className="font-semibold text-on-surface text-sm">{mat.title}</div>
                       {mat.description && (
-                        <div className="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-md">{mat.description}</div>
+                        <div className="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-md">
+                          {mat.description}
+                        </div>
                       )}
                     </td>
                     <td className="p-4 text-xs font-mono text-on-surface-variant">
@@ -173,14 +201,15 @@ function TeacherStudyMaterials() {
                     </td>
                     <td className="p-4">
                       <div className="flex gap-2">
-                        <a
-                          href={mat.fileUrl.startsWith("http") ? mat.fileUrl : `${getBackendUrl()}${mat.fileUrl}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          type="button"
+                          onClick={() => void handleView(mat)}
+                          disabled={openingPdfId === mat._id}
                           className="px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
                         >
-                          <Icon name="visibility" className="text-[14px]" /> View
-                        </a>
+                          <Icon name="visibility" className="text-[14px]" />
+                          {openingPdfId === mat._id ? "Opening..." : "View"}
+                        </button>
                         <button
                           onClick={() => handleDelete(mat._id)}
                           className="px-3 py-1.5 bg-error/10 text-error hover:bg-error/20 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none"
@@ -198,7 +227,12 @@ function TeacherStudyMaterials() {
       )}
 
       {/* Upload Study Material Modal */}
-      <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Upload Study Material" icon="upload_file">
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Upload Study Material"
+        icon="upload_file"
+      >
         {error && (
           <div className="mb-4 p-3 bg-error/15 text-error rounded-xl text-sm border border-error/25 flex items-center gap-2">
             <Icon name="error" className="shrink-0" />
@@ -215,7 +249,11 @@ function TeacherStudyMaterials() {
           />
           <label className="block text-xs font-bold uppercase tracking-wider text-on-surface-variant">
             Material Category
-            <select value={category} onChange={(e) => setCategory(e.target.value as typeof category)} className="mt-2 w-full rounded-xl border border-outline-variant bg-surface p-3 text-sm normal-case">
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value as typeof category)}
+              className="mt-2 w-full rounded-xl border border-outline-variant bg-surface p-3 text-sm normal-case"
+            >
               <option value="MATH">Math</option>
               <option value="READING_WRITING">English, Reading & Writing</option>
             </select>
@@ -236,7 +274,9 @@ function TeacherStudyMaterials() {
               <p className="text-xs text-on-surface-variant">
                 {file ? file.name : "Select or drag & drop PDF note file"}
               </p>
-              <p className="text-[10px] text-on-surface-variant/60 mt-1">PDF file format only (up to 20MB)</p>
+              <p className="text-[10px] text-on-surface-variant/60 mt-1">
+                PDF file format only (up to 20MB)
+              </p>
               <input
                 type="file"
                 accept=".pdf"

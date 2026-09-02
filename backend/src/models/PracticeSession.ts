@@ -23,5 +23,6 @@ const PracticeSessionSchema: Schema = new Schema(
 
 PracticeSessionSchema.index({ student: 1, createdAt: -1 });
 PracticeSessionSchema.index({ student: 1, question: 1 });
+PracticeSessionSchema.index({ student: 1, isCorrect: 1, createdAt: -1 });
 
 export default mongoose.model<IPracticeSession>("PracticeSession", PracticeSessionSchema);

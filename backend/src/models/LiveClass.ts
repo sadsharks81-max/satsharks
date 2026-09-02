@@ -29,7 +29,7 @@ const LiveClassSchema: Schema = new Schema(
     },
     // LiveKit room name. Set to the document's own _id (unique, URL-safe) right after creation.
     roomName: { type: String, required: true, unique: true },
-    maxStudents: { type: Number, default: 50 },
+    maxStudents: { type: Number, default: 100, min: 1, max: 500 },
     startedAt: { type: Date, default: null },
     endedAt: { type: Date, default: null },
     teacher: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },

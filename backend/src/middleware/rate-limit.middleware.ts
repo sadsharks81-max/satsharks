@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import rateLimit, { ipKeyGenerator, type Options } from "express-rate-limit";
 import { env } from "../config/env";
 
@@ -62,9 +63,25 @@ export const publicWriteRateLimiter = rateLimit({
   limit: 20,
 });
 
-/** Broad backstop for the whole API surface. */
+/**
+ * Keep authenticated users in independent buckets. A school commonly puts an
+ * entire class behind one public/NAT IP; keying the broad limiter only by that
+ * IP made 25 classroom status polls exceed the shared allowance by themselves.
+ * Hashing the bearer token avoids retaining credentials in the in-memory store
+ * while preserving an IP bucket for unauthenticated traffic.
+ */
+const apiKey = (req: { ip?: string; headers: { authorization?: string } }) => {
+  const authorization = req.headers.authorization;
+  if (authorization?.startsWith("Bearer ")) {
+    return `auth:${crypto.createHash("sha256").update(authorization).digest("base64url")}`;
+  }
+  return `ip:${ipKeyGenerator(req.ip ?? "")}`;
+};
+
+/** Broad backstop for the whole API surface, isolated per authenticated user. */
 export const apiRateLimiter = rateLimit({
   ...baseOptions,
   windowMs: 60 * 1000,
   limit: 300,
+  keyGenerator: apiKey,
 });

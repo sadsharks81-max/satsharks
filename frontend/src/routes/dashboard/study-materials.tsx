@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { StudentLayout } from "../../components/layout/StudentLayout";
 import { Icon } from "../../components/common/Icon";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { Modal } from "../../components/ui/Modal";
-import { api, getBackendUrl } from "../../services/api";
+import { api } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
+import { fetchStudyMaterialPdf } from "../../services/studyMaterialFiles";
 
 export const Route = createFileRoute("/dashboard/study-materials")({
   component: StudyMaterialsPage,
@@ -23,10 +24,14 @@ interface Material {
 }
 
 function StudyMaterialsPage() {
+  const { user } = useAuth();
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState(true);
   const [activePdfUrl, setActivePdfUrl] = useState<string | null>(null);
   const [activePdfTitle, setActivePdfTitle] = useState<string>("");
+  const [openingPdfId, setOpeningPdfId] = useState<string | null>(null);
+  const [pdfError, setPdfError] = useState("");
+  const objectUrlRef = useRef<string | null>(null);
   const [category, setCategory] = useState<"MATH" | "READING_WRITING">("MATH");
 
   useEffect(() => {
@@ -46,9 +51,35 @@ function StudyMaterialsPage() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  const getFullPdfUrl = (relativeUrl: string) => {
-    if (relativeUrl.startsWith("http")) return relativeUrl;
-    return `${getBackendUrl()}${relativeUrl}`;
+  useEffect(
+    () => () => {
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+    },
+    [],
+  );
+
+  const openPdf = async (material: Material) => {
+    setOpeningPdfId(material._id);
+    setPdfError("");
+    try {
+      const url = await fetchStudyMaterialPdf(material._id);
+      if (objectUrlRef.current) URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = url;
+      setActivePdfUrl(url);
+      setActivePdfTitle(material.title);
+    } catch (error) {
+      setPdfError(error instanceof Error ? error.message : "The PDF could not be opened.");
+    } finally {
+      setOpeningPdfId(null);
+    }
+  };
+
+  const closePdf = () => {
+    setActivePdfUrl(null);
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
   };
 
   if (loading) {
@@ -61,7 +92,6 @@ function StudyMaterialsPage() {
     );
   }
 
-  const { user } = useAuth();
   const isPaid = user?.subscription === "PAID" || user?.role === "ADMIN";
 
   if (!isPaid) {
@@ -69,7 +99,9 @@ function StudyMaterialsPage() {
       <StudentLayout activeItem="/dashboard/study-materials">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-1">Study Materials</h1>
-          <p className="text-on-surface-variant text-sm font-medium">Browse, view, and read study materials and notes shared by your instructors</p>
+          <p className="text-on-surface-variant text-sm font-medium">
+            Browse, view, and read study materials and notes shared by your instructors
+          </p>
         </div>
         <div className="max-w-md mx-auto my-12 text-center bg-surface border border-outline-variant/40 rounded-2xl p-8 shadow-md">
           <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-6">
@@ -77,7 +109,8 @@ function StudyMaterialsPage() {
           </div>
           <h2 className="text-xl font-bold text-on-surface mb-2">Premium Feature Locked</h2>
           <p className="text-xs text-on-surface-variant leading-relaxed mb-6">
-            Study Materials are only available for Premium users. Upgrade to access all PDF notes, cheat sheets, and class slides.
+            Study Materials are only available for Premium users. Upgrade to access all PDF notes,
+            cheat sheets, and class slides.
           </p>
           <Link
             to="/sat"
@@ -95,12 +128,30 @@ function StudyMaterialsPage() {
     <StudentLayout activeItem="/dashboard/study-materials">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-1">Study Materials</h1>
-        <p className="text-on-surface-variant text-sm font-medium">Browse, view, and read study materials and notes shared by your instructors</p>
+        <p className="text-on-surface-variant text-sm font-medium">
+          Browse, view, and read study materials and notes shared by your instructors
+        </p>
       </div>
       <div className="mb-6 flex flex-wrap gap-2">
-        <button onClick={() => setCategory("MATH")} className={`rounded-xl px-5 py-2 text-sm font-bold ${category === "MATH" ? "bg-primary text-on-primary" : "bg-surface-container-low"}`}>Math Materials</button>
-        <button onClick={() => setCategory("READING_WRITING")} className={`rounded-xl px-5 py-2 text-sm font-bold ${category === "READING_WRITING" ? "bg-primary text-on-primary" : "bg-surface-container-low"}`}>English, Reading & Writing</button>
+        <button
+          onClick={() => setCategory("MATH")}
+          className={`rounded-xl px-5 py-2 text-sm font-bold ${category === "MATH" ? "bg-primary text-on-primary" : "bg-surface-container-low"}`}
+        >
+          Math Materials
+        </button>
+        <button
+          onClick={() => setCategory("READING_WRITING")}
+          className={`rounded-xl px-5 py-2 text-sm font-bold ${category === "READING_WRITING" ? "bg-primary text-on-primary" : "bg-surface-container-low"}`}
+        >
+          English, Reading & Writing
+        </button>
       </div>
+
+      {pdfError && (
+        <div className="mb-5 rounded-xl border border-error/25 bg-error/10 px-4 py-3 text-sm font-medium text-error">
+          {pdfError}
+        </div>
+      )}
 
       {materials.filter((item) => item.category === category).length === 0 ? (
         <EmptyState
@@ -110,37 +161,42 @@ function StudyMaterialsPage() {
         />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {materials.filter((item) => item.category === category).map((mat) => (
-            <div key={mat._id} className="bg-surface rounded-2xl p-6 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover-lift">
-              <div>
-                <div className="flex items-start justify-between gap-3 mb-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-error/10 text-error">
-                    <Icon name="picture_as_pdf" className="text-2xl" />
-                  </span>
-                  <span className="text-[10px] font-mono font-bold text-on-surface-variant bg-surface-container-high px-2.5 py-1 rounded-md">
-                    {formatSize(mat.fileSize)}
-                  </span>
+          {materials
+            .filter((item) => item.category === category)
+            .map((mat) => (
+              <div
+                key={mat._id}
+                className="bg-surface rounded-2xl p-6 border border-outline-variant/40 shadow-sm flex flex-col justify-between hover-lift"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-error/10 text-error">
+                      <Icon name="picture_as_pdf" className="text-2xl" />
+                    </span>
+                    <span className="text-[10px] font-mono font-bold text-on-surface-variant bg-surface-container-high px-2.5 py-1 rounded-md">
+                      {formatSize(mat.fileSize)}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-base text-on-surface leading-snug line-clamp-1">
+                    {mat.title}
+                  </h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed mt-2 line-clamp-3">
+                    {mat.description || "No description provided."}
+                  </p>
                 </div>
-                <h3 className="font-bold text-base text-on-surface leading-snug line-clamp-1">{mat.title}</h3>
-                <p className="text-xs text-on-surface-variant leading-relaxed mt-2 line-clamp-3">
-                  {mat.description || "No description provided."}
-                </p>
-              </div>
 
-              <div className="mt-6 pt-4 border-t border-outline-variant/35 flex">
-                <button
-                  onClick={() => {
-                    setActivePdfUrl(getFullPdfUrl(mat.fileUrl));
-                    setActivePdfTitle(mat.title);
-                  }}
-                  className="w-full py-2.5 rounded-xl bg-primary text-on-primary hover:bg-accent hover:text-primary transition-all text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 border-none cursor-pointer"
-                >
-                  <Icon name="menu_book" className="text-[16px]" />
-                  Read Online
-                </button>
+                <div className="mt-6 pt-4 border-t border-outline-variant/35 flex">
+                  <button
+                    onClick={() => void openPdf(mat)}
+                    disabled={openingPdfId === mat._id}
+                    className="w-full py-2.5 rounded-xl bg-primary text-on-primary hover:bg-accent hover:text-primary transition-all text-xs font-bold shadow-sm flex items-center justify-center gap-1.5 border-none cursor-pointer"
+                  >
+                    <Icon name="menu_book" className="text-[16px]" />
+                    {openingPdfId === mat._id ? "Opening..." : "Read Online"}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
 
@@ -153,12 +209,14 @@ function StudyMaterialsPage() {
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-error/10 text-error">
                 <Icon name="picture_as_pdf" className="text-xl" />
               </span>
-              <h2 className="font-bold text-lg text-on-surface truncate max-w-xl">{activePdfTitle}</h2>
+              <h2 className="font-bold text-lg text-on-surface truncate max-w-xl">
+                {activePdfTitle}
+              </h2>
             </div>
-            
+
             <div className="flex items-center gap-3">
               <button
-                onClick={() => { setActivePdfUrl(null); }}
+                onClick={closePdf}
                 className="p-2 hover:bg-surface-container-high rounded-full transition-colors cursor-pointer text-on-surface-variant hover:text-on-surface border-none bg-transparent"
                 aria-label="Close Reader"
               >
@@ -166,7 +224,7 @@ function StudyMaterialsPage() {
               </button>
             </div>
           </div>
-          
+
           {/* PDF Viewer Body */}
           <div className="flex-grow w-full bg-surface-container-low relative overflow-hidden">
             <iframe

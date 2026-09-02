@@ -10,6 +10,17 @@ import { Input } from "../../components/ui/Input";
 import { Textarea } from "../../components/ui/Textarea";
 import { useAuth } from "../../hooks/useAuth";
 
+interface LiveClassSummary {
+  _id: string;
+  title: string;
+  description?: string;
+  scheduledAt: string;
+  duration: number;
+  roomName?: string;
+  maxStudents?: number;
+  status: "SCHEDULED" | "LIVE" | "COMPLETED" | "CANCELLED";
+}
+
 export const Route = createFileRoute("/teacher/classes")({
   component: TeacherClasses,
 });
@@ -17,7 +28,7 @@ export const Route = createFileRoute("/teacher/classes")({
 function TeacherClasses() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [classes, setClasses] = useState<any[]>([]);
+  const [classes, setClasses] = useState<LiveClassSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -30,12 +41,13 @@ function TeacherClasses() {
     description: "",
     scheduledAt: "",
     duration: 60,
-    maxStudents: 50,
+    maxStudents: 100,
   });
 
   const fetchClasses = () => {
     setLoading(true);
-    api.get("/api/live-classes")
+    api
+      .get("/api/live-classes")
       .then((res) => {
         if (res.success) {
           setClasses(res.classes || []);
@@ -56,9 +68,12 @@ function TeacherClasses() {
 
     const poll = () => {
       liveClassIds.forEach((id) => {
-        liveClassApi.getParticipantCount(id).then((res) => {
-          if (res.success) setParticipantCounts((prev) => ({ ...prev, [id]: res.count }));
-        }).catch(() => {});
+        liveClassApi
+          .getParticipantCount(id)
+          .then((res) => {
+            if (res.success) setParticipantCounts((prev) => ({ ...prev, [id]: res.count }));
+          })
+          .catch(() => {});
       });
     };
     poll();
@@ -85,7 +100,7 @@ function TeacherClasses() {
       if (res.success) {
         fetchClasses();
         setModalOpen(false);
-        setForm({ title: "", description: "", scheduledAt: "", duration: 60, maxStudents: 50 });
+        setForm({ title: "", description: "", scheduledAt: "", duration: 60, maxStudents: 100 });
       } else {
         alert(res.error || "Failed to create class session.");
       }
@@ -111,7 +126,7 @@ function TeacherClasses() {
     }
   };
 
-  const handleStartClass = async (c: any) => {
+  const handleStartClass = async (c: LiveClassSummary) => {
     setStartingId(c._id);
     const ok = await handleUpdateStatus(c._id, "LIVE");
     setStartingId(null);
@@ -121,14 +136,16 @@ function TeacherClasses() {
   // Joinable classes (LIVE / SCHEDULED) first, completed/cancelled sessions at the end
   const statusOrder: Record<string, number> = { LIVE: 0, SCHEDULED: 1, CANCELLED: 2, COMPLETED: 3 };
   const sortedClasses = [...classes].sort(
-    (a, b) => (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4)
+    (a, b) => (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4),
   );
 
   return (
     <TeacherLayout activeItem="/teacher/classes">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold text-on-background mb-2">My Live Classes</h1>
+          <h1 className="text-3xl font-display font-bold text-on-background mb-2">
+            My Live Classes
+          </h1>
           <p className="text-on-surface-variant text-sm">
             Launch live classroom sessions, schedule upcoming ones, and review completed sessions.
           </p>
@@ -143,13 +160,16 @@ function TeacherClasses() {
       </div>
 
       {loading ? (
-        <div className="text-center p-12 text-on-surface-variant animate-pulse">Loading classes...</div>
+        <div className="text-center p-12 text-on-surface-variant animate-pulse">
+          Loading classes...
+        </div>
       ) : classes.length === 0 ? (
         <div className="bg-surface-container-lowest border border-outline-variant/35 rounded-2xl p-16 text-center flex flex-col items-center">
           <Icon name="video_camera_front" className="text-5xl text-on-surface-variant/40 mb-4" />
           <p className="text-lg font-bold text-on-surface mb-2">No live classes found</p>
           <p className="text-sm text-on-surface-variant max-w-sm">
-            You don't have any classes scheduled yet. Click "Schedule Class" above to create your first class.
+            You don't have any classes scheduled yet. Click "Schedule Class" above to create your
+            first class.
           </p>
         </div>
       ) : (
@@ -166,10 +186,10 @@ function TeacherClasses() {
                       c.status === "LIVE"
                         ? "success"
                         : c.status === "COMPLETED"
-                        ? "default"
-                        : c.status === "CANCELLED"
-                        ? "error"
-                        : "info"
+                          ? "default"
+                          : c.status === "CANCELLED"
+                            ? "error"
+                            : "info"
                     }
                   >
                     {c.status}
@@ -177,14 +197,16 @@ function TeacherClasses() {
                   {c.status === "LIVE" && (
                     <span className="inline-flex items-center gap-1 text-xs font-bold text-on-surface-variant">
                       <Icon name="groups" className="text-[14px] text-primary" />
-                      {participantCounts[c._id] ?? 0} / {c.maxStudents ?? 50} joined
+                      {participantCounts[c._id] ?? 0} / {c.maxStudents ?? 100} joined
                     </span>
                   )}
                 </div>
 
                 <h3 className="text-lg font-bold text-on-surface mb-1.5">{c.title}</h3>
                 {c.description && (
-                  <p className="text-sm text-on-surface-variant mb-4 line-clamp-2">{c.description}</p>
+                  <p className="text-sm text-on-surface-variant mb-4 line-clamp-2">
+                    {c.description}
+                  </p>
                 )}
 
                 <div className="space-y-2 border-t border-outline-variant/20 pt-4 mb-6">
@@ -195,7 +217,8 @@ function TeacherClasses() {
                   </p>
                   <p className="text-xs text-on-surface-variant flex items-center gap-2">
                     <Icon name="schedule" className="text-[16px] text-primary" />
-                    <span className="font-semibold text-on-surface">Duration:</span> {c.duration} minutes
+                    <span className="font-semibold text-on-surface">Duration:</span> {c.duration}{" "}
+                    minutes
                   </p>
                 </div>
               </div>

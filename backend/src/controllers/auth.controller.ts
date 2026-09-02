@@ -4,6 +4,7 @@ import User from "../models/User";
 import { generateTokens } from "../utils/jwt";
 import { sendPasswordResetEmail } from "../utils/mailer";
 import { sendError } from "../utils/http";
+import { env } from "../config/env";
 import {
   generateResetToken,
   hashPassword,
@@ -51,7 +52,7 @@ export const register = async (req: Request, res: Response) => {
     const subscription = "FREE";
     const status = "ACTIVE";
 
-    if (!process.env.DATABASE_URL) {
+    if (!env.isDatabaseConfigured) {
       // Mock mode
       const tokens = generateTokens("mock-id", "STUDENT", region, subscription, status);
       return res.status(201).json({
@@ -108,7 +109,7 @@ export const login = async (req: Request, res: Response) => {
     const { password } = req.body;
     const email = normalizeEmail(req.body.email);
 
-    if (!process.env.DATABASE_URL) {
+    if (!env.isDatabaseConfigured) {
       // Mock mode
       const mockRole = email.includes("admin") ? "ADMIN" : "STUDENT";
       const mockRegion = email.includes("international")
@@ -142,7 +143,9 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // `password` is select:false on the schema, so it must be requested explicitly.
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select(
+      "+password name email role country region subscription status",
+    );
     if (!user || !user.password) {
       return res.status(401).json({ success: false, error: "Invalid credentials" });
     }

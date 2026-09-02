@@ -6,6 +6,7 @@ export interface IStudyMaterial extends Document {
   fileUrl: string;
   fileName: string;
   fileSize: number;
+  storageFileId?: mongoose.Types.ObjectId;
   category: "MATH" | "READING_WRITING";
   uploadedBy: mongoose.Types.ObjectId;
   createdAt: Date;
@@ -19,6 +20,7 @@ const StudyMaterialSchema: Schema = new Schema(
     fileUrl: { type: String, required: true },
     fileName: { type: String, required: true },
     fileSize: { type: Number, required: true },
+    storageFileId: { type: Schema.Types.ObjectId, select: false },
     category: {
       type: String,
       enum: ["MATH", "READING_WRITING"],

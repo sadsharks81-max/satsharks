@@ -7,6 +7,7 @@ export const getAllUniversities = async (req: Request, res: Response) => {
     // Public, unauthenticated endpoint: lean() avoids hydrating full Mongoose
     // documents for a payload that is only ever serialised straight to JSON.
     const universities = await University.find().lean();
+    res.setHeader("Cache-Control", "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400");
     return res.status(200).json({ success: true, data: universities });
   } catch (error: any) {
     console.error("Get All Universities Error:", error);

@@ -82,5 +82,6 @@ const SATTestAttemptSchema: Schema = new Schema(
 
 SATTestAttemptSchema.index({ student: 1, createdAt: -1 });
 SATTestAttemptSchema.index({ student: 1, test: 1 });
+SATTestAttemptSchema.index({ student: 1, status: 1, completedAt: -1 });
 
 export default mongoose.model<ISATTestAttempt>("SATTestAttempt", SATTestAttemptSchema);

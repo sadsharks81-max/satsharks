@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import PracticeTestUpload from "../models/PracticeTestUpload";
 import type { IExtractedQuestion } from "../models/PracticeTestUpload";
@@ -425,6 +425,15 @@ const isCloudinaryConfigured = !!(
   process.env.CLOUDINARY_API_SECRET
 );
 
+const SITE_IMAGE_BUCKET = "siteImages";
+
+const getSiteImageBucket = () => {
+  if (!mongoose.connection.db) return null;
+  return new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+    bucketName: SITE_IMAGE_BUCKET,
+  });
+};
+
 if (isCloudinaryConfigured) {
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -455,9 +464,29 @@ export const uploadImage = async (req: AuthRequest, res: Response) => {
       );
       uploadStream.end(file.buffer);
     } else {
-      // Fallback: Convert to Base64 Data URL and store directly in DB
-      const base64Data = file.buffer.toString("base64");
-      const dataUrl = `data:${file.mimetype};base64,${base64Data}`;
+      const bucket = getSiteImageBucket();
+      if (bucket) {
+        // Railway's local filesystem is ephemeral, while embedding base64 in a
+        // success-story/question document makes every JSON response enormous.
+        // GridFS keeps the binary persistent and independently cacheable.
+        const imageId = new mongoose.Types.ObjectId();
+        const uploadStream = bucket.openUploadStreamWithId(imageId, file.originalname, {
+          contentType: file.mimetype,
+          metadata: { uploadedBy: req.user?.userId },
+        });
+        await new Promise<void>((resolve, reject) => {
+          uploadStream.once("finish", resolve);
+          uploadStream.once("error", reject);
+          uploadStream.end(file.buffer);
+        });
+        return res.status(201).json({
+          success: true,
+          url: `/media/images/${imageId}`,
+        });
+      }
+
+      // Preserve standalone mock development when no database is connected.
+      const dataUrl = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
       return res.status(201).json({
         success: true,
         url: dataUrl
@@ -465,5 +494,36 @@ export const uploadImage = async (req: AuthRequest, res: Response) => {
     }
   } catch (error) {
     sendError(res, error, "upload.uploadImage");
+  }
+};
+
+export const streamUploadedImage = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const imageIdParam = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    if (!mongoose.isValidObjectId(imageIdParam)) {
+      return res.status(404).json({ success: false, error: "Image not found" });
+    }
+
+    const bucket = getSiteImageBucket();
+    if (!bucket) {
+      return res.status(503).json({ success: false, error: "Image storage unavailable" });
+    }
+
+    const imageId = new mongoose.Types.ObjectId(imageIdParam);
+    const storedFile = await bucket.find({ _id: imageId }).next();
+    if (!storedFile) {
+      return res.status(404).json({ success: false, error: "Image not found" });
+    }
+
+    res.setHeader("Content-Type", storedFile.contentType || "application/octet-stream");
+    res.setHeader("Content-Length", storedFile.length.toString());
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    res.setHeader("X-Content-Type-Options", "nosniff");
+
+    const download = bucket.openDownloadStream(imageId);
+    download.once("error", next);
+    return download.pipe(res);
+  } catch (error) {
+    return next(error);
   }
 };

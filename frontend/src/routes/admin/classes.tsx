@@ -8,6 +8,19 @@ import { Modal } from "../../components/ui/Modal";
 import { Input } from "../../components/ui/Input";
 import { Textarea } from "../../components/ui/Textarea";
 import { Select } from "../../components/ui/Select";
+import type { User } from "../../types";
+
+interface LiveClassSummary {
+  _id: string;
+  title: string;
+  description?: string;
+  scheduledAt: string;
+  duration: number;
+  roomName?: string;
+  maxStudents?: number;
+  status: "SCHEDULED" | "LIVE" | "COMPLETED" | "CANCELLED";
+  teacher?: Pick<User, "name" | "email">;
+}
 
 export const Route = createFileRoute("/admin/classes")({
   component: () => (
@@ -19,8 +32,8 @@ export const Route = createFileRoute("/admin/classes")({
 
 function AdminClasses() {
   const navigate = useNavigate();
-  const [classes, setClasses] = useState<any[]>([]);
-  const [teachers, setTeachers] = useState<any[]>([]);
+  const [classes, setClasses] = useState<LiveClassSummary[]>([]);
+  const [teachers, setTeachers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -33,14 +46,16 @@ function AdminClasses() {
     scheduledAt: "",
     duration: 60,
     teacherId: "",
-    maxStudents: 50,
+    maxStudents: 100,
   });
 
   const fetchClassesAndTeachers = async () => {
     setLoading(true);
     try {
-      const classRes = await api.get("/api/live-classes");
-      const teacherRes = await api.get("/api/users?role=TEACHER");
+      const [classRes, teacherRes] = await Promise.all([
+        api.get("/api/live-classes"),
+        api.get("/api/users?role=TEACHER"),
+      ]);
 
       if (classRes.success) setClasses(classRes.classes || []);
       if (teacherRes.success) setTeachers(teacherRes.users || []);
@@ -71,7 +86,14 @@ function AdminClasses() {
       if (res.success) {
         fetchClassesAndTeachers();
         setModalOpen(false);
-        setForm({ title: "", description: "", scheduledAt: "", duration: 60, teacherId: "", maxStudents: 50 });
+        setForm({
+          title: "",
+          description: "",
+          scheduledAt: "",
+          duration: 60,
+          teacherId: "",
+          maxStudents: 100,
+        });
       } else {
         alert(res.error || "Failed to schedule class.");
       }
@@ -96,7 +118,12 @@ function AdminClasses() {
   };
 
   const handleDeleteClass = async (id: string) => {
-    if (!confirm("Permanently delete this class session, its attendance, and its chat history? This cannot be undone.")) return;
+    if (
+      !confirm(
+        "Permanently delete this class session, its attendance, and its chat history? This cannot be undone.",
+      )
+    )
+      return;
     setDeletingClassId(id);
     try {
       const res = await api.delete(`/api/live-classes/${id}`);
@@ -115,14 +142,16 @@ function AdminClasses() {
   // Joinable classes (LIVE / SCHEDULED) first, completed/cancelled sessions at the end
   const statusOrder: Record<string, number> = { LIVE: 0, SCHEDULED: 1, CANCELLED: 2, COMPLETED: 3 };
   const sortedClasses = [...classes].sort(
-    (a, b) => (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4)
+    (a, b) => (statusOrder[a.status] ?? 4) - (statusOrder[b.status] ?? 4),
   );
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-display font-bold text-on-background mb-2">Live Classes Control</h1>
+          <h1 className="text-3xl font-display font-bold text-on-background mb-2">
+            Live Classes Control
+          </h1>
           <p className="text-on-surface-variant text-sm">
             Schedule live classroom sessions, assign teachers, and monitor active teaching sessions.
           </p>
@@ -137,13 +166,16 @@ function AdminClasses() {
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-on-surface-variant animate-pulse">Loading classes...</div>
+        <div className="text-center py-12 text-on-surface-variant animate-pulse">
+          Loading classes...
+        </div>
       ) : classes.length === 0 ? (
         <div className="bg-surface border border-outline-variant/35 rounded-2xl p-16 text-center flex flex-col items-center">
           <Icon name="video_camera_front" className="text-5xl text-on-surface-variant/40 mb-4" />
           <p className="text-lg font-bold text-on-surface mb-2">No Classes Scheduled</p>
           <p className="text-sm text-on-surface-variant max-w-sm">
-            There are no active or scheduled live classes. Click "Schedule Session" above to set one up.
+            There are no active or scheduled live classes. Click "Schedule Session" above to set one
+            up.
           </p>
         </div>
       ) : (
@@ -166,21 +198,27 @@ function AdminClasses() {
                     <td className="p-4">
                       <div className="font-semibold text-on-surface text-sm">{c.title}</div>
                       {c.description && (
-                        <div className="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-xs">{c.description}</div>
+                        <div className="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-xs">
+                          {c.description}
+                        </div>
                       )}
                     </td>
                     <td className="p-4">
-                      <div className="font-semibold text-on-surface text-sm">{c.teacher?.name || "Unassigned"}</div>
+                      <div className="font-semibold text-on-surface text-sm">
+                        {c.teacher?.name || "Unassigned"}
+                      </div>
                       <div className="text-xs text-on-surface-variant">{c.teacher?.email}</div>
                     </td>
                     <td className="p-4 text-xs text-on-surface-variant">
-                      <div className="font-semibold">{new Date(c.scheduledAt).toLocaleString()}</div>
+                      <div className="font-semibold">
+                        {new Date(c.scheduledAt).toLocaleString()}
+                      </div>
                       <div className="mt-0.5">{c.duration} minutes</div>
                     </td>
                     <td className="p-4 text-xs text-on-surface-variant">
                       <span className="inline-flex items-center gap-1 font-semibold">
                         <Icon name="groups" className="text-[14px] text-primary" />
-                        {c.maxStudents ?? 50} max
+                        {c.maxStudents ?? 100} max
                       </span>
                     </td>
                     <td className="p-4">
@@ -189,10 +227,10 @@ function AdminClasses() {
                           c.status === "LIVE"
                             ? "success"
                             : c.status === "COMPLETED"
-                            ? "default"
-                            : c.status === "CANCELLED"
-                            ? "error"
-                            : "info"
+                              ? "default"
+                              : c.status === "CANCELLED"
+                                ? "error"
+                                : "info"
                         }
                       >
                         {c.status}
@@ -282,7 +320,8 @@ function AdminClasses() {
 
           {teachers.length === 0 ? (
             <div className="p-3 bg-error/10 border border-error/25 text-error text-xs rounded-xl font-semibold">
-              No registered teachers found. Please register/promote a user to TEACHER in the User Management tab first.
+              No registered teachers found. Please register/promote a user to TEACHER in the User
+              Management tab first.
             </div>
           ) : (
             <Select
@@ -292,7 +331,10 @@ function AdminClasses() {
               required
               options={[
                 { value: "", label: "Select a teacher..." },
-                ...teachers.map((t) => ({ value: t._id, label: `${t.name} (${t.email})` })),
+                ...teachers.map((t) => ({
+                  value: t._id || t.id,
+                  label: `${t.name} (${t.email})`,
+                })),
               ]}
             />
           )}

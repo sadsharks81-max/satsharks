@@ -11,7 +11,8 @@ export const getMyNotifications = async (req: AuthRequest, res: Response) => {
 
     const notifications = await Notification.find({ user: userId })
       .sort({ createdAt: -1 })
-      .limit(50); // limit to recent 50
+      .limit(50)
+      .lean(); // limit to recent 50 without hydrating Mongoose documents
 
     return res.status(200).json({ success: true, data: notifications });
   } catch (error: any) {

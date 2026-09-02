@@ -1,5 +1,6 @@
 import React from "react";
 import katex from "katex";
+import "katex/dist/katex.min.css";
 
 const QUESTION_TYPE_TAG_PATTERN =
   /\[\s*(multiple\s*choice|mcq|spr(?:\s*[-–—]\s*grid[-\s]?in)?|grid[-\s]?in|fill[-\s]in[-\s]the[-\s]blank)\s*\]/i;
@@ -210,7 +211,7 @@ export function renderFormattedText(text: string | undefined | null): React.Reac
           // Prevent standard currency strings ($3 for the first hour and $) from being parsed as inline math.
           // Inline LaTeX math typically doesn't contain multiple regular English words without math symbols.
           const wordCount = formula.split(/\s+/).length;
-          const hasMathSymbol = /[=+\-*\/\\^{}()<>_]/.test(formula) || /^[a-zA-Z]$/.test(formula);
+          const hasMathSymbol = /[=+\-*/\\^{}()<>_]/.test(formula) || /^[a-zA-Z]$/.test(formula);
           const isCurrency = wordCount > 2 && !hasMathSymbol;
 
           if (isCurrency) {
@@ -236,7 +237,7 @@ export function renderFormattedText(text: string | undefined | null): React.Reac
           }
         } else {
           // Exponent parsing for regular text parts
-          let normalized = part
+          const normalized = part
             .replace(/²/g, "^2")
             .replace(/³/g, "^3")
             .replace(/⁴/g, "^4")

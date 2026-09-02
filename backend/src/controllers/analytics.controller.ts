@@ -3,20 +3,41 @@ import SATTestAttempt from "../models/SATTestAttempt";
 import PracticeSession from "../models/PracticeSession";
 import VocabularyProgress from "../models/VocabularyProgress";
 import User from "../models/User";
+import { Types } from "mongoose";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { sendError } from "../utils/http";
 
 export const getDashboardStats = async (req: AuthRequest, res: Response) => {
   try {
     const studentId = req.user?.userId;
+    if (!studentId) {
+      return res.status(401).json({ success: false, error: "Unauthorized" });
+    }
+    const studentObjectId = new Types.ObjectId(studentId);
 
-    const [totalTests, practiceCount, practiceCorrect, attempts, recentPractice] = await Promise.all([
-      SATTestAttempt.countDocuments({ student: studentId, status: "COMPLETED" }),
+    const [testSummaryRows, practiceCount, practiceCorrect, recentAttempts, recentPractice] = await Promise.all([
+      SATTestAttempt.aggregate<{
+        totalTests: number;
+        avgScore: number;
+        bestScore: number;
+      }>([
+        { $match: { student: studentObjectId, status: "COMPLETED" } },
+        {
+          $group: {
+            _id: null,
+            totalTests: { $sum: 1 },
+            avgScore: { $avg: "$percentage" },
+            bestScore: { $max: "$percentage" },
+          },
+        },
+      ]),
       PracticeSession.countDocuments({ student: studentId }),
       PracticeSession.countDocuments({ student: studentId, isCorrect: true }),
       SATTestAttempt.find({ student: studentId, status: "COMPLETED" })
         .select("percentage totalCorrect createdAt")
-        .sort({ createdAt: -1 }),
+        .sort({ completedAt: -1 })
+        .limit(5)
+        .lean(),
       PracticeSession.find({ student: studentId })
         .populate({
           path: "question",
@@ -28,15 +49,10 @@ export const getDashboardStats = async (req: AuthRequest, res: Response) => {
         .lean(),
     ]);
 
-    const avgScore = attempts.length > 0
-      ? Math.round(attempts.reduce((sum, a) => sum + a.percentage, 0) / attempts.length)
-      : 0;
-
-    const bestScore = attempts.length > 0
-      ? Math.max(...attempts.map((a) => a.percentage))
-      : 0;
-
-    const recentAttempts = attempts.slice(0, 5);
+    const testSummary = testSummaryRows[0];
+    const totalTests = testSummary?.totalTests || 0;
+    const avgScore = Math.round(testSummary?.avgScore || 0);
+    const bestScore = Math.round(testSummary?.bestScore || 0);
 
     res.status(200).json({
       success: true,
@@ -215,7 +231,6 @@ export const getPredictedScore = async (req: AuthRequest, res: Response) => {
 
     // Weight by recency and difficulty level of questions in attempts
     let weightedCorrect = 0;
-    let weightedTotal = 0;
     let recencyWeightSum = 0;
 
     attempts.forEach((attempt, index) => {

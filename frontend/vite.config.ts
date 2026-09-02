@@ -22,24 +22,28 @@ export default defineConfig({
   nitro: {
     preset: "vercel",
   },
-    vite: {
-      // Defense in depth: never allow a production build to emit calls to
-      // react/jsx-dev-runtime, even if the host injects a bad NODE_ENV.
-      esbuild: {
-        jsxDev: false,
-      },
-      server: {
-        host: "0.0.0.0",
-        proxy: {
-          "/api": {
-            target: "http://localhost:5000",
-            changeOrigin: true,
-          },
-          "/uploads": {
-            target: "http://localhost:5000",
-            changeOrigin: true,
-          },
+  vite: {
+    // Defense in depth: never allow a production build to emit calls to
+    // react/jsx-dev-runtime, even if the host injects a bad NODE_ENV.
+    esbuild: {
+      jsxDev: false,
+    },
+    server: {
+      host: "0.0.0.0",
+      proxy: {
+        "/api": {
+          target: "http://localhost:5000",
+          changeOrigin: true,
+        },
+        "/uploads": {
+          target: "http://localhost:5000",
+          changeOrigin: true,
+        },
+        "/media": {
+          target: "http://localhost:5000",
+          changeOrigin: true,
         },
       },
     },
+  },
 });

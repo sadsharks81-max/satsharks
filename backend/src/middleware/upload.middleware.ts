@@ -64,7 +64,14 @@ const pdfUpload = (prefix: string) =>
   });
 
 export const practiceTestUpload = pdfUpload("");
-export const studyMaterialUpload = pdfUpload("notes-");
+// Study materials are persisted to MongoDB GridFS by the controller. Keeping
+// the bytes in memory avoids writing a temporary file to Railway's ephemeral
+// filesystem, where it would disappear on restart or deploy.
+export const studyMaterialUpload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: pdfFileFilter,
+  limits: { fileSize: 20 * 1024 * 1024, files: 1 },
+});
 
 export const paymentProofUpload = multer({
   storage: diskStorage("proof-", (mimetype) => IMAGE_MIME_TYPES.get(mimetype) ?? ".bin"),

@@ -2,10 +2,12 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import compression from "compression";
 import path from "path";
 import { env } from "./config/env";
 import { connectDB } from "./config/db";
 import { apiRateLimiter } from "./middleware/rate-limit.middleware";
+import { streamUploadedImage } from "./controllers/upload.controller";
 
 const app = express();
 
@@ -82,17 +84,22 @@ app.use(
     maxAge: 86400,
   }),
 );
+// Compress JSON, HTML and text responses. Large public datasets and analytics
+// payloads otherwise spend much longer on the wire than they do in MongoDB.
+app.use(compression({ threshold: 1024 }));
 // `combined` in production so logs carry status, size, referrer and user agent.
 app.use(morgan(env.isProduction ? "combined" : "dev"));
-
-// Connect to database (or run in mock mode)
-connectDB();
 
 // Basic Route , registered before the rate limiter so uptime probes are never
 // throttled.
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "ok", message: "API is running" });
 });
+
+// Immutable public images live outside the API limiter. A full class behind one
+// NAT address can therefore load a shared page without exhausting an anonymous
+// request bucket, and browsers/CDNs may cache the binary for a year.
+app.get("/media/images/:id", streamUploadedImage);
 
 app.use("/api", apiRateLimiter);
 
@@ -268,9 +275,20 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-const server = app.listen(env.port, () => {
-  console.log(`Server running in ${env.nodeEnv} mode on port ${env.port}`);
-});
+let server: ReturnType<typeof app.listen> | null = null;
+
+/**
+ * Do not accept traffic until MongoDB is ready. Mongoose otherwise buffers the
+ * first burst of login requests during a deploy, which looks like intermittent
+ * login failures and can exhaust request timeouts under a full class arrival.
+ */
+export const startServer = async () => {
+  await connectDB();
+  server = app.listen(env.port, () => {
+    console.log(`Server running in ${env.nodeEnv} mode on port ${env.port}`);
+  });
+  return server;
+};
 
 /**
  * Without these, an unhandled rejection leaves the process in an unknown state
@@ -279,6 +297,9 @@ const server = app.listen(env.port, () => {
  */
 const shutdown = (signal: string) => {
   console.log(`${signal} received, shutting down gracefully`);
+  if (!server) {
+    process.exit(0);
+  }
   server.close(() => {
     void import("mongoose").then(({ default: mongoose }) =>
       mongoose.connection.close(false).finally(() => process.exit(0)),
@@ -298,6 +319,11 @@ process.on("unhandledRejection", (reason) => {
 process.on("uncaughtException", (error) => {
   console.error("[fatal] uncaught exception:", error);
   shutdown("uncaughtException");
+});
+
+void startServer().catch((error) => {
+  console.error("[fatal] server startup failed:", error);
+  process.exit(1);
 });
 
 export default app;

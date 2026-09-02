@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocalParticipant, useDataChannel, useParticipantAttributes, useTracks } from "@livekit/components-react";
+import {
+  useLocalParticipant,
+  useDataChannel,
+  useParticipantAttributes,
+  useTracks,
+} from "@livekit/components-react";
 import { Track } from "livekit-client";
 import { TopBar } from "./TopBar";
 import { VideoStage } from "./VideoStage";
@@ -23,7 +28,13 @@ const isTypingInField = () => {
   return tag === "INPUT" || tag === "TEXTAREA";
 };
 
-export function ClassroomExperience({ liveClass, classId, currentUserId, canModerate, onLeave }: ClassroomExperienceProps) {
+export function ClassroomExperience({
+  liveClass,
+  classId,
+  currentUserId,
+  canModerate,
+  onLeave,
+}: ClassroomExperienceProps) {
   const [activePanel, setActivePanel] = useState<PanelKind | null>(null);
   const [unreadChat, setUnreadChat] = useState(0);
   const [whiteboardOpen, setWhiteboardOpen] = useState(false);
@@ -83,61 +94,75 @@ export function ClassroomExperience({ liveClass, classId, currentUserId, canMode
     return () => window.removeEventListener("keydown", handler);
   }, [activePanel, handleToggleRaiseHand, handleToggleFullscreen]);
 
-  const tracks = useTracks([
-    { source: Track.Source.ScreenShare, withPlaceholder: false },
-  ]);
+  const tracks = useTracks([{ source: Track.Source.ScreenShare, withPlaceholder: false }]);
   const isScreenSharing = tracks.some((t) => t.source === Track.Source.ScreenShare);
 
   const [topBarVisible, setTopBarVisible] = useState(true);
   const [bottomBarVisible, setBottomBarVisible] = useState(true);
 
-  if (isScreenSharing) {
-    return (
+  return (
+    <div
+      ref={containerRef}
+      className="relative flex h-full w-full flex-col overflow-hidden bg-[#0B1120]"
+    >
       <div
-        ref={containerRef}
-        className="relative h-full w-full bg-[#0B1120] overflow-hidden"
+        className={
+          isScreenSharing
+            ? `absolute left-0 right-0 top-0 z-30 transition-all duration-300 ${
+                topBarVisible
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-full opacity-0 pointer-events-none"
+              }`
+            : "relative z-30 shrink-0"
+        }
       >
-        {/* TopBar Overlay */}
-        <div
-          className={`absolute top-0 left-0 right-0 z-30 transition-all duration-300 ${
-            topBarVisible
-              ? "translate-y-0 opacity-100"
-              : "-translate-y-full opacity-0 pointer-events-none"
-          }`}
-        >
-          <div className="relative">
-            <TopBar title={liveClass.title} startedAt={liveClass.startedAt} durationMinutes={liveClass.duration} onLeave={onLeave} />
+        <div className="relative">
+          <TopBar
+            title={liveClass.title}
+            startedAt={liveClass.startedAt}
+            durationMinutes={liveClass.duration}
+            onLeave={onLeave}
+          />
+          {isScreenSharing && (
             <button
               type="button"
               onClick={() => setTopBarVisible(false)}
-              className="absolute bottom-[-24px] left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-b border-x border-white/10 rounded-b-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center"
+              className="absolute bottom-[-24px] left-1/2 z-40 flex -translate-x-1/2 cursor-pointer items-center justify-center rounded-b-xl border-b border-x border-white/10 bg-[#0F172A] px-4 py-1 text-white shadow-lg transition-colors hover:bg-[#1E293B]"
               title="Collapse Top Bar"
             >
               <Icon name="keyboard_arrow_up" className="text-base" />
             </button>
-          </div>
+          )}
         </div>
+      </div>
 
-        {/* Floating expand arrow when TopBar is collapsed */}
-        {!topBarVisible && (
-          <button
-            type="button"
-            onClick={() => setTopBarVisible(true)}
-            className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-b border-x border-white/10 rounded-b-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center animate-bounce"
-            title="Expand Top Bar"
-          >
-            <Icon name="keyboard_arrow_down" className="text-base" />
-          </button>
-        )}
+      {isScreenSharing && !topBarVisible && (
+        <button
+          type="button"
+          onClick={() => setTopBarVisible(true)}
+          className="absolute left-1/2 top-0 z-40 flex -translate-x-1/2 animate-bounce cursor-pointer items-center justify-center rounded-b-xl border-b border-x border-white/10 bg-[#0F172A] px-4 py-1 text-white shadow-lg transition-colors hover:bg-[#1E293B]"
+          title="Expand Top Bar"
+        >
+          <Icon name="keyboard_arrow_down" className="text-base" />
+        </button>
+      )}
 
-        {/* Full-bleed Video Stage */}
-        <div className="h-full w-full">
-          <VideoStage teacherIdentity={liveClass.teacher?._id} controlsVisible={topBarVisible} />
+      <div className="relative flex min-h-0 flex-1 overflow-hidden">
+        <div className="min-w-0 flex-1">
+          <VideoStage
+            teacherIdentity={liveClass.teacher?._id}
+            controlsVisible={!isScreenSharing || topBarVisible}
+            maxVisibleCameras={canModerate ? 16 : 9}
+          />
         </div>
-
-        {/* Side Panel overlay */}
         {activePanel && (
-          <div className="absolute right-0 top-16 bottom-20 z-40 w-80 bg-[#111827] border-l border-white/10 shadow-2xl">
+          <div
+            className={
+              isScreenSharing
+                ? "absolute bottom-20 right-0 top-16 z-40 w-80 border-l border-white/10 bg-[#111827] shadow-2xl"
+                : "absolute inset-0 z-10 sm:static sm:inset-auto sm:z-auto"
+            }
+          >
             <SidePanel
               activePanel={activePanel}
               onChangeTab={handleTogglePanel}
@@ -149,89 +174,54 @@ export function ClassroomExperience({ liveClass, classId, currentUserId, canMode
             />
           </div>
         )}
+      </div>
 
-        {/* BottomToolbar Overlay */}
-        <div
-          className={`absolute bottom-0 left-0 right-0 z-30 transition-all duration-300 ${
-            bottomBarVisible
-              ? "translate-y-0 opacity-100"
-              : "translate-y-full opacity-0 pointer-events-none"
-          }`}
-        >
-          <div className="relative">
+      <div
+        className={
+          isScreenSharing
+            ? `absolute bottom-0 left-0 right-0 z-30 transition-all duration-300 ${
+                bottomBarVisible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-full opacity-0 pointer-events-none"
+              }`
+            : "relative z-30 shrink-0"
+        }
+      >
+        <div className="relative">
+          {isScreenSharing && (
             <button
               type="button"
               onClick={() => setBottomBarVisible(false)}
-              className="absolute top-[-24px] left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-t border-x border-white/10 rounded-t-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center"
+              className="absolute top-[-24px] left-1/2 z-40 flex -translate-x-1/2 cursor-pointer items-center justify-center rounded-t-xl border-t border-x border-white/10 bg-[#0F172A] px-4 py-1 text-white shadow-lg transition-colors hover:bg-[#1E293B]"
               title="Collapse Toolbar"
             >
               <Icon name="keyboard_arrow_down" className="text-base" />
             </button>
-            <BottomToolbar
-              activePanel={activePanel}
-              onTogglePanel={handleTogglePanel}
-              unreadChatCount={unreadChat}
-              handRaised={handRaised}
-              onToggleRaiseHand={handleToggleRaiseHand}
-              onOpenWhiteboard={() => setWhiteboardOpen(true)}
-              isFullscreen={isFullscreen}
-              onToggleFullscreen={handleToggleFullscreen}
-              onLeave={onLeave}
-            />
-          </div>
+          )}
+          <BottomToolbar
+            activePanel={activePanel}
+            onTogglePanel={handleTogglePanel}
+            unreadChatCount={unreadChat}
+            handRaised={handRaised}
+            onToggleRaiseHand={handleToggleRaiseHand}
+            onOpenWhiteboard={() => setWhiteboardOpen(true)}
+            isFullscreen={isFullscreen}
+            onToggleFullscreen={handleToggleFullscreen}
+            onLeave={onLeave}
+          />
         </div>
-
-        {/* Floating expand arrow when BottomToolbar is collapsed */}
-        {!bottomBarVisible && (
-          <button
-            type="button"
-            onClick={() => setBottomBarVisible(true)}
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-[#0F172A] hover:bg-[#1E293B] text-white border-t border-x border-white/10 rounded-t-xl px-4 py-1 cursor-pointer z-40 transition-colors shadow-lg flex items-center justify-center animate-bounce"
-            title="Expand Toolbar"
-          >
-            <Icon name="keyboard_arrow_up" className="text-base" />
-          </button>
-        )}
-
-        <WhiteboardPlaceholder open={whiteboardOpen} onClose={() => setWhiteboardOpen(false)} />
-      </div>
-    );
-  }
-
-  return (
-    <div ref={containerRef} className="flex h-full w-full flex-col bg-[#0B1120]">
-      <TopBar title={liveClass.title} startedAt={liveClass.startedAt} durationMinutes={liveClass.duration} onLeave={onLeave} />
-
-      <div className="relative flex min-h-0 flex-1 overflow-hidden">
-        <div className="min-w-0 flex-1">
-          <VideoStage teacherIdentity={liveClass.teacher?._id} />
-        </div>
-        {activePanel && (
-          <div className="absolute inset-0 z-10 sm:static sm:inset-auto sm:z-auto">
-            <SidePanel
-              activePanel={activePanel}
-              onChangeTab={handleTogglePanel}
-              onClose={() => setActivePanel(null)}
-              classId={classId}
-              currentUserId={currentUserId}
-              teacherIdentity={liveClass.teacher?._id}
-              canModerate={canModerate}
-            />
-          </div>
-        )}
       </div>
 
-      <BottomToolbar
-        activePanel={activePanel}
-        onTogglePanel={handleTogglePanel}
-        unreadChatCount={unreadChat}
-        handRaised={handRaised}
-        onToggleRaiseHand={handleToggleRaiseHand}
-        onOpenWhiteboard={() => setWhiteboardOpen(true)}
-        isFullscreen={isFullscreen}
-        onToggleFullscreen={handleToggleFullscreen}
-        onLeave={onLeave}
-      />
+      {isScreenSharing && !bottomBarVisible && (
+        <button
+          type="button"
+          onClick={() => setBottomBarVisible(true)}
+          className="absolute bottom-0 left-1/2 z-40 flex -translate-x-1/2 animate-bounce cursor-pointer items-center justify-center rounded-t-xl border-t border-x border-white/10 bg-[#0F172A] px-4 py-1 text-white shadow-lg transition-colors hover:bg-[#1E293B]"
+          title="Expand Toolbar"
+        >
+          <Icon name="keyboard_arrow_up" className="text-base" />
+        </button>
+      )}
 
       <WhiteboardPlaceholder open={whiteboardOpen} onClose={() => setWhiteboardOpen(false)} />
     </div>

@@ -17,10 +17,11 @@ import {
   muteRoomParticipant,
   issueRoomToken,
   verifyWebhookEvent,
+  countStudentParticipants,
 } from "../services/livekit.service";
 
-const MIN_TOKEN_TTL_SECONDS = 5 * 60;
-const MAX_TOKEN_TTL_SECONDS = 4 * 60 * 60;
+const MIN_TOKEN_TTL_SECONDS = 30 * 60;
+const MAX_TOKEN_TTL_SECONDS = 8 * 60 * 60;
 const JOIN_GRACE_MINUTES = 15; // how long after scheduled end a class can still be joined
 
 const handleServiceError = (res: Response, error: any) => {
@@ -49,7 +50,7 @@ export const createLiveClass = async (req: AuthRequest, res: Response) => {
       scheduledAt: new Date(scheduledAt),
       duration: duration || 60,
       roomName: _id.toString(),
-      maxStudents: Number(maxStudents) > 0 ? Number(maxStudents) : 50,
+      maxStudents: Math.min(500, Math.max(1, Number(maxStudents) || 100)),
       teacher: teacherId,
       createdBy: req.user?.userId,
     });
@@ -214,7 +215,10 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
 
       const now = new Date();
       const opensAt = new Date(liveClass.scheduledAt.getTime() - JOIN_BUFFER_MINUTES * 60000);
-      const closesAt = new Date(liveClass.scheduledAt.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000);
+      const classStart = liveClass.startedAt && liveClass.startedAt > liveClass.scheduledAt
+        ? liveClass.startedAt
+        : liveClass.scheduledAt;
+      const closesAt = new Date(classStart.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000);
       if (now < opensAt || now > closesAt) {
         return res.status(403).json({ success: false, error: "This class is not within its scheduled join window." });
       }
@@ -223,7 +227,7 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
       }
 
       const participants = await listRoomParticipants(liveClass.roomName);
-      if (participants.length >= liveClass.maxStudents) {
+      if (countStudentParticipants(participants, String(liveClass.teacher)) >= liveClass.maxStudents) {
         return res.status(403).json({ success: false, error: "This class has reached its maximum number of students." });
       }
     }
@@ -236,11 +240,14 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
     await ensureRoomExists(liveClass.roomName, liveClass.maxStudents);
 
     const user = await User.findById(userId).select("name");
+    const classStart = liveClass.startedAt && liveClass.startedAt > liveClass.scheduledAt
+      ? liveClass.startedAt
+      : liveClass.scheduledAt;
     const ttlSeconds = Math.min(
       MAX_TOKEN_TTL_SECONDS,
       Math.max(
         MIN_TOKEN_TTL_SECONDS,
-        Math.round((liveClass.scheduledAt.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000 - Date.now()) / 1000)
+        Math.round((classStart.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000 - Date.now()) / 1000)
       )
     );
 
@@ -248,6 +255,7 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
       roomName: liveClass.roomName,
       identity: String(userId),
       name: user?.name || "Guest",
+      role: role || "STUDENT",
       ttlSeconds,
       grant: {
         roomAdmin: role === "ADMIN" || role === "TEACHER",
@@ -275,7 +283,10 @@ export const getLiveClassParticipants = async (req: AuthRequest, res: Response) 
       return res.status(200).json({ success: true, count: 0 });
     }
     const participants = await listRoomParticipants(liveClass.roomName);
-    res.status(200).json({ success: true, count: participants.length });
+    res.status(200).json({
+      success: true,
+      count: countStudentParticipants(participants, String(liveClass.teacher)),
+    });
   } catch (error: any) {
     handleServiceError(res, error);
   }
@@ -388,12 +399,9 @@ export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
       await LiveClass.updateOne({ roomName, startedAt: null }, { startedAt: new Date() });
     }
 
-    if (event.event === "room_finished") {
-      await LiveClass.updateOne(
-        { roomName, status: { $ne: "COMPLETED" } },
-        { status: "COMPLETED", endedAt: new Date() }
-      );
-    }
+    // A room can finish after a temporary period with no connected clients.
+    // Only the teacher/admin status action should complete a class; otherwise a
+    // network interruption permanently locks every student out of rejoining.
 
     if (event.event === "participant_joined" && event.participant) {
       const liveClass = await LiveClass.findOne({ roomName });

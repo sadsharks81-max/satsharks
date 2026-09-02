@@ -113,10 +113,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap",
       },
-      {
-        rel: "stylesheet",
-        href: "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css",
-      },
     ],
   }),
   shellComponent: RootShell,

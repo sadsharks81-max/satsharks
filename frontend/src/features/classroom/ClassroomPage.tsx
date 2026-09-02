@@ -7,8 +7,14 @@ import { useClassStatusPoll } from "./useClassStatusPoll";
 import { useLiveClassRoom } from "./useLiveClassRoom";
 import { WaitingRoom } from "./WaitingRoom";
 import { ClassroomExperience } from "./ClassroomExperience";
+import type { User } from "../../types";
 
-const resolveUserId = (user: any): string | undefined => user?.id || user?._id || user?.userId;
+const resolveUserId = (user: User | null): string | undefined =>
+  user?.id || user?._id || user?.userId;
+const LIVEKIT_ROOM_OPTIONS = {
+  adaptiveStream: { pauseVideoInBackground: true },
+  dynacast: true,
+};
 
 const backRouteForRole = (role?: string) => {
   if (role === "TEACHER") return "/teacher/classes";
@@ -51,7 +57,9 @@ function FullScreenMessage({
           <Icon name={icon} className="text-3xl" />
         </div>
         <h2 className="font-display text-xl font-bold text-on-surface mb-2">{title}</h2>
-        {message && <p className="text-sm text-on-surface-variant mb-8 leading-relaxed">{message}</p>}
+        {message && (
+          <p className="text-sm text-on-surface-variant mb-8 leading-relaxed">{message}</p>
+        )}
         <div className="space-y-2.5">
           <button
             onClick={onPrimary}
@@ -77,22 +85,36 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [disconnected, setDisconnected] = useState(false);
+  const [connectionGeneration, setConnectionGeneration] = useState(0);
 
   const role = user?.role;
   const currentUserId = resolveUserId(user);
   const backTo = backRouteForRole(role);
-  const handleLeave = () => navigate({ to: backTo as any });
+  const handleLeave = () => navigate({ to: backTo });
 
   const { liveClass, loading: classLoading, error: classError } = useClassStatusPoll(roomId);
 
   const isStudent = role === "STUDENT";
   const canAttemptConnect =
-    Boolean(liveClass) && liveClass!.status !== "CANCELLED" && (!isStudent || liveClass!.status === "LIVE") && !disconnected;
+    Boolean(liveClass) &&
+    liveClass!.status !== "CANCELLED" &&
+    (!isStudent || liveClass!.status === "LIVE") &&
+    !disconnected;
 
-  const { token, serverUrl, error: tokenError, upgradeRequired, loading: tokenLoading, refetch } = useLiveClassRoom(
-    roomId,
-    canAttemptConnect
-  );
+  const {
+    token,
+    serverUrl,
+    error: tokenError,
+    upgradeRequired,
+    loading: tokenLoading,
+    refetch,
+  } = useLiveClassRoom(roomId, canAttemptConnect);
+
+  const handleRejoin = async () => {
+    await refetch();
+    setConnectionGeneration((generation) => generation + 1);
+    setDisconnected(false);
+  };
 
   if (classLoading) return <FullScreenLoading label="Loading classroom..." />;
 
@@ -127,7 +149,7 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
         title="You were disconnected"
         message="Your connection to the classroom dropped. You can try rejoining, or head back to your dashboard."
         primaryLabel="Rejoin Class"
-        onPrimary={() => setDisconnected(false)}
+        onPrimary={() => void handleRejoin()}
         secondaryLabel="Leave"
         onSecondary={handleLeave}
       />
@@ -156,16 +178,18 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     return <FullScreenLoading label="Connecting to classroom..." />;
   }
 
-  const canModerate = role === "ADMIN" || (role === "TEACHER" && liveClass.teacher?._id === currentUserId);
+  const canModerate =
+    role === "ADMIN" || (role === "TEACHER" && liveClass.teacher?._id === currentUserId);
 
   return (
     <LiveKitRoom
-      key={token}
+      key={`${token}:${connectionGeneration}`}
       token={token}
       serverUrl={serverUrl}
       connect
       audio={false}
       video={false}
+      options={LIVEKIT_ROOM_OPTIONS}
       className="fixed inset-0 z-50"
       onDisconnected={() => setDisconnected(true)}
       onError={(err) => console.error("LiveKit room error:", err)}

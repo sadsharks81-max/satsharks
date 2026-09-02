@@ -26,6 +26,7 @@ const developmentSecret = () => crypto.randomBytes(32).toString("hex");
 
 const jwtSecret = process.env.JWT_SECRET || developmentSecret();
 const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET || developmentSecret();
+const databaseUrl = (process.env.DATABASE_URL || "").trim();
 
 if (isProduction && jwtSecret === jwtRefreshSecret) {
   throw new Error("JWT_SECRET and JWT_REFRESH_SECRET must be different values");
@@ -51,7 +52,7 @@ export const env = {
   isProduction,
   port: parsePositiveInt(process.env.PORT, 5000),
   frontendUrl: (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/$/, ""),
-  databaseUrl: process.env.DATABASE_URL || "",
+  databaseUrl,
   jwtSecret,
   jwtRefreshSecret,
   // Kept at the previous 7d default so existing sessions and the current
@@ -59,15 +60,13 @@ export const env = {
   // endpoint is wired into the client.
   accessTokenTtl: process.env.JWT_ACCESS_TTL || "7d",
   refreshTokenTtl: process.env.JWT_REFRESH_TTL || "30d",
-  isDatabaseConfigured: Boolean(process.env.DATABASE_URL),
+  isDatabaseConfigured: Boolean(databaseUrl),
   // Mock auth mints tokens without verifying credentials, so it can never be
   // switchable on in production regardless of how the env var is set.
   allowMockAuth: !isProduction && process.env.ALLOW_MOCK_AUTH === "true",
   extraCorsOrigins,
-  // When Cloudinary is unconfigured, /api/uploads/image returns a base64 data
-  // URL that the admin UI then submits inside a JSON body. A 10MB image inflates
-  // to ~14MB of base64, so this is the smallest limit that cannot break the
-  // existing image flow, down from a 50MB limit that was a cheap memory-DoS.
+  // Kept large enough for existing records that may still contain legacy base64
+  // images. New uploads use Cloudinary or GridFS and return a short URL.
   jsonBodyLimit: process.env.JSON_BODY_LIMIT || "16mb",
   // Nothing in the app posts large urlencoded forms.
   urlencodedBodyLimit: process.env.URLENCODED_BODY_LIMIT || "1mb",
