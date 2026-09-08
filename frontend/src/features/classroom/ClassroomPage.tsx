@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveKitRoom, RoomAudioRenderer } from "@livekit/components-react";
 import { useAuth } from "../../hooks/useAuth";
@@ -86,11 +86,22 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
   const navigate = useNavigate();
   const [disconnected, setDisconnected] = useState(false);
   const [connectionGeneration, setConnectionGeneration] = useState(0);
+  const isUnmountingRef = useRef(false);
+
+  useEffect(() => {
+    isUnmountingRef.current = false;
+    return () => {
+      isUnmountingRef.current = true;
+    };
+  }, []);
 
   const role = user?.role;
   const currentUserId = resolveUserId(user);
   const backTo = backRouteForRole(role);
-  const handleLeave = () => navigate({ to: backTo });
+  const handleLeave = () => {
+    isUnmountingRef.current = true;
+    navigate({ to: backTo });
+  };
 
   const { liveClass, loading: classLoading, error: classError } = useClassStatusPoll(roomId);
 
@@ -111,9 +122,15 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
   } = useLiveClassRoom(roomId, canAttemptConnect);
 
   const handleRejoin = async () => {
-    await refetch();
-    setConnectionGeneration((generation) => generation + 1);
     setDisconnected(false);
+    setConnectionGeneration((generation) => generation + 1);
+    await refetch();
+  };
+
+  const handleLiveKitDisconnected = (reason?: any) => {
+    if (isUnmountingRef.current) return;
+    console.warn("LiveKit room disconnected:", reason);
+    setDisconnected(true);
   };
 
   if (classLoading) return <FullScreenLoading label="Loading classroom..." />;
@@ -156,6 +173,18 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     );
   }
 
+  if (isStudent && liveClass.status === "COMPLETED") {
+    return (
+      <FullScreenMessage
+        icon="check_circle"
+        title="Class has ended"
+        message="This class session has been completed. Thank you for attending!"
+        primaryLabel="Go Back"
+        onPrimary={handleLeave}
+      />
+    );
+  }
+
   if (isStudent && liveClass.status !== "LIVE") {
     return <WaitingRoom liveClass={liveClass} onLeave={handleLeave} />;
   }
@@ -191,7 +220,7 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
       video={false}
       options={LIVEKIT_ROOM_OPTIONS}
       className="fixed inset-0 z-50"
-      onDisconnected={() => setDisconnected(true)}
+      onDisconnected={handleLiveKitDisconnected}
       onError={(err) => console.error("LiveKit room error:", err)}
     >
       <RoomAudioRenderer />

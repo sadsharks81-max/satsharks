@@ -31,8 +31,8 @@ export function useLiveClassRoom(classId: string, enabled: boolean) {
   }, [classId]);
 
   useEffect(() => {
-    if (enabled) fetchToken();
-  }, [enabled, fetchToken]);
+    if (enabled && !token && !loading && !error) fetchToken();
+  }, [enabled, token, loading, error, fetchToken]);
 
   return { token, serverUrl, error, upgradeRequired, loading, refetch: fetchToken };
 }

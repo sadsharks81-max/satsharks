@@ -177,12 +177,18 @@ export const getCategoryBreakdown = async (req: AuthRequest, res: Response) => {
   try {
     const studentId = req.user?.userId;
 
-    const attempts = await SATTestAttempt.find({ student: studentId, status: "COMPLETED" })
-      .populate({
+    const [attempts, practiceSessions] = await Promise.all([
+      SATTestAttempt.find({ student: studentId, status: "COMPLETED" }).populate({
         path: "moduleAttempts.answers.question",
         select: "category difficulty",
         populate: { path: "category", select: "name section" },
-      });
+      }),
+      PracticeSession.find({ student: studentId }).populate({
+        path: "question",
+        select: "category difficulty",
+        populate: { path: "category", select: "name section" },
+      }),
+    ]);
 
     const categoryStats: Record<string, { correct: number; total: number; name: string }> = {};
 
@@ -199,6 +205,17 @@ export const getCategoryBreakdown = async (req: AuthRequest, res: Response) => {
           if (ans.isCorrect) categoryStats[catId].correct++;
         }
       }
+    }
+
+    for (const session of practiceSessions) {
+      const q = session.question as any;
+      if (!q?.category) continue;
+      const catId = q.category._id.toString();
+      if (!categoryStats[catId]) {
+        categoryStats[catId] = { correct: 0, total: 0, name: q.category.name };
+      }
+      categoryStats[catId].total++;
+      if (session.isCorrect) categoryStats[catId].correct++;
     }
 
     const breakdown = Object.values(categoryStats).map((c) => ({
@@ -291,12 +308,18 @@ export const getErrorAnalysis = async (req: AuthRequest, res: Response) => {
   try {
     const studentId = req.user?.userId;
 
-    const attempts = await SATTestAttempt.find({ student: studentId, status: "COMPLETED" })
-      .populate({
+    const [attempts, practiceMistakes] = await Promise.all([
+      SATTestAttempt.find({ student: studentId, status: "COMPLETED" }).populate({
         path: "moduleAttempts.answers.question",
-        select: "text difficulty correctAnswer explanation options category",
+        select: "text difficulty correctAnswer explanation options category section",
         populate: { path: "category", select: "name section" }
-      });
+      }),
+      PracticeSession.find({ student: studentId, isCorrect: false }).populate({
+        path: "question",
+        select: "text difficulty correctAnswer explanation options category section",
+        populate: { path: "category", select: "name section" }
+      }),
+    ]);
 
     const categoryErrorStats: Record<string, { errors: number; name: string; section: string }> = {};
     const incorrectQuestionsList: any[] = [];
@@ -329,20 +352,46 @@ export const getErrorAnalysis = async (req: AuthRequest, res: Response) => {
             options: q.options || [],
             categoryName: catName,
             sectionName: catSec === "MATH" ? "Math" : "Reading & Writing",
-            completedAt: attempt.completedAt,
+            completedAt: attempt.completedAt || (attempt as any).createdAt,
           });
         }
       }
     }
 
-    // Sort by recent attempts first
-    incorrectQuestionsList.sort((a, b) => b.completedAt.getTime() - a.completedAt.getTime());
+    for (const session of practiceMistakes) {
+      const q = session.question as any;
+      if (!q) continue;
+
+      const catId = q.category?._id?.toString() || "Unknown";
+      const catName = q.category?.name || "Uncategorized";
+      const catSec = q.category?.section || q.section || "MATH";
+
+      if (!categoryErrorStats[catId]) {
+        categoryErrorStats[catId] = { errors: 0, name: catName, section: catSec };
+      }
+      categoryErrorStats[catId].errors++;
+
+      incorrectQuestionsList.push({
+        questionId: q._id,
+        text: q.text,
+        difficulty: q.difficulty || "MEDIUM",
+        correctAnswer: q.correctAnswer,
+        selectedAnswer: session.selectedAnswer,
+        skipped: !session.selectedAnswer,
+        explanation: q.explanation || "No explanation provided.",
+        options: q.options || [],
+        categoryName: catName,
+        sectionName: catSec === "MATH" ? "Math" : "Reading & Writing",
+        completedAt: (session as any).createdAt || new Date(),
+      });
+    }
+
+    incorrectQuestionsList.sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
 
     res.status(200).json({
       success: true,
       errorStats: Object.values(categoryErrorStats),
-      // Limit to 20 most recent mistakes
-      incorrectQuestions: incorrectQuestionsList.slice(0, 20),
+      incorrectQuestions: incorrectQuestionsList.slice(0, 30),
     });
   } catch (error) {
     sendError(res, error, "analytics.getErrorAnalysis");
@@ -353,12 +402,18 @@ export const getTimingAnalysis = async (req: AuthRequest, res: Response) => {
   try {
     const studentId = req.user?.userId;
 
-    const attempts = await SATTestAttempt.find({ student: studentId, status: "COMPLETED" })
-      .populate({
+    const [attempts, practiceSessions] = await Promise.all([
+      SATTestAttempt.find({ student: studentId, status: "COMPLETED" }).populate({
         path: "moduleAttempts.answers.question",
         select: "text difficulty category section",
-        populate: { path: "category", select: "name" }
-      });
+        populate: { path: "category", select: "name" },
+      }),
+      PracticeSession.find({ student: studentId }).populate({
+        path: "question",
+        select: "text difficulty category section",
+        populate: { path: "category", select: "name" },
+      }),
+    ]);
 
     let totalRwTime = 0;
     let totalRwCount = 0;
@@ -384,6 +439,21 @@ export const getTimingAnalysis = async (req: AuthRequest, res: Response) => {
             totalMathCount++;
           }
         }
+      }
+    }
+
+    for (const session of practiceSessions) {
+      const q = session.question as any;
+      const time = session.timeSpent || 0;
+      if (!q || time <= 0) continue;
+
+      const isRw = q.section === "READING_WRITING";
+      if (isRw) {
+        totalRwTime += time;
+        totalRwCount++;
+      } else {
+        totalMathTime += time;
+        totalMathCount++;
       }
     }
 
@@ -425,6 +495,31 @@ export const getTimingAnalysis = async (req: AuthRequest, res: Response) => {
       }
     }
 
+    for (const session of practiceSessions) {
+      const q = session.question as any;
+      const time = session.timeSpent || 0;
+      if (!q || time <= 0) continue;
+
+      const isRw = q.section === "READING_WRITING";
+      const sectionAverage = isRw ? rwAvg : mathAvg;
+      if (sectionAverage <= 0) continue;
+      const threshold = sectionAverage * 1.5;
+
+      if (time > threshold) {
+        slowQuestions.push({
+          questionId: q._id,
+          text: q.text,
+          difficulty: q.difficulty || "MEDIUM",
+          categoryName: q.category?.name || "General",
+          sectionName: isRw ? "Reading & Writing" : "Math",
+          timeSpent: time,
+          avgTime: Math.round(isRw ? rwAvg : mathAvg),
+          percentageSlow: Math.round(((time - (isRw ? rwAvg : mathAvg)) / (isRw ? rwAvg : mathAvg)) * 100),
+          completedAt: (session as any).createdAt || new Date(),
+        });
+      }
+    }
+
     slowQuestions.sort((a, b) => b.timeSpent - a.timeSpent);
 
     res.status(200).json({
@@ -433,7 +528,7 @@ export const getTimingAnalysis = async (req: AuthRequest, res: Response) => {
         rwAvg: Math.round(rwAvg),
         mathAvg: Math.round(mathAvg),
       },
-      slowQuestions: slowQuestions.slice(0, 15),
+      slowQuestions: slowQuestions.slice(0, 20),
     });
   } catch (error) {
     sendError(res, error, "analytics.getTimingAnalysis");

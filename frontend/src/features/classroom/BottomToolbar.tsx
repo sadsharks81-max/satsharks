@@ -118,6 +118,7 @@ interface BottomToolbarProps {
   isFullscreen: boolean;
   onToggleFullscreen: () => void;
   onLeave: () => void;
+  canModerate: boolean;
 }
 
 export function BottomToolbar({
@@ -130,6 +131,7 @@ export function BottomToolbar({
   isFullscreen,
   onToggleFullscreen,
   onLeave,
+  canModerate,
 }: BottomToolbarProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [screenShareError, setScreenShareError] = useState("");
@@ -163,22 +165,24 @@ export function BottomToolbar({
         icon={mic.enabled ? "mic" : "mic_off"}
         label={mic.enabled ? "Mute microphone (M)" : "Unmute microphone (M)"}
         danger={!mic.enabled}
-        onClick={() => mic.toggle()}
+        onClick={() => { mic.toggle().catch(() => {}); }}
       />
       <ToolbarButton
         id="cr-toggle-cam"
         icon={cam.enabled ? "videocam" : "videocam_off"}
         label={cam.enabled ? "Turn off camera (V)" : "Turn on camera (V)"}
         danger={!cam.enabled}
-        onClick={() => cam.toggle()}
+        onClick={() => { cam.toggle().catch(() => {}); }}
       />
-      <ToolbarButton
-        icon={isScreenShareEnabled ? "cancel_presentation" : "screen_share"}
-        label={isScreenShareEnabled ? "Stop screen share" : "Share screen"}
-        active={isScreenShareEnabled}
-        onClick={() => void toggleScreenShare()}
-        buttonProps={{ disabled: screenShare.pending }}
-      />
+      {canModerate && (
+        <ToolbarButton
+          icon={isScreenShareEnabled ? "cancel_presentation" : "screen_share"}
+          label={isScreenShareEnabled ? "Stop screen share" : "Share screen"}
+          active={isScreenShareEnabled}
+          onClick={() => void toggleScreenShare()}
+          buttonProps={{ disabled: screenShare.pending }}
+        />
+      )}
       <ToolbarButton
         icon="front_hand"
         label={handRaised ? "Lower hand (H)" : "Raise hand (H)"}

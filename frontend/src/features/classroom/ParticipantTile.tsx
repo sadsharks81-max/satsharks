@@ -7,9 +7,10 @@ interface ParticipantTileProps {
   trackRef: TrackReferenceOrPlaceholder;
   isTeacher: boolean;
   spotlight?: boolean;
+  isScreenShare?: boolean;
 }
 
-export function ParticipantTile({ trackRef, isTeacher, spotlight = false }: ParticipantTileProps) {
+export function ParticipantTile({ trackRef, isTeacher, spotlight = false, isScreenShare = false }: ParticipantTileProps) {
   const { participant } = trackRef;
   const isSpeaking = useIsSpeaking(participant);
   const { quality } = useConnectionQualityIndicator({ participant });
@@ -24,7 +25,7 @@ export function ParticipantTile({ trackRef, isTeacher, spotlight = false }: Part
       }`}
     >
       {hasVideo ? (
-        <VideoTrack trackRef={trackRef as any} className="h-full w-full object-cover" />
+        <VideoTrack trackRef={trackRef as any} className={`h-full w-full ${isScreenShare ? "object-contain" : "object-cover"}`} />
       ) : (
         <div className="flex h-full w-full items-center justify-center">
           <div

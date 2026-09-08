@@ -15,6 +15,7 @@ export const Route = createFileRoute("/dashboard/live-classes")({
 });
 
 const JOIN_BUFFER_MINUTES = 10;
+const JOIN_GRACE_MINUTES = 15;
 
 type JoinState =
   | { kind: "ready" }
@@ -30,9 +31,15 @@ function getJoinState(c: any, now: Date, isPaid: boolean): JoinState {
 
   const scheduledAt = new Date(c.scheduledAt);
   const opensAt = new Date(scheduledAt.getTime() - JOIN_BUFFER_MINUTES * 60000);
-  const closesAt = new Date(scheduledAt.getTime() + (c.duration || 60) * 60000);
 
-  if (now > closesAt) return { kind: "ended" };
+  // Match backend logic: if the teacher started late, extend the close window
+  // from the actual start time rather than the original schedule, plus a grace buffer.
+  const startedAt = c.startedAt ? new Date(c.startedAt) : null;
+  const classStart = startedAt && startedAt > scheduledAt ? startedAt : scheduledAt;
+  const closesAt = new Date(classStart.getTime() + ((c.duration || 60) + JOIN_GRACE_MINUTES) * 60000);
+
+  // If the class is currently LIVE, never show "ended" — the teacher is actively in session.
+  if (now > closesAt && c.status !== "LIVE") return { kind: "ended" };
   if (now < opensAt && c.status !== "LIVE") return { kind: "waiting-for-window", opensAt };
   if (!isPaid) return { kind: "not-paid" };
   if (c.status !== "LIVE") return { kind: "waiting-for-teacher" };
@@ -147,19 +154,29 @@ function StudentLiveClasses() {
   }
 
   useEffect(() => {
-    api.get("/api/live-classes")
-      .then((res) => {
-        if (res.success) {
-          setClasses(res.classes || []);
-        }
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => setNow(new Date()), 15000);
-    return () => clearInterval(interval);
+    let cancelled = false;
+    const fetchClasses = () => {
+      api.get("/api/live-classes")
+        .then((res) => {
+          if (!cancelled && res.success) {
+            setClasses(res.classes || []);
+          }
+        })
+        .catch(() => {})
+        .finally(() => {
+          if (!cancelled) setLoading(false);
+        });
+    };
+    fetchClasses();
+    // Poll every 15 seconds so students see LIVE status within seconds of teacher starting class.
+    const interval = setInterval(() => {
+      fetchClasses();
+      setNow(new Date());
+    }, 15000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
   }, []);
 
   const handleJoin = (c: any) => {

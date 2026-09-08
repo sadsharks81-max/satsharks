@@ -208,6 +208,7 @@ export function ClassroomExperience({
             isFullscreen={isFullscreen}
             onToggleFullscreen={handleToggleFullscreen}
             onLeave={onLeave}
+            canModerate={canModerate}
           />
         </div>
       </div>

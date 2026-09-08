@@ -34,15 +34,17 @@ export function VideoStage({
   // decoding a full classroom on every student's device.
   const cameraTracks = [...allCameraTracks]
     .sort((a, b) => {
+      // Stable sort: teacher first, then local participant, then others by identity.
+      // Avoids re-sorting on isSpeaking which caused video stutter and lag.
       const priority = (track: typeof a) =>
         track.participant.identity === teacherIdentity
-          ? 3
+          ? 2
           : track.participant.isLocal
-            ? 2
-            : track.participant.isSpeaking
-              ? 1
-              : 0;
-      return priority(b) - priority(a);
+            ? 1
+            : 0;
+      const diff = priority(b) - priority(a);
+      if (diff !== 0) return diff;
+      return a.participant.identity.localeCompare(b.participant.identity);
     })
     .slice(0, maxVisibleCameras);
 
@@ -56,6 +58,7 @@ export function VideoStage({
             trackRef={screenShareTrack}
             isTeacher={screenShareTrack.participant.identity === teacherIdentity}
             spotlight
+            isScreenShare
           />
         </div>
 

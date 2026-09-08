@@ -132,7 +132,10 @@ export function PracticeContent() {
     timeSpentRef.current = timeSpent;
   }, [timeSpent]);
 
-  const finishPracticeSession = () => {
+  const finishPracticeSession = async () => {
+    if (selectedAnswer && !showResult && questions[currentIdx]) {
+      await handleSubmitAnswer();
+    }
     setSessionSummary({
       total: statsRef.current.total,
       correct: statsRef.current.correct,
@@ -252,7 +255,7 @@ export function PracticeContent() {
   };
 
   const handleSubmitAnswer = async () => {
-    if (!selectedAnswer || !questions[currentIdx]) return;
+    if (!selectedAnswer || !questions[currentIdx]) return false;
     const res = await api.post("/api/practice/answer", {
       questionId: questions[currentIdx]._id,
       selectedAnswer,
@@ -276,15 +279,20 @@ export function PracticeContent() {
         },
       ]);
       setTotalSolved((prev) => prev + 1);
+      return true;
     } else {
       alert(res.error || "Failed to submit answer");
       if (res.limitReached) {
         fetchPracticeHistory();
       }
+      return false;
     }
   };
 
-  const handlePrev = () => {
+  const handlePrev = async () => {
+    if (selectedAnswer && !showResult) {
+      await handleSubmitAnswer();
+    }
     if (currentIdx > 0) {
       setCurrentIdx(currentIdx - 1);
       setSelectedAnswer(null);
@@ -293,7 +301,10 @@ export function PracticeContent() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (selectedAnswer && !showResult) {
+      await handleSubmitAnswer();
+    }
     if (currentIdx < questions.length - 1) {
       setCurrentIdx(currentIdx + 1);
       setSelectedAnswer(null);
