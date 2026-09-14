@@ -132,28 +132,12 @@ function StudentLiveClasses() {
 
   const isPaid = user?.subscription === "PAID" || user?.role === "ADMIN";
 
-  if (!isPaid) {
-    return (
-      <div className="max-w-md mx-auto my-12 text-center bg-surface border border-outline-variant/40 rounded-2xl p-8 shadow-md">
-        <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-6">
-          <Icon name="workspace_premium" className="text-3xl" />
-        </div>
-        <h2 className="text-xl font-bold text-on-surface mb-2">Premium Feature Locked</h2>
-        <p className="text-xs text-on-surface-variant leading-relaxed mb-6">
-          Live Classes are only available for Premium users. Upgrade to access all live interactive sessions with your instructors.
-        </p>
-        <Link
-          to="/sat"
-          hash="pricing"
-          className="inline-block w-full py-3 text-center bg-primary hover:bg-accent text-on-primary hover:text-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md font-semibold"
-        >
-          Upgrade to Premium
-        </Link>
-      </div>
-    );
-  }
-
   useEffect(() => {
+    if (!isPaid) {
+      setLoading(false);
+      return;
+    }
+
     let cancelled = false;
     const fetchClasses = () => {
       api.get("/api/live-classes")
@@ -177,10 +161,31 @@ function StudentLiveClasses() {
       cancelled = true;
       clearInterval(interval);
     };
-  }, []);
+  }, [isPaid]);
+
+  if (!isPaid) {
+    return (
+      <div className="max-w-md mx-auto my-12 text-center bg-surface border border-outline-variant/40 rounded-2xl p-8 shadow-md">
+        <div className="w-16 h-16 rounded-2xl bg-accent/10 text-accent flex items-center justify-center mx-auto mb-6">
+          <Icon name="workspace_premium" className="text-3xl" />
+        </div>
+        <h2 className="text-xl font-bold text-on-surface mb-2">Premium Feature Locked</h2>
+        <p className="text-xs text-on-surface-variant leading-relaxed mb-6">
+          Live Classes are only available for Premium users. Upgrade to access all live interactive sessions with your instructors.
+        </p>
+        <Link
+          to="/sat"
+          hash="pricing"
+          className="inline-block w-full py-3 text-center bg-primary hover:bg-accent text-on-primary hover:text-primary font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md font-semibold"
+        >
+          Upgrade to Premium
+        </Link>
+      </div>
+    );
+  }
 
   const handleJoin = (c: any) => {
-    navigate({ to: `/classroom/${c.roomName || c._id}` });
+    navigate({ to: `/classroom/${c._id}` });
   };
 
   const live = classes.filter((c) => c.status === "LIVE");

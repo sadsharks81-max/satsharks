@@ -210,6 +210,10 @@ export const createCustomTest = async (req: AuthRequest, res: Response) => {
       moduleAttempts: [
         {
           moduleIndex: 0,
+          startedAt: new Date(),
+          totalQuestions: customTest.modules[0].questions.length,
+          score: 0,
+          correctCount: 0,
           answers: customTest.modules[0].questions.map(qId => ({
             question: qId,
             selectedAnswer: null,
@@ -220,6 +224,10 @@ export const createCustomTest = async (req: AuthRequest, res: Response) => {
         },
         {
           moduleIndex: 1,
+          startedAt: null,
+          totalQuestions: customTest.modules[1].questions.length,
+          score: 0,
+          correctCount: 0,
           answers: customTest.modules[1].questions.map(qId => ({
             question: qId,
             selectedAnswer: null,
@@ -229,6 +237,9 @@ export const createCustomTest = async (req: AuthRequest, res: Response) => {
           }))
         }
       ],
+      currentModuleIndex: 0,
+      totalQuestions: customTest.modules.reduce((total, module) => total + module.questions.length, 0),
+      startedAt: new Date(),
       status: "IN_PROGRESS"
     });
 

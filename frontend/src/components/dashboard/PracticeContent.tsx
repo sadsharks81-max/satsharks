@@ -43,6 +43,17 @@ const normalizedCategoryName = (name: string) => name.trim().toLowerCase();
 
 const BLOCKED_CATEGORY_NAMES = ["math", "sat math"];
 
+type PracticeResult = {
+  isCorrect: boolean;
+  correctAnswer: string;
+  explanation: string;
+};
+
+type PracticeAnswerState = {
+  selectedAnswer: string;
+  result?: PracticeResult;
+};
+
 export function PracticeContent() {
   const { user } = useAuth();
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -50,7 +61,9 @@ export function PracticeContent() {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
-  const [result, setResult] = useState<{ isCorrect: boolean; correctAnswer: string; explanation: string } | null>(null);
+  const [result, setResult] = useState<PracticeResult | null>(null);
+  const [answerStates, setAnswerStates] = useState<Record<string, PracticeAnswerState>>({});
+  const [isSubmittingAnswer, setIsSubmittingAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, correct: 0 });
   const [totalSolved, setTotalSolved] = useState(0);
@@ -119,6 +132,8 @@ export function PracticeContent() {
   const statsRef = useRef(stats);
   const attemptedAnswersRef = useRef(attemptedAnswers);
   const timeSpentRef = useRef(timeSpent);
+  const answerStatesRef = useRef(answerStates);
+  const isSubmittingAnswerRef = useRef(false);
 
   useEffect(() => {
     statsRef.current = stats;
@@ -131,6 +146,10 @@ export function PracticeContent() {
   useEffect(() => {
     timeSpentRef.current = timeSpent;
   }, [timeSpent]);
+
+  useEffect(() => {
+    answerStatesRef.current = answerStates;
+  }, [answerStates]);
 
   const finishPracticeSession = async () => {
     if (selectedAnswer && !showResult && questions[currentIdx]) {
@@ -154,6 +173,8 @@ export function PracticeContent() {
     setResult(null);
     setStats({ total: 0, correct: 0 });
     setAttemptedAnswers([]);
+    setAnswerStates({});
+    answerStatesRef.current = {};
   };
 
   const startPracticeSession = () => {
@@ -226,6 +247,8 @@ export function PracticeContent() {
       setSelectedAnswer(null);
       setShowResult(false);
       setResult(null);
+      setAnswerStates({});
+      answerStatesRef.current = {};
     }
     setLoading(false);
   };
@@ -254,62 +277,103 @@ export function PracticeContent() {
     }
   };
 
+  const updateCurrentSelection = (answer: string) => {
+    const question = questions[currentIdx];
+    if (!question || showResult) return;
+
+    setSelectedAnswer(answer);
+    const nextStates = {
+      ...answerStatesRef.current,
+      [question._id]: { selectedAnswer: answer },
+    };
+    answerStatesRef.current = nextStates;
+    setAnswerStates(nextStates);
+  };
+
+  const showQuestion = (index: number) => {
+    const saved = answerStatesRef.current[questions[index]?._id];
+    setCurrentIdx(index);
+    setSelectedAnswer(saved?.selectedAnswer || null);
+    setResult(saved?.result || null);
+    setShowResult(Boolean(saved?.result));
+  };
+
   const handleSubmitAnswer = async () => {
-    if (!selectedAnswer || !questions[currentIdx]) return false;
-    const res = await api.post("/api/practice/answer", {
-      questionId: questions[currentIdx]._id,
-      selectedAnswer,
-      timeSpent,
-    });
-    if (res.success) {
-      setResult(res.result);
-      setShowResult(true);
-      setStats((prev) => ({
-        total: prev.total + 1,
-        correct: prev.correct + (res.result.isCorrect ? 1 : 0),
-      }));
-      setAttemptedAnswers((prev) => [
-        ...prev,
-        {
-          questionId: questions[currentIdx]._id,
-          question: questions[currentIdx].text,
-          selectedAnswer,
-          correctAnswer: res.result.correctAnswer,
-          isCorrect: res.result.isCorrect,
-        },
-      ]);
-      setTotalSolved((prev) => prev + 1);
-      return true;
-    } else {
-      alert(res.error || "Failed to submit answer");
-      if (res.limitReached) {
-        fetchPracticeHistory();
+    const question = questions[currentIdx];
+    if (!selectedAnswer || !question) return false;
+
+    const saved = answerStatesRef.current[question._id];
+    if (saved?.result) return true;
+    if (isSubmittingAnswerRef.current) return false;
+
+    isSubmittingAnswerRef.current = true;
+    setIsSubmittingAnswer(true);
+    try {
+      const submittedAnswer = selectedAnswer;
+      const res = await api.post("/api/practice/answer", {
+        questionId: question._id,
+        selectedAnswer: submittedAnswer,
+        timeSpent,
+      });
+      if (res.success) {
+        const nextStates = {
+          ...answerStatesRef.current,
+          [question._id]: { selectedAnswer: submittedAnswer, result: res.result },
+        };
+        answerStatesRef.current = nextStates;
+        setAnswerStates(nextStates);
+        setResult(res.result);
+        setShowResult(true);
+
+        const nextStats = {
+          total: statsRef.current.total + 1,
+          correct: statsRef.current.correct + (res.result.isCorrect ? 1 : 0),
+        };
+        statsRef.current = nextStats;
+        setStats(nextStats);
+
+        const nextAttemptedAnswers = [
+          ...attemptedAnswersRef.current,
+          {
+            questionId: question._id,
+            question: question.text,
+            selectedAnswer: submittedAnswer,
+            correctAnswer: res.result.correctAnswer,
+            isCorrect: res.result.isCorrect,
+          },
+        ];
+        attemptedAnswersRef.current = nextAttemptedAnswers;
+        setAttemptedAnswers(nextAttemptedAnswers);
+        setTotalSolved((prev) => prev + 1);
+        return true;
       }
+
+      alert(res.error || "Failed to submit answer");
+      if (res.limitReached) fetchPracticeHistory();
       return false;
+    } finally {
+      isSubmittingAnswerRef.current = false;
+      setIsSubmittingAnswer(false);
     }
   };
 
   const handlePrev = async () => {
     if (selectedAnswer && !showResult) {
-      await handleSubmitAnswer();
+      const submitted = await handleSubmitAnswer();
+      if (!submitted) return;
     }
     if (currentIdx > 0) {
-      setCurrentIdx(currentIdx - 1);
-      setSelectedAnswer(null);
-      setShowResult(false);
-      setResult(null);
+      showQuestion(currentIdx - 1);
     }
   };
 
   const handleNext = async () => {
     if (selectedAnswer && !showResult) {
-      await handleSubmitAnswer();
+      const submitted = await handleSubmitAnswer();
+      if (!submitted) return;
     }
     if (currentIdx < questions.length - 1) {
-      setCurrentIdx(currentIdx + 1);
-      setSelectedAnswer(null);
-      setShowResult(false);
-      setResult(null);
+      showQuestion(currentIdx + 1);
     }
   };
 
@@ -818,7 +882,7 @@ export function PracticeContent() {
                       return (
                         <button
                           key={opt.label}
-                          onClick={() => !showResult && setSelectedAnswer(opt.label)}
+                          onClick={() => updateCurrentSelection(opt.label)}
                           disabled={showResult}
                           className={`w-full flex items-center gap-4 py-3 px-4 rounded-xl border-2 text-left transition-all cursor-pointer disabled:cursor-default ${
                             optStyle || "border-outline-variant/40 hover:border-primary/40"
@@ -848,7 +912,7 @@ export function PracticeContent() {
                     <input
                       type="text"
                       value={selectedAnswer || ""}
-                      onChange={(e) => !showResult && setSelectedAnswer(e.target.value)}
+                      onChange={(e) => updateCurrentSelection(e.target.value)}
                       disabled={showResult}
                       placeholder="Type your answer here..."
                       className={`w-full max-w-[300px] px-4 py-3 rounded-xl border-2 text-base font-mono transition-all bg-surface text-on-surface focus:outline-none focus:shadow-md ${
@@ -893,10 +957,10 @@ export function PracticeContent() {
                 {!showResult ? (
                   <button
                     onClick={handleSubmitAnswer}
-                    disabled={!selectedAnswer}
+                    disabled={!selectedAnswer || isSubmittingAnswer}
                     className="flex-1 py-2.5 rounded-xl bg-primary text-on-primary font-semibold text-xs disabled:opacity-40 hover:bg-accent transition-all cursor-pointer"
                   >
-                    Check Answer
+                    {isSubmittingAnswer ? "Saving..." : "Check Answer"}
                   </button>
                 ) : (
                   <div className="flex-1 text-center py-2.5 text-xs font-bold text-primary uppercase tracking-wider">
@@ -914,7 +978,7 @@ export function PracticeContent() {
                 ) : (
                   <button
                     onClick={handleNext}
-                    disabled={currentIdx >= questions.length - 1}
+                    disabled={currentIdx >= questions.length - 1 || isSubmittingAnswer}
                     className="px-4 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-xs font-semibold transition-colors cursor-pointer disabled:opacity-30 disabled:hover:bg-transparent flex items-center gap-1.5"
                   >
                     Next <Icon name="arrow_forward" className="text-[14px]" />

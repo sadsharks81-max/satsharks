@@ -249,7 +249,7 @@ function AdminClasses() {
                         {c.status === "LIVE" && (
                           <>
                             <button
-                              onClick={() => navigate({ to: `/classroom/${c.roomName || c._id}` })}
+                              onClick={() => navigate({ to: `/classroom/${c._id}` })}
                               className="px-3 py-1.5 bg-success/15 text-success hover:bg-success/25 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none"
                             >
                               <Icon name="visibility" className="text-[14px]" /> Monitor

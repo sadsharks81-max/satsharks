@@ -234,6 +234,9 @@ export const completeModule = async (req: AuthRequest, res: Response) => {
     });
     modAttempt.correctCount = correctCount;
     modAttempt.score = correctCount;
+    // Older custom-test attempts were created without this field, which made
+    // completed tests appear as 0/0 in results and history.
+    modAttempt.totalQuestions = mod.questions.length;
     modAttempt.completedAt = new Date();
 
     let nextModuleIndex = moduleIndex + 1;
@@ -332,7 +335,13 @@ async function finalizeAttempt(attempt: any, res: Response) {
 
   for (const mod of attempt.moduleAttempts) {
     if (isAdaptive && !mod.startedAt) continue;
-    
+
+    // Fall back to the test definition for legacy/custom attempts whose
+    // module totals were not initialized when the attempt was created.
+    const moduleQuestionCount = test?.modules?.[mod.moduleIndex]?.questions?.length || 0;
+    if (!mod.totalQuestions && moduleQuestionCount) {
+      mod.totalQuestions = moduleQuestionCount;
+    }
     totalCorrect += mod.correctCount;
     totalQuestions += mod.totalQuestions;
     if (mod.startedAt && mod.completedAt) {
@@ -404,9 +413,16 @@ export const getSATAttempt = async (req: AuthRequest, res: Response) => {
 
     if (test && test.modules) {
       for (const ma of attemptObj.moduleAttempts) {
-        if (!ma.startedAt) continue;
         const testMod = test.modules[ma.moduleIndex];
         if (!testMod || !testMod.questions) continue;
+
+        if (!ma.totalQuestions && (ma.startedAt || ma.completedAt)) {
+          ma.totalQuestions = testMod.questions.length;
+        }
+        if (!ma.startedAt && ma.completedAt) {
+          ma.startedAt = attemptObj.startedAt || ma.completedAt;
+        }
+        if (!ma.startedAt) continue;
 
         // Map existing answers by question ID
         const existingAnswersMap = new Map();
@@ -438,6 +454,18 @@ export const getSATAttempt = async (req: AuthRequest, res: Response) => {
         });
 
         ma.answers = fullAnswers;
+      }
+
+      // Keep old completed custom tests useful without requiring a database
+      // migration. Their module scores were stored correctly; only the totals
+      // were missing.
+      if (attemptObj.status === "COMPLETED" && !attemptObj.totalQuestions) {
+        const completedModules = attemptObj.moduleAttempts.filter((ma: any) => ma.startedAt || ma.completedAt);
+        attemptObj.totalCorrect = completedModules.reduce((sum: number, ma: any) => sum + (ma.correctCount || 0), 0);
+        attemptObj.totalQuestions = completedModules.reduce((sum: number, ma: any) => sum + (ma.totalQuestions || 0), 0);
+        attemptObj.percentage = attemptObj.totalQuestions
+          ? Math.round((attemptObj.totalCorrect / attemptObj.totalQuestions) * 100)
+          : 0;
       }
     }
 

@@ -7,6 +7,31 @@ import { Types } from "mongoose";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { sendError } from "../utils/http";
 
+const withRecoveredAttemptTotals = (attempt: any) => {
+  if (attempt.totalQuestions > 0 || !attempt.test?.modules) return attempt;
+
+  const completedModules = (attempt.moduleAttempts || []).filter(
+    (moduleAttempt: any) => moduleAttempt.startedAt || moduleAttempt.completedAt,
+  );
+  const totalQuestions = completedModules.reduce((total: number, moduleAttempt: any) => {
+    const storedTotal = Number(moduleAttempt.totalQuestions) || 0;
+    const testModuleTotal = attempt.test.modules[moduleAttempt.moduleIndex]?.questions?.length || 0;
+    return total + (storedTotal || testModuleTotal);
+  }, 0);
+  const totalCorrect = completedModules.reduce(
+    (total: number, moduleAttempt: any) => total + (Number(moduleAttempt.correctCount) || 0),
+    0,
+  );
+
+  return {
+    ...attempt,
+    totalQuestions,
+    totalCorrect,
+    totalScore: totalCorrect,
+    percentage: totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0,
+  };
+};
+
 export const getDashboardStats = async (req: AuthRequest, res: Response) => {
   try {
     const studentId = req.user?.userId;
@@ -93,16 +118,17 @@ export const getTestHistory = async (req: AuthRequest, res: Response) => {
 
     const [attempts, total] = await Promise.all([
       SATTestAttempt.find({ student: studentId, status: "COMPLETED" })
-        .populate("test", "title year testNumber")
+        .populate("test", "title year testNumber modules.questions")
         .sort({ completedAt: -1 })
         .skip(skip)
-        .limit(limitNum),
+        .limit(limitNum)
+        .lean(),
       SATTestAttempt.countDocuments({ student: studentId, status: "COMPLETED" }),
     ]);
 
     res.status(200).json({
       success: true,
-      attempts,
+      attempts: attempts.map(withRecoveredAttemptTotals),
       pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
     });
   } catch (error) {
@@ -115,7 +141,7 @@ export const getUnifiedHistory = async (req: AuthRequest, res: Response) => {
     const studentId = req.user?.userId;
     const [fullTests, practice, vocabulary] = await Promise.all([
       SATTestAttempt.find({ student: studentId, status: "COMPLETED" })
-        .populate("test", "title year testNumber")
+        .populate("test", "title year testNumber modules.questions")
         .sort({ completedAt: -1 })
         .lean(),
       PracticeSession.find({ student: studentId })
@@ -126,7 +152,7 @@ export const getUnifiedHistory = async (req: AuthRequest, res: Response) => {
     ]);
     res.status(200).json({
       success: true,
-      fullTests,
+      fullTests: fullTests.map(withRecoveredAttemptTotals),
       practice: practice.map((item: any) => ({
         _id: item._id,
         title: item.question?.category?.name || "Practice Question",

@@ -24,6 +24,16 @@ const MIN_TOKEN_TTL_SECONDS = 30 * 60;
 const MAX_TOKEN_TTL_SECONDS = 8 * 60 * 60;
 const JOIN_GRACE_MINUTES = 15; // how long after scheduled end a class can still be joined
 
+// Classroom URLs historically used either the class document id or LiveKit's
+// room name. Accept both so legacy scheduled classes and existing links remain
+// joinable, while avoiding findById cast errors for non-ObjectId room names.
+const findLiveClassByIdentifier = (identifierParam: string | string[]) => {
+  const identifier = Array.isArray(identifierParam) ? identifierParam[0] : identifierParam;
+  const identifiers: Record<string, unknown>[] = [{ roomName: identifier }];
+  if (mongoose.isValidObjectId(identifier)) identifiers.push({ _id: identifier });
+  return LiveClass.findOne({ $or: identifiers });
+};
+
 const handleServiceError = (res: Response, error: any) => {
   if (error instanceof LiveKitNotConfiguredError) {
     return res.status(503).json({ success: false, error: error.message });
@@ -92,7 +102,7 @@ export const getLiveClasses = async (req: AuthRequest, res: Response) => {
 // Get single live class details
 export const getLiveClassById = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id)
+    const liveClass = await findLiveClassByIdentifier(req.params.id)
       .populate("teacher", "name email")
       .populate("createdBy", "name email");
 
@@ -114,7 +124,7 @@ export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => 
       return res.status(400).json({ success: false, error: "Invalid status" });
     }
 
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
       return res.status(404).json({ success: false, error: "Class session not found" });
     }
@@ -151,7 +161,7 @@ export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => 
 // Delete a class session
 export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
       return res.status(404).json({ success: false, error: "Class session not found" });
     }
@@ -187,7 +197,7 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
 // Issue a scoped LiveKit access token for the requesting user to join this class's room.
 export const generateJoinToken = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
       return res.status(404).json({ success: false, error: "Class session not found" });
     }
@@ -275,7 +285,7 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
 // Lightweight participant count, used by dashboard cards for "Students Joined" - only meaningful once LIVE.
 export const getLiveClassParticipants = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
       return res.status(404).json({ success: false, error: "Class session not found" });
     }
@@ -301,7 +311,7 @@ const assertModeratorAccess = async (req: AuthRequest, liveClass: InstanceType<t
 
 export const muteParticipant = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
     if (!(await assertModeratorAccess(req, liveClass))) {
       return res.status(403).json({ success: false, error: "Only the teacher or an admin can do this" });
@@ -316,7 +326,7 @@ export const muteParticipant = async (req: AuthRequest, res: Response) => {
 
 export const removeParticipantFromClass = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
     if (!(await assertModeratorAccess(req, liveClass))) {
       return res.status(403).json({ success: false, error: "Only the teacher or an admin can do this" });
@@ -347,7 +357,7 @@ export const postChatMessage = async (req: AuthRequest, res: Response) => {
     if (!text || !text.trim()) {
       return res.status(400).json({ success: false, error: "Message text is required" });
     }
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
 
     const user = await User.findById(req.user?.userId).select("name");
@@ -367,7 +377,7 @@ export const postChatMessage = async (req: AuthRequest, res: Response) => {
 
 export const deleteChatMessage = async (req: AuthRequest, res: Response) => {
   try {
-    const liveClass = await LiveClass.findById(req.params.id);
+    const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
     if (!(await assertModeratorAccess(req, liveClass))) {
       return res.status(403).json({ success: false, error: "Only the teacher or an admin can delete messages" });

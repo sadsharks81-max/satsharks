@@ -130,7 +130,7 @@ function TeacherClasses() {
     setStartingId(c._id);
     const ok = await handleUpdateStatus(c._id, "LIVE");
     setStartingId(null);
-    if (ok) navigate({ to: `/classroom/${c.roomName || c._id}` });
+    if (ok) navigate({ to: `/classroom/${c._id}` });
   };
 
   // Joinable classes (LIVE / SCHEDULED) first, completed/cancelled sessions at the end
@@ -246,7 +246,7 @@ function TeacherClasses() {
                 {c.status === "LIVE" && (
                   <>
                     <button
-                      onClick={() => navigate({ to: `/classroom/${c.roomName || c._id}` })}
+                      onClick={() => navigate({ to: `/classroom/${c._id}` })}
                       className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-success text-white rounded-xl text-xs font-bold hover:opacity-90 transition-opacity cursor-pointer border-none"
                     >
                       <Icon name="video_call" />
