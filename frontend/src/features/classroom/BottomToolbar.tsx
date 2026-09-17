@@ -36,7 +36,7 @@ function ToolbarButton({
       title={label}
       onClick={onClick}
       {...buttonProps}
-      className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 ${
+      className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 ${
         danger
           ? "bg-error border-error text-white hover:bg-error/90"
           : active
@@ -134,20 +134,43 @@ export function BottomToolbar({
   canModerate,
 }: BottomToolbarProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [screenShareError, setScreenShareError] = useState("");
+  const [mediaError, setMediaError] = useState("");
   const { isScreenShareEnabled } = useLocalParticipant();
 
   const mic = useTrackToggle({ source: Track.Source.Microphone });
   const cam = useTrackToggle({ source: Track.Source.Camera });
   const screenShare = useTrackToggle({ source: Track.Source.ScreenShare });
 
+  const toggleMic = async () => {
+    if (mic.pending) return;
+    setMediaError("");
+    try {
+      await mic.toggle();
+    } catch (error: any) {
+      console.warn("Unable to toggle microphone:", error);
+      setMediaError("Microphone access failed. Check browser permissions.");
+    }
+  };
+
+  const toggleCam = async () => {
+    if (cam.pending) return;
+    setMediaError("");
+    try {
+      await cam.toggle();
+    } catch (error: any) {
+      console.warn("Unable to toggle camera:", error);
+      setMediaError("Camera access failed. Check browser permissions.");
+    }
+  };
+
   const toggleScreenShare = async () => {
-    setScreenShareError("");
+    if (screenShare.pending) return;
+    setMediaError("");
     try {
       await screenShare.toggle();
     } catch (error) {
       console.error("Unable to toggle screen sharing:", error);
-      setScreenShareError(
+      setMediaError(
         "Screen sharing could not start. Check browser permission and try again.",
       );
     }
@@ -155,9 +178,10 @@ export function BottomToolbar({
 
   return (
     <div className="relative flex shrink-0 items-center justify-center gap-2 sm:gap-3 border-t border-white/10 bg-[#0B1120] px-4 py-3 flex-wrap">
-      {screenShareError && (
-        <div className="absolute bottom-full mb-2 rounded-lg bg-error px-3 py-2 text-xs font-semibold text-white shadow-lg">
-          {screenShareError}
+      {mediaError && (
+        <div className="absolute bottom-full mb-2 rounded-lg bg-error px-3 py-2 text-xs font-semibold text-white shadow-lg flex items-center gap-2">
+          <span>{mediaError}</span>
+          <button onClick={() => setMediaError("")} className="text-white/80 hover:text-white font-bold ml-1">✕</button>
         </div>
       )}
       <ToolbarButton
@@ -165,14 +189,16 @@ export function BottomToolbar({
         icon={mic.enabled ? "mic" : "mic_off"}
         label={mic.enabled ? "Mute microphone (M)" : "Unmute microphone (M)"}
         danger={!mic.enabled}
-        onClick={() => { mic.toggle().catch(() => {}); }}
+        onClick={() => void toggleMic()}
+        buttonProps={{ disabled: mic.pending }}
       />
       <ToolbarButton
         id="cr-toggle-cam"
         icon={cam.enabled ? "videocam" : "videocam_off"}
         label={cam.enabled ? "Turn off camera (V)" : "Turn on camera (V)"}
         danger={!cam.enabled}
-        onClick={() => { cam.toggle().catch(() => {}); }}
+        onClick={() => void toggleCam()}
+        buttonProps={{ disabled: cam.pending }}
       />
       {canModerate && (
         <ToolbarButton

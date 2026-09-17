@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, Component } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveKitRoom, RoomAudioRenderer } from "@livekit/components-react";
 import { useAuth } from "../../hooks/useAuth";
@@ -14,16 +14,82 @@ const resolveUserId = (user: User | null): string | undefined =>
   user?.id || user?._id || user?.userId;
 
 const LIVEKIT_ROOM_OPTIONS = {
-  adaptiveStream: { pauseVideoInBackground: true },
-  dynacast: true,
+  adaptiveStream: false,
+  dynacast: false,
+  stopLocalTrackOnUnpublish: true,
+  singlePeerConnection: false,
 };
 
 const LIVEKIT_CONNECT_OPTIONS = {
   autoSubscribe: true,
-  maxRetries: 5,
+  maxRetries: 10,
   peerConnectionTimeout: 30000,
   websocketTimeout: 30000,
 };
+
+const DISCONNECT_REASON_NAMES: Record<number, string> = {
+  0: "UNKNOWN_REASON",
+  1: "CLIENT_INITIATED",
+  2: "DUPLICATE_IDENTITY",
+  3: "SERVER_SHUTDOWN",
+  4: "PARTICIPANT_REMOVED",
+  5: "ROOM_DELETED",
+  6: "STATE_MISMATCH",
+  7: "JOIN_FAILURE",
+  8: "MIGRATION",
+  9: "SIGNAL_CLOSE",
+  10: "ROOM_CLOSED",
+  11: "USER_UNAVAILABLE",
+  12: "USER_REJECTED",
+  13: "SIP_TRUNK_FAILURE",
+};
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+}
+
+class ClassroomErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("[ClassroomErrorBoundary] Caught stage error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex h-full w-full items-center justify-center p-6 bg-[#0B1120] text-white">
+          <div className="max-w-md text-center space-y-4">
+            <Icon name="warning" className="text-4xl text-accent mx-auto" />
+            <h3 className="text-lg font-bold">Classroom Display Warning</h3>
+            <p className="text-xs text-white/60 leading-relaxed">
+              A visual element encountered an issue, but your classroom audio and connection remain active.
+            </p>
+            <button
+              onClick={() => this.setState({ hasError: false })}
+              className="px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-accent cursor-pointer border-none transition-colors"
+            >
+              Reload Display
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const backRouteForRole = (role?: string) => {
   if (role === "TEACHER") return "/teacher/classes";
@@ -178,9 +244,18 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     }
   }, [roomId, refetchClass, navigate, backTo]);
 
+  const autoRejoinAttemptsRef = useRef(0);
+  const autoRejoinTimerRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
+    };
+  }, []);
+
   // Clean rejoin: fetch fresh token FIRST before resetting disconnected state
   // to avoid mounting with stale tokens and avoid unmounting race conditions
-  const handleRejoin = async () => {
+  const handleRejoin = useCallback(async () => {
     setIsRejoining(true);
     try {
       const res = await refetchToken();
@@ -191,21 +266,48 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     } finally {
       setIsRejoining(false);
     }
-  };
+  }, [refetchToken]);
+
+  const handleLiveKitConnected = useCallback(() => {
+    console.log("[Classroom] LiveKit room connected successfully");
+    autoRejoinAttemptsRef.current = 0;
+    if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
+  }, []);
 
   const handleLiveKitDisconnected = useCallback((reason?: any) => {
     if (isUnmountingRef.current) return;
     // DisconnectReason.CLIENT_INITIATED is 1 — do not treat intentional leaves as errors
     if (reason === 1 || reason === "CLIENT_INITIATED") {
-      console.log("LiveKit disconnected gracefully (client initiated)");
+      console.log("[Classroom] LiveKit disconnected gracefully (client initiated)");
       return;
     }
-    console.warn("LiveKit room disconnected:", reason);
+    const reasonName = typeof reason === "number" ? DISCONNECT_REASON_NAMES[reason] || `REASON_${reason}` : String(reason);
+    console.warn(`[Classroom] LiveKit room disconnected: ${reasonName} (code: ${reason})`);
+
+    // Transient disconnect (such as state mismatch, temporary network drop, signal close):
+    // Attempt automatic silent recovery up to 3 times before presenting a blocking error modal
+    if (autoRejoinAttemptsRef.current < 3 && (reason === 6 || reason === 9 || reason === 0 || reason === undefined)) {
+      autoRejoinAttemptsRef.current += 1;
+      console.info(`[Classroom] Attempting automatic reconnect (attempt ${autoRejoinAttemptsRef.current}/3)...`);
+      if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
+      autoRejoinTimerRef.current = window.setTimeout(() => {
+        if (!isUnmountingRef.current) {
+          void handleRejoin().then(() => {
+            console.info("[Classroom] Automatic reconnect completed.");
+          }).catch((err) => {
+            console.error("[Classroom] Automatic reconnect failed:", err);
+            setDisconnected(true);
+          });
+        }
+      }, 800);
+      return;
+    }
+
     setDisconnected(true);
-  }, []);
+  }, [handleRejoin]);
 
   const handleLiveKitError = useCallback((err: Error) => {
-    console.error("LiveKit room error:", err);
+    console.error("[Classroom] LiveKit room error:", err);
   }, []);
 
   if (classLoading) return <FullScreenLoading label="Loading classroom..." />;
@@ -294,19 +396,22 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
       options={LIVEKIT_ROOM_OPTIONS}
       connectOptions={LIVEKIT_CONNECT_OPTIONS}
       className="fixed inset-0 z-50"
+      onConnected={handleLiveKitConnected}
       onDisconnected={handleLiveKitDisconnected}
       onError={handleLiveKitError}
     >
       <RoomAudioRenderer />
-      <ClassroomExperience
-        liveClass={liveClass}
-        classId={roomId}
-        currentUserId={currentUserId}
-        canModerate={canModerate}
-        onStartClass={handleStartClass}
-        onEndClass={handleEndClass}
-        onLeave={handleLeave}
-      />
+      <ClassroomErrorBoundary>
+        <ClassroomExperience
+          liveClass={liveClass}
+          classId={roomId}
+          currentUserId={currentUserId}
+          canModerate={canModerate}
+          onStartClass={handleStartClass}
+          onEndClass={handleEndClass}
+          onLeave={handleLeave}
+        />
+      </ClassroomErrorBoundary>
     </LiveKitRoom>
   );
 }

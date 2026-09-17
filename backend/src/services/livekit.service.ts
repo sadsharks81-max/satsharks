@@ -1,4 +1,4 @@
-import { AccessToken, RoomServiceClient, WebhookReceiver, VideoGrant, TrackType } from "livekit-server-sdk";
+import { AccessToken, RoomServiceClient, WebhookReceiver, VideoGrant, TrackType, TrackSource } from "livekit-server-sdk";
 import { env } from "../config/env";
 
 // Grace window kept in sync with JOIN_BUFFER_MINUTES on the frontend (dashboard/live-classes.tsx)
@@ -48,7 +48,7 @@ interface IssueTokenParams {
   name: string;
   role: string;
   ttlSeconds: number;
-  grant: Pick<VideoGrant, "roomAdmin" | "canPublish" | "canSubscribe" | "canUpdateOwnMetadata">;
+  grant: Pick<VideoGrant, "roomAdmin" | "canPublish" | "canPublishSources" | "canSubscribe" | "canUpdateOwnMetadata">;
 }
 
 /**
@@ -150,4 +150,4 @@ export const verifyWebhookEvent = async (body: string, authHeader: string) => {
   return receiver.receive(body, authHeader);
 };
 
-export { LiveKitNotConfiguredError };
+export { LiveKitNotConfiguredError, TrackSource };

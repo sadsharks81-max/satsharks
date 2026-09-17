@@ -37,26 +37,26 @@ export function VideoStage({
       // Stable sort: teacher first, then local participant, then others by identity.
       // Avoids re-sorting on isSpeaking which caused video stutter and lag.
       const priority = (track: typeof a) =>
-        track.participant.identity === teacherIdentity
+        track.participant?.identity === teacherIdentity
           ? 2
-          : track.participant.isLocal
+          : track.participant?.isLocal
             ? 1
             : 0;
       const diff = priority(b) - priority(a);
       if (diff !== 0) return diff;
-      return a.participant.identity.localeCompare(b.participant.identity);
+      return (a.participant?.identity || "").localeCompare(b.participant?.identity || "");
     })
     .slice(0, maxVisibleCameras);
 
   if (screenShareTrack) {
-    const teacherCameraTrack = cameraTracks.find((t) => t.participant.identity === teacherIdentity);
+    const teacherCameraTrack = cameraTracks.find((t) => t.participant?.identity === teacherIdentity);
     return (
       <div className="relative h-full w-full p-0 min-h-0 bg-[#0B1120]">
         {/* Full-bleed Screen Share */}
         <div className="h-full w-full">
           <ParticipantTile
             trackRef={screenShareTrack}
-            isTeacher={screenShareTrack.participant.identity === teacherIdentity}
+            isTeacher={screenShareTrack.participant?.identity === teacherIdentity}
             spotlight
             isScreenShare
           />
@@ -90,7 +90,7 @@ export function VideoStage({
       <div className="h-full w-full p-4">
         <ParticipantTile
           trackRef={cameraTracks[0]}
-          isTeacher={cameraTracks[0].participant.identity === teacherIdentity}
+          isTeacher={cameraTracks[0].participant?.identity === teacherIdentity}
           spotlight
         />
       </div>
@@ -106,9 +106,9 @@ export function VideoStage({
       >
         {cameraTracks.map((t) => (
           <ParticipantTile
-            key={t.participant.identity}
+            key={t.publication?.trackSid || `${t.participant?.identity || "unknown"}_${t.source}`}
             trackRef={t}
-            isTeacher={t.participant.identity === teacherIdentity}
+            isTeacher={t.participant?.identity === teacherIdentity}
           />
         ))}
       </div>

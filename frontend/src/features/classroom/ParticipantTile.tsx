@@ -16,7 +16,7 @@ export function ParticipantTile({ trackRef, isTeacher, spotlight = false, isScre
   const { quality } = useConnectionQualityIndicator({ participant });
   const { attributes } = useParticipantAttributes({ participant });
   const handRaised = attributes?.handRaised === "true";
-  const hasVideo = Boolean(trackRef.publication) && !trackRef.publication?.isMuted;
+  const hasVideo = Boolean(trackRef.publication?.track) && !trackRef.publication?.isMuted;
 
   return (
     <div

@@ -18,6 +18,7 @@ import {
   issueRoomToken,
   verifyWebhookEvent,
   countStudentParticipants,
+  TrackSource,
 } from "../services/livekit.service";
 
 const MIN_TOKEN_TTL_SECONDS = 30 * 60;
@@ -274,6 +275,12 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
       grant: {
         roomAdmin: role === "ADMIN" || role === "TEACHER",
         canPublish: true,
+        canPublishSources: [
+          TrackSource.CAMERA,
+          TrackSource.MICROPHONE,
+          TrackSource.SCREEN_SHARE,
+          TrackSource.SCREEN_SHARE_AUDIO,
+        ],
         canSubscribe: true,
         // Needed for the raise-hand feature, which stores state via localParticipant.setAttributes().
         canUpdateOwnMetadata: true,
