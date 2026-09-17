@@ -20,6 +20,8 @@ interface ClassroomExperienceProps {
   classId: string;
   currentUserId?: string;
   canModerate: boolean;
+  onStartClass?: () => Promise<void> | void;
+  onEndClass?: () => Promise<void> | void;
   onLeave: () => void;
 }
 
@@ -33,6 +35,8 @@ export function ClassroomExperience({
   classId,
   currentUserId,
   canModerate,
+  onStartClass,
+  onEndClass,
   onLeave,
 }: ClassroomExperienceProps) {
   const [activePanel, setActivePanel] = useState<PanelKind | null>(null);
@@ -121,6 +125,10 @@ export function ClassroomExperience({
             title={liveClass.title}
             startedAt={liveClass.startedAt}
             durationMinutes={liveClass.duration}
+            status={liveClass.status}
+            canModerate={canModerate}
+            onStartClass={onStartClass}
+            onEndClass={onEndClass}
             onLeave={onLeave}
           />
           {isScreenSharing && (

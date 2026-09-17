@@ -109,12 +109,20 @@ function AdminClasses() {
       const res = await api.put(`/api/live-classes/${id}/status`, { status });
       if (res.success) {
         fetchClassesAndTeachers();
+        return true;
       } else {
         alert(res.error || "Failed to update class status.");
+        return false;
       }
     } catch (err) {
       alert("Failed to update class status.");
+      return false;
     }
+  };
+
+  const handleStartClass = async (c: LiveClassSummary) => {
+    const ok = await handleUpdateStatus(c._id, "LIVE");
+    if (ok) navigate({ to: `/classroom/${c._id}` });
   };
 
   const handleDeleteClass = async (id: string) => {
@@ -181,24 +189,24 @@ function AdminClasses() {
       ) : (
         <div className="bg-surface border border-outline-variant/40 rounded-2xl overflow-hidden shark-shadow">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-sm whitespace-nowrap">
+            <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-surface-container-low border-b border-outline-variant/40 text-xs uppercase tracking-wider text-on-surface-variant">
-                  <th className="p-4 font-bold">Class Details</th>
-                  <th className="p-4 font-bold">Assigned Teacher</th>
-                  <th className="p-4 font-bold">Schedule</th>
-                  <th className="p-4 font-bold">Capacity</th>
-                  <th className="p-4 font-bold">Status</th>
-                  <th className="p-4 font-bold text-right">Actions</th>
+                <tr className="border-b border-outline-variant/40 bg-surface-container-low text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">
+                  <th className="p-4">Class Details</th>
+                  <th className="p-4">Assigned Teacher</th>
+                  <th className="p-4">Date & Time</th>
+                  <th className="p-4">Capacity</th>
+                  <th className="p-4">Status</th>
+                  <th className="p-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-outline-variant/20">
+              <tbody className="divide-y divide-outline-variant/20 text-sm">
                 {sortedClasses.map((c) => (
-                  <tr key={c._id} className="hover:bg-surface-container-low/40 transition-colors">
+                  <tr key={c._id} className="hover:bg-surface-container-lowest/50 transition-colors">
                     <td className="p-4">
-                      <div className="font-semibold text-on-surface text-sm">{c.title}</div>
+                      <div className="font-bold text-on-surface">{c.title}</div>
                       {c.description && (
-                        <div className="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-xs">
+                        <div className="text-xs text-on-surface-variant line-clamp-1 mt-0.5">
                           {c.description}
                         </div>
                       )}
@@ -239,12 +247,22 @@ function AdminClasses() {
                     <td className="p-4 text-right">
                       <div className="flex justify-end gap-2">
                         {c.status === "SCHEDULED" && (
-                          <button
-                            onClick={() => handleUpdateStatus(c._id, "LIVE")}
-                            className="px-3 py-1.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none"
-                          >
-                            <Icon name="play_arrow" className="text-[14px]" /> Start
-                          </button>
+                          <>
+                            <button
+                              onClick={() => handleStartClass(c)}
+                              className="px-3 py-1.5 bg-success text-white hover:bg-success/90 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none shadow-sm"
+                              title="Start session and enter live classroom"
+                            >
+                              <Icon name="play_arrow" className="text-[14px]" /> Start Class
+                            </button>
+                            <button
+                              onClick={() => navigate({ to: `/classroom/${c._id}` })}
+                              className="px-3 py-1.5 bg-surface-container-high text-on-surface hover:bg-surface-container-highest rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer border-none"
+                              title="Enter classroom room ahead of time"
+                            >
+                              <Icon name="video_call" className="text-[14px]" /> Enter Room
+                            </button>
+                          </>
                         )}
                         {c.status === "LIVE" && (
                           <>

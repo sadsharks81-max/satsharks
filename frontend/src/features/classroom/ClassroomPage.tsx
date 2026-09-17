@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveKitRoom, RoomAudioRenderer } from "@livekit/components-react";
 import { useAuth } from "../../hooks/useAuth";
 import { Icon } from "../../components/common/Icon";
+import { api } from "../../services/api";
 import { useClassStatusPoll } from "./useClassStatusPoll";
 import { useLiveClassRoom } from "./useLiveClassRoom";
 import { WaitingRoom } from "./WaitingRoom";
@@ -11,9 +12,17 @@ import type { User } from "../../types";
 
 const resolveUserId = (user: User | null): string | undefined =>
   user?.id || user?._id || user?.userId;
+
 const LIVEKIT_ROOM_OPTIONS = {
   adaptiveStream: { pauseVideoInBackground: true },
   dynacast: true,
+};
+
+const LIVEKIT_CONNECT_OPTIONS = {
+  autoSubscribe: true,
+  maxRetries: 5,
+  peerConnectionTimeout: 30000,
+  websocketTimeout: 30000,
 };
 
 const backRouteForRole = (role?: string) => {
@@ -41,6 +50,7 @@ function FullScreenMessage({
   onPrimary,
   secondaryLabel,
   onSecondary,
+  primaryDisabled,
 }: {
   icon: string;
   title: string;
@@ -49,6 +59,7 @@ function FullScreenMessage({
   onPrimary: () => void;
   secondaryLabel?: string;
   onSecondary?: () => void;
+  primaryDisabled?: boolean;
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0B1120] p-6">
@@ -63,7 +74,8 @@ function FullScreenMessage({
         <div className="space-y-2.5">
           <button
             onClick={onPrimary}
-            className="w-full py-3 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-accent transition-colors cursor-pointer border-none"
+            disabled={primaryDisabled}
+            className="w-full py-3 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-accent transition-colors cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {primaryLabel}
           </button>
@@ -85,6 +97,7 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [disconnected, setDisconnected] = useState(false);
+  const [isRejoining, setIsRejoining] = useState(false);
   const [connectionGeneration, setConnectionGeneration] = useState(0);
   const isUnmountingRef = useRef(false);
 
@@ -103,7 +116,7 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     navigate({ to: backTo });
   };
 
-  const { liveClass, loading: classLoading, error: classError } = useClassStatusPoll(roomId);
+  const { liveClass, loading: classLoading, error: classError, refetch: refetchClass } = useClassStatusPoll(roomId);
 
   const isStudent = role === "STUDENT";
   const canAttemptConnect =
@@ -118,20 +131,82 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     error: tokenError,
     upgradeRequired,
     loading: tokenLoading,
-    refetch,
+    refetch: refetchToken,
   } = useLiveClassRoom(roomId, canAttemptConnect);
 
+  const canModerate =
+    role === "ADMIN" || (role === "TEACHER" && String(liveClass?.teacher?._id) === String(currentUserId));
+
+  // Automatically mark scheduled class as LIVE when teacher or admin joins so students are admitted immediately
+  useEffect(() => {
+    if (canModerate && liveClass && liveClass.status === "SCHEDULED") {
+      api.put(`/api/live-classes/${roomId}/status`, { status: "LIVE" })
+        .then((res) => {
+          if (res.success) {
+            void refetchClass();
+          }
+        })
+        .catch((err) => console.error("Auto-start class error:", err));
+    }
+  }, [canModerate, liveClass?.status, roomId, refetchClass]);
+
+  const handleStartClass = useCallback(async () => {
+    try {
+      const res = await api.put(`/api/live-classes/${roomId}/status`, { status: "LIVE" });
+      if (res.success) {
+        await refetchClass();
+      } else {
+        alert(res.error || "Failed to start class session.");
+      }
+    } catch {
+      alert("Error starting class session.");
+    }
+  }, [roomId, refetchClass]);
+
+  const handleEndClass = useCallback(async () => {
+    try {
+      const res = await api.put(`/api/live-classes/${roomId}/status`, { status: "COMPLETED" });
+      if (res.success) {
+        await refetchClass();
+        isUnmountingRef.current = true;
+        navigate({ to: backTo });
+      } else {
+        alert(res.error || "Failed to end class session.");
+      }
+    } catch {
+      alert("Error ending class session.");
+    }
+  }, [roomId, refetchClass, navigate, backTo]);
+
+  // Clean rejoin: fetch fresh token FIRST before resetting disconnected state
+  // to avoid mounting with stale tokens and avoid unmounting race conditions
   const handleRejoin = async () => {
-    setDisconnected(false);
-    setConnectionGeneration((generation) => generation + 1);
-    await refetch();
+    setIsRejoining(true);
+    try {
+      const res = await refetchToken();
+      if (res && res.success && res.token) {
+        setDisconnected(false);
+        setConnectionGeneration((generation) => generation + 1);
+      }
+    } finally {
+      setIsRejoining(false);
+    }
   };
 
-  const handleLiveKitDisconnected = (reason?: any) => {
+  const handleLiveKitDisconnected = useCallback((reason?: any) => {
     if (isUnmountingRef.current) return;
+    // DisconnectReason.CLIENT_INITIATED is 1 — do not treat intentional leaves as errors
+    if (reason === 1 || reason === "CLIENT_INITIATED") {
+      console.log("LiveKit disconnected gracefully (client initiated)");
+      return;
+    }
     console.warn("LiveKit room disconnected:", reason);
     setDisconnected(true);
-  };
+  }, []);
+
+  const handleLiveKitError = useCallback((err: Error) => {
+    console.error("LiveKit room error:", err);
+  }, []);
 
   if (classLoading) return <FullScreenLoading label="Loading classroom..." />;
 
@@ -164,9 +239,10 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
       <FullScreenMessage
         icon="wifi_off"
         title="You were disconnected"
-        message="Your connection to the classroom dropped. You can try rejoining, or head back to your dashboard."
-        primaryLabel="Rejoin Class"
+        message="Your connection to the classroom dropped. Click below to reconnect to the session."
+        primaryLabel={isRejoining ? "Reconnecting..." : "Rejoin Class"}
         onPrimary={() => void handleRejoin()}
+        primaryDisabled={isRejoining}
         secondaryLabel="Leave"
         onSecondary={handleLeave}
       />
@@ -196,7 +272,7 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
         title={upgradeRequired ? "Premium required" : "Unable to join"}
         message={tokenError}
         primaryLabel={upgradeRequired ? "View Plans" : "Try Again"}
-        onPrimary={() => (upgradeRequired ? navigate({ to: "/sat" }) : refetch())}
+        onPrimary={() => (upgradeRequired ? navigate({ to: "/sat" }) : refetchToken())}
         secondaryLabel="Go Back"
         onSecondary={handleLeave}
       />
@@ -207,9 +283,6 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     return <FullScreenLoading label="Connecting to classroom..." />;
   }
 
-  const canModerate =
-    role === "ADMIN" || (role === "TEACHER" && liveClass.teacher?._id === currentUserId);
-
   return (
     <LiveKitRoom
       key={`${token}:${connectionGeneration}`}
@@ -219,9 +292,10 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
       audio={false}
       video={false}
       options={LIVEKIT_ROOM_OPTIONS}
+      connectOptions={LIVEKIT_CONNECT_OPTIONS}
       className="fixed inset-0 z-50"
       onDisconnected={handleLiveKitDisconnected}
-      onError={(err) => console.error("LiveKit room error:", err)}
+      onError={handleLiveKitError}
     >
       <RoomAudioRenderer />
       <ClassroomExperience
@@ -229,6 +303,8 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
         classId={roomId}
         currentUserId={currentUserId}
         canModerate={canModerate}
+        onStartClass={handleStartClass}
+        onEndClass={handleEndClass}
         onLeave={handleLeave}
       />
     </LiveKitRoom>

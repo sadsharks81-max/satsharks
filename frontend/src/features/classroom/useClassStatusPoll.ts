@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { api } from "../../services/api";
 
 export interface LiveClassDetails {
@@ -26,16 +26,42 @@ export function useClassStatusPoll(classId: string) {
   const [liveClass, setLiveClass] = useState<LiveClassDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const hasLoadedRef = useRef(false);
 
   const fetchOnce = useCallback(async () => {
-    const res = await api.get(`/api/live-classes/${classId}`);
-    if (res.success) {
-      setLiveClass(res.liveClass);
-      setError(null);
-    } else {
-      setError(res.error || "This class could not be found.");
+    try {
+      const res = await api.get(`/api/live-classes/${classId}`);
+      if (res.success && res.liveClass) {
+        hasLoadedRef.current = true;
+        setLiveClass((prev) => {
+          if (
+            prev &&
+            prev.status === res.liveClass.status &&
+            prev.startedAt === res.liveClass.startedAt &&
+            prev.title === res.liveClass.title &&
+            prev.roomName === res.liveClass.roomName &&
+            prev.duration === res.liveClass.duration &&
+            prev.teacher?._id === res.liveClass.teacher?._id
+          ) {
+            return prev; // Preserve object identity, prevent render cascade
+          }
+          return res.liveClass;
+        });
+        setError(null);
+      } else {
+        // Only set fatal error if we haven't loaded the class yet.
+        // If already loaded, a transient poll failure should never tear down the classroom.
+        if (!hasLoadedRef.current) {
+          setError(res.error || "This class could not be found.");
+        }
+      }
+    } catch {
+      if (!hasLoadedRef.current) {
+        setError("Unable to load class session.");
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, [classId]);
 
   const pollInterval =

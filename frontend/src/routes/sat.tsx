@@ -1453,10 +1453,10 @@ function SATPrepPage() {
                     <div className="flex justify-between items-center text-sm pb-2 border-b border-outline-variant/20">
                       <span className="text-on-surface-variant text-xs">Bank Name:</span>
                       <span className="font-semibold text-on-surface flex items-center">
-                        MEEZAN BANK
+                        Bank Alfalah
                         <button
                           type="button"
-                          onClick={() => handleCopy("MEEZAN BANK", "bank")}
+                          onClick={() => handleCopy("Bank Alfalah", "bank")}
                           className="ml-2 text-primary hover:text-accent p-0.5 cursor-pointer"
                         >
                           <Icon name="content_copy" className="text-sm" />
@@ -1467,10 +1467,10 @@ function SATPrepPage() {
                     <div className="flex justify-between items-center text-sm pb-2 border-b border-outline-variant/20">
                       <span className="text-on-surface-variant text-xs">Account Title:</span>
                       <span className="font-semibold text-on-surface flex items-center">
-                        HAFIZ MUHAMMAD TAYYAB
+                        SAT SHARKS
                         <button
                           type="button"
-                          onClick={() => handleCopy("HAFIZ MUHAMMAD TAYYAB", "title")}
+                          onClick={() => handleCopy("SAT SHARKS", "title")}
                           className="ml-2 text-primary hover:text-accent p-0.5 cursor-pointer"
                         >
                           <Icon name="content_copy" className="text-sm" />
@@ -1481,10 +1481,10 @@ function SATPrepPage() {
                     <div className="flex justify-between items-center text-sm pb-2 border-b border-outline-variant/20">
                       <span className="text-on-surface-variant text-xs">Account Number:</span>
                       <span className="font-mono font-semibold text-on-surface flex items-center">
-                        00300112919975
+                        00661011371041
                         <button
                           type="button"
-                          onClick={() => handleCopy("00300112919975", "acc")}
+                          onClick={() => handleCopy("00661011371041", "acc")}
                           className="ml-2 text-primary hover:text-accent p-0.5 cursor-pointer"
                         >
                           <Icon name="content_copy" className="text-sm" />
@@ -1495,10 +1495,10 @@ function SATPrepPage() {
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-on-surface-variant text-xs">IBAN Number:</span>
                       <span className="font-mono font-semibold text-on-surface flex items-center">
-                        PK09MEZN0000300112919975
+                        PK63ALFH0066001011371041
                         <button
                           type="button"
-                          onClick={() => handleCopy("PK09MEZN0000300112919975", "iban")}
+                          onClick={() => handleCopy("PK63ALFH0066001011371041", "iban")}
                           className="ml-2 text-primary hover:text-accent p-0.5 cursor-pointer"
                         >
                           <Icon name="content_copy" className="text-sm" />
@@ -1513,13 +1513,13 @@ function SATPrepPage() {
               {activeTab === "wallet" && (
                 <div className="space-y-3">
                   <p className="text-xs text-on-surface-variant leading-relaxed">
-                    Transfer the plan amount to our JazzCash account and upload the receipt screenshot below.
+                    Transfer the plan amount using our TILL ID via JazzCash or Raast and upload the receipt screenshot below.
                   </p>
                   <div className="rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-4 space-y-2.5">
                     <div className="flex justify-between items-center text-sm pb-2 border-b border-outline-variant/20">
                       <span className="text-on-surface-variant text-xs">Mobile Wallet:</span>
                       <span className="font-semibold text-on-surface flex items-center">
-                        JazzCash
+                        JazzCash or Raast ID
                       </span>
                     </div>
                     <div className="flex justify-between items-center text-sm pb-2 border-b border-outline-variant/20">
@@ -1537,12 +1537,12 @@ function SATPrepPage() {
                       </span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-on-surface-variant text-xs">Mobile Number:</span>
+                      <span className="text-on-surface-variant text-xs">TILL ID:</span>
                       <span className="font-mono font-semibold text-on-surface flex items-center">
-                        0316 451 4334
+                        984035539
                         <button
                           type="button"
-                          onClick={() => handleCopy("03164514334", "walletNum")}
+                          onClick={() => handleCopy("984035539", "walletNum")}
                           className="ml-2 text-primary hover:text-accent p-0.5 cursor-pointer"
                         >
                           <Icon name="content_copy" className="text-sm" />
@@ -1550,6 +1550,17 @@ function SATPrepPage() {
                         {copiedText === "walletNum" && <span className="text-[10px] text-success ml-1">Copied</span>}
                       </span>
                     </div>
+                  </div>
+                  <div className="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-surface-container-low border border-outline-variant/30 text-[11px] text-on-surface-variant">
+                    <span>💡 Dial <strong className="text-on-surface font-mono">*786*10#</strong> and enter TILL ID or scan via JazzCash / Raast</span>
+                    <a
+                      href="/jazzcash-raast-qr.jpg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline font-semibold shrink-0"
+                    >
+                      View QR
+                    </a>
                   </div>
                 </div>
               )}

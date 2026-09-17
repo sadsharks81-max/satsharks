@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { liveClassApi } from "../../services/liveClassApi";
+import { liveClassApi, type JoinTokenResponse } from "../../services/liveClassApi";
 
 /**
  * Fetches a scoped LiveKit join token for this class. `enabled` gates the initial
@@ -14,25 +14,42 @@ export function useLiveClassRoom(classId: string, enabled: boolean) {
   const [upgradeRequired, setUpgradeRequired] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const fetchToken = useCallback(async () => {
+  const fetchToken = useCallback(async (): Promise<JoinTokenResponse> => {
     setLoading(true);
     setError(null);
-    const res = await liveClassApi.getToken(classId);
-    if (res.success && res.token && res.url) {
-      setToken(res.token);
-      setServerUrl(res.url);
-      setUpgradeRequired(false);
-    } else {
-      setError(res.error || "Unable to join this class right now.");
-      setUpgradeRequired(Boolean(res.upgradeRequired));
+    try {
+      const res = await liveClassApi.getToken(classId);
+      if (res.success && res.token && res.url) {
+        setToken(res.token);
+        setServerUrl(res.url);
+        setUpgradeRequired(false);
+        return res;
+      } else {
+        setError(res.error || "Unable to join this class right now.");
+        setUpgradeRequired(Boolean(res.upgradeRequired));
+        setToken(null);
+        return res;
+      }
+    } catch (err: any) {
+      const msg = err?.message || "Failed to connect to class server.";
+      setError(msg);
       setToken(null);
+      return { success: false, error: msg };
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, [classId]);
 
+  const clearToken = useCallback(() => {
+    setToken(null);
+    setServerUrl(null);
+  }, []);
+
   useEffect(() => {
-    if (enabled && !token && !loading && !error) fetchToken();
+    if (enabled && !token && !loading && !error) {
+      void fetchToken();
+    }
   }, [enabled, token, loading, error, fetchToken]);
 
-  return { token, serverUrl, error, upgradeRequired, loading, refetch: fetchToken };
+  return { token, serverUrl, error, upgradeRequired, loading, refetch: fetchToken, clearToken };
 }

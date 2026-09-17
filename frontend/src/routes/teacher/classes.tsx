@@ -229,14 +229,21 @@ function TeacherClasses() {
                     <button
                       onClick={() => handleStartClass(c)}
                       disabled={startingId === c._id}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-accent transition-colors cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-xl text-xs font-bold hover:bg-accent transition-colors cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                     >
                       <Icon name="play_arrow" />
                       {startingId === c._id ? "Starting..." : "Start Class"}
                     </button>
                     <button
+                      onClick={() => navigate({ to: `/classroom/${c._id}` })}
+                      className="px-3.5 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-xs font-bold text-on-surface-variant transition-colors cursor-pointer"
+                      title="Enter room ahead of scheduled start"
+                    >
+                      Enter Room
+                    </button>
+                    <button
                       onClick={() => handleUpdateStatus(c._id, "CANCELLED")}
-                      className="px-4 py-2.5 rounded-xl border border-outline-variant/40 hover:bg-surface-container-high text-xs font-bold text-on-surface-variant transition-colors cursor-pointer"
+                      className="px-3 py-2.5 rounded-xl border border-error/20 hover:bg-error/10 text-xs font-bold text-error transition-colors cursor-pointer"
                     >
                       Cancel
                     </button>

@@ -229,15 +229,19 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
         ? liveClass.startedAt
         : liveClass.scheduledAt;
       const closesAt = new Date(classStart.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000);
-      if (now < opensAt || now > closesAt) {
-        return res.status(403).json({ success: false, error: "This class is not within its scheduled join window." });
-      }
+
+      // If the class is not yet live, enforce the opening join window.
+      // If the class is already live, allow students to join even if the session has run overtime.
       if (liveClass.status !== "LIVE") {
+        if (now < opensAt || now > closesAt) {
+          return res.status(403).json({ success: false, error: "This class is not within its scheduled join window." });
+        }
         return res.status(409).json({ success: false, error: "Waiting for the teacher to start the class.", waiting: true });
       }
 
       const participants = await listRoomParticipants(liveClass.roomName);
-      if (countStudentParticipants(participants, String(liveClass.teacher)) >= liveClass.maxStudents) {
+      const isAlreadyInRoom = participants.some((p: any) => String(p.identity) === String(userId));
+      if (!isAlreadyInRoom && countStudentParticipants(participants, String(liveClass.teacher)) >= liveClass.maxStudents) {
         return res.status(403).json({ success: false, error: "This class has reached its maximum number of students." });
       }
     }
