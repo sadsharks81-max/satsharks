@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, Component } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveKitRoom, RoomAudioRenderer } from "@livekit/components-react";
 import { useAuth } from "../../hooks/useAuth";
@@ -14,8 +14,8 @@ const resolveUserId = (user: User | null): string | undefined =>
   user?.id || user?._id || user?.userId;
 
 const LIVEKIT_ROOM_OPTIONS = {
-  adaptiveStream: false,
-  dynacast: false,
+  adaptiveStream: { pauseVideoInBackground: true },
+  dynacast: true,
   stopLocalTrackOnUnpublish: true,
   singlePeerConnection: false,
 };

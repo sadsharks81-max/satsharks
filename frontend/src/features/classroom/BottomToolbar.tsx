@@ -15,9 +15,9 @@ interface ToolbarButtonProps {
   label: string;
   active?: boolean;
   danger?: boolean;
+  disabled?: boolean;
   badge?: number;
   onClick?: () => void;
-  buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
 }
 
 function ToolbarButton({
@@ -26,16 +26,16 @@ function ToolbarButton({
   label,
   active,
   danger,
+  disabled,
   badge,
   onClick,
-  buttonProps,
 }: ToolbarButtonProps) {
   return (
     <button
       id={id}
       title={label}
-      onClick={onClick}
-      {...buttonProps}
+      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
       className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 ${
         danger
           ? "bg-error border-error text-white hover:bg-error/90"
@@ -190,7 +190,7 @@ export function BottomToolbar({
         label={mic.enabled ? "Mute microphone (M)" : "Unmute microphone (M)"}
         danger={!mic.enabled}
         onClick={() => void toggleMic()}
-        buttonProps={{ disabled: mic.pending }}
+        disabled={mic.pending}
       />
       <ToolbarButton
         id="cr-toggle-cam"
@@ -198,7 +198,7 @@ export function BottomToolbar({
         label={cam.enabled ? "Turn off camera (V)" : "Turn on camera (V)"}
         danger={!cam.enabled}
         onClick={() => void toggleCam()}
-        buttonProps={{ disabled: cam.pending }}
+        disabled={cam.pending}
       />
       {canModerate && (
         <ToolbarButton
@@ -206,7 +206,7 @@ export function BottomToolbar({
           label={isScreenShareEnabled ? "Stop screen share" : "Share screen"}
           active={isScreenShareEnabled}
           onClick={() => void toggleScreenShare()}
-          buttonProps={{ disabled: screenShare.pending }}
+          disabled={screenShare.pending}
         />
       )}
       <ToolbarButton
