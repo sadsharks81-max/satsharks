@@ -58,9 +58,11 @@ app.use(
 import { stripeWebhook } from "./controllers/payment.controller";
 app.post("/api/payment/webhook/stripe", express.raw({ type: "application/json" }), stripeWebhook);
 
-// LiveKit webhook must also come BEFORE express.json() - signature verification needs the raw body
+// LiveKit webhooks use application/webhook+json and must be parsed as raw bytes
+// before the global JSON parser. The signature covers the exact request body.
 import { liveKitWebhook } from "./controllers/live-class.controller";
-app.post("/api/live-classes/webhook", express.raw({ type: "application/json" }), liveKitWebhook);
+import { liveKitWebhookBodyParser } from "./middleware/livekit-webhook.middleware";
+app.post("/api/live-classes/webhook", liveKitWebhookBodyParser, liveKitWebhook);
 
 app.use(express.json({ limit: env.jsonBodyLimit }));
 app.use(express.urlencoded({ limit: env.urlencodedBodyLimit, extended: true }));

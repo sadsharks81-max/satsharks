@@ -12,6 +12,13 @@ class LiveKitNotConfiguredError extends Error {
   }
 }
 
+class LiveKitJoinUnavailableError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "LiveKitJoinUnavailableError";
+  }
+}
+
 let roomServiceClient: RoomServiceClient | null = null;
 let webhookReceiver: WebhookReceiver | null = null;
 
@@ -70,6 +77,46 @@ export const issueRoomToken = async ({ roomName, identity, name, role, ttlSecond
     ...grant,
   });
   return at.toJwt();
+};
+
+/**
+ * LiveKit's room-service API remains available after a Cloud project exhausts
+ * its connection-minute allowance, while browser WebSocket joins are rejected
+ * with HTTP 429. Probe the same validation route used by the client so token
+ * issuance fails with a useful message instead of leaving users in a connect
+ * loop. Network/probe errors are logged but do not block a potentially healthy
+ * join; only definitive LiveKit responses are surfaced.
+ */
+export const assertRoomJoinAvailable = async (token: string): Promise<void> => {
+  assertConfigured();
+  const validateUrl = new URL(env.livekitUrl);
+  validateUrl.protocol = validateUrl.protocol === "wss:" ? "https:" : "http:";
+  validateUrl.pathname = `${validateUrl.pathname.replace(/\/$/, "")}/rtc/validate`;
+  validateUrl.search = "";
+  validateUrl.searchParams.set("access_token", token);
+  validateUrl.searchParams.set("auto_subscribe", "1");
+  validateUrl.searchParams.set("sdk", "js");
+  validateUrl.searchParams.set("version", "2.21.0");
+  validateUrl.searchParams.set("protocol", "16");
+  validateUrl.searchParams.set("client_protocol", "16");
+
+  try {
+    const response = await fetch(validateUrl, {
+      signal: AbortSignal.timeout(5_000),
+    });
+    if (response.ok) return;
+
+    const responseText = (await response.text()).toLowerCase();
+    if (response.status === 429 && responseText.includes("connection minutes limit exceeded")) {
+      throw new LiveKitJoinUnavailableError("The live classroom service has reached its LiveKit connection-minute limit. Please contact the administrator.");
+    }
+  } catch (error) {
+    if (error instanceof LiveKitJoinUnavailableError) throw error;
+    console.warn("[LiveKit] Join-availability probe failed; allowing the browser to attempt connection", {
+      name: error instanceof Error ? error.name : "UnknownError",
+      message: error instanceof Error ? error.message : "Unknown validation error",
+    });
+  }
 };
 
 /**
@@ -157,4 +204,4 @@ export const verifyWebhookEvent = async (body: string, authHeader: string) => {
   return receiver.receive(body, authHeader);
 };
 
-export { LiveKitNotConfiguredError, TrackSource };
+export { LiveKitJoinUnavailableError, LiveKitNotConfiguredError, TrackSource };

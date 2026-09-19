@@ -32,15 +32,6 @@ const LIVEKIT_CONNECT_OPTIONS = {
 
 const CLASSROOM_CONNECTION_TIMEOUT_MS = 45_000;
 
-const TRANSIENT_DISCONNECT_REASONS = new Set<DisconnectReason | undefined>([
-  undefined,
-  DisconnectReason.UNKNOWN_REASON,
-  DisconnectReason.SERVER_SHUTDOWN,
-  DisconnectReason.STATE_MISMATCH,
-  DisconnectReason.MIGRATION,
-  DisconnectReason.SIGNAL_CLOSE,
-]);
-
 const disconnectMessageFor = (reason?: DisconnectReason) => {
   switch (reason) {
     case DisconnectReason.DUPLICATE_IDENTITY:
@@ -272,15 +263,6 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     }
   }, [roomId, refetchClass, navigate, backTo]);
 
-  const autoRejoinAttemptsRef = useRef(0);
-  const autoRejoinTimerRef = useRef<number | undefined>(undefined);
-
-  useEffect(() => {
-    return () => {
-      if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
-    };
-  }, []);
-
   // Clean rejoin: fetch fresh token FIRST before resetting disconnected state
   // to avoid mounting with stale tokens and avoid unmounting race conditions
   const handleRejoin = useCallback(async (): Promise<boolean> => {
@@ -313,8 +295,6 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     setConnectionFailure(null);
     setDisconnected(false);
     setDisconnectReason(undefined);
-    autoRejoinAttemptsRef.current = 0;
-    if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
   }, [currentUserId, liveClass?.roomName, roomId]);
 
   const handleLiveKitDisconnected = useCallback(
@@ -335,27 +315,8 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
         reason: reason === undefined ? "UNKNOWN" : DisconnectReason[reason],
         reasonCode: reason,
       });
-
-      // Transient disconnect (such as state mismatch, temporary network drop, signal close):
-      // After LiveKit's internal recovery has ended, try two bounded fresh-token rejoins.
-      if (autoRejoinAttemptsRef.current < 2 && TRANSIENT_DISCONNECT_REASONS.has(reason)) {
-        autoRejoinAttemptsRef.current += 1;
-        console.info(
-          `[Classroom] Attempting fresh-token rejoin (${autoRejoinAttemptsRef.current}/2)`,
-        );
-        if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
-        autoRejoinTimerRef.current = window.setTimeout(() => {
-          if (!isUnmountingRef.current) {
-            void handleRejoin().then((success) => {
-              console.info(
-                `[Classroom] Automatic fresh-token rejoin ${success ? "started" : "failed"}`,
-              );
-            });
-          }
-        }, 1_000);
-      }
     },
-    [currentUserId, handleRejoin, liveClass?.roomName, roomId],
+    [currentUserId, liveClass?.roomName, roomId],
   );
 
   const handleLiveKitError = useCallback(
@@ -367,7 +328,12 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
         message: err.message,
       });
       setHasConnected(false);
-      setConnectionFailure("Unable to connect to the classroom. Please try again.");
+      const message = err.message.toLowerCase();
+      setConnectionFailure(
+        message.includes("websocket") || message.includes("signal connection")
+          ? "The live classroom service rejected the connection. Please try again once, then contact the administrator if the problem continues."
+          : "Unable to connect to the classroom. Please try again.",
+      );
     },
     [liveClass?.roomName, roomId],
   );
@@ -419,6 +385,21 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     );
   }
 
+  if (connectionFailure) {
+    return (
+      <FullScreenMessage
+        icon="error"
+        title="Unable to connect"
+        message={connectionFailure}
+        primaryLabel={isRejoining ? "Connecting..." : "Try Again"}
+        onPrimary={() => void handleRejoin()}
+        primaryDisabled={isRejoining}
+        secondaryLabel="Go Back"
+        onSecondary={handleLeave}
+      />
+    );
+  }
+
   if (disconnected) {
     return (
       <FullScreenMessage
@@ -433,21 +414,6 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
         onPrimary={() => void handleRejoin()}
         primaryDisabled={isRejoining}
         secondaryLabel="Leave"
-        onSecondary={handleLeave}
-      />
-    );
-  }
-
-  if (connectionFailure) {
-    return (
-      <FullScreenMessage
-        icon="error"
-        title="Unable to connect"
-        message={connectionFailure}
-        primaryLabel={isRejoining ? "Connecting..." : "Try Again"}
-        onPrimary={() => void handleRejoin()}
-        primaryDisabled={isRejoining}
-        secondaryLabel="Go Back"
         onSecondary={handleLeave}
       />
     );

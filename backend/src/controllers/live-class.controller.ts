@@ -9,6 +9,7 @@ import { env } from "../config/env";
 import { sendError } from "../utils/http";
 import {
   JOIN_BUFFER_MINUTES,
+  LiveKitJoinUnavailableError,
   LiveKitNotConfiguredError,
   ensureRoomExists,
   deleteRoomIfExists,
@@ -16,6 +17,7 @@ import {
   removeRoomParticipant,
   muteRoomParticipant,
   issueRoomToken,
+  assertRoomJoinAvailable,
   verifyWebhookEvent,
   countStudentParticipants,
   TrackSource,
@@ -36,7 +38,7 @@ const findLiveClassByIdentifier = (identifierParam: string | string[]) => {
 };
 
 const handleServiceError = (res: Response, error: any) => {
-  if (error instanceof LiveKitNotConfiguredError) {
+  if (error instanceof LiveKitNotConfiguredError || error instanceof LiveKitJoinUnavailableError) {
     return res.status(503).json({ success: false, error: error.message });
   }
   return sendError(res, error, "live-class.handler");
@@ -291,6 +293,7 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
         canUpdateOwnMetadata: true,
       },
     });
+    await assertRoomJoinAvailable(token);
 
     console.info("[LiveKit] Issued classroom token", {
       roomName: liveClass.roomName,
@@ -418,11 +421,19 @@ export const deleteChatMessage = async (req: AuthRequest, res: Response) => {
 };
 
 // --- Webhook ---
-// Mounted with express.raw() ahead of express.json() in server.ts, mirroring the Stripe webhook.
+// Mounted with the LiveKit raw-body parser ahead of express.json() in server.ts.
 export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
   try {
-    const authHeader = (req.headers["authorization"] as string) || "";
-    const body = (req.body as Buffer).toString("utf8");
+    if (!Buffer.isBuffer(req.body)) {
+      return res.status(415).json({
+        success: false,
+        error: "LiveKit webhook requires an application/webhook+json raw body",
+      });
+    }
+
+    const authHeader = req.get("authorization") || "";
+    // WebhookReceiver verifies this exact string. Do not JSON.parse/stringify it.
+    const body = req.body.toString("utf8");
     const event = await verifyWebhookEvent(body, authHeader);
 
     const roomName = event.room?.name;
