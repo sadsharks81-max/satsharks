@@ -3,11 +3,38 @@ import {
   useTrackToggle,
   useLocalParticipant,
   useMediaDeviceSelect,
+  useTracks,
 } from "@livekit/components-react";
-import { Track } from "livekit-client";
+import { ScreenSharePresets, Track } from "livekit-client";
 import { Icon } from "../../components/common/Icon";
 
 type PanelKind = "chat" | "participants" | "notes";
+
+const SCREEN_SHARE_CAPTURE_OPTIONS = {
+  audio: false,
+  contentHint: "text" as const,
+  // Preserve document/slide readability without capturing wasteful 30 fps motion.
+  resolution: ScreenSharePresets.h1080fps15.resolution,
+};
+
+const mediaErrorMessage = (kind: "microphone" | "camera" | "screen", error: unknown) => {
+  const name = error instanceof Error ? error.name : "";
+  if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+    return kind === "screen"
+      ? "Screen sharing was cancelled or blocked by the browser."
+      : `Please allow ${kind} access in your browser settings.`;
+  }
+  if (name === "NotFoundError" || name === "DevicesNotFoundError") {
+    return `No ${kind === "screen" ? "screen capture source" : kind} is available.`;
+  }
+  if (name === "NotReadableError" || name === "TrackStartError") {
+    return `The ${kind} is unavailable or already in use by another application.`;
+  }
+  if (name === "NotSupportedError" || name === "SecurityError") {
+    return `${kind === "screen" ? "Screen sharing" : `${kind[0].toUpperCase()}${kind.slice(1)} access`} requires a supported browser over HTTPS.`;
+  }
+  return `${kind === "screen" ? "Screen sharing" : `${kind[0].toUpperCase()}${kind.slice(1)} access`} could not be started. Please try again.`;
+};
 
 interface ToolbarButtonProps {
   id?: string;
@@ -32,8 +59,11 @@ function ToolbarButton({
 }: ToolbarButtonProps) {
   return (
     <button
+      type="button"
       id={id}
       title={label}
+      aria-label={label}
+      aria-pressed={active}
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       className={`relative flex h-12 w-12 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 ${
@@ -54,7 +84,13 @@ function ToolbarButton({
   );
 }
 
-function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
+function DeviceSettingsMenu({
+  onClose,
+  onError,
+}: {
+  onClose: () => void;
+  onError: (message: string) => void;
+}) {
   const mic = useMediaDeviceSelect({ kind: "audioinput" });
   const cam = useMediaDeviceSelect({ kind: "videoinput" });
   const ref = useRef<HTMLDivElement>(null);
@@ -67,6 +103,19 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [onClose]);
 
+  const selectDevice = async (kind: "microphone" | "camera", deviceId: string) => {
+    try {
+      if (kind === "microphone") await mic.setActiveMediaDevice(deviceId);
+      else await cam.setActiveMediaDevice(deviceId);
+    } catch (error) {
+      console.warn(`[Classroom] Unable to select ${kind} device`, {
+        name: error instanceof Error ? error.name : "UnknownError",
+        message: error instanceof Error ? error.message : "Unknown device error",
+      });
+      onError(mediaErrorMessage(kind, error));
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -78,7 +127,8 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
         </label>
         <select
           value={mic.activeDeviceId}
-          onChange={(e) => mic.setActiveMediaDevice(e.target.value)}
+          disabled={mic.devices.length === 0}
+          onChange={(e) => void selectDevice("microphone", e.target.value)}
           className="w-full rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 text-xs text-white outline-none"
         >
           {mic.devices.map((d) => (
@@ -86,6 +136,7 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
               {d.label || "Microphone"}
             </option>
           ))}
+          {mic.devices.length === 0 && <option value="">No microphone detected</option>}
         </select>
       </div>
       <div>
@@ -94,7 +145,8 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
         </label>
         <select
           value={cam.activeDeviceId}
-          onChange={(e) => cam.setActiveMediaDevice(e.target.value)}
+          disabled={cam.devices.length === 0}
+          onChange={(e) => void selectDevice("camera", e.target.value)}
           className="w-full rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 text-xs text-white outline-none"
         >
           {cam.devices.map((d) => (
@@ -102,6 +154,7 @@ function DeviceSettingsMenu({ onClose }: { onClose: () => void }) {
               {d.label || "Camera"}
             </option>
           ))}
+          {cam.devices.length === 0 && <option value="">No camera detected</option>}
         </select>
       </div>
     </div>
@@ -119,6 +172,7 @@ interface BottomToolbarProps {
   onToggleFullscreen: () => void;
   onLeave: () => void;
   canModerate: boolean;
+  mediaControlsDisabled: boolean;
 }
 
 export function BottomToolbar({
@@ -132,23 +186,43 @@ export function BottomToolbar({
   onToggleFullscreen,
   onLeave,
   canModerate,
+  mediaControlsDisabled,
 }: BottomToolbarProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [mediaError, setMediaError] = useState("");
-  const { isScreenShareEnabled } = useLocalParticipant();
+  const { localParticipant, isScreenShareEnabled } = useLocalParticipant();
+  const screenShareTracks = useTracks([
+    { source: Track.Source.ScreenShare, withPlaceholder: false },
+  ]);
+  const anotherParticipantIsSharing = screenShareTracks.some(
+    (track) =>
+      track.participant.identity !== localParticipant.identity &&
+      Boolean(track.publication.track) &&
+      !track.publication.isMuted,
+  );
 
-  const mic = useTrackToggle({ source: Track.Source.Microphone });
-  const cam = useTrackToggle({ source: Track.Source.Camera });
-  const screenShare = useTrackToggle({ source: Track.Source.ScreenShare });
+  const mic = useTrackToggle({
+    source: Track.Source.Microphone,
+    onDeviceError: (error) => setMediaError(mediaErrorMessage("microphone", error)),
+  });
+  const cam = useTrackToggle({
+    source: Track.Source.Camera,
+    onDeviceError: (error) => setMediaError(mediaErrorMessage("camera", error)),
+  });
+  const screenShare = useTrackToggle({
+    source: Track.Source.ScreenShare,
+    captureOptions: SCREEN_SHARE_CAPTURE_OPTIONS,
+    onDeviceError: (error) => setMediaError(mediaErrorMessage("screen", error)),
+  });
 
   const toggleMic = async () => {
     if (mic.pending) return;
     setMediaError("");
     try {
       await mic.toggle();
-    } catch (error: any) {
+    } catch (error) {
       console.warn("Unable to toggle microphone:", error);
-      setMediaError("Microphone access failed. Check browser permissions.");
+      setMediaError(mediaErrorMessage("microphone", error));
     }
   };
 
@@ -157,31 +231,43 @@ export function BottomToolbar({
     setMediaError("");
     try {
       await cam.toggle();
-    } catch (error: any) {
+    } catch (error) {
       console.warn("Unable to toggle camera:", error);
-      setMediaError("Camera access failed. Check browser permissions.");
+      setMediaError(mediaErrorMessage("camera", error));
     }
   };
 
   const toggleScreenShare = async () => {
     if (screenShare.pending) return;
     setMediaError("");
+    if (!isScreenShareEnabled && anotherParticipantIsSharing) {
+      setMediaError("Another participant is already sharing their screen.");
+      return;
+    }
     try {
       await screenShare.toggle();
     } catch (error) {
       console.error("Unable to toggle screen sharing:", error);
-      setMediaError(
-        "Screen sharing could not start. Check browser permission and try again.",
-      );
+      setMediaError(mediaErrorMessage("screen", error));
     }
   };
 
   return (
     <div className="relative flex shrink-0 items-center justify-center gap-2 sm:gap-3 border-t border-white/10 bg-[#0B1120] px-4 py-3 flex-wrap">
       {mediaError && (
-        <div className="absolute bottom-full mb-2 rounded-lg bg-error px-3 py-2 text-xs font-semibold text-white shadow-lg flex items-center gap-2">
+        <div
+          role="alert"
+          className="absolute bottom-full mb-2 rounded-lg bg-error px-3 py-2 text-xs font-semibold text-white shadow-lg flex items-center gap-2"
+        >
           <span>{mediaError}</span>
-          <button onClick={() => setMediaError("")} className="text-white/80 hover:text-white font-bold ml-1">✕</button>
+          <button
+            type="button"
+            aria-label="Dismiss media error"
+            onClick={() => setMediaError("")}
+            className="text-white/80 hover:text-white font-bold ml-1"
+          >
+            &times;
+          </button>
         </div>
       )}
       <ToolbarButton
@@ -190,7 +276,7 @@ export function BottomToolbar({
         label={mic.enabled ? "Mute microphone (M)" : "Unmute microphone (M)"}
         danger={!mic.enabled}
         onClick={() => void toggleMic()}
-        disabled={mic.pending}
+        disabled={mediaControlsDisabled || mic.pending}
       />
       <ToolbarButton
         id="cr-toggle-cam"
@@ -198,15 +284,25 @@ export function BottomToolbar({
         label={cam.enabled ? "Turn off camera (V)" : "Turn on camera (V)"}
         danger={!cam.enabled}
         onClick={() => void toggleCam()}
-        disabled={cam.pending}
+        disabled={mediaControlsDisabled || cam.pending}
       />
       {canModerate && (
         <ToolbarButton
           icon={isScreenShareEnabled ? "cancel_presentation" : "screen_share"}
-          label={isScreenShareEnabled ? "Stop screen share" : "Share screen"}
+          label={
+            isScreenShareEnabled
+              ? "Stop screen share"
+              : anotherParticipantIsSharing
+                ? "Another participant is sharing"
+                : "Share screen"
+          }
           active={isScreenShareEnabled}
           onClick={() => void toggleScreenShare()}
-          disabled={screenShare.pending}
+          disabled={
+            mediaControlsDisabled ||
+            screenShare.pending ||
+            (!isScreenShareEnabled && anotherParticipantIsSharing)
+          }
         />
       )}
       <ToolbarButton
@@ -214,6 +310,7 @@ export function BottomToolbar({
         label={handRaised ? "Lower hand (H)" : "Raise hand (H)"}
         active={handRaised}
         onClick={onToggleRaiseHand}
+        disabled={mediaControlsDisabled}
       />
 
       <div className="mx-1 h-8 w-[1px] bg-white/10 hidden sm:block" />
@@ -239,8 +336,11 @@ export function BottomToolbar({
           label="Settings"
           active={settingsOpen}
           onClick={() => setSettingsOpen((v) => !v)}
+          disabled={mediaControlsDisabled}
         />
-        {settingsOpen && <DeviceSettingsMenu onClose={() => setSettingsOpen(false)} />}
+        {settingsOpen && (
+          <DeviceSettingsMenu onClose={() => setSettingsOpen(false)} onError={setMediaError} />
+        )}
       </div>
 
       <ToolbarButton

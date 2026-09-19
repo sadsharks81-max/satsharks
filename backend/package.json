@@ -16,6 +16,7 @@
     "import:practice": "tsx src/scripts/importPracticeQuestions.ts",
     "replace:practice:english": "tsx src/scripts/replaceEnglishPracticeQuestions.ts",
     "test:practice-parser": "tsx src/scripts/testPracticeQuestionParser.ts",
+    "test:livekit-smoke": "tsx src/scripts/livekitSmoke.ts",
     "validate:practice-pdf": "tsx src/scripts/validatePracticeQuestionPdf.ts",
     "seed": "tsx scripts/seed.ts",
     "migrate": "tsx scripts/migrate.ts",

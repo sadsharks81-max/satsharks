@@ -1,6 +1,6 @@
 import express from "express";
 import { authenticate } from "../middleware/auth.middleware";
-import { requireAdminOrTeacher } from "../middleware/role.middleware";
+import { requireActiveUser, requireAdminOrTeacher } from "../middleware/role.middleware";
 import {
   createLiveClass,
   getLiveClasses,
@@ -35,7 +35,7 @@ router.delete("/:id", authenticate, requireAdminOrTeacher(), deleteLiveClass);
 
 // Issue a LiveKit join token - role/paid/schedule/capacity checks happen inside the controller,
 // since admin, teacher, and student all hit this same endpoint with different rules.
-router.post("/:id/token", authenticate, generateJoinToken);
+router.post("/:id/token", authenticate, requireActiveUser(), generateJoinToken);
 
 // Live "Students Joined" count for dashboard cards
 router.get("/:id/participants", authenticate, getLiveClassParticipants);

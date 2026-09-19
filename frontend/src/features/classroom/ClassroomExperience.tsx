@@ -4,8 +4,9 @@ import {
   useDataChannel,
   useParticipantAttributes,
   useTracks,
+  useConnectionState,
 } from "@livekit/components-react";
-import { Track } from "livekit-client";
+import { ConnectionState, Track } from "livekit-client";
 import { TopBar } from "./TopBar";
 import { VideoStage } from "./VideoStage";
 import { BottomToolbar } from "./BottomToolbar";
@@ -46,6 +47,7 @@ export function ClassroomExperience({
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { localParticipant } = useLocalParticipant();
+  const connectionState = useConnectionState();
   const { attributes } = useParticipantAttributes({ participant: localParticipant });
   const handRaised = attributes?.handRaised === "true";
 
@@ -66,7 +68,14 @@ export function ClassroomExperience({
   }, []);
 
   const handleToggleRaiseHand = useCallback(() => {
-    localParticipant.setAttributes({ handRaised: handRaised ? "false" : "true" });
+    void localParticipant
+      .setAttributes({ handRaised: handRaised ? "false" : "true" })
+      .catch((error) => {
+        console.warn("[Classroom] Unable to update raised-hand state", {
+          name: error instanceof Error ? error.name : "UnknownError",
+          message: error instanceof Error ? error.message : "Unknown data-channel error",
+        });
+      });
   }, [localParticipant, handRaised]);
 
   const handleToggleFullscreen = useCallback(() => {
@@ -103,12 +112,43 @@ export function ClassroomExperience({
 
   const [topBarVisible, setTopBarVisible] = useState(true);
   const [bottomBarVisible, setBottomBarVisible] = useState(true);
+  const isReconnecting =
+    connectionState === ConnectionState.Reconnecting ||
+    connectionState === ConnectionState.SignalReconnecting;
+  const mediaControlsDisabled = connectionState !== ConnectionState.Connected;
+
+  if (
+    connectionState === ConnectionState.Disconnected ||
+    connectionState === ConnectionState.Connecting
+  ) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-[#0B1120] text-white/70">
+        <div className="flex flex-col items-center gap-3">
+          <Icon name="hourglass_top" className="text-4xl animate-spin" />
+          <p className="text-sm font-semibold">
+            {connectionState === ConnectionState.Connecting
+              ? "Connecting to classroom..."
+              : "Preparing classroom connection..."}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
       ref={containerRef}
       className="relative flex h-full w-full flex-col overflow-hidden bg-[#0B1120]"
     >
+      {isReconnecting && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="absolute left-1/2 top-3 z-50 -translate-x-1/2 rounded-full border border-accent/30 bg-[#0B1120]/95 px-4 py-2 text-xs font-semibold text-white shadow-xl"
+        >
+          Connection interrupted. Reconnecting...
+        </div>
+      )}
       <div
         className={
           isScreenSharing
@@ -217,6 +257,7 @@ export function ClassroomExperience({
             onToggleFullscreen={handleToggleFullscreen}
             onLeave={onLeave}
             canModerate={canModerate}
+            mediaControlsDisabled={mediaControlsDisabled}
           />
         </div>
       </div>

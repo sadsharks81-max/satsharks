@@ -1,4 +1,4 @@
-import { AccessToken, RoomServiceClient, WebhookReceiver, VideoGrant, TrackType } from "livekit-server-sdk";
+import { AccessToken, RoomServiceClient, ServerError, WebhookReceiver, VideoGrant, TrackType, TrackSource } from "livekit-server-sdk";
 import { env } from "../config/env";
 
 // Grace window kept in sync with JOIN_BUFFER_MINUTES on the frontend (dashboard/live-classes.tsx)
@@ -48,7 +48,7 @@ interface IssueTokenParams {
   name: string;
   role: string;
   ttlSeconds: number;
-  grant: Pick<VideoGrant, "roomAdmin" | "canPublish" | "canSubscribe" | "canUpdateOwnMetadata">;
+  grant: Pick<VideoGrant, "canPublish" | "canPublishSources" | "canSubscribe" | "canUpdateOwnMetadata">;
 }
 
 /**
@@ -88,8 +88,10 @@ export const ensureRoomExists = async (roomName: string, maxParticipants: number
     // maxStudents describes students, not the teacher/admin seats required to
     // run and moderate the class.
     maxParticipants: maxParticipants + MODERATOR_CAPACITY_BUFFER,
-    // Allow a meaningful reconnect window after a temporary network outage.
-    emptyTimeout: 30 * 60,
+    // Room created ahead of class may remain empty while participants arrive.
+    emptyTimeout: 10 * 60,
+    // Preserve the room through a brief whole-class network interruption.
+    departureTimeout: 5 * 60,
   }).then(() => {
     ensuredRooms.set(roomName, Date.now() + ROOM_ENSURE_CACHE_MS);
   }).finally(() => {
@@ -126,9 +128,14 @@ export const listRoomParticipants = async (roomName: string) => {
   const client = getRoomServiceClient();
   try {
     return await client.listParticipants(roomName);
-  } catch {
+  } catch (error) {
     // Room not created yet (e.g. class hasn't started) - treat as empty.
-    return [];
+    if (error instanceof ServerError && error.code === "not_found") return [];
+    console.error(`[LiveKit] Unable to list participants for room ${roomName}:`, {
+      name: error instanceof Error ? error.name : "UnknownError",
+      message: error instanceof Error ? error.message : "Unknown LiveKit service error",
+    });
+    throw error;
   }
 };
 
@@ -150,4 +157,4 @@ export const verifyWebhookEvent = async (body: string, authHeader: string) => {
   return receiver.receive(body, authHeader);
 };
 
-export { LiveKitNotConfiguredError };
+export { LiveKitNotConfiguredError, TrackSource };

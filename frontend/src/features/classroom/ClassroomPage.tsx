@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { LiveKitRoom, RoomAudioRenderer } from "@livekit/components-react";
+import { DisconnectReason } from "livekit-client";
 import { useAuth } from "../../hooks/useAuth";
 import { Icon } from "../../components/common/Icon";
 import { api } from "../../services/api";
@@ -17,31 +18,43 @@ const LIVEKIT_ROOM_OPTIONS = {
   adaptiveStream: { pauseVideoInBackground: true },
   dynacast: true,
   stopLocalTrackOnUnpublish: true,
-  singlePeerConnection: false,
+  // A unified peer connection reduces ICE/transport overhead and is the
+  // current LiveKit default for reliable publisher/subscriber recovery.
+  singlePeerConnection: true,
 };
 
 const LIVEKIT_CONNECT_OPTIONS = {
   autoSubscribe: true,
-  maxRetries: 10,
-  peerConnectionTimeout: 30000,
-  websocketTimeout: 30000,
+  maxRetries: 3,
+  peerConnectionTimeout: 20_000,
+  websocketTimeout: 15_000,
 };
 
-const DISCONNECT_REASON_NAMES: Record<number, string> = {
-  0: "UNKNOWN_REASON",
-  1: "CLIENT_INITIATED",
-  2: "DUPLICATE_IDENTITY",
-  3: "SERVER_SHUTDOWN",
-  4: "PARTICIPANT_REMOVED",
-  5: "ROOM_DELETED",
-  6: "STATE_MISMATCH",
-  7: "JOIN_FAILURE",
-  8: "MIGRATION",
-  9: "SIGNAL_CLOSE",
-  10: "ROOM_CLOSED",
-  11: "USER_UNAVAILABLE",
-  12: "USER_REJECTED",
-  13: "SIP_TRUNK_FAILURE",
+const CLASSROOM_CONNECTION_TIMEOUT_MS = 45_000;
+
+const TRANSIENT_DISCONNECT_REASONS = new Set<DisconnectReason | undefined>([
+  undefined,
+  DisconnectReason.UNKNOWN_REASON,
+  DisconnectReason.SERVER_SHUTDOWN,
+  DisconnectReason.STATE_MISMATCH,
+  DisconnectReason.MIGRATION,
+  DisconnectReason.SIGNAL_CLOSE,
+]);
+
+const disconnectMessageFor = (reason?: DisconnectReason) => {
+  switch (reason) {
+    case DisconnectReason.DUPLICATE_IDENTITY:
+      return "This account joined the classroom from another tab or device. Close the other session before rejoining.";
+    case DisconnectReason.PARTICIPANT_REMOVED:
+      return "A teacher or administrator removed you from this classroom.";
+    case DisconnectReason.ROOM_DELETED:
+    case DisconnectReason.ROOM_CLOSED:
+      return "This classroom session has ended or is no longer available.";
+    case DisconnectReason.JOIN_FAILURE:
+      return "The classroom connection could not be established. Please try again.";
+    default:
+      return "The classroom connection ended after LiveKit could not recover it. You can safely try joining again.";
+  }
 };
 
 interface ErrorBoundaryProps {
@@ -75,9 +88,11 @@ class ClassroomErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBo
             <Icon name="warning" className="text-4xl text-accent mx-auto" />
             <h3 className="text-lg font-bold">Classroom Display Warning</h3>
             <p className="text-xs text-white/60 leading-relaxed">
-              A visual element encountered an issue, but your classroom audio and connection remain active.
+              A visual element encountered an issue, but your classroom audio and connection remain
+              active.
             </p>
             <button
+              type="button"
               onClick={() => this.setState({ hasError: false })}
               className="px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-accent cursor-pointer border-none transition-colors"
             >
@@ -139,6 +154,7 @@ function FullScreenMessage({
         )}
         <div className="space-y-2.5">
           <button
+            type="button"
             onClick={onPrimary}
             disabled={primaryDisabled}
             className="w-full py-3 rounded-xl bg-primary text-on-primary font-bold text-sm hover:bg-accent transition-colors cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed"
@@ -147,6 +163,7 @@ function FullScreenMessage({
           </button>
           {secondaryLabel && onSecondary && (
             <button
+              type="button"
               onClick={onSecondary}
               className="w-full py-3 rounded-xl border border-outline-variant/40 hover:bg-surface-container-low text-sm font-bold text-on-surface-variant transition-colors cursor-pointer"
             >
@@ -163,6 +180,9 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [disconnected, setDisconnected] = useState(false);
+  const [disconnectReason, setDisconnectReason] = useState<DisconnectReason | undefined>();
+  const [connectionFailure, setConnectionFailure] = useState<string | null>(null);
+  const [hasConnected, setHasConnected] = useState(false);
   const [isRejoining, setIsRejoining] = useState(false);
   const [connectionGeneration, setConnectionGeneration] = useState(0);
   const isUnmountingRef = useRef(false);
@@ -182,14 +202,20 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     navigate({ to: backTo });
   };
 
-  const { liveClass, loading: classLoading, error: classError, refetch: refetchClass } = useClassStatusPoll(roomId);
+  const {
+    liveClass,
+    loading: classLoading,
+    error: classError,
+    refetch: refetchClass,
+  } = useClassStatusPoll(roomId);
 
   const isStudent = role === "STUDENT";
   const canAttemptConnect =
     Boolean(liveClass) &&
     liveClass!.status !== "CANCELLED" &&
     (!isStudent || liveClass!.status === "LIVE") &&
-    !disconnected;
+    !disconnected &&
+    !connectionFailure;
 
   const {
     token,
@@ -201,12 +227,14 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
   } = useLiveClassRoom(roomId, canAttemptConnect);
 
   const canModerate =
-    role === "ADMIN" || (role === "TEACHER" && String(liveClass?.teacher?._id) === String(currentUserId));
+    role === "ADMIN" ||
+    (role === "TEACHER" && String(liveClass?.teacher?._id) === String(currentUserId));
 
   // Automatically mark scheduled class as LIVE when teacher or admin joins so students are admitted immediately
   useEffect(() => {
-    if (canModerate && liveClass && liveClass.status === "SCHEDULED") {
-      api.put(`/api/live-classes/${roomId}/status`, { status: "LIVE" })
+    if (canModerate && liveClass?.status === "SCHEDULED") {
+      api
+        .put(`/api/live-classes/${roomId}/status`, { status: "LIVE" })
         .then((res) => {
           if (res.success) {
             void refetchClass();
@@ -255,60 +283,115 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
 
   // Clean rejoin: fetch fresh token FIRST before resetting disconnected state
   // to avoid mounting with stale tokens and avoid unmounting race conditions
-  const handleRejoin = useCallback(async () => {
+  const handleRejoin = useCallback(async (): Promise<boolean> => {
     setIsRejoining(true);
     try {
       const res = await refetchToken();
       if (res && res.success && res.token) {
+        setHasConnected(false);
+        setConnectionFailure(null);
         setDisconnected(false);
+        setDisconnectReason(undefined);
         setConnectionGeneration((generation) => generation + 1);
+        return true;
       }
+      setDisconnected(false);
+      setConnectionFailure(res?.error || "Unable to reconnect to the classroom. Please try again.");
+      return false;
     } finally {
       setIsRejoining(false);
     }
   }, [refetchToken]);
 
   const handleLiveKitConnected = useCallback(() => {
-    console.log("[Classroom] LiveKit room connected successfully");
+    console.info("[Classroom] LiveKit room connected", {
+      classId: roomId,
+      roomName: liveClass?.roomName,
+      identity: currentUserId,
+    });
+    setHasConnected(true);
+    setConnectionFailure(null);
+    setDisconnected(false);
+    setDisconnectReason(undefined);
     autoRejoinAttemptsRef.current = 0;
     if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
-  }, []);
+  }, [currentUserId, liveClass?.roomName, roomId]);
 
-  const handleLiveKitDisconnected = useCallback((reason?: any) => {
-    if (isUnmountingRef.current) return;
-    // DisconnectReason.CLIENT_INITIATED is 1 — do not treat intentional leaves as errors
-    if (reason === 1 || reason === "CLIENT_INITIATED") {
-      console.log("[Classroom] LiveKit disconnected gracefully (client initiated)");
-      return;
-    }
-    const reasonName = typeof reason === "number" ? DISCONNECT_REASON_NAMES[reason] || `REASON_${reason}` : String(reason);
-    console.warn(`[Classroom] LiveKit room disconnected: ${reasonName} (code: ${reason})`);
+  const handleLiveKitDisconnected = useCallback(
+    (reason?: DisconnectReason) => {
+      if (isUnmountingRef.current) return;
+      // DisconnectReason.CLIENT_INITIATED is 1 — do not treat intentional leaves as errors
+      if (reason === DisconnectReason.CLIENT_INITIATED) {
+        console.info("[Classroom] LiveKit disconnected gracefully (client initiated)");
+        return;
+      }
+      setHasConnected(false);
+      setDisconnectReason(reason);
+      setDisconnected(true);
+      console.warn("[Classroom] LiveKit room disconnected", {
+        classId: roomId,
+        roomName: liveClass?.roomName,
+        identity: currentUserId,
+        reason: reason === undefined ? "UNKNOWN" : DisconnectReason[reason],
+        reasonCode: reason,
+      });
 
-    // Transient disconnect (such as state mismatch, temporary network drop, signal close):
-    // Attempt automatic silent recovery up to 3 times before presenting a blocking error modal
-    if (autoRejoinAttemptsRef.current < 3 && (reason === 6 || reason === 9 || reason === 0 || reason === undefined)) {
-      autoRejoinAttemptsRef.current += 1;
-      console.info(`[Classroom] Attempting automatic reconnect (attempt ${autoRejoinAttemptsRef.current}/3)...`);
-      if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
-      autoRejoinTimerRef.current = window.setTimeout(() => {
-        if (!isUnmountingRef.current) {
-          void handleRejoin().then(() => {
-            console.info("[Classroom] Automatic reconnect completed.");
-          }).catch((err) => {
-            console.error("[Classroom] Automatic reconnect failed:", err);
-            setDisconnected(true);
-          });
-        }
-      }, 800);
-      return;
-    }
+      // Transient disconnect (such as state mismatch, temporary network drop, signal close):
+      // After LiveKit's internal recovery has ended, try two bounded fresh-token rejoins.
+      if (autoRejoinAttemptsRef.current < 2 && TRANSIENT_DISCONNECT_REASONS.has(reason)) {
+        autoRejoinAttemptsRef.current += 1;
+        console.info(
+          `[Classroom] Attempting fresh-token rejoin (${autoRejoinAttemptsRef.current}/2)`,
+        );
+        if (autoRejoinTimerRef.current) window.clearTimeout(autoRejoinTimerRef.current);
+        autoRejoinTimerRef.current = window.setTimeout(() => {
+          if (!isUnmountingRef.current) {
+            void handleRejoin().then((success) => {
+              console.info(
+                `[Classroom] Automatic fresh-token rejoin ${success ? "started" : "failed"}`,
+              );
+            });
+          }
+        }, 1_000);
+      }
+    },
+    [currentUserId, handleRejoin, liveClass?.roomName, roomId],
+  );
 
-    setDisconnected(true);
-  }, [handleRejoin]);
+  const handleLiveKitError = useCallback(
+    (err: Error) => {
+      console.error("[Classroom] LiveKit connection failed", {
+        classId: roomId,
+        roomName: liveClass?.roomName,
+        name: err.name,
+        message: err.message,
+      });
+      setHasConnected(false);
+      setConnectionFailure("Unable to connect to the classroom. Please try again.");
+    },
+    [liveClass?.roomName, roomId],
+  );
 
-  const handleLiveKitError = useCallback((err: Error) => {
-    console.error("[Classroom] LiveKit room error:", err);
-  }, []);
+  useEffect(() => {
+    if (!token || !serverUrl || disconnected || connectionFailure || hasConnected) return;
+
+    const timeout = window.setTimeout(() => {
+      console.error("[Classroom] LiveKit connection timed out", {
+        classId: roomId,
+        roomName: liveClass?.roomName,
+      });
+      setConnectionFailure("The classroom connection timed out. Please try again.");
+    }, CLASSROOM_CONNECTION_TIMEOUT_MS);
+    return () => window.clearTimeout(timeout);
+  }, [
+    connectionFailure,
+    disconnected,
+    hasConnected,
+    liveClass?.roomName,
+    roomId,
+    serverUrl,
+    token,
+  ]);
 
   if (classLoading) return <FullScreenLoading label="Loading classroom..." />;
 
@@ -340,12 +423,31 @@ export function ClassroomPage({ roomId }: { roomId: string }) {
     return (
       <FullScreenMessage
         icon="wifi_off"
-        title="You were disconnected"
-        message="Your connection to the classroom dropped. Click below to reconnect to the session."
+        title={
+          disconnectReason === DisconnectReason.PARTICIPANT_REMOVED
+            ? "Removed from classroom"
+            : "Classroom disconnected"
+        }
+        message={disconnectMessageFor(disconnectReason)}
         primaryLabel={isRejoining ? "Reconnecting..." : "Rejoin Class"}
         onPrimary={() => void handleRejoin()}
         primaryDisabled={isRejoining}
         secondaryLabel="Leave"
+        onSecondary={handleLeave}
+      />
+    );
+  }
+
+  if (connectionFailure) {
+    return (
+      <FullScreenMessage
+        icon="error"
+        title="Unable to connect"
+        message={connectionFailure}
+        primaryLabel={isRejoining ? "Connecting..." : "Try Again"}
+        onPrimary={() => void handleRejoin()}
+        primaryDisabled={isRejoining}
+        secondaryLabel="Go Back"
         onSecondary={handleLeave}
       />
     );

@@ -18,6 +18,7 @@ import {
   issueRoomToken,
   verifyWebhookEvent,
   countStudentParticipants,
+  TrackSource,
 } from "../services/livekit.service";
 
 const MIN_TOKEN_TTL_SECONDS = 30 * 60;
@@ -208,6 +209,9 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
 
     const role = req.user?.role;
     const userId = req.user?.userId;
+    if (!role || !userId) {
+      return res.status(401).json({ success: false, error: "Unable to authenticate with classroom." });
+    }
     const isTeacherOfClass = String(liveClass.teacher) === String(userId);
 
     if (role === "TEACHER" && !isTeacherOfClass) {
@@ -272,12 +276,27 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
       role: role || "STUDENT",
       ttlSeconds,
       grant: {
-        roomAdmin: role === "ADMIN" || role === "TEACHER",
         canPublish: true,
+        canPublishSources:
+          role === "STUDENT"
+            ? [TrackSource.CAMERA, TrackSource.MICROPHONE]
+            : [
+                TrackSource.CAMERA,
+                TrackSource.MICROPHONE,
+                TrackSource.SCREEN_SHARE,
+                TrackSource.SCREEN_SHARE_AUDIO,
+              ],
         canSubscribe: true,
         // Needed for the raise-hand feature, which stores state via localParticipant.setAttributes().
         canUpdateOwnMetadata: true,
       },
+    });
+
+    console.info("[LiveKit] Issued classroom token", {
+      roomName: liveClass.roomName,
+      identity: String(userId),
+      role,
+      ttlSeconds,
     });
 
     res.status(200).json({ success: true, token, url: env.livekitUrl, roomName: liveClass.roomName });

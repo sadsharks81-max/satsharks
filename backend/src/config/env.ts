@@ -27,9 +27,34 @@ const developmentSecret = () => crypto.randomBytes(32).toString("hex");
 const jwtSecret = process.env.JWT_SECRET || developmentSecret();
 const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET || developmentSecret();
 const databaseUrl = (process.env.DATABASE_URL || "").trim();
+const livekitUrl = (process.env.LIVEKIT_URL || "").trim().replace(/\/$/, "");
+const livekitApiKey = (process.env.LIVEKIT_API_KEY || "").trim();
+const livekitApiSecret = (process.env.LIVEKIT_API_SECRET || "").trim();
+const livekitValuesPresent = [livekitUrl, livekitApiKey, livekitApiSecret].filter(Boolean).length;
 
 if (isProduction && jwtSecret === jwtRefreshSecret) {
   throw new Error("JWT_SECRET and JWT_REFRESH_SECRET must be different values");
+}
+
+if (isProduction && livekitValuesPresent > 0 && livekitValuesPresent < 3) {
+  throw new Error(
+    "LIVEKIT_URL, LIVEKIT_API_KEY, and LIVEKIT_API_SECRET must all be configured together",
+  );
+}
+
+if (livekitUrl) {
+  let livekitProtocol: string;
+  try {
+    livekitProtocol = new URL(livekitUrl).protocol;
+  } catch {
+    throw new Error("LIVEKIT_URL must be a valid ws:// or wss:// URL");
+  }
+  if (!["ws:", "wss:"].includes(livekitProtocol)) {
+    throw new Error("LIVEKIT_URL must use the ws:// or wss:// protocol");
+  }
+  if (isProduction && livekitProtocol !== "wss:") {
+    throw new Error("LIVEKIT_URL must use wss:// in production");
+  }
 }
 
 const parsePositiveInt = (value: string | undefined, fallback: number) => {
@@ -74,10 +99,8 @@ export const env = {
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
   payproClientId: process.env.PAYPRO_CLIENT_ID || "",
   payproSecretKey: process.env.PAYPRO_SECRET_KEY || "",
-  livekitUrl: process.env.LIVEKIT_URL || "",
-  livekitApiKey: process.env.LIVEKIT_API_KEY || "",
-  livekitApiSecret: process.env.LIVEKIT_API_SECRET || "",
-  isLiveKitConfigured: Boolean(
-    process.env.LIVEKIT_URL && process.env.LIVEKIT_API_KEY && process.env.LIVEKIT_API_SECRET,
-  ),
+  livekitUrl,
+  livekitApiKey,
+  livekitApiSecret,
+  isLiveKitConfigured: livekitValuesPresent === 3,
 };
