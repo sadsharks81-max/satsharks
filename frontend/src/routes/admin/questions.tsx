@@ -63,6 +63,7 @@ function AdminQuestions() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [sectionFilter, setSectionFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [page, setPage] = useState(1);
@@ -150,6 +151,7 @@ function AdminQuestions() {
     const params = new URLSearchParams({ page: String(page), limit: "20" });
     if (search) params.set("search", search);
     if (sectionFilter) params.set("section", sectionFilter);
+    if (categoryFilter) params.set("category", categoryFilter);
     if (difficultyFilter) params.set("difficulty", difficultyFilter);
     if (statusFilter) params.set("status", statusFilter);
 
@@ -168,7 +170,23 @@ function AdminQuestions() {
   };
 
   useEffect(() => { fetchCategories(); }, []);
-  useEffect(() => { fetchQuestions(); }, [page, search, sectionFilter, difficultyFilter, statusFilter]);
+  useEffect(() => { fetchQuestions(); }, [page, search, sectionFilter, categoryFilter, difficultyFilter, statusFilter]);
+
+  // When a category is deleted while it is the active filter, fall back to all categories.
+  useEffect(() => {
+    if (categoryFilter && !categories.some((c) => c._id === categoryFilter)) setCategoryFilter("");
+  }, [categories]);
+
+  const categoryFilterOptions = [
+    { value: "", label: "All Categories" },
+    ...categories
+      .filter((c) => !sectionFilter || c.section === sectionFilter)
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((c) => ({
+        value: c._id,
+        label: `${c.name}${sectionFilter ? "" : c.section === "MATH" ? " (Math)" : " (R&W)"}`,
+      })),
+  ];
 
   const openCreate = () => {
     setEditingQ(null);
@@ -348,7 +366,20 @@ function AdminQuestions() {
         <div className="flex-1 min-w-[200px]">
           <SearchInput value={search} onChange={setSearch} placeholder="Search questions..." />
         </div>
-        <Select value={sectionFilter} onChange={(e) => { setSectionFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Sections" }, { value: "MATH", label: "Math" }, { value: "READING_WRITING", label: "Reading & Writing" }]} className="!w-auto !py-2" />
+        <Select
+          value={sectionFilter}
+          onChange={(e) => {
+            const nextSection = e.target.value;
+            setSectionFilter(nextSection);
+            // Keep the category only if it belongs to the newly chosen section.
+            const selected = categories.find((c) => c._id === categoryFilter);
+            if (selected && nextSection && selected.section !== nextSection) setCategoryFilter("");
+            setPage(1);
+          }}
+          options={[{ value: "", label: "All Sections" }, { value: "MATH", label: "Math" }, { value: "READING_WRITING", label: "Reading & Writing" }]}
+          className="!w-auto !py-2"
+        />
+        <Select value={categoryFilter} onChange={(e) => { setCategoryFilter(e.target.value); setPage(1); }} options={categoryFilterOptions} className="!w-auto !py-2" />
         <Select value={difficultyFilter} onChange={(e) => { setDifficultyFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Difficulties" }, { value: "EASY", label: "Easy" }, { value: "MEDIUM", label: "Medium" }, { value: "HARD", label: "Hard" }]} className="!w-auto !py-2" />
         <Select value={statusFilter} onChange={(e) => { setStatusFilter(e.target.value); setPage(1); }} options={[{ value: "", label: "All Statuses" }, { value: "PUBLISHED", label: "Published" }, { value: "UPLOADED", label: "Uploaded" }, { value: "UPDATED", label: "Updated" }, { value: "REVIEW", label: "Review" }]} className="!w-auto !py-2" />
         {selectedQuestionIds.size > 0 && (

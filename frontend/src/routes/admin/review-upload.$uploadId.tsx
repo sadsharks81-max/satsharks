@@ -24,20 +24,40 @@ function ReviewUpload() {
   const [publishing, setPublishing] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  const isQuestionComplete = (question: ExtractedQuestion, categoryList = categories) => {
+    const category = categoryList.find((item) => item.name === question.category);
+    return Boolean(
+      question.text.trim() &&
+        question.options.length === 4 &&
+        question.options.every((option) => option.text.trim()) &&
+        question.explanation.trim() &&
+        category &&
+        category.section === question.section,
+    );
+  };
+
   useEffect(() => {
     Promise.all([api.get(`/api/uploads/${uploadId}`), api.get("/api/categories")]).then(
       ([res, categoryRes]) => {
+        const categoryList: QuestionCategory[] = categoryRes.success ? categoryRes.categories || [] : [];
         if (res.success && res.upload) {
           setUpload(res.upload);
+          // Practice-question uploads that have not been reviewed yet start with every
+          // complete question selected, so the admin only unselects the bad ones.
+          // Saved reviews keep the admin's own selection.
+          const autoSelect =
+            res.upload.uploadType === "PRACTICE_QUESTIONS" && res.upload.status === "EXTRACTED";
           setQuestions(
-            (res.upload.extractedQuestions || []).map((question: ExtractedQuestion) => ({
-              ...question,
-              section: question.section || "MATH",
-            })),
+            (res.upload.extractedQuestions || []).map((question: ExtractedQuestion) => {
+              const normalized = { ...question, section: question.section || "MATH" };
+              return autoSelect
+                ? { ...normalized, approved: isQuestionComplete(normalized, categoryList) }
+                : normalized;
+            }),
           );
           setReviewNotes(res.upload.reviewNotes || "");
         }
-        if (categoryRes.success) setCategories(categoryRes.categories || []);
+        setCategories(categoryList);
         setLoading(false);
       },
     );
@@ -53,25 +73,30 @@ function ReviewUpload() {
 
   const toggleApproval = (idx: number) => {
     const question = questions[idx];
-    if (!question.approved) {
-      const category = categories.find((item) => item.name === question.category);
-      if (
-        !question.text.trim() ||
-        question.options.length !== 4 ||
-        question.options.some((option) => !option.text.trim()) ||
-        !question.explanation.trim() ||
-        !category ||
-        category.section !== question.section
-      ) {
-        setMessage({
-          type: "error",
-          text: `Question ${idx + 1} is incomplete or its category does not match its section.`,
-        });
-        return;
-      }
+    if (!question.approved && !isQuestionComplete(question)) {
+      setMessage({
+        type: "error",
+        text: `Question ${idx + 1} is incomplete or its category does not match its section.`,
+      });
+      return;
     }
     setMessage(null);
     setQuestions((prev) => prev.map((q, i) => (i === idx ? { ...q, approved: !q.approved } : q)));
+  };
+
+  const setAllApproval = (approved: boolean) => {
+    const skipped = approved ? questions.filter((q) => !isQuestionComplete(q)).length : 0;
+    setQuestions((prev) =>
+      prev.map((q) => ({ ...q, approved: approved ? isQuestionComplete(q) : false })),
+    );
+    setMessage(
+      skipped > 0
+        ? {
+            type: "error",
+            text: `${skipped} question(s) were left unselected because they are incomplete or their category does not match their section.`,
+          }
+        : null,
+    );
   };
 
   const handleSaveReview = async () => {
@@ -130,6 +155,8 @@ function ReviewUpload() {
   }
 
   const approvedCount = questions.filter((q) => q.approved).length;
+  // Incomplete questions cannot be selected, so "all" means every selectable one.
+  const allSelected = approvedCount > 0 && approvedCount >= questions.filter((q) => isQuestionComplete(q)).length;
 
   return (
     <AdminLayout activeItem="/admin/uploads">
@@ -162,6 +189,20 @@ function ReviewUpload() {
         >
           <Icon name="publish" className="text-lg" /> Publish {approvedCount} Questions
         </button>
+        {questions.length > 0 && (
+          <div className="ml-auto flex items-center gap-3">
+            <span className="text-sm text-on-surface-variant">
+              {approvedCount} of {questions.length} selected
+            </span>
+            <button
+              onClick={() => setAllApproval(!allSelected)}
+              className="inline-flex items-center gap-2 rounded-xl border border-outline-variant px-4 py-2.5 text-sm font-semibold hover:bg-surface-container-low transition-colors cursor-pointer"
+            >
+              <Icon name={allSelected ? "remove_done" : "done_all"} className="text-lg" />
+              {allSelected ? "Unselect All" : "Select All"}
+            </button>
+          </div>
+        )}
       </div>
 
       {message && (

@@ -134,6 +134,7 @@ export function PracticeContent() {
   const timeSpentRef = useRef(timeSpent);
   const answerStatesRef = useRef(answerStates);
   const isSubmittingAnswerRef = useRef(false);
+  const fetchQuestionsRequestRef = useRef(0);
 
   useEffect(() => {
     statsRef.current = stats;
@@ -237,12 +238,38 @@ export function PracticeContent() {
         .map((item) => item._id);
       if (excludedCategoryIds.length) params.set("excludeCategories", excludedCategoryIds.join(","));
     }
-    params.set("limit", "100");
+    params.set("limit", "500");
 
+    // A practice session covers every question matching the filters, so load all
+    // pages rather than only the first. The page count comes from the server, so
+    // this stays correct whatever page size the API actually applies.
+    const requestId = ++fetchQuestionsRequestRef.current;
     const res = await api.get(`/api/questions?${params}`);
+    const allQuestions: Question[] =res.success ? res.questions || [] : [];
+    const totalPages = res.success ? Number(res.pagination?.pages) || 1 : 1;
+    if (res.success && totalPages > 1) {
+      const remainingPages = await Promise.all(
+        Array.from({ length: totalPages - 1 }, (_, index) => {
+          const pageParams = new URLSearchParams(params);
+          pageParams.set("page", String(index + 2));
+          return api.get(`/api/questions?${pageParams}`);
+        }),
+      );
+      const seen = new Set(allQuestions.map((item) => item._id));
+      for (const pageRes of remainingPages) {
+        for (const item of (pageRes.success ? pageRes.questions || [] : []) as Question[]) {
+          if (!seen.has(item._id)) {
+            seen.add(item._id);
+            allQuestions.push(item);
+          }
+        }
+      }
+    }
+    // Ignore responses for filters the student has already changed away from.
+    if (requestId !== fetchQuestionsRequestRef.current) return;
     if (res.success) {
-      setQuestions(res.questions || []);
-      setAvailableQuestionCount(res.pagination?.total || 0);
+      setQuestions(allQuestions);
+      setAvailableQuestionCount(res.pagination?.total || allQuestions.length);
       setCurrentIdx(0);
       setSelectedAnswer(null);
       setShowResult(false);

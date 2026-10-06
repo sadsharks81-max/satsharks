@@ -57,7 +57,10 @@ export const getQuestions = async (req: Request, res: Response) => {
     // draft and under-review questions.
     filter.status = "PUBLISHED";
 
-    const { page, limit, skip } = getPagination(req.query as Record<string, unknown>);
+    // Practice sessions load every question matching the selected filters, so
+    // allow larger pages than the default cap to keep the client's request count
+    // low for big categories.
+    const { page, limit, skip } = getPagination(req.query as Record<string, unknown>, 20, 500);
 
     // Answers and explanations are withheld from the question bank listing.
     // This endpoint is open to every authenticated student and previously
@@ -137,7 +140,27 @@ export const updateQuestion = async (req: Request, res: Response) => {
 
     if (text !== undefined) existingQuestion.text = text;
     if (options !== undefined) existingQuestion.options = options;
-    if (correctAnswer !== undefined) existingQuestion.correctAnswer = correctAnswer;
+    if (correctAnswer !== undefined) {
+      existingQuestion.correctAnswer = typeof correctAnswer === "string" ? correctAnswer.trim() : correctAnswer;
+    }
+
+    // Keep the answer consistent with the question type: a multiple choice answer
+    // must name one of its options, and a fill-in (no options) answer can't be blank.
+    if (options !== undefined || correctAnswer !== undefined) {
+      const optionLabels = (existingQuestion.options || []).map((option) => option.label);
+      if (optionLabels.length > 0 && !optionLabels.includes(existingQuestion.correctAnswer)) {
+        return res.status(400).json({
+          success: false,
+          error: "Correct answer must match one of the option labels (A, B, C, or D).",
+        });
+      }
+      if (optionLabels.length === 0 && !String(existingQuestion.correctAnswer || "").trim()) {
+        return res.status(400).json({
+          success: false,
+          error: "Correct answer is required for fill-in questions.",
+        });
+      }
+    }
     if (explanation !== undefined) existingQuestion.explanation = stripEmojis(explanation);
     if (category !== undefined) existingQuestion.category = category;
     if (difficulty !== undefined) existingQuestion.difficulty = difficulty;

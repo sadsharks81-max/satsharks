@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminLayout } from "../../components/layout/AdminLayout";
-import { api } from "../../services/api";
+import { api, resolveImageUrl } from "../../services/api";
 import { Icon } from "../../components/common/Icon";
 import { Badge } from "../../components/ui/Badge";
 import { Input } from "../../components/ui/Input";
@@ -21,6 +21,9 @@ function ResolveReportPage() {
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  // SPR = student-produced response (fill-in / grid-in): no options, typed answer.
+  const [questionType, setQuestionType] = useState<"MCQ" | "SPR">("MCQ");
+  const [formError, setFormError] = useState("");
 
   const [form, setForm] = useState({
     text: "",
@@ -40,9 +43,11 @@ function ResolveReportPage() {
         setReport(res.report);
         const q = res.report.question;
         if (q) {
+          const isSpr = !q.options || q.options.length === 0;
+          setQuestionType(isSpr ? "SPR" : "MCQ");
           setForm({
             text: q.text || "",
-            correctAnswer: q.correctAnswer || "A",
+            correctAnswer: q.correctAnswer || (isSpr ? "" : "A"),
             explanation: q.explanation || "",
             difficulty: q.difficulty || "MEDIUM",
             section: q.section || "MATH",
@@ -59,16 +64,36 @@ function ResolveReportPage() {
 
   const handleSave = async () => {
     if (!report?.question?._id) return;
+    setFormError("");
+    if (!form.text.trim()) {
+      setFormError("Question text is required.");
+      return;
+    }
+    if (questionType === "MCQ" && [form.optA, form.optB, form.optC, form.optD].some((opt) => !opt.trim())) {
+      setFormError("All four options are required for multiple choice questions.");
+      return;
+    }
+    if (questionType === "SPR" && !form.correctAnswer.trim()) {
+      setFormError("Enter the correct answer for this fill-in question.");
+      return;
+    }
     setSaving(true);
     setSaveSuccess(false);
+    const { optA, optB, optC, optD, ...fields } = form;
     const res = await api.put(`/api/questions/${report.question._id}`, {
-      ...form,
-      options: [
-        { label: "A", text: form.optA },
-        { label: "B", text: form.optB },
-        { label: "C", text: form.optC },
-        { label: "D", text: form.optD },
-      ],
+      ...fields,
+      // Fill-in questions have no options; sending A-D here would turn them into
+      // a multiple choice question with blank choices.
+      options:
+        questionType === "MCQ"
+          ? [
+              { label: "A", text: optA },
+              { label: "B", text: optB },
+              { label: "C", text: optC },
+              { label: "D", text: optD },
+            ]
+          : [],
+      correctAnswer: questionType === "SPR" ? form.correctAnswer.trim() : form.correctAnswer,
     });
     setSaving(false);
     if (res.success) {
@@ -79,7 +104,7 @@ function ResolveReportPage() {
         handleResolve();
       }
     } else {
-      alert(res.error || "Failed to save question.");
+      setFormError(res.error || "Failed to save question.");
     }
   };
 
@@ -238,6 +263,13 @@ function ResolveReportPage() {
               </button>
             </div>
 
+            {formError && (
+              <div className="mb-4 p-3 bg-error/15 text-error rounded-xl text-sm border border-error/25 flex items-center gap-2">
+                <Icon name="error" className="shrink-0" />
+                <span>{formError}</span>
+              </div>
+            )}
+
             {!report.question ? (
               <div className="text-error text-sm text-center py-8">
                 The associated question has been deleted from the database.
@@ -274,24 +306,73 @@ function ResolveReportPage() {
                   required
                 />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Input label="Option A" value={form.optA} onChange={(e) => setForm({ ...form, optA: e.target.value })} required />
-                  <Input label="Option B" value={form.optB} onChange={(e) => setForm({ ...form, optB: e.target.value })} required />
-                  <Input label="Option C" value={form.optC} onChange={(e) => setForm({ ...form, optC: e.target.value })} required />
-                  <Input label="Option D" value={form.optD} onChange={(e) => setForm({ ...form, optD: e.target.value })} required />
-                </div>
+                {report.question.imageUrl && (
+                  <div>
+                    <p className="mb-1.5 block font-mono text-[12px] uppercase tracking-[0.08em] text-on-surface-variant">Question Image</p>
+                    <img
+                      src={resolveImageUrl(report.question.imageUrl)}
+                      alt="Question"
+                      className="max-h-64 rounded-xl border border-outline-variant/30"
+                    />
+                  </div>
+                )}
 
                 <Select
-                  label="Correct Answer"
-                  value={form.correctAnswer}
-                  onChange={(e) => setForm({ ...form, correctAnswer: e.target.value })}
+                  label="Question Type"
+                  value={questionType}
+                  onChange={(e) => {
+                    const newType = e.target.value as "MCQ" | "SPR";
+                    setQuestionType(newType);
+                    setFormError("");
+                    if (newType === "SPR" && ["A", "B", "C", "D"].includes(form.correctAnswer)) {
+                      setForm({ ...form, correctAnswer: "" });
+                    } else if (newType === "MCQ" && !["A", "B", "C", "D"].includes(form.correctAnswer)) {
+                      setForm({ ...form, correctAnswer: "A" });
+                    }
+                  }}
                   options={[
-                    { value: "A", label: "Option A" },
-                    { value: "B", label: "Option B" },
-                    { value: "C", label: "Option C" },
-                    { value: "D", label: "Option D" },
+                    { value: "MCQ", label: "Multiple Choice (MCQ)" },
+                    { value: "SPR", label: "Fill-in-the-blank (SPR)" },
                   ]}
                 />
+
+                {questionType === "MCQ" ? (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Input label="Option A" value={form.optA} onChange={(e) => setForm({ ...form, optA: e.target.value })} required />
+                      <Input label="Option B" value={form.optB} onChange={(e) => setForm({ ...form, optB: e.target.value })} required />
+                      <Input label="Option C" value={form.optC} onChange={(e) => setForm({ ...form, optC: e.target.value })} required />
+                      <Input label="Option D" value={form.optD} onChange={(e) => setForm({ ...form, optD: e.target.value })} required />
+                    </div>
+
+                    <Select
+                      label="Correct Answer"
+                      value={form.correctAnswer}
+                      onChange={(e) => setForm({ ...form, correctAnswer: e.target.value })}
+                      options={[
+                        { value: "A", label: "Option A" },
+                        { value: "B", label: "Option B" },
+                        { value: "C", label: "Option C" },
+                        { value: "D", label: "Option D" },
+                      ]}
+                    />
+                  </>
+                ) : (
+                  <div className="space-y-1.5">
+                    <Input
+                      label="Correct Answer"
+                      value={form.correctAnswer}
+                      onChange={(e) => setForm({ ...form, correctAnswer: e.target.value })}
+                      required
+                      placeholder="e.g. 21, -1/2, or 4.25"
+                    />
+                    <p className="text-xs text-on-surface-variant">
+                      Students type their answer for this question. Equivalent numbers are accepted
+                      automatically (e.g. 1/2, 0.5, .5). Separate multiple accepted answers with "or"
+                      (e.g. <span className="font-mono">2/3 or .6666 or .6667</span>).
+                    </p>
+                  </div>
+                )}
 
                 <Textarea
                   label="Explanation"

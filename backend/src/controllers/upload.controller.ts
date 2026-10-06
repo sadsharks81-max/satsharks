@@ -220,8 +220,11 @@ export const triggerExtraction = async (req: AuthRequest, res: Response) => {
             return [];
           }
 
+          // Practice-question PDFs pass strict format, category and section checks
+          // above, so each question starts selected; the admin only unselects the
+          // ones that were not read correctly.
           const { questionNumber: _questionNumber, ...extracted } = question;
-          return [{ ...extracted, category: category.name }];
+          return [{ ...extracted, category: category.name, approved: true }];
         });
       } else {
         extractedQuestions = [];
