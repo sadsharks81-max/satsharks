@@ -492,7 +492,7 @@ function AdminQuestions() {
             >
               {form.imageUrl ? (
                 <div className="flex flex-col items-center gap-3">
-                  <img src={form.imageUrl} alt="Uploaded preview" className="max-h-32 rounded-lg border border-outline-variant/30" />
+                  <img src={resolveImageUrl(form.imageUrl)} alt="Uploaded preview" className="max-h-32 rounded-lg border border-outline-variant/30" />
                   <div className="flex gap-2">
                     <label className="px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest rounded-lg text-xs font-semibold transition-colors cursor-pointer text-on-surface">
                       Change Image

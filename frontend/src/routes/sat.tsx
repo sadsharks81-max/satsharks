@@ -218,6 +218,19 @@ function PriceBadge({ amount, period, accent }: PriceBadgeProps) {
   );
 }
 
+function NoRefundNote() {
+  return (
+    <div className="flex justify-center mt-8">
+      <p className="inline-flex items-center gap-2.5 rounded-2xl border border-accent/40 bg-accent/10 px-5 py-3 text-sm text-on-surface">
+        <Icon name="info" className="text-xl text-accent flex-shrink-0" />
+        <span>
+          <span className="font-bold">No refund policy:</span> All payments are final and non-refundable. Please review your plan carefully before paying.
+        </span>
+      </p>
+    </div>
+  );
+}
+
 function LoadingSkeleton() {
   return (
     <div className="inline-block w-40 h-[38px] rounded-xl bg-surface-container-high animate-pulse" />
@@ -509,8 +522,10 @@ function SATPrepPage() {
           {/* Cards */}
           <div id="pricing" className="max-w-6xl mx-auto px-6">
 
+            <NoRefundNote />
+
             {/* Pricing Main Category Toggle & Switcher */}
-            <div className="flex flex-wrap justify-center gap-3 mb-10 mt-8">
+            <div className="flex flex-wrap justify-center gap-3 mb-10 mt-6">
               {[
                 { id: "sat", label: "SAT Prep & Mastery", icon: "menu_book" },
                 { id: "admission", label: "Admission Counseling", icon: "account_balance" },
