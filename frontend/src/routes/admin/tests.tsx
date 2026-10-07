@@ -76,6 +76,9 @@ function AdminTests() {
   // Questions manager modal
   const [questionsModalOpen, setQuestionsModalOpen] = useState(false);
   const [activeTestForQuestions, setActiveTestForQuestions] = useState<any | null>(null);
+  // The test list carries only question ids, so the dialog waits for the full test.
+  const [questionsLoading, setQuestionsLoading] = useState(false);
+  const [questionsLoadError, setQuestionsLoadError] = useState("");
   const [selectedModuleIndex, setSelectedModuleIndex] = useState(0);
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
   const [questionType, setQuestionType] = useState<"MCQ" | "SPR">("MCQ");
@@ -229,16 +232,17 @@ function AdminTests() {
     setEditingQuestionId(null);
     setQuestionError("");
     setIsAddingQuestion(false);
+    setQuestionsLoadError("");
+    setQuestionsLoading(true);
     setQuestionsModalOpen(true);
 
-    try {
-      const res = await api.get(`/api/sat/admin/${test._id}`);
-      if (res.success && res.test) {
-        setActiveTestForQuestions(res.test);
-      }
-    } catch (e) {
-      console.error("Failed to fetch fresh test details:", e);
+    const res = await api.get(`/api/sat/admin/${test._id}`);
+    if (res.success && res.test) {
+      setActiveTestForQuestions(res.test);
+    } else {
+      setQuestionsLoadError(res.error || "Could not load this test's questions.");
     }
+    setQuestionsLoading(false);
   };
 
   const startAddQuestion = () => {
@@ -592,7 +596,13 @@ function AdminTests() {
 
       {/* Manage Test Questions Modal */}
       <Modal open={questionsModalOpen} onClose={() => setQuestionsModalOpen(false)} title={`Manage Test Questions , ${activeTestForQuestions?.title}`} icon="list_alt" maxWidth="max-w-5xl">
-        {activeTestForQuestions && (
+        {questionsLoading && (
+          <div className="py-12 text-center text-sm text-on-surface-variant">Loading questions...</div>
+        )}
+        {!questionsLoading && questionsLoadError && (
+          <div className="rounded-xl border border-error/25 bg-error/10 p-4 text-sm text-error">{questionsLoadError}</div>
+        )}
+        {!questionsLoading && !questionsLoadError && activeTestForQuestions && (
           <div className="flex flex-col md:flex-row gap-6 max-h-[70vh]">
             {/* Left side: Module Selector */}
             <div className="w-full md:w-1/4 border-r border-outline-variant/30 pr-4 space-y-2 overflow-y-auto">

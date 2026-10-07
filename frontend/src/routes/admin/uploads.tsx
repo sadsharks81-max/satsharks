@@ -8,6 +8,7 @@ import { Input } from "../../components/ui/Input";
 import { EmptyState } from "../../components/ui/EmptyState";
 import { api, getBackendUrl } from "../../services/api";
 import type { PracticeTestUpload } from "../../types";
+import { FullTestUploads } from "../../components/admin/FullTestUploads";
 
 export const Route = createFileRoute("/admin/uploads")({
   component: AdminUploads,
@@ -24,6 +25,7 @@ function AdminUploads() {
   const [pageError, setPageError] = useState("");
   const [extractingId, setExtractingId] = useState<string | null>(null);
   const [activeType, setActiveType] = useState<"FULL_TEST" | "PRACTICE_QUESTIONS">("FULL_TEST");
+  const [fullTestModalOpen, setFullTestModalOpen] = useState(false);
 
   const fetchUploads = async () => {
     const res = await api.get("/api/uploads");
@@ -50,8 +52,7 @@ function AdminUploads() {
 
     try {
       const token = localStorage.getItem("accessToken");
-      const endpoint = activeType === "FULL_TEST" ? "practice-test" : "practice-questions";
-      const res = await fetch(`${getBackendUrl()}/api/uploads/${endpoint}`, {
+      const res = await fetch(`${getBackendUrl()}/api/uploads/practice-questions`, {
         method: "POST",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: formData,
@@ -115,6 +116,10 @@ function AdminUploads() {
         </div>
         <button
           onClick={() => {
+            if (activeType === "FULL_TEST") {
+              setFullTestModalOpen(true);
+              return;
+            }
             setModalOpen(true);
             setError("");
           }}
@@ -193,7 +198,11 @@ END QUESTION`}</pre>
         </div>
       )}
 
-      {pageError && (
+      {activeType === "FULL_TEST" && (
+        <FullTestUploads uploadOpen={fullTestModalOpen} onUploadClose={() => setFullTestModalOpen(false)} />
+      )}
+
+      {activeType === "PRACTICE_QUESTIONS" && pageError && (
         <div className="mb-6 whitespace-pre-line rounded-xl border border-error/25 bg-error/10 p-4 text-sm text-error">
           <div className="flex items-start gap-2">
             <Icon name="error" className="mt-0.5 shrink-0" />
@@ -202,17 +211,13 @@ END QUESTION`}</pre>
         </div>
       )}
 
-      {loading ? (
+      {activeType !== "PRACTICE_QUESTIONS" ? null : loading ? (
         <div className="text-center py-12 text-on-surface-variant">Loading...</div>
       ) : uploads.filter((item) => (item.uploadType || "FULL_TEST") === activeType).length === 0 ? (
         <EmptyState
           icon="upload_file"
           title="No uploads yet"
-          description={
-            activeType === "FULL_TEST"
-              ? "Upload a full practice-test PDF to get started"
-              : "Upload a correctly formatted practice-question PDF to get started"
-          }
+          description="Upload a correctly formatted practice-question PDF to get started"
         />
       ) : (
         <div className="rounded-xl bg-surface-container-lowest border border-outline-variant/40 overflow-hidden shark-shadow">
@@ -287,9 +292,7 @@ END QUESTION`}</pre>
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
-        title={
-          activeType === "FULL_TEST" ? "Upload Full Practice Test" : "Import Practice Questions"
-        }
+        title="Import Practice Questions"
         icon="upload_file"
       >
         {error && (
@@ -324,21 +327,19 @@ END QUESTION`}</pre>
               />
             </div>
           </div>
-          {activeType === "PRACTICE_QUESTIONS" && (
-            <div className="rounded-xl border border-warning/30 bg-warning/10 p-3 text-xs leading-5 text-on-surface-variant">
-              Before uploading, confirm the PDF uses the required field order and selectable text.
-              Need a clean starting file?{" "}
-              <a
-                href="/practice-question-import-template.html"
-                target="_blank"
-                rel="noreferrer"
-                className="font-semibold text-primary underline"
-              >
-                Open the printable template
-              </a>
-              .
-            </div>
-          )}
+          <div className="rounded-xl border border-warning/30 bg-warning/10 p-3 text-xs leading-5 text-on-surface-variant">
+            Before uploading, confirm the PDF uses the required field order and selectable text.
+            Need a clean starting file?{" "}
+            <a
+              href="/practice-question-import-template.html"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-primary underline"
+            >
+              Open the printable template
+            </a>
+            .
+          </div>
           <div className="flex gap-4 pt-4 border-t border-outline-variant/30">
             <button
               type="button"

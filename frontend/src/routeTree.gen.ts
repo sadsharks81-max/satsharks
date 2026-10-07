@@ -64,6 +64,7 @@ import { Route as AdminReportsIdRouteImport } from './routes/admin/reports.$id'
 import { Route as AdminReviewUploadUploadIdRouteImport } from './routes/admin/review-upload.$uploadId'
 import { Route as DashboardSatResultAttemptIdRouteImport } from './routes/dashboard/sat-result.$attemptId'
 import { Route as DashboardSatRunnerAttemptIdRouteImport } from './routes/dashboard/sat-runner.$attemptId'
+import { Route as AdminReviewFullTestUploadIdSectionRouteImport } from './routes/admin/review-full-test.$uploadId.$section'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -343,6 +344,12 @@ const DashboardSatRunnerAttemptIdRoute =
     path: '/sat-runner/$attemptId',
     getParentRoute: () => DashboardRoute,
   } as any)
+const AdminReviewFullTestUploadIdSectionRoute =
+  AdminReviewFullTestUploadIdSectionRouteImport.update({
+    id: '/admin/review-full-test/$uploadId/$section',
+    path: '/admin/review-full-test/$uploadId/$section',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -400,6 +407,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/sat-result/$attemptId': typeof DashboardSatResultAttemptIdRoute
   '/dashboard/sat-runner/$attemptId': typeof DashboardSatRunnerAttemptIdRoute
   '/admin/reports/': typeof AdminReportsIndexRoute
+  '/admin/review-full-test/$uploadId/$section': typeof AdminReviewFullTestUploadIdSectionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -455,6 +463,7 @@ export interface FileRoutesByTo {
   '/dashboard/sat-result/$attemptId': typeof DashboardSatResultAttemptIdRoute
   '/dashboard/sat-runner/$attemptId': typeof DashboardSatRunnerAttemptIdRoute
   '/admin/reports': typeof AdminReportsIndexRoute
+  '/admin/review-full-test/$uploadId/$section': typeof AdminReviewFullTestUploadIdSectionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -513,6 +522,7 @@ export interface FileRoutesById {
   '/dashboard/sat-result/$attemptId': typeof DashboardSatResultAttemptIdRoute
   '/dashboard/sat-runner/$attemptId': typeof DashboardSatRunnerAttemptIdRoute
   '/admin/reports/': typeof AdminReportsIndexRoute
+  '/admin/review-full-test/$uploadId/$section': typeof AdminReviewFullTestUploadIdSectionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -572,6 +582,7 @@ export interface FileRouteTypes {
     | '/dashboard/sat-result/$attemptId'
     | '/dashboard/sat-runner/$attemptId'
     | '/admin/reports/'
+    | '/admin/review-full-test/$uploadId/$section'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -627,6 +638,7 @@ export interface FileRouteTypes {
     | '/dashboard/sat-result/$attemptId'
     | '/dashboard/sat-runner/$attemptId'
     | '/admin/reports'
+    | '/admin/review-full-test/$uploadId/$section'
   id:
     | '__root__'
     | '/'
@@ -684,6 +696,7 @@ export interface FileRouteTypes {
     | '/dashboard/sat-result/$attemptId'
     | '/dashboard/sat-runner/$attemptId'
     | '/admin/reports/'
+    | '/admin/review-full-test/$uploadId/$section'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -728,6 +741,7 @@ export interface RootRouteChildren {
   AdminIndexRoute: typeof AdminIndexRoute
   TeacherIndexRoute: typeof TeacherIndexRoute
   AdminReviewUploadUploadIdRoute: typeof AdminReviewUploadUploadIdRoute
+  AdminReviewFullTestUploadIdSectionRoute: typeof AdminReviewFullTestUploadIdSectionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1117,6 +1131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardSatRunnerAttemptIdRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/admin/review-full-test/$uploadId/$section': {
+      id: '/admin/review-full-test/$uploadId/$section'
+      path: '/admin/review-full-test/$uploadId/$section'
+      fullPath: '/admin/review-full-test/$uploadId/$section'
+      preLoaderRoute: typeof AdminReviewFullTestUploadIdSectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1210,6 +1231,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminIndexRoute: AdminIndexRoute,
   TeacherIndexRoute: TeacherIndexRoute,
   AdminReviewUploadUploadIdRoute: AdminReviewUploadUploadIdRoute,
+  AdminReviewFullTestUploadIdSectionRoute:
+    AdminReviewFullTestUploadIdSectionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

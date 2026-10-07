@@ -64,6 +64,17 @@ const pdfUpload = (prefix: string) =>
   });
 
 export const practiceTestUpload = pdfUpload("");
+
+/**
+ * Full-test section PDFs are parsed inside the upload request and only the
+ * extracted questions are stored, so the file never needs to reach the disk.
+ * Up to two files: the Reading & Writing PDF and the Math PDF.
+ */
+export const fullTestPdfUpload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: pdfFileFilter,
+  limits: { fileSize: PDF_SIZE_LIMIT, files: 2 },
+});
 // Study materials are persisted to MongoDB GridFS by the controller. Keeping
 // the bytes in memory avoids writing a temporary file to Railway's ephemeral
 // filesystem, where it would disappear on restart or deploy.

@@ -7,6 +7,7 @@ import { AuthRequest } from "../middleware/auth.middleware";
 import { checkAnswerCorrectness } from "../utils/grading";
 import { sendError } from "../utils/http";
 import { stripEmojis } from "../utils/text";
+import { FULL_TEST_QUESTION_TAG, fullTestQuestionTag } from "../utils/question-tags";
 
 // --- Student: list available SAT tests ---
 export const getSATTests = async (req: AuthRequest, res: Response) => {
@@ -493,13 +494,14 @@ export const getMySATAttempts = async (req: AuthRequest, res: Response) => {
 // --- Admin: list all SAT tests ---
 export const getAllSATTestsAdmin = async (req: Request, res: Response) => {
   try {
+    // The list shows only test details and module counts, so questions stay as
+    // ids here. Populating them shipped every question and inline graph image of
+    // every test (~19 MB, 12-18 s), which could run past the client's 30 s
+    // timeout and leave the page without its tests. The Questions dialog loads a
+    // single test in full from getSATTestAdminById.
     const tests = await SATTest.find({
       $or: [{ year: { $ne: 9999 } }, { year: { $exists: false } }],
     })
-      .populate({
-        path: "modules.questions",
-        select: "text options correctAnswer explanation difficulty category imageUrl",
-      })
       .sort({ year: -1, testNumber: 1 })
       .lean();
 
@@ -541,6 +543,23 @@ export const updateSATTestAdmin = async (req: Request, res: Response) => {
     if (rwScoreMapping !== undefined) update.rwScoreMapping = rwScoreMapping;
     if (mathScoreMapping !== undefined) update.mathScoreMapping = mathScoreMapping;
 
+    // Students must never be routed into an empty module, so a test can only be
+    // activated once every module (all six for an adaptive test) has questions.
+    if (isActive === true) {
+      const existing = await SATTest.findById(req.params.id).select("isAdaptive modules.name modules.questions").lean();
+      if (!existing) return res.status(404).json({ success: false, error: "Test not found" });
+      const emptyModules = existing.modules.filter((module) => !module.questions?.length).map((module) => module.name);
+      if (existing.isAdaptive && existing.modules.length !== 6) {
+        return res.status(400).json({ success: false, error: "An adaptive test needs exactly six modules before it can be activated." });
+      }
+      if (existing.modules.length === 0 || emptyModules.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: `Add questions to every module before activating. Empty: ${emptyModules.join(", ") || "all modules"}.`,
+        });
+      }
+    }
+
     const test = await SATTest.findByIdAndUpdate(req.params.id, update, { new: true });
     if (!test) return res.status(404).json({ success: false, error: "Test not found" });
     res.status(200).json({ success: true, test });
@@ -574,6 +593,12 @@ export const addQuestionToTestModule = async (req: AuthRequest, res: Response) =
       return res.status(400).json({ success: false, error: "Invalid module index" });
     }
 
+    // A question added to an uploaded full test belongs to that exam like its
+    // siblings, so it inherits their tags and stays out of practice pools.
+    const testTag = fullTestQuestionTag(String(test._id));
+    const isUploadedFullTest = Boolean(await Question.exists({ tags: testTag }));
+    const questionTags: string[] = Array.isArray(tags) ? tags : [];
+
     const question = await Question.create({
       text,
       options,
@@ -582,7 +607,9 @@ export const addQuestionToTestModule = async (req: AuthRequest, res: Response) =
       category,
       difficulty,
       section,
-      tags: tags || [],
+      tags: isUploadedFullTest
+        ? [...new Set([...questionTags, FULL_TEST_QUESTION_TAG, testTag])]
+        : questionTags,
       imageUrl: imageUrl || null,
       source: "MANUAL",
       status: imageUrl ? "UPDATED" : "PUBLISHED",

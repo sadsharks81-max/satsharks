@@ -9,6 +9,7 @@ import SATTestAttempt from "../models/SATTestAttempt";
 import QuestionCategory from "../models/QuestionCategory";
 import { stripEmojis } from "../utils/text";
 import { sendError } from "../utils/http";
+import { FULL_TEST_QUESTION_TAG } from "../utils/question-tags";
 
 const CUSTOM_TEST_CATEGORY_NAMES = {
   MATH: ["SAT Advanced Math", "SAT Algebra", "SAT Data & Statistics", "SAT Geometry"],
@@ -148,7 +149,12 @@ export const createCustomTest = async (req: AuthRequest, res: Response) => {
       return res.status(400).json({ success: false, error: "Select at least one approved custom-test category." });
     }
 
-    const matchCriteria: any = { section: subject, category: { $in: selectedCategoryIds } };
+    const matchCriteria: any = {
+      section: subject,
+      category: { $in: selectedCategoryIds },
+      // Questions uploaded as part of a full test belong to that exam only.
+      tags: { $ne: FULL_TEST_QUESTION_TAG },
+    };
     if (difficulties && difficulties.length > 0) {
       matchCriteria.difficulty = { $in: difficulties };
     }

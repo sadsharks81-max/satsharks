@@ -138,6 +138,50 @@ export interface PracticeTestUpload {
   createdAt: string;
 }
 
+export type FullTestSection = "READING_WRITING" | "MATH";
+export type FullTestModuleSlot = "MODULE_1" | "MODULE_2_EASY" | "MODULE_2_HARD";
+
+export interface FullTestUploadQuestion {
+  moduleSlot: FullTestModuleSlot;
+  questionNumber: number;
+  questionType: "MULTIPLE_CHOICE" | "GRID_IN";
+  text: string;
+  options: QuestionOption[];
+  correctAnswer: string;
+  explanation: string;
+  category: string;
+  difficulty: string;
+}
+
+export interface FullTestUploadSection {
+  fileName: string;
+  fileSize: number;
+  status: "EXTRACTED" | "REVIEWED" | "FAILED";
+  errorMessage: string;
+  warnings: string[];
+  uploadedAt: string;
+  reviewedAt: string | null;
+  /** Present on the single-upload response. */
+  questions?: FullTestUploadQuestion[];
+  /** Present on the list response, which omits question bodies. */
+  questionCount?: number;
+  moduleCounts?: Record<FullTestModuleSlot, number>;
+}
+
+export interface FullTestUpload {
+  _id: string;
+  title: string;
+  year: number;
+  testNumber: number;
+  status: "DRAFT" | "PUBLISHED";
+  readingWriting: FullTestUploadSection | null;
+  math: FullTestUploadSection | null;
+  publishedTest: string | null;
+  publishedAt: string | null;
+  uploadedBy: { name: string; email: string } | string;
+  createdAt: string;
+}
+
 export interface Pagination {
   page: number;
   limit: number;

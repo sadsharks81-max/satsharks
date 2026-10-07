@@ -7,6 +7,7 @@ import { AuthRequest } from "../middleware/auth.middleware";
 import { stripEmojis } from "../utils/text";
 import { deleteManagedImage, deleteReplacedManagedImage } from "../utils/managed-image";
 import { sendError } from "../utils/http";
+import { FULL_TEST_QUESTION_TAG } from "../utils/question-tags";
 import { asEnumValue, asObjectId, buildSearchFilter, getPagination } from "../utils/query";
 
 const DIFFICULTIES = ["EASY", "MEDIUM", "HARD"] as const;
@@ -60,6 +61,8 @@ export const getQuestions = async (req: Request, res: Response) => {
     // is fixed rather than caller-controlled: allowing `?status=` here exposed
     // draft and under-review questions.
     filter.status = { $in: LIVE_STATUSES };
+    // Questions uploaded as part of a full test belong to that exam only.
+    filter.tags = { $ne: FULL_TEST_QUESTION_TAG };
 
     // Practice sessions load every question matching the selected filters, so
     // allow larger pages than the default cap to keep the client's request count
