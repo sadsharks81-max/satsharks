@@ -12,6 +12,10 @@ import { asEnumValue, asObjectId, buildSearchFilter, getPagination } from "../ut
 const DIFFICULTIES = ["EASY", "MEDIUM", "HARD"] as const;
 const SECTIONS = ["READING_WRITING", "MATH"] as const;
 const STATUSES = ["UPLOADED", "REVIEW", "PUBLISHED", "UPDATED"] as const;
+// Statuses a student may see. "UPDATED" is not a draft state: it is set on a
+// published question whenever an admin attaches or changes its image (graph),
+// so excluding it hid every graph question from practice.
+const LIVE_STATUSES = ["PUBLISHED", "UPDATED"] as const;
 
 /**
  * Builds a Question filter from untrusted query params.
@@ -55,7 +59,7 @@ export const getQuestions = async (req: Request, res: Response) => {
     // This route is reachable by any authenticated student, so the status filter
     // is fixed rather than caller-controlled: allowing `?status=` here exposed
     // draft and under-review questions.
-    filter.status = "PUBLISHED";
+    filter.status = { $in: LIVE_STATUSES };
 
     // Practice sessions load every question matching the selected filters, so
     // allow larger pages than the default cap to keep the client's request count
