@@ -15,7 +15,7 @@ import type {
   PredictedScore,
   DashboardStats,
 } from "../../types";
-import { stripEmojis, stripQuestionTypeTags } from "../../utils/format";
+import { renderFormattedText } from "../../utils/format";
 
 export const Route = createFileRoute("/dashboard/analytics")({
   component: Analytics,
@@ -484,7 +484,7 @@ function Analytics() {
                     />
                     <div className="min-w-0 flex-1">
                       <div className="line-clamp-2 text-sm font-semibold text-on-surface">
-                        {stripQuestionTypeTags(entry.question)}
+                        {renderFormattedText(entry.question)}
                       </div>
                       <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-on-surface-variant">
                         <span>{entry.category}</span>
@@ -615,7 +615,7 @@ function Analytics() {
                           </span>
                         </div>
                         <p className="text-sm text-on-surface font-body leading-relaxed pt-2 line-clamp-2 max-w-4xl">
-                          {q.text}
+                          {renderFormattedText(q.text)}
                         </p>
                       </div>
                       <button
@@ -715,7 +715,7 @@ function Analytics() {
                           </span>
                         </div>
                         <p className="text-sm text-on-surface font-body leading-relaxed pt-2 line-clamp-2 max-w-4xl">
-                          {q.text}
+                          {renderFormattedText(q.text)}
                         </p>
                       </div>
                       <button
@@ -882,7 +882,7 @@ function Analytics() {
       >
         <div className="p-1 space-y-4">
           <p className="text-sm leading-relaxed text-on-surface whitespace-pre-wrap">
-            {stripEmojis(stripQuestionTypeTags(selectedQuestionText))}
+            {renderFormattedText(selectedQuestionText)}
           </p>
           <div className="flex justify-end pt-4 border-t border-outline-variant/20">
             <button

@@ -54,6 +54,26 @@ const DUAL_LEVELS: Record<string, { final: string; options: { sys: string; label
 const W_FINAL = 0.7;
 const W_EARLIER = 0.3;
 const EARLIER_ONLY = new Set(["CIE_OLEVEL", "CIE_IGCSE"]);
+const A_LEVEL_SYSTEM = "GCE_ALEVEL";
+const DEFAULT_A_LEVEL_SUBJECTS = 3;
+const DEFAULT_O_LEVEL_SUBJECTS = 8;
+
+function gradeName(band: GradingBand | undefined) {
+  return band?.label.split("(")[0].trim() || "";
+}
+
+function averageGradeGpa(system: GradingSystem | null, gradeIndexes: number[]) {
+  if (!system || gradeIndexes.length === 0) return 0;
+  const total = gradeIndexes.reduce((sum, index) => {
+    const band = system.bands[Math.min(index, system.bands.length - 1)];
+    return sum + (band?.gpa ?? 0);
+  }, 0);
+  return total / gradeIndexes.length;
+}
+
+function resizeGradeSelections(current: number[], count: number, defaultIndex = 1) {
+  return Array.from({ length: count }, (_, index) => current[index] ?? defaultIndex);
+}
 
 const EC_TIERS = [
   { v: 9.5, t: "Tier 1 — National / international distinction", ex: "Olympiad medal, national team, published research, founded org with real impact" },
@@ -109,8 +129,8 @@ function scoreUniversity(uni: any, gpa: number, sat: number | null, budget: numb
   
   let score = 50 + Math.max(-30, Math.min(30, fit * 60));
   
-  let reasons: string[] = [];
-  let warnings: string[] = [];
+  const reasons: string[] = [];
+  const warnings: string[] = [];
   
   if (fit >= 0) {
     reasons.push("Your grades meet the requirements");
@@ -338,9 +358,9 @@ function ApplicationModal({ selectedUnis, profile, onClose }: { selectedUnis: an
           <div style={{ background: C.bg, borderColor: C.line }} className="p-4 rounded-xl border">
             <h3 className="font-bold text-[#F5B841] mb-2 text-sm">Attached Profile Data</h3>
             <div className="text-xs text-[#8DA0B9] space-y-1">
-              <div><strong>Final Level Grade:</strong> {profile.higherGrades} ({profile.higherType})</div>
+              <div><strong>Final Level Grades:</strong> {profile.higherGrades} ({profile.higherType})</div>
               {profile.secondaryGrades && (
-                <div><strong>Earlier Qualification Grade:</strong> {profile.secondaryGrades} ({profile.secondaryType})</div>
+                <div><strong>Earlier Qualification Grades:</strong> {profile.secondaryGrades} ({profile.secondaryType})</div>
               )}
               <div><strong>US GPA Equivalent:</strong> {profile.gpa}</div>
               <div><strong>SAT Score:</strong> {profile.sat || "N/A"}</div>
@@ -376,6 +396,14 @@ function UniversityMatcherContent() {
   const [earlierSysIdx, setEarlierSysIdx] = useState(0);
   const [earlierIdx, setEarlierIdx] = useState(1);
   const [useEarlier, setUseEarlier] = useState(true);
+  const [aLevelSubjectCount, setALevelSubjectCount] = useState(DEFAULT_A_LEVEL_SUBJECTS);
+  const [aLevelGrades, setALevelGrades] = useState<number[]>(
+    Array(DEFAULT_A_LEVEL_SUBJECTS).fill(1),
+  );
+  const [oLevelSubjectCount, setOLevelSubjectCount] = useState(DEFAULT_O_LEVEL_SUBJECTS);
+  const [oLevelGrades, setOLevelGrades] = useState<number[]>(
+    Array(DEFAULT_O_LEVEL_SUBJECTS).fill(1),
+  );
   
   const [ecTier, setEcTier] = useState(2);
   const [ecAreas, setEcAreas] = useState<string[]>(["Leadership"]);
@@ -405,23 +433,55 @@ function UniversityMatcherContent() {
   const dual = DUAL_LEVELS[sysCode];
   const earlierOpt = dual ? dual.options[Math.min(earlierSysIdx, dual.options.length - 1)] : null;
   const earlierSys = earlierOpt ? GRADING_SYSTEMS[earlierOpt.sys] : null;
+  const isALevelStudent = sysCode === A_LEVEL_SYSTEM;
 
   const bandF = sys.bands[Math.min(finalIdx, sys.bands.length - 1)];
   const bandE = earlierSys ? earlierSys.bands[Math.min(earlierIdx, earlierSys.bands.length - 1)] : null;
-  
-  const gpaFinal = bandF?.gpa ?? 0;
-  const gpa = dual && useEarlier && bandE
-    ? +(W_FINAL * gpaFinal + W_EARLIER * (bandE.gpa ?? gpaFinal)).toFixed(2)
-    : gpaFinal;
+
+  const aLevelGpa = isALevelStudent ? averageGradeGpa(sys, aLevelGrades) : 0;
+  const oLevelGpa = isALevelStudent ? averageGradeGpa(earlierSys, oLevelGrades) : 0;
+  const gpaFinal = isALevelStudent ? aLevelGpa : (bandF?.gpa ?? 0);
+  const gpa = isALevelStudent
+    ? +(W_FINAL * aLevelGpa + W_EARLIER * oLevelGpa).toFixed(2)
+    : dual && useEarlier && bandE
+      ? +(W_FINAL * gpaFinal + W_EARLIER * (bandE.gpa ?? gpaFinal)).toFixed(2)
+      : gpaFinal;
+
+  const aLevelGradeSummary = aLevelGrades.map((index) => gradeName(sys.bands[index])).join(", ");
+  const oLevelGradeSummary = oLevelGrades
+    .map((index) => gradeName(earlierSys?.bands[index]))
+    .join(", ");
 
   const ecScore = Math.min(10, EC_TIERS[ecTier].v + Math.min(1.5, ecAreas.length * 0.35));
-  const satNum = sat ? parseInt(sat, 10) : null;
+  const parsedSat = sat ? parseInt(sat, 10) : null;
+  const satNum = parsedSat != null && parsedSat >= 400 && parsedSat <= 1600 ? parsedSat : null;
 
   const switchSystem = (code: string) => {
     setSysCode(code);
     setFinalIdx(1);
     setEarlierIdx(1);
     setEarlierSysIdx(0);
+    setUseEarlier(true);
+  };
+
+  const updateSubjectCount = (
+    value: string,
+    minimum: number,
+    maximum: number,
+    setCount: (count: number) => void,
+    setGrades: React.Dispatch<React.SetStateAction<number[]>>,
+  ) => {
+    const count = Math.max(minimum, Math.min(maximum, Number(value) || minimum));
+    setCount(count);
+    setGrades((current) => resizeGradeSelections(current, count));
+  };
+
+  const updateGrade = (
+    subjectIndex: number,
+    gradeIndex: number,
+    setGrades: React.Dispatch<React.SetStateAction<number[]>>,
+  ) => {
+    setGrades((current) => current.map((grade, index) => (index === subjectIndex ? gradeIndex : grade)));
   };
 
   const toggleSelectUni = (uni: any) => {
@@ -570,57 +630,160 @@ function UniversityMatcherContent() {
             {sysOptions.map(([code, s]) => <option key={code} value={code}>{s.country} — {s.name}</option>)}
           </select>
 
-          <label style={{ fontSize: 13, color: C.mist }}>{dual ? dual.final : `Your grades (${sys.scale})`}</label>
-          <select value={finalIdx} onChange={e => setFinalIdx(+e.target.value)} style={selStyle}>
-            {sys.bands.map((b, i) => <option key={i} value={i}>{b.label}</option>)}
-          </select>
-
-          {dual && (
+          {isALevelStudent ? (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
-                <label style={{ fontSize: 13, color: C.mist }}>Earlier qualification</label>
-                <label style={{ fontSize: 11, color: C.mist, cursor: "pointer", whiteSpace: "nowrap" }}>
-                  <input type="checkbox" checked={useEarlier} onChange={e => setUseEarlier(e.target.checked)} style={{ accentColor: C.teal, marginRight: 5 }} />
-                  include (30%)
-                </label>
-              </div>
+              <label style={{ fontSize: 13, color: C.mist }}>Earlier qualification</label>
               {dual.options.length > 1 ? (
-                <select value={earlierSysIdx} disabled={!useEarlier} onChange={e => { setEarlierSysIdx(+e.target.value); setEarlierIdx(1); }} style={{ ...selStyle, marginBottom: 8, opacity: useEarlier ? 1 : 0.4 }}>
+                <select
+                  value={earlierSysIdx}
+                  onChange={(e) => {
+                    setEarlierSysIdx(Number(e.target.value));
+                    setOLevelGrades(Array(oLevelSubjectCount).fill(1));
+                  }}
+                  style={{ ...selStyle, marginBottom: 8 }}
+                >
                   {dual.options.map((o, i) => <option key={i} value={i}>{o.label}</option>)}
                 </select>
               ) : (
-                <p style={{ fontSize: 12, color: C.foam, margin: "6px 0", opacity: useEarlier ? 1 : 0.4 }}>{earlierOpt?.label}</p>
+                <p style={{ fontSize: 12, color: C.foam, margin: "6px 0" }}>{earlierOpt?.label}</p>
               )}
-              <select value={earlierIdx} disabled={!useEarlier} onChange={e => setEarlierIdx(+e.target.value)} style={{ ...selStyle, opacity: useEarlier ? 1 : 0.4 }}>
-                {(earlierSys?.bands || []).map((b, i) => <option key={i} value={i}>{b.label}</option>)}
+
+              <label style={{ fontSize: 13, color: C.mist }}>How many O-Level / IGCSE subjects are you enrolled in?</label>
+              <input
+                type="number"
+                min={1}
+                max={14}
+                value={oLevelSubjectCount}
+                onChange={(e) => updateSubjectCount(e.target.value, 1, 14, setOLevelSubjectCount, setOLevelGrades)}
+                style={selStyle}
+              />
+
+              <label style={{ fontSize: 13, color: C.mist }}>How many A-Level subjects are you enrolled in?</label>
+              <input
+                type="number"
+                min={1}
+                max={6}
+                value={aLevelSubjectCount}
+                onChange={(e) => updateSubjectCount(e.target.value, 1, 6, setALevelSubjectCount, setALevelGrades)}
+                style={selStyle}
+              />
+
+              <label style={{ fontSize: 13, color: C.mist }}>Enter your O-Level / IGCSE grade for each subject</label>
+              <div className="grid grid-cols-2 gap-2 mt-2 mb-5">
+                {oLevelGrades.map((gradeIndex, subjectIndex) => (
+                  <label key={`o-level-${subjectIndex}`} style={{ fontSize: 11, color: C.mist }}>
+                    Subject {subjectIndex + 1}
+                    <select
+                      aria-label={`O-Level or IGCSE subject ${subjectIndex + 1} grade`}
+                      value={gradeIndex}
+                      onChange={(e) => updateGrade(subjectIndex, Number(e.target.value), setOLevelGrades)}
+                      style={{ ...selStyle, marginTop: 4, marginBottom: 0 }}
+                    >
+                      {(earlierSys?.bands || []).map((band, index) => (
+                        <option key={index} value={index}>{gradeName(band)}</option>
+                      ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+
+              <label style={{ fontSize: 13, color: C.mist }}>Enter your A-Level grade for each subject</label>
+              <div className="grid grid-cols-2 gap-2 mt-2 mb-5">
+                {aLevelGrades.map((gradeIndex, subjectIndex) => (
+                  <label key={`a-level-${subjectIndex}`} style={{ fontSize: 11, color: C.mist }}>
+                    Subject {subjectIndex + 1}
+                    <select
+                      aria-label={`A-Level subject ${subjectIndex + 1} grade`}
+                      value={gradeIndex}
+                      onChange={(e) => updateGrade(subjectIndex, Number(e.target.value), setALevelGrades)}
+                      style={{ ...selStyle, marginTop: 4, marginBottom: 0 }}
+                    >
+                      {sys.bands.map((band, index) => (
+                        <option key={index} value={index}>{gradeName(band)}</option>
+                      ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <label style={{ fontSize: 13, color: C.mist }}>{dual ? dual.final : `Your grades (${sys.scale})`}</label>
+              <select value={finalIdx} onChange={e => setFinalIdx(+e.target.value)} style={selStyle}>
+                {sys.bands.map((b, i) => <option key={i} value={i}>{b.label}</option>)}
               </select>
+
+              {dual && (
+                <>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8 }}>
+                    <label style={{ fontSize: 13, color: C.mist }}>Earlier qualification</label>
+                    <label style={{ fontSize: 11, color: C.mist, cursor: "pointer", whiteSpace: "nowrap" }}>
+                      <input type="checkbox" checked={useEarlier} onChange={e => setUseEarlier(e.target.checked)} style={{ accentColor: C.teal, marginRight: 5 }} />
+                      include (30%)
+                    </label>
+                  </div>
+                  {dual.options.length > 1 ? (
+                    <select value={earlierSysIdx} disabled={!useEarlier} onChange={e => { setEarlierSysIdx(+e.target.value); setEarlierIdx(1); }} style={{ ...selStyle, marginBottom: 8, opacity: useEarlier ? 1 : 0.4 }}>
+                      {dual.options.map((o, i) => <option key={i} value={i}>{o.label}</option>)}
+                    </select>
+                  ) : (
+                    <p style={{ fontSize: 12, color: C.foam, margin: "6px 0", opacity: useEarlier ? 1 : 0.4 }}>{earlierOpt?.label}</p>
+                  )}
+                  <select value={earlierIdx} disabled={!useEarlier} onChange={e => setEarlierIdx(+e.target.value)} style={{ ...selStyle, opacity: useEarlier ? 1 : 0.4 }}>
+                    {(earlierSys?.bands || []).map((b, i) => <option key={i} value={i}>{b.label}</option>)}
+                  </select>
+                </>
+              )}
             </>
           )}
 
           {/* Grade Translation Card */}
-          <div className="flow" key={sysCode + finalIdx + earlierSysIdx + earlierIdx + useEarlier} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: 10, padding: "14px 16px", marginBottom: 16 }}>
+          <div className="flow" key={sysCode + finalIdx + earlierSysIdx + earlierIdx + useEarlier + aLevelGradeSummary + oLevelGradeSummary} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: 10, padding: "14px 16px", marginBottom: 16 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-              <p style={{ fontSize: 10, letterSpacing: "2px", color: C.mist, textTransform: "uppercase" }}>Grade translation {dual && useEarlier ? "(70/30)" : ""}</p>
+              <p style={{ fontSize: 10, letterSpacing: "2px", color: C.mist, textTransform: "uppercase" }}>Grade translation {isALevelStudent || (dual && useEarlier) ? "(70/30)" : ""}</p>
               {sys.official && <span style={{ fontSize: 9, letterSpacing: "1px", color: C.green, border: `1px solid ${C.green}`, borderRadius: 10, padding: "2px 7px" }}>✓ OFFICIAL BOUNDARIES</span>}
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ flex: 1 }}>
-                <div className="sg" style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.2 }}>{bandF.label?.split("(")[0].trim()}</div>
-                <div style={{ fontSize: 10, color: C.mist }}>{dual ? "final level" : "native"}</div>
-              </div>
-              <span style={{ color: C.tealDim }}>→</span>
-              <div>
-                <div className="sg" style={{ fontSize: 14, fontWeight: 700 }}>{bandF.pct != null ? bandF.pct + "%+" : "—"}</div>
-                <div style={{ fontSize: 10, color: C.mist }}>percentile</div>
-              </div>
-              <span style={{ color: C.tealDim }}>→</span>
-              <div>
-                <div className="sg" style={{ fontSize: 19, fontWeight: 700, color: C.teal }}>{gpa.toFixed(2)}</div>
-                <div style={{ fontSize: 10, color: C.mist }}>US GPA</div>
-              </div>
-            </div>
-            {dual && useEarlier && bandE && earlierOpt && (
-              <p style={{ fontSize: 11, color: C.mist, marginTop: 8 }}>+ {earlierOpt.label}: {bandE.label?.split("(")[0].trim()} (GPA {bandE.gpa?.toFixed(1)}) at 30% weight</p>
+            {isALevelStudent ? (
+              <>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <div className="sg" style={{ fontSize: 15, fontWeight: 700 }}>{aLevelGpa.toFixed(2)}</div>
+                    <div style={{ fontSize: 10, color: C.mist }}>A-Level average · 70%</div>
+                  </div>
+                  <div>
+                    <div className="sg" style={{ fontSize: 15, fontWeight: 700 }}>{oLevelGpa.toFixed(2)}</div>
+                    <div style={{ fontSize: 10, color: C.mist }}>O-Level average · 30%</div>
+                  </div>
+                  <div>
+                    <div className="sg" style={{ fontSize: 19, fontWeight: 700, color: C.teal }}>{gpa.toFixed(2)}</div>
+                    <div style={{ fontSize: 10, color: C.mist }}>US GPA equivalent</div>
+                  </div>
+                </div>
+                <p style={{ fontSize: 11, color: C.mist, marginTop: 10 }}>A-Level grades: {aLevelGradeSummary}</p>
+                <p style={{ fontSize: 11, color: C.mist, marginTop: 4 }}>O-Level / IGCSE grades: {oLevelGradeSummary}</p>
+              </>
+            ) : (
+              <>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ flex: 1 }}>
+                    <div className="sg" style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.2 }}>{bandF.label?.split("(")[0].trim()}</div>
+                    <div style={{ fontSize: 10, color: C.mist }}>{dual ? "final level" : "native"}</div>
+                  </div>
+                  <span style={{ color: C.tealDim }}>→</span>
+                  <div>
+                    <div className="sg" style={{ fontSize: 14, fontWeight: 700 }}>{bandF.pct != null ? bandF.pct + "%+" : "—"}</div>
+                    <div style={{ fontSize: 10, color: C.mist }}>percentile</div>
+                  </div>
+                  <span style={{ color: C.tealDim }}>→</span>
+                  <div>
+                    <div className="sg" style={{ fontSize: 19, fontWeight: 700, color: C.teal }}>{gpa.toFixed(2)}</div>
+                    <div style={{ fontSize: 10, color: C.mist }}>US GPA</div>
+                  </div>
+                </div>
+                {dual && useEarlier && bandE && earlierOpt && (
+                  <p style={{ fontSize: 11, color: C.mist, marginTop: 8 }}>+ {earlierOpt.label}: {bandE.label?.split("(")[0].trim()} (GPA {bandE.gpa?.toFixed(1)}) at 30% weight</p>
+                )}
+              </>
             )}
             {sys.sat === "Yes" && <p style={{ fontSize: 11, color: C.gold, marginTop: 8 }}>Students from this system usually add the SAT — it strengthens your file.</p>}
           </div>
@@ -654,7 +817,19 @@ function UniversityMatcherContent() {
           </div>
 
           <label style={{ fontSize: 13, color: C.mist }}>SAT score (optional)</label>
-          <input value={sat} onChange={e => setSat(e.target.value.replace(/\D/g, ""))} placeholder="e.g. 1420" maxLength={4} style={selStyle} />
+          <input
+            type="number"
+            min={400}
+            max={1600}
+            step={10}
+            value={sat}
+            onChange={(e) => setSat(e.target.value)}
+            onBlur={() => {
+              if (sat) setSat(String(Math.max(400, Math.min(1600, Math.round(Number(sat) / 10) * 10))));
+            }}
+            placeholder="e.g. 1420"
+            style={selStyle}
+          />
 
           <label style={{ fontSize: 13, color: C.mist }}>Yearly budget — {money(budget)}</label>
           <input type="range" min={10000} max={80000} step={2500} value={budget} onChange={e => setBudget(+e.target.value)} style={{ width: "100%", marginTop: 8, marginBottom: 14, accentColor: C.teal }} />
@@ -872,9 +1047,13 @@ function UniversityMatcherContent() {
           profile={{
             level: "UNDERGRADUATE",
             secondaryType: earlierOpt?.label || "Matric / SSC",
-            secondaryGrades: bandE?.label || "",
+            secondaryGrades: isALevelStudent
+              ? `${oLevelSubjectCount} subjects: ${oLevelGradeSummary}`
+              : bandE?.label || "",
             higherType: sys.name,
-            higherGrades: bandF.label,
+            higherGrades: isALevelStudent
+              ? `${aLevelSubjectCount} subjects: ${aLevelGradeSummary}`
+              : bandF.label,
             gpa: gpa.toFixed(2),
             sat: sat,
             budget: `$${budget}/yr`,

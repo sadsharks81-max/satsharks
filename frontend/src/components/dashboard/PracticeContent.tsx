@@ -11,7 +11,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { SecurityWrapper } from "../common/SecurityWrapper";
 import { ReportIssueModal } from "../common/ReportIssueModal";
 import type { Question, QuestionCategory } from "../../types";
-import { renderFormattedText, stripQuestionTypeTags } from "../../utils/format";
+import { renderFormattedText } from "../../utils/format";
 
 const MathFraction = ({ num, den }: { num: ReactNode; den: ReactNode }) => (
   <span className="inline-flex flex-col items-center justify-center align-middle mx-1 text-[10px] leading-none">
@@ -1306,7 +1306,7 @@ export function PracticeContent() {
               ) : sessionSummary.answers.map((answer, index) => (
                 <div key={`${answer.questionId}-${index}`} className="rounded-xl border border-outline-variant/40 p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="text-sm font-semibold">{index + 1}. {stripQuestionTypeTags(answer.question)}</p>
+                    <p className="text-sm font-semibold">{index + 1}. {renderFormattedText(answer.question)}</p>
                     <Badge variant={answer.isCorrect ? "success" : "error"}>
                       {answer.isCorrect ? "Correct" : "Incorrect"}
                     </Badge>

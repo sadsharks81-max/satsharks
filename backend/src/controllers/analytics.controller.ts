@@ -310,7 +310,9 @@ export const getPredictedScore = async (req: AuthRequest, res: Response) => {
     });
 
     const averageAccuracy = weightedCorrect / recencyWeightSum;
-    const predictedScore = Math.round(400 + averageAccuracy * 1200);
+    // Digital SAT scores are reported in 10-point increments. Keep predictions
+    // on the same scale so students never see impossible values such as 1457.
+    const predictedScore = Math.round((400 + averageAccuracy * 1200) / 10) * 10;
     const confidence = Math.min(95, 40 + attempts.length * 5.5);
 
     res.status(200).json({
