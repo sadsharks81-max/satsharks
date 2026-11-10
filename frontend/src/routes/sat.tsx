@@ -777,9 +777,6 @@ function SATPrepPage() {
                           </p>
                           <div className="pl-10 mb-6">
                             <div className="text-2xl font-extrabold text-primary font-mono">{c.t1l ? `Rs. ${getAdmissionPrice(c, "guided")}` : getAdmissionPrice(c, "guided")}</div>
-                            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
-                              {c.t1l ? `${c.t1l} PKR` : "USD"}
-                            </span>
                           </div>
                           <div className="border-t border-outline-variant/30 pt-4">
                             {c.guided.map((g, idx) => (
@@ -822,9 +819,6 @@ function SATPrepPage() {
                           </p>
                           <div className="pl-10 mb-6">
                             <div className="text-2xl font-extrabold text-accent font-mono">{c.t2l ? `Rs. ${getAdmissionPrice(c, "complete")}` : getAdmissionPrice(c, "complete")}</div>
-                            <span className="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
-                              {c.t2l ? `${c.t2l} PKR` : "USD"}
-                            </span>
                           </div>
                           <div className="border-t border-outline-variant/30 pt-4">
                             {c.complete.map((comp, idx) => (

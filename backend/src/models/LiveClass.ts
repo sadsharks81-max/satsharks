@@ -10,6 +10,13 @@ export interface ILiveClass extends Document {
   maxStudents: number;
   startedAt?: Date | null;
   endedAt?: Date | null;
+  recordingStatus: "NONE" | "STARTING" | "ACTIVE" | "PROCESSING" | "READY" | "FAILED";
+  recordingEgressId?: string | null;
+  recordingDriveFileId?: string | null;
+  recordingDriveUrl?: string | null;
+  recordingError?: string | null;
+  recordingStartedAt?: Date | null;
+  recordingEndedAt?: Date | null;
   teacher: mongoose.Schema.Types.ObjectId;
   createdBy: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
@@ -32,6 +39,17 @@ const LiveClassSchema: Schema = new Schema(
     maxStudents: { type: Number, default: 100, min: 1, max: 500 },
     startedAt: { type: Date, default: null },
     endedAt: { type: Date, default: null },
+    recordingStatus: {
+      type: String,
+      enum: ["NONE", "STARTING", "ACTIVE", "PROCESSING", "READY", "FAILED"],
+      default: "NONE",
+    },
+    recordingEgressId: { type: String, default: null },
+    recordingDriveFileId: { type: String, default: null },
+    recordingDriveUrl: { type: String, default: null },
+    recordingError: { type: String, default: null },
+    recordingStartedAt: { type: Date, default: null },
+    recordingEndedAt: { type: Date, default: null },
     teacher: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },

@@ -15,6 +15,7 @@ import { WhiteboardPlaceholder } from "./WhiteboardPlaceholder";
 import { CHAT_TOPIC_MESSAGE } from "./chatTopics";
 import type { LiveClassDetails } from "./useClassStatusPoll";
 import { Icon } from "../../components/common/Icon";
+import { liveClassApi, type ClassRecording } from "../../services/liveClassApi";
 
 interface ClassroomExperienceProps {
   liveClass: LiveClassDetails;
@@ -44,6 +45,9 @@ export function ClassroomExperience({
   const [unreadChat, setUnreadChat] = useState(0);
   const [whiteboardOpen, setWhiteboardOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [recording, setRecording] = useState<ClassRecording>({ status: "NONE" });
+  const [recordingBusy, setRecordingBusy] = useState(false);
+  const [recordingNotice, setRecordingNotice] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { localParticipant } = useLocalParticipant();
@@ -117,6 +121,34 @@ export function ClassroomExperience({
     connectionState === ConnectionState.SignalReconnecting;
   const mediaControlsDisabled = connectionState !== ConnectionState.Connected;
 
+  const refreshRecording = useCallback(async () => {
+    const result = await liveClassApi.getRecording(classId);
+    if (result.success) setRecording(result.recording);
+  }, [classId]);
+
+  useEffect(() => {
+    void refreshRecording();
+    const interval = window.setInterval(() => void refreshRecording(), 10_000);
+    return () => window.clearInterval(interval);
+  }, [refreshRecording]);
+
+  const handleToggleRecording = useCallback(async () => {
+    if (!canModerate || recordingBusy) return;
+    if (recording.status === "READY" && recording.driveUrl) {
+      window.open(recording.driveUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+    setRecordingBusy(true);
+    setRecordingNotice("");
+    const result =
+      recording.status === "ACTIVE"
+        ? await liveClassApi.stopRecording(classId)
+        : await liveClassApi.startRecording(classId);
+    if (!result.success) setRecordingNotice(result.error || "Unable to update class recording.");
+    await refreshRecording();
+    setRecordingBusy(false);
+  }, [canModerate, classId, recording.driveUrl, recording.status, recordingBusy, refreshRecording]);
+
   if (
     connectionState === ConnectionState.Disconnected ||
     connectionState === ConnectionState.Connecting
@@ -147,6 +179,21 @@ export function ClassroomExperience({
           className="absolute left-1/2 top-3 z-50 -translate-x-1/2 rounded-full border border-accent/30 bg-[#0B1120]/95 px-4 py-2 text-xs font-semibold text-white shadow-xl"
         >
           Connection interrupted. Reconnecting...
+        </div>
+      )}
+      {recordingNotice && (
+        <div
+          role="alert"
+          className="absolute left-1/2 top-16 z-50 flex max-w-[90%] -translate-x-1/2 items-center gap-3 rounded-lg bg-error px-4 py-2 text-xs font-semibold text-white shadow-xl"
+        >
+          <span>{recordingNotice}</span>
+          <button
+            type="button"
+            onClick={() => setRecordingNotice("")}
+            aria-label="Dismiss recording error"
+          >
+            &times;
+          </button>
         </div>
       )}
       <div
@@ -258,6 +305,9 @@ export function ClassroomExperience({
             onLeave={onLeave}
             canModerate={canModerate}
             mediaControlsDisabled={mediaControlsDisabled}
+            recordingStatus={recording.status}
+            recordingBusy={recordingBusy}
+            onToggleRecording={() => void handleToggleRecording()}
           />
         </div>
       </div>
@@ -273,7 +323,12 @@ export function ClassroomExperience({
         </button>
       )}
 
-      <WhiteboardPlaceholder open={whiteboardOpen} onClose={() => setWhiteboardOpen(false)} />
+      <WhiteboardPlaceholder
+        open={whiteboardOpen}
+        onClose={() => setWhiteboardOpen(false)}
+        classId={classId}
+        canModerate={canModerate}
+      />
     </div>
   );
 }

@@ -15,6 +15,18 @@ import {
   postChatMessage,
   deleteChatMessage,
 } from "../controllers/live-class.controller";
+import {
+  addWhiteboardStroke,
+  clearWhiteboard,
+  closePoll,
+  createPoll,
+  getPolls,
+  getRecordingStatus,
+  getWhiteboard,
+  startRecording,
+  stopRecording,
+  voteOnPoll,
+} from "../controllers/classroom-tools.controller";
 
 const router = express.Router();
 
@@ -48,5 +60,21 @@ router.post("/:id/participants/:identity/remove", authenticate, requireAdminOrTe
 router.get("/:id/chat", authenticate, getChatHistory);
 router.post("/:id/chat", authenticate, postChatMessage);
 router.delete("/:id/chat/:messageId", authenticate, requireAdminOrTeacher(), deleteChatMessage);
+
+// Shared whiteboard state, backed by LiveKit data-channel broadcasts on the client.
+router.get("/:id/whiteboard", authenticate, requireActiveUser(), getWhiteboard);
+router.post("/:id/whiteboard/strokes", authenticate, requireActiveUser(), addWhiteboardStroke);
+router.delete("/:id/whiteboard", authenticate, requireAdminOrTeacher(), clearWhiteboard);
+
+// Live polls. Any active participant may vote; only the assigned teacher/admin may create or close.
+router.get("/:id/polls", authenticate, requireActiveUser(), getPolls);
+router.post("/:id/polls", authenticate, requireAdminOrTeacher(), createPoll);
+router.put("/:id/polls/:pollId/vote", authenticate, requireActiveUser(), voteOnPoll);
+router.put("/:id/polls/:pollId/close", authenticate, requireAdminOrTeacher(), closePoll);
+
+// Server-side LiveKit recording and Drive delivery.
+router.get("/:id/recording", authenticate, requireActiveUser(), getRecordingStatus);
+router.post("/:id/recording/start", authenticate, requireAdminOrTeacher(), startRecording);
+router.post("/:id/recording/stop", authenticate, requireAdminOrTeacher(), stopRecording);
 
 export default router;

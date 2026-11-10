@@ -7,8 +7,9 @@ import {
 } from "@livekit/components-react";
 import { ScreenSharePresets, Track } from "livekit-client";
 import { Icon } from "../../components/common/Icon";
+import type { RecordingStatus } from "../../services/liveClassApi";
 
-type PanelKind = "chat" | "participants" | "notes";
+type PanelKind = "chat" | "participants" | "polls" | "notes";
 
 const SCREEN_SHARE_CAPTURE_OPTIONS = {
   audio: false,
@@ -173,6 +174,9 @@ interface BottomToolbarProps {
   onLeave: () => void;
   canModerate: boolean;
   mediaControlsDisabled: boolean;
+  recordingStatus: RecordingStatus;
+  recordingBusy: boolean;
+  onToggleRecording: () => void;
 }
 
 export function BottomToolbar({
@@ -187,6 +191,9 @@ export function BottomToolbar({
   onLeave,
   canModerate,
   mediaControlsDisabled,
+  recordingStatus,
+  recordingBusy,
+  onToggleRecording,
 }: BottomToolbarProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [mediaError, setMediaError] = useState("");
@@ -197,8 +204,8 @@ export function BottomToolbar({
   const anotherParticipantIsSharing = screenShareTracks.some(
     (track) =>
       track.participant.identity !== localParticipant.identity &&
-      Boolean(track.publication.track) &&
-      !track.publication.isMuted,
+      Boolean(track.publication?.track) &&
+      !track.publication?.isMuted,
   );
 
   const mic = useTrackToggle({
@@ -305,6 +312,28 @@ export function BottomToolbar({
           }
         />
       )}
+      {canModerate && (
+        <ToolbarButton
+          icon={recordingStatus === "ACTIVE" ? "stop_circle" : "radio_button_checked"}
+          label={
+            recordingStatus === "ACTIVE"
+              ? "Stop recording"
+              : recordingStatus === "STARTING"
+                ? "Starting recording..."
+                : recordingStatus === "PROCESSING"
+                  ? "Saving recording to Drive..."
+                  : recordingStatus === "READY"
+                    ? "Recording saved to Drive"
+                    : "Start recording"
+          }
+          active={recordingStatus === "ACTIVE" || recordingStatus === "STARTING"}
+          danger={recordingStatus === "ACTIVE"}
+          onClick={onToggleRecording}
+          disabled={
+            recordingBusy || recordingStatus === "STARTING" || recordingStatus === "PROCESSING"
+          }
+        />
+      )}
       <ToolbarButton
         icon="front_hand"
         label={handRaised ? "Lower hand (H)" : "Raise hand (H)"}
@@ -327,6 +356,12 @@ export function BottomToolbar({
         label="Participants"
         active={activePanel === "participants"}
         onClick={() => onTogglePanel("participants")}
+      />
+      <ToolbarButton
+        icon="poll"
+        label="Polls"
+        active={activePanel === "polls"}
+        onClick={() => onTogglePanel("polls")}
       />
       <ToolbarButton icon="draw" label="Whiteboard" onClick={onOpenWhiteboard} />
 

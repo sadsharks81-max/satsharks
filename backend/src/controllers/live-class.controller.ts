@@ -4,6 +4,8 @@ import { AuthRequest } from "../middleware/auth.middleware";
 import LiveClass from "../models/LiveClass";
 import LiveClassChatMessage from "../models/LiveClassChatMessage";
 import LiveClassAttendance from "../models/LiveClassAttendance";
+import LiveClassPoll from "../models/LiveClassPoll";
+import LiveClassWhiteboardStroke from "../models/LiveClassWhiteboardStroke";
 import User from "../models/User";
 import { env } from "../config/env";
 import { sendError } from "../utils/http";
@@ -22,6 +24,11 @@ import {
   countStudentParticipants,
   TrackSource,
 } from "../services/livekit.service";
+import {
+  startClassRecording,
+  stopClassRecording,
+  transferRecordingToDrive,
+} from "../services/class-recording.service";
 
 const MIN_TOKEN_TTL_SECONDS = 30 * 60;
 const MAX_TOKEN_TTL_SECONDS = 8 * 60 * 60;
@@ -148,12 +155,31 @@ export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => 
     }
 
     if (status === "COMPLETED" && liveClass.status !== "COMPLETED") {
+      if (["STARTING", "ACTIVE"].includes(liveClass.recordingStatus)) {
+        await stopClassRecording(liveClass).catch((error) => {
+          console.error("[Recording] Unable to stop recording while ending class", {
+            roomName: liveClass.roomName,
+            message: error instanceof Error ? error.message : "Unknown recording error",
+          });
+        });
+      }
       await deleteRoomIfExists(liveClass.roomName);
       liveClass.endedAt = new Date();
     }
 
     liveClass.status = status;
     await liveClass.save();
+
+    // Record every configured class automatically. A recording-provider failure
+    // is stored on the class but must never prevent students from entering.
+    if (status === "LIVE" && !["STARTING", "ACTIVE", "PROCESSING"].includes(liveClass.recordingStatus)) {
+      await startClassRecording(liveClass).catch((error) => {
+        console.error("[Recording] Automatic recording could not start", {
+          roomName: liveClass.roomName,
+          message: error instanceof Error ? error.message : "Unknown recording error",
+        });
+      });
+    }
 
     res.status(200).json({ success: true, liveClass });
   } catch (error: any) {
@@ -172,6 +198,12 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
     if (liveClass.status === "LIVE") {
       return res.status(409).json({ success: false, error: "End the live class before deleting it." });
     }
+    if (["STARTING", "ACTIVE", "PROCESSING"].includes(liveClass.recordingStatus)) {
+      return res.status(409).json({
+        success: false,
+        error: "Wait for the class recording to finish saving to Drive before deleting this class.",
+      });
+    }
 
     // Only creator/teacher/admin can delete
     if (req.user?.role !== "ADMIN" && String(liveClass.createdBy) !== String(req.user?.userId)) {
@@ -186,6 +218,8 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
       await session.withTransaction(async () => {
         await LiveClassAttendance.deleteMany({ liveClass: liveClass._id }, { session });
         await LiveClassChatMessage.deleteMany({ liveClass: liveClass._id }, { session });
+        await LiveClassPoll.deleteMany({ liveClass: liveClass._id }, { session });
+        await LiveClassWhiteboardStroke.deleteMany({ liveClass: liveClass._id }, { session });
         await LiveClass.deleteOne({ _id: liveClass._id }, { session });
       });
     } finally {
@@ -436,7 +470,7 @@ export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
     const body = req.body.toString("utf8");
     const event = await verifyWebhookEvent(body, authHeader);
 
-    const roomName = event.room?.name;
+    const roomName = event.room?.name || event.egressInfo?.roomName;
     if (!roomName) return res.status(200).json({ received: true });
 
     if (event.event === "room_started") {
@@ -471,6 +505,43 @@ export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
           { leftAt: new Date() },
           { sort: { joinedAt: -1 } }
         );
+      }
+    }
+
+    if (event.event === "egress_started" && event.egressInfo) {
+      await LiveClass.updateOne(
+        { roomName },
+        {
+          recordingStatus: "ACTIVE",
+          recordingEgressId: event.egressInfo.egressId,
+          recordingStartedAt: new Date(),
+          recordingError: null,
+        },
+      );
+    }
+
+    if (event.event === "egress_ended" && event.egressInfo) {
+      const file = event.egressInfo.fileResults[0];
+      if (event.egressInfo.error || !file) {
+        await LiveClass.updateOne(
+          { roomName },
+          {
+            recordingStatus: "FAILED",
+            recordingError: (event.egressInfo.error || "Recording finished without an output file").slice(0, 500),
+            recordingEndedAt: new Date(),
+          },
+        );
+      } else {
+        await LiveClass.updateOne(
+          { roomName },
+          { recordingStatus: "PROCESSING", recordingEndedAt: new Date() },
+        );
+        // The file can be large, so acknowledge LiveKit's signed webhook first
+        // and let the long-running Railway process stream it to Drive.
+        void transferRecordingToDrive(roomName, {
+          filename: file.filename,
+          location: file.location,
+        });
       }
     }
 

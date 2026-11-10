@@ -3,12 +3,14 @@ import { Icon } from "../../components/common/Icon";
 import { ChatPanel } from "./ChatPanel";
 import { ParticipantsPanel } from "./ParticipantsPanel";
 import { NotesPanel } from "./NotesPanel";
+import { PollsPanel } from "./PollsPanel";
 
-export type PanelKind = "chat" | "participants" | "notes";
+export type PanelKind = "chat" | "participants" | "polls" | "notes";
 
 const TABS: { key: PanelKind; label: string; icon: string }[] = [
   { key: "chat", label: "Chat", icon: "chat" },
   { key: "participants", label: "Participants", icon: "group" },
+  { key: "polls", label: "Polls", icon: "poll" },
   { key: "notes", label: "Notes", icon: "edit_note" },
 ];
 
@@ -22,7 +24,15 @@ interface SidePanelProps {
   canModerate: boolean;
 }
 
-export function SidePanel({ activePanel, onChangeTab, onClose, classId, currentUserId, teacherIdentity, canModerate }: SidePanelProps) {
+export function SidePanel({
+  activePanel,
+  onChangeTab,
+  onClose,
+  classId,
+  currentUserId,
+  teacherIdentity,
+  canModerate,
+}: SidePanelProps) {
   return (
     <motion.div
       initial={{ x: 24, opacity: 0 }}
@@ -56,10 +66,17 @@ export function SidePanel({ activePanel, onChangeTab, onClose, classId, currentU
       </div>
 
       <div className="min-h-0 flex-1">
-        {activePanel === "chat" && <ChatPanel classId={classId} currentUserId={currentUserId} canModerate={canModerate} />}
-        {activePanel === "participants" && (
-          <ParticipantsPanel classId={classId} teacherIdentity={teacherIdentity} canModerate={canModerate} />
+        {activePanel === "chat" && (
+          <ChatPanel classId={classId} currentUserId={currentUserId} canModerate={canModerate} />
         )}
+        {activePanel === "participants" && (
+          <ParticipantsPanel
+            classId={classId}
+            teacherIdentity={teacherIdentity}
+            canModerate={canModerate}
+          />
+        )}
+        {activePanel === "polls" && <PollsPanel classId={classId} canModerate={canModerate} />}
         {activePanel === "notes" && <NotesPanel classId={classId} />}
       </div>
     </motion.div>

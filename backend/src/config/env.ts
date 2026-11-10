@@ -31,6 +31,14 @@ const livekitUrl = (process.env.LIVEKIT_URL || "").trim().replace(/\/$/, "");
 const livekitApiKey = (process.env.LIVEKIT_API_KEY || "").trim();
 const livekitApiSecret = (process.env.LIVEKIT_API_SECRET || "").trim();
 const livekitValuesPresent = [livekitUrl, livekitApiKey, livekitApiSecret].filter(Boolean).length;
+const googleServiceAccountEmail = (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || "").trim();
+const googleServiceAccountPrivateKey = (process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || "")
+  .replace(/\\n/g, "\n")
+  .trim();
+const recordingGcpBucket = (process.env.RECORDING_GCP_BUCKET || "").trim();
+const recordingDriveFolderId = (process.env.RECORDING_DRIVE_FOLDER_ID || "")
+  .trim()
+  .match(/[-\w]{20,}/)?.[0] || "";
 
 if (isProduction && jwtSecret === jwtRefreshSecret) {
   throw new Error("JWT_SECRET and JWT_REFRESH_SECRET must be different values");
@@ -103,4 +111,15 @@ export const env = {
   livekitApiKey,
   livekitApiSecret,
   isLiveKitConfigured: livekitValuesPresent === 3,
+  googleServiceAccountEmail,
+  googleServiceAccountPrivateKey,
+  recordingGcpBucket,
+  recordingDriveFolderId,
+  isClassRecordingConfigured: Boolean(
+    livekitValuesPresent === 3 &&
+      googleServiceAccountEmail &&
+      googleServiceAccountPrivateKey &&
+      recordingGcpBucket &&
+      recordingDriveFolderId,
+  ),
 };
