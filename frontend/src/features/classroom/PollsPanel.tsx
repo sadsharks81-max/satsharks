@@ -82,6 +82,20 @@ export function PollsPanel({ classId, canModerate }: PollsPanelProps) {
     setBusy(false);
   };
 
+  const revealResults = async (poll: ClassroomPoll) => {
+    if (busy || poll.resultsVisible) return;
+    setBusy(true);
+    setError("");
+    const result = await liveClassApi.revealPollResults(classId, poll._id);
+    if (result.success) {
+      await refresh();
+      await publishRefresh();
+    } else {
+      setError(result.error || "Unable to show the results to students.");
+    }
+    setBusy(false);
+  };
+
   const activePoll = polls.find((poll) => poll.status === "ACTIVE");
   const previousPolls = polls.filter((poll) => poll.status === "CLOSED");
 
@@ -176,6 +190,7 @@ export function PollsPanel({ classId, canModerate }: PollsPanelProps) {
             canModerate={canModerate}
             onVote={vote}
             onClose={closePoll}
+            onReveal={revealResults}
           />
         ) : (
           <div className="rounded-xl border border-dashed border-white/10 py-8 text-center text-xs text-white/40">
@@ -195,9 +210,10 @@ export function PollsPanel({ classId, canModerate }: PollsPanelProps) {
                   key={poll._id}
                   poll={poll}
                   busy={busy}
-                  canModerate={false}
+                  canModerate={canModerate}
                   onVote={vote}
                   onClose={closePoll}
+                  onReveal={revealResults}
                   compact
                 />
               ))}
@@ -215,6 +231,7 @@ function PollCard({
   canModerate,
   onVote,
   onClose,
+  onReveal,
   compact = false,
 }: {
   poll: ClassroomPoll;
@@ -222,9 +239,11 @@ function PollCard({
   canModerate: boolean;
   onVote: (poll: ClassroomPoll, optionId: string) => void;
   onClose: (poll: ClassroomPoll) => void;
+  onReveal: (poll: ClassroomPoll) => void;
   compact?: boolean;
 }) {
-  const total = Math.max(1, poll.responseCount);
+  const showResults = canModerate || poll.resultsVisible;
+  const total = Math.max(1, poll.responseCount || 0);
   return (
     <div className="rounded-xl border border-white/10 bg-white/5 p-3">
       <div className="mb-3 flex items-start justify-between gap-2">
@@ -237,7 +256,7 @@ function PollCard({
       </div>
       <div className="space-y-2">
         {poll.options.map((option) => {
-          const count = poll.counts[option.id] || 0;
+          const count = poll.counts?.[option.id] || 0;
           const percent = Math.round((count / total) * 100);
           const selected = poll.selectedOptionId === option.id;
           return (
@@ -248,26 +267,52 @@ function PollCard({
               disabled={busy || poll.status !== "ACTIVE"}
               className={`relative w-full overflow-hidden rounded-lg border p-2.5 text-left transition-colors ${selected ? "border-primary bg-primary/15" : "border-white/10 bg-black/10 hover:border-white/25"} disabled:cursor-default`}
             >
-              <span
-                className="absolute inset-y-0 left-0 bg-primary/15 transition-all"
-                style={{ width: `${percent}%` }}
-              />
+              {showResults && (
+                <span
+                  className="absolute inset-y-0 left-0 bg-primary/15 transition-all"
+                  style={{ width: `${percent}%` }}
+                />
+              )}
               <span className="relative flex items-center gap-2 text-xs text-white">
                 <strong className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10">
                   {option.id}
                 </strong>
                 <span className="min-w-0 flex-1">{option.text}</span>
-                <span className="font-mono text-[10px] text-white/50">
-                  {count} · {percent}%
-                </span>
+                {showResults && (
+                  <span className="font-mono text-[10px] text-white/50">
+                    {count} &middot; {percent}%
+                  </span>
+                )}
               </span>
             </button>
           );
         })}
       </div>
-      {!compact && (
+      {!compact && showResults && (
         <p className="mt-2 text-[10px] text-white/40">
-          {poll.responseCount} response{poll.responseCount === 1 ? "" : "s"}
+          {poll.responseCount || 0} response{poll.responseCount === 1 ? "" : "s"}
+        </p>
+      )}
+      {!showResults && (
+        <div className="mt-2 flex items-center gap-1.5 rounded-lg bg-white/5 px-2.5 py-2 text-[10px] text-white/50">
+          <Icon name="visibility_off" className="text-[14px]" />
+          Results are hidden until the teacher shares them.
+        </div>
+      )}
+      {canModerate && !poll.resultsVisible && (
+        <button
+          type="button"
+          onClick={() => void onReveal(poll)}
+          disabled={busy}
+          className="mt-3 w-full rounded-lg bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-primary/90 disabled:opacity-50"
+        >
+          <Icon name="visibility" className="mr-1 align-middle text-[15px]" />
+          Show results to students
+        </button>
+      )}
+      {canModerate && poll.resultsVisible && (
+        <p className="mt-2 flex items-center gap-1.5 text-[10px] font-semibold text-success">
+          <Icon name="visibility" className="text-[14px]" /> Results are visible to students
         </p>
       )}
       {canModerate && poll.status === "ACTIVE" && (

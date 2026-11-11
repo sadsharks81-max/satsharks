@@ -41,4 +41,10 @@ https://YOUR-BACKEND/api/live-classes/webhook
 
 The same endpoint already handles attendance. Recording delivery uses `egress_started` and `egress_ended` events. A recording moves through `STARTING`, `ACTIVE`, `PROCESSING`, and `READY`; transfer errors are stored as `FAILED` and can be retried by starting another recording while the class is live.
 
+## Recorded Lectures library
+
+When a recording reaches `READY`, it appears automatically in the **Recorded Lectures** tab for students and admins. Teachers see recordings for the classes assigned to them. The browser requests a short-lived playback session and streams the MP4 through the SATSharks backend with byte-range support, so viewers stay inside the SATSharks player and never receive a Google Drive page link.
+
+Until at least one recording reaches `READY`, each dashboard shows the empty state **No recorded lectures yet**.
+
 References: [LiveKit egress outputs](https://docs.livekit.io/transport/media/ingress-egress/egress/outputs/), [LiveKit room composite recording](https://docs.livekit.io/transport/media/ingress-egress/egress/room-composite/), and [Google Shared Drives](https://developers.google.com/workspace/drive/api/guides/about-shareddrives).

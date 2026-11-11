@@ -7,6 +7,7 @@ import { Icon } from "../common/Icon";
 const navItems = [
   { to: "/teacher", label: "Dashboard", icon: "dashboard" },
   { to: "/teacher/classes", label: "Live Classes", icon: "video_camera_front" },
+  { to: "/teacher/recorded-lectures", label: "Recorded Lectures", icon: "video_library" },
   { to: "/teacher/practice", label: "Practice Questions", icon: "fitness_center" },
   { to: "/teacher/sat-tests", label: "Digital SAT Practice Tests", icon: "school" },
   { to: "/teacher/student-progress", label: "Student Progress", icon: "monitoring" },

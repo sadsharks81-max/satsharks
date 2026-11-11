@@ -129,6 +129,18 @@ const googleAuth = () =>
     ],
   });
 
+export const getDriveRecordingStream = async (fileId: string, range?: string) => {
+  if (!env.isClassRecordingConfigured) throw new ClassRecordingNotConfiguredError();
+  const drive = google.drive({ version: "v3", auth: googleAuth() });
+  return drive.files.get(
+    { fileId, alt: "media", supportsAllDrives: true },
+    {
+      responseType: "stream",
+      ...(range ? { headers: { Range: range } } : {}),
+    },
+  );
+};
+
 const gcsObjectName = (filename: string, location: string) => {
   if (location.startsWith("gs://")) {
     const withoutScheme = location.slice(5);

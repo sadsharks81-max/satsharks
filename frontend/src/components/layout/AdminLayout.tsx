@@ -30,6 +30,7 @@ const navItems = [
   { to: "/admin/study-materials", label: "Study Materials", icon: "menu_book" },
   { to: "/admin/reports", label: "Reported Issues", icon: "report_problem" },
   { to: "/admin/classes", label: "Live Classes", icon: "video_camera_front" },
+  { to: "/admin/recorded-lectures", label: "Recorded Lectures", icon: "video_library" },
   { to: "/admin/settings", label: "Site Settings", icon: "settings" },
 ] as const satisfies readonly AdminNavItem[];
 

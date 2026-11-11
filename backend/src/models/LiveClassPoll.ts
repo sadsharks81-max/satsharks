@@ -6,6 +6,9 @@ export interface ILiveClassPoll extends Document {
   options: { id: string; text: string }[];
   responses: { user: mongoose.Types.ObjectId; optionId: string; answeredAt: Date }[];
   status: "ACTIVE" | "CLOSED";
+  resultsVisible: boolean;
+  revealedAt?: Date | null;
+  revealedBy?: mongoose.Types.ObjectId | null;
   createdBy: mongoose.Types.ObjectId;
   closedAt?: Date | null;
   createdAt: Date;
@@ -45,6 +48,9 @@ const LiveClassPollSchema = new Schema(
       default: [],
     },
     status: { type: String, enum: ["ACTIVE", "CLOSED"], default: "ACTIVE", index: true },
+    resultsVisible: { type: Boolean, default: false },
+    revealedAt: { type: Date, default: null },
+    revealedBy: { type: Schema.Types.ObjectId, ref: "User", default: null },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
     closedAt: { type: Date, default: null },
   },

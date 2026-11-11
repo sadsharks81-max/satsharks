@@ -26,6 +26,7 @@ import { Route as AdminEssaysRouteImport } from './routes/admin/essays'
 import { Route as AdminPaymentHistoryRouteImport } from './routes/admin/payment-history'
 import { Route as AdminPaymentsRouteImport } from './routes/admin/payments'
 import { Route as AdminQuestionsRouteImport } from './routes/admin/questions'
+import { Route as AdminRecordedLecturesRouteImport } from './routes/admin/recorded-lectures'
 import { Route as AdminReportsRouteImport } from './routes/admin/reports'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminStudentProgressRouteImport } from './routes/admin/student-progress'
@@ -48,6 +49,7 @@ import { Route as DashboardHistoryRouteImport } from './routes/dashboard/history
 import { Route as DashboardLeaderboardRouteImport } from './routes/dashboard/leaderboard'
 import { Route as DashboardLiveClassesRouteImport } from './routes/dashboard/live-classes'
 import { Route as DashboardPracticeRouteImport } from './routes/dashboard/practice'
+import { Route as DashboardRecordedLecturesRouteImport } from './routes/dashboard/recorded-lectures'
 import { Route as DashboardSatTestsRouteImport } from './routes/dashboard/sat-tests'
 import { Route as DashboardStudyMaterialsRouteImport } from './routes/dashboard/study-materials'
 import { Route as DashboardVocabularyRouteImport } from './routes/dashboard/vocabulary'
@@ -56,6 +58,7 @@ import { Route as PaymentSuccessRouteImport } from './routes/payment.success'
 import { Route as TeacherIndexRouteImport } from './routes/teacher/index'
 import { Route as TeacherClassesRouteImport } from './routes/teacher/classes'
 import { Route as TeacherPracticeRouteImport } from './routes/teacher/practice'
+import { Route as TeacherRecordedLecturesRouteImport } from './routes/teacher/recorded-lectures'
 import { Route as TeacherSatTestsRouteImport } from './routes/teacher/sat-tests'
 import { Route as TeacherStudentProgressRouteImport } from './routes/teacher/student-progress'
 import { Route as TeacherStudyMaterialsRouteImport } from './routes/teacher/study-materials'
@@ -149,6 +152,11 @@ const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
 const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
   id: '/admin/questions',
   path: '/admin/questions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRecordedLecturesRoute = AdminRecordedLecturesRouteImport.update({
+  id: '/admin/recorded-lectures',
+  path: '/admin/recorded-lectures',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminReportsRoute = AdminReportsRouteImport.update({
@@ -261,6 +269,12 @@ const DashboardPracticeRoute = DashboardPracticeRouteImport.update({
   path: '/practice',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardRecordedLecturesRoute =
+  DashboardRecordedLecturesRouteImport.update({
+    id: '/recorded-lectures',
+    path: '/recorded-lectures',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardSatTestsRoute = DashboardSatTestsRouteImport.update({
   id: '/sat-tests',
   path: '/sat-tests',
@@ -299,6 +313,11 @@ const TeacherClassesRoute = TeacherClassesRouteImport.update({
 const TeacherPracticeRoute = TeacherPracticeRouteImport.update({
   id: '/teacher/practice',
   path: '/teacher/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeacherRecordedLecturesRoute = TeacherRecordedLecturesRouteImport.update({
+  id: '/teacher/recorded-lectures',
+  path: '/teacher/recorded-lectures',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeacherSatTestsRoute = TeacherSatTestsRouteImport.update({
@@ -368,6 +387,7 @@ export interface FileRoutesByFullPath {
   '/admin/payment-history': typeof AdminPaymentHistoryRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/recorded-lectures': typeof AdminRecordedLecturesRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/student-progress': typeof AdminStudentProgressRoute
@@ -389,6 +409,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/leaderboard': typeof DashboardLeaderboardRoute
   '/dashboard/live-classes': typeof DashboardLiveClassesRoute
   '/dashboard/practice': typeof DashboardPracticeRoute
+  '/dashboard/recorded-lectures': typeof DashboardRecordedLecturesRoute
   '/dashboard/sat-tests': typeof DashboardSatTestsRoute
   '/dashboard/study-materials': typeof DashboardStudyMaterialsRoute
   '/dashboard/vocabulary': typeof DashboardVocabularyRoute
@@ -396,6 +417,7 @@ export interface FileRoutesByFullPath {
   '/payment/success': typeof PaymentSuccessRoute
   '/teacher/classes': typeof TeacherClassesRoute
   '/teacher/practice': typeof TeacherPracticeRoute
+  '/teacher/recorded-lectures': typeof TeacherRecordedLecturesRoute
   '/teacher/sat-tests': typeof TeacherSatTestsRoute
   '/teacher/student-progress': typeof TeacherStudentProgressRoute
   '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
@@ -425,6 +447,7 @@ export interface FileRoutesByTo {
   '/admin/payment-history': typeof AdminPaymentHistoryRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/recorded-lectures': typeof AdminRecordedLecturesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/student-progress': typeof AdminStudentProgressRoute
   '/admin/study-materials': typeof AdminStudyMaterialsRoute
@@ -445,6 +468,7 @@ export interface FileRoutesByTo {
   '/dashboard/leaderboard': typeof DashboardLeaderboardRoute
   '/dashboard/live-classes': typeof DashboardLiveClassesRoute
   '/dashboard/practice': typeof DashboardPracticeRoute
+  '/dashboard/recorded-lectures': typeof DashboardRecordedLecturesRoute
   '/dashboard/sat-tests': typeof DashboardSatTestsRoute
   '/dashboard/study-materials': typeof DashboardStudyMaterialsRoute
   '/dashboard/vocabulary': typeof DashboardVocabularyRoute
@@ -452,6 +476,7 @@ export interface FileRoutesByTo {
   '/payment/success': typeof PaymentSuccessRoute
   '/teacher/classes': typeof TeacherClassesRoute
   '/teacher/practice': typeof TeacherPracticeRoute
+  '/teacher/recorded-lectures': typeof TeacherRecordedLecturesRoute
   '/teacher/sat-tests': typeof TeacherSatTestsRoute
   '/teacher/student-progress': typeof TeacherStudentProgressRoute
   '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
@@ -483,6 +508,7 @@ export interface FileRoutesById {
   '/admin/payment-history': typeof AdminPaymentHistoryRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/recorded-lectures': typeof AdminRecordedLecturesRoute
   '/admin/reports': typeof AdminReportsRouteWithChildren
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/student-progress': typeof AdminStudentProgressRoute
@@ -504,6 +530,7 @@ export interface FileRoutesById {
   '/dashboard/leaderboard': typeof DashboardLeaderboardRoute
   '/dashboard/live-classes': typeof DashboardLiveClassesRoute
   '/dashboard/practice': typeof DashboardPracticeRoute
+  '/dashboard/recorded-lectures': typeof DashboardRecordedLecturesRoute
   '/dashboard/sat-tests': typeof DashboardSatTestsRoute
   '/dashboard/study-materials': typeof DashboardStudyMaterialsRoute
   '/dashboard/vocabulary': typeof DashboardVocabularyRoute
@@ -511,6 +538,7 @@ export interface FileRoutesById {
   '/payment/success': typeof PaymentSuccessRoute
   '/teacher/classes': typeof TeacherClassesRoute
   '/teacher/practice': typeof TeacherPracticeRoute
+  '/teacher/recorded-lectures': typeof TeacherRecordedLecturesRoute
   '/teacher/sat-tests': typeof TeacherSatTestsRoute
   '/teacher/student-progress': typeof TeacherStudentProgressRoute
   '/teacher/study-materials': typeof TeacherStudyMaterialsRoute
@@ -543,6 +571,7 @@ export interface FileRouteTypes {
     | '/admin/payment-history'
     | '/admin/payments'
     | '/admin/questions'
+    | '/admin/recorded-lectures'
     | '/admin/reports'
     | '/admin/settings'
     | '/admin/student-progress'
@@ -564,6 +593,7 @@ export interface FileRouteTypes {
     | '/dashboard/leaderboard'
     | '/dashboard/live-classes'
     | '/dashboard/practice'
+    | '/dashboard/recorded-lectures'
     | '/dashboard/sat-tests'
     | '/dashboard/study-materials'
     | '/dashboard/vocabulary'
@@ -571,6 +601,7 @@ export interface FileRouteTypes {
     | '/payment/success'
     | '/teacher/classes'
     | '/teacher/practice'
+    | '/teacher/recorded-lectures'
     | '/teacher/sat-tests'
     | '/teacher/student-progress'
     | '/teacher/study-materials'
@@ -600,6 +631,7 @@ export interface FileRouteTypes {
     | '/admin/payment-history'
     | '/admin/payments'
     | '/admin/questions'
+    | '/admin/recorded-lectures'
     | '/admin/settings'
     | '/admin/student-progress'
     | '/admin/study-materials'
@@ -620,6 +652,7 @@ export interface FileRouteTypes {
     | '/dashboard/leaderboard'
     | '/dashboard/live-classes'
     | '/dashboard/practice'
+    | '/dashboard/recorded-lectures'
     | '/dashboard/sat-tests'
     | '/dashboard/study-materials'
     | '/dashboard/vocabulary'
@@ -627,6 +660,7 @@ export interface FileRouteTypes {
     | '/payment/success'
     | '/teacher/classes'
     | '/teacher/practice'
+    | '/teacher/recorded-lectures'
     | '/teacher/sat-tests'
     | '/teacher/student-progress'
     | '/teacher/study-materials'
@@ -657,6 +691,7 @@ export interface FileRouteTypes {
     | '/admin/payment-history'
     | '/admin/payments'
     | '/admin/questions'
+    | '/admin/recorded-lectures'
     | '/admin/reports'
     | '/admin/settings'
     | '/admin/student-progress'
@@ -678,6 +713,7 @@ export interface FileRouteTypes {
     | '/dashboard/leaderboard'
     | '/dashboard/live-classes'
     | '/dashboard/practice'
+    | '/dashboard/recorded-lectures'
     | '/dashboard/sat-tests'
     | '/dashboard/study-materials'
     | '/dashboard/vocabulary'
@@ -685,6 +721,7 @@ export interface FileRouteTypes {
     | '/payment/success'
     | '/teacher/classes'
     | '/teacher/practice'
+    | '/teacher/recorded-lectures'
     | '/teacher/sat-tests'
     | '/teacher/student-progress'
     | '/teacher/study-materials'
@@ -716,6 +753,7 @@ export interface RootRouteChildren {
   AdminPaymentHistoryRoute: typeof AdminPaymentHistoryRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminQuestionsRoute: typeof AdminQuestionsRoute
+  AdminRecordedLecturesRoute: typeof AdminRecordedLecturesRoute
   AdminReportsRoute: typeof AdminReportsRouteWithChildren
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminStudentProgressRoute: typeof AdminStudentProgressRoute
@@ -735,6 +773,7 @@ export interface RootRouteChildren {
   PaymentSuccessRoute: typeof PaymentSuccessRoute
   TeacherClassesRoute: typeof TeacherClassesRoute
   TeacherPracticeRoute: typeof TeacherPracticeRoute
+  TeacherRecordedLecturesRoute: typeof TeacherRecordedLecturesRoute
   TeacherSatTestsRoute: typeof TeacherSatTestsRoute
   TeacherStudentProgressRoute: typeof TeacherStudentProgressRoute
   TeacherStudyMaterialsRoute: typeof TeacherStudyMaterialsRoute
@@ -863,6 +902,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/questions'
       fullPath: '/admin/questions'
       preLoaderRoute: typeof AdminQuestionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/recorded-lectures': {
+      id: '/admin/recorded-lectures'
+      path: '/admin/recorded-lectures'
+      fullPath: '/admin/recorded-lectures'
+      preLoaderRoute: typeof AdminRecordedLecturesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/reports': {
@@ -1019,6 +1065,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPracticeRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/recorded-lectures': {
+      id: '/dashboard/recorded-lectures'
+      path: '/recorded-lectures'
+      fullPath: '/dashboard/recorded-lectures'
+      preLoaderRoute: typeof DashboardRecordedLecturesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/sat-tests': {
       id: '/dashboard/sat-tests'
       path: '/sat-tests'
@@ -1073,6 +1126,13 @@ declare module '@tanstack/react-router' {
       path: '/teacher/practice'
       fullPath: '/teacher/practice'
       preLoaderRoute: typeof TeacherPracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teacher/recorded-lectures': {
+      id: '/teacher/recorded-lectures'
+      path: '/teacher/recorded-lectures'
+      fullPath: '/teacher/recorded-lectures'
+      preLoaderRoute: typeof TeacherRecordedLecturesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/teacher/sat-tests': {
@@ -1148,6 +1208,7 @@ interface DashboardRouteChildren {
   DashboardLeaderboardRoute: typeof DashboardLeaderboardRoute
   DashboardLiveClassesRoute: typeof DashboardLiveClassesRoute
   DashboardPracticeRoute: typeof DashboardPracticeRoute
+  DashboardRecordedLecturesRoute: typeof DashboardRecordedLecturesRoute
   DashboardSatTestsRoute: typeof DashboardSatTestsRoute
   DashboardStudyMaterialsRoute: typeof DashboardStudyMaterialsRoute
   DashboardVocabularyRoute: typeof DashboardVocabularyRoute
@@ -1163,6 +1224,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardLeaderboardRoute: DashboardLeaderboardRoute,
   DashboardLiveClassesRoute: DashboardLiveClassesRoute,
   DashboardPracticeRoute: DashboardPracticeRoute,
+  DashboardRecordedLecturesRoute: DashboardRecordedLecturesRoute,
   DashboardSatTestsRoute: DashboardSatTestsRoute,
   DashboardStudyMaterialsRoute: DashboardStudyMaterialsRoute,
   DashboardVocabularyRoute: DashboardVocabularyRoute,
@@ -1206,6 +1268,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminPaymentHistoryRoute: AdminPaymentHistoryRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminQuestionsRoute: AdminQuestionsRoute,
+  AdminRecordedLecturesRoute: AdminRecordedLecturesRoute,
   AdminReportsRoute: AdminReportsRouteWithChildren,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminStudentProgressRoute: AdminStudentProgressRoute,
@@ -1225,6 +1288,7 @@ const rootRouteChildren: RootRouteChildren = {
   PaymentSuccessRoute: PaymentSuccessRoute,
   TeacherClassesRoute: TeacherClassesRoute,
   TeacherPracticeRoute: TeacherPracticeRoute,
+  TeacherRecordedLecturesRoute: TeacherRecordedLecturesRoute,
   TeacherSatTestsRoute: TeacherSatTestsRoute,
   TeacherStudentProgressRoute: TeacherStudentProgressRoute,
   TeacherStudyMaterialsRoute: TeacherStudyMaterialsRoute,

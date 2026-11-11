@@ -1,5 +1,6 @@
 import { Response } from "express";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import { AuthRequest } from "../middleware/auth.middleware";
 import LiveClass from "../models/LiveClass";
 import LiveClassChatMessage from "../models/LiveClassChatMessage";
@@ -25,6 +26,8 @@ import {
   TrackSource,
 } from "../services/livekit.service";
 import {
+  ClassRecordingNotConfiguredError,
+  getDriveRecordingStream,
   startClassRecording,
   stopClassRecording,
   transferRecordingToDrive,
@@ -106,6 +109,120 @@ export const getLiveClasses = async (req: AuthRequest, res: Response) => {
     res.status(200).json({ success: true, classes });
   } catch (error) {
     sendError(res, error, "live-class.getLiveClasses");
+  }
+};
+
+const recordingAccessQuery = (req: AuthRequest): Record<string, unknown> => {
+  const query: Record<string, unknown> = {
+    recordingStatus: "READY",
+    recordingDriveFileId: { $nin: [null, ""] },
+  };
+  if (req.user?.role === "TEACHER") query.teacher = req.user.userId;
+  return query;
+};
+
+export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
+  try {
+    const recordings = await LiveClass.find(recordingAccessQuery(req))
+      .select("title description scheduledAt duration recordingEndedAt teacher")
+      .populate("teacher", "name")
+      .sort({ recordingEndedAt: -1, scheduledAt: -1 })
+      .lean();
+    res.json({
+      success: true,
+      recordings: recordings.map((recording: any) => ({
+        _id: String(recording._id),
+        title: recording.title,
+        description: recording.description || "",
+        scheduledAt: recording.scheduledAt,
+        duration: recording.duration,
+        recordedAt: recording.recordingEndedAt || recording.scheduledAt,
+        teacherName: recording.teacher?.name || "SATSharks instructor",
+      })),
+    });
+  } catch (error) {
+    sendError(res, error, "live-class.getRecordedLectures");
+  }
+};
+
+export const createRecordingPlaybackSession = async (req: AuthRequest, res: Response) => {
+  try {
+    const recording = await LiveClass.findOne({
+      _id: req.params.recordingId,
+      ...recordingAccessQuery(req),
+    }).select("_id");
+    if (!recording) {
+      return res.status(404).json({ success: false, error: "Recorded lecture not found" });
+    }
+    const token = jwt.sign(
+      {
+        typ: "recording-playback",
+        recordingId: String(recording._id),
+        userId: req.user?.userId,
+      },
+      env.jwtSecret,
+      { expiresIn: "30m" },
+    );
+    res.json({
+      success: true,
+      playbackUrl: `/api/live-classes/recordings/${recording._id}/stream?token=${encodeURIComponent(token)}`,
+    });
+  } catch (error) {
+    sendError(res, error, "live-class.createRecordingPlaybackSession");
+  }
+};
+
+export const streamRecordedLecture = async (req: AuthRequest, res: Response) => {
+  try {
+    const rawToken = typeof req.query.token === "string" ? req.query.token : "";
+    let payload: { typ?: string; recordingId?: string };
+    try {
+      payload = jwt.verify(rawToken, env.jwtSecret) as typeof payload;
+    } catch {
+      return res.status(401).json({ success: false, error: "Playback link expired" });
+    }
+    if (payload.typ !== "recording-playback" || payload.recordingId !== req.params.recordingId) {
+      return res.status(401).json({ success: false, error: "Invalid playback link" });
+    }
+    const recording = await LiveClass.findOne({
+      _id: req.params.recordingId,
+      recordingStatus: "READY",
+      recordingDriveFileId: { $nin: [null, ""] },
+    }).select("recordingDriveFileId");
+    if (!recording?.recordingDriveFileId) {
+      return res.status(404).json({ success: false, error: "Recorded lecture not found" });
+    }
+
+    const driveResponse = await getDriveRecordingStream(
+      recording.recordingDriveFileId,
+      req.headers.range,
+    );
+    const sourceHeaders = driveResponse.headers as unknown as Record<string, unknown> & {
+      get?: (name: string) => string | null;
+    };
+    const copyHeader = (name: string, fallback?: string) => {
+      const value =
+        typeof sourceHeaders.get === "function" ? sourceHeaders.get(name) : sourceHeaders[name];
+      if (value !== undefined) res.setHeader(name, String(value));
+      else if (fallback) res.setHeader(name, fallback);
+    };
+    copyHeader("content-type", "video/mp4");
+    copyHeader("content-length");
+    copyHeader("content-range");
+    res.setHeader("accept-ranges", "bytes");
+    res.setHeader("cache-control", "private, no-store");
+    res.status(driveResponse.status === 206 ? 206 : 200);
+    (driveResponse.data as NodeJS.ReadableStream).on("error", (error) => {
+      console.error("[Recording] Playback stream failed", { recordingId: req.params.recordingId, error });
+      if (!res.headersSent) res.status(502).end();
+      else res.destroy(error as Error);
+    });
+    (driveResponse.data as NodeJS.ReadableStream).pipe(res);
+  } catch (error) {
+    if (error instanceof ClassRecordingNotConfiguredError) {
+      return res.status(503).json({ success: false, error: error.message });
+    }
+    sendError(res, error, "live-class.streamRecordedLecture");
   }
 };
 

@@ -119,19 +119,25 @@ export const clearWhiteboard = async (req: AuthRequest, res: Response) => {
   }
 };
 
-const presentPoll = (poll: any, userId?: string) => {
+const presentPoll = (poll: any, userId?: string, moderator = false) => {
   const responses = Array.isArray(poll.responses) ? poll.responses : [];
-  const counts = Object.fromEntries(poll.options.map((option: any) => [option.id, 0]));
-  for (const response of responses) {
-    if (response.optionId in counts) counts[response.optionId] += 1;
+  const resultsVisible = Boolean(poll.resultsVisible);
+  const canViewResults = moderator || resultsVisible;
+  let counts: Record<string, number> | null = null;
+  if (canViewResults) {
+    counts = Object.fromEntries(poll.options.map((option: any) => [option.id, 0]));
+    for (const response of responses) {
+      if (response.optionId in counts) counts[response.optionId] += 1;
+    }
   }
   return {
     _id: String(poll._id),
     question: poll.question,
     options: poll.options,
     status: poll.status,
+    resultsVisible,
     counts,
-    responseCount: responses.length,
+    responseCount: canViewResults ? responses.length : null,
     selectedOptionId:
       responses.find((response: any) => String(response.user) === String(userId))?.optionId || null,
     createdAt: poll.createdAt,
@@ -144,7 +150,8 @@ export const getPolls = async (req: AuthRequest, res: Response) => {
     const liveClass = await loadClass(req, res);
     if (!liveClass) return;
     const polls = await LiveClassPoll.find({ liveClass: liveClass._id }).sort({ createdAt: -1 }).limit(20).lean();
-    res.json({ success: true, polls: polls.map((poll) => presentPoll(poll, req.user?.userId)) });
+    const moderator = canModerate(req, liveClass);
+    res.json({ success: true, polls: polls.map((poll) => presentPoll(poll, req.user?.userId, moderator)) });
   } catch (error) {
     sendError(res, error, "classroom-tools.getPolls");
   }
@@ -182,7 +189,7 @@ export const createPoll = async (req: AuthRequest, res: Response) => {
       })),
       createdBy: req.user?.userId,
     });
-    res.status(201).json({ success: true, poll: presentPoll(poll.toObject(), req.user?.userId) });
+    res.status(201).json({ success: true, poll: presentPoll(poll.toObject(), req.user?.userId, true) });
   } catch (error) {
     sendError(res, error, "classroom-tools.createPoll");
   }
@@ -231,7 +238,10 @@ export const voteOnPoll = async (req: AuthRequest, res: Response) => {
     if (!updatedPoll) {
       return res.status(409).json({ success: false, error: "This poll has already closed" });
     }
-    res.json({ success: true, poll: presentPoll(updatedPoll.toObject(), req.user?.userId) });
+    res.json({
+      success: true,
+      poll: presentPoll(updatedPoll.toObject(), req.user?.userId, canModerate(req, liveClass)),
+    });
   } catch (error) {
     sendError(res, error, "classroom-tools.voteOnPoll");
   }
@@ -250,9 +260,28 @@ export const closePoll = async (req: AuthRequest, res: Response) => {
       { new: true },
     );
     if (!poll) return res.status(404).json({ success: false, error: "Poll not found" });
-    res.json({ success: true, poll: presentPoll(poll.toObject(), req.user?.userId) });
+    res.json({ success: true, poll: presentPoll(poll.toObject(), req.user?.userId, true) });
   } catch (error) {
     sendError(res, error, "classroom-tools.closePoll");
+  }
+};
+
+export const revealPollResults = async (req: AuthRequest, res: Response) => {
+  try {
+    const liveClass = await loadClass(req, res);
+    if (!liveClass) return;
+    if (!canModerate(req, liveClass)) {
+      return res.status(403).json({ success: false, error: "Only the teacher or an admin can reveal poll results" });
+    }
+    const poll = await LiveClassPoll.findOneAndUpdate(
+      { _id: req.params.pollId, liveClass: liveClass._id },
+      { resultsVisible: true, revealedAt: new Date(), revealedBy: req.user?.userId },
+      { new: true },
+    );
+    if (!poll) return res.status(404).json({ success: false, error: "Poll not found" });
+    res.json({ success: true, poll: presentPoll(poll.toObject(), req.user?.userId, true) });
+  } catch (error) {
+    sendError(res, error, "classroom-tools.revealPollResults");
   }
 };
 

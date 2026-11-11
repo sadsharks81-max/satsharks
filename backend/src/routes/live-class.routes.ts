@@ -9,10 +9,13 @@ import {
   deleteLiveClass,
   generateJoinToken,
   getLiveClassParticipants,
+  getRecordedLectures,
   muteParticipant,
   removeParticipantFromClass,
   getChatHistory,
   postChatMessage,
+  createRecordingPlaybackSession,
+  streamRecordedLecture,
   deleteChatMessage,
 } from "../controllers/live-class.controller";
 import {
@@ -23,6 +26,7 @@ import {
   getPolls,
   getRecordingStatus,
   getWhiteboard,
+  revealPollResults,
   startRecording,
   stopRecording,
   voteOnPoll,
@@ -32,6 +36,16 @@ const router = express.Router();
 
 // Get list of classes (accessible to all logged in users, with role-based filtering inside)
 router.get("/", authenticate, getLiveClasses);
+
+// Recorded lectures must be declared before /:id so "recordings" is not treated as a class id.
+router.get("/recordings", authenticate, requireActiveUser(), getRecordedLectures);
+router.post(
+  "/recordings/:recordingId/playback-session",
+  authenticate,
+  requireActiveUser(),
+  createRecordingPlaybackSession,
+);
+router.get("/recordings/:recordingId/stream", streamRecordedLecture);
 
 // Get single class details
 router.get("/:id", authenticate, getLiveClassById);
@@ -71,6 +85,7 @@ router.get("/:id/polls", authenticate, requireActiveUser(), getPolls);
 router.post("/:id/polls", authenticate, requireAdminOrTeacher(), createPoll);
 router.put("/:id/polls/:pollId/vote", authenticate, requireActiveUser(), voteOnPoll);
 router.put("/:id/polls/:pollId/close", authenticate, requireAdminOrTeacher(), closePoll);
+router.put("/:id/polls/:pollId/reveal", authenticate, requireAdminOrTeacher(), revealPollResults);
 
 // Server-side LiveKit recording and Drive delivery.
 router.get("/:id/recording", authenticate, requireActiveUser(), getRecordingStatus);

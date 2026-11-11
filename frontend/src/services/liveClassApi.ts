@@ -35,8 +35,9 @@ export interface ClassroomPoll {
   question: string;
   options: { id: string; text: string }[];
   status: "ACTIVE" | "CLOSED";
-  counts: Record<string, number>;
-  responseCount: number;
+  resultsVisible: boolean;
+  counts: Record<string, number> | null;
+  responseCount: number | null;
   selectedOptionId: string | null;
   createdAt: string;
   closedAt?: string | null;
@@ -112,6 +113,12 @@ export const liveClassApi = {
     pollId: string,
   ): Promise<{ success: boolean; poll: ClassroomPoll; error?: string }> =>
     api.put(`/api/live-classes/${classId}/polls/${pollId}/close`, {}),
+
+  revealPollResults: (
+    classId: string,
+    pollId: string,
+  ): Promise<{ success: boolean; poll: ClassroomPoll; error?: string }> =>
+    api.put(`/api/live-classes/${classId}/polls/${pollId}/reveal`, {}),
 
   getRecording: (
     classId: string,
