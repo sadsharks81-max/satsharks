@@ -155,6 +155,18 @@ export const appendBrowserRecordingChunk = async ({
   if (body.length === 0) throw new Error("Recording chunk is empty");
 
   try {
+    if (final) {
+      await Promise.all([
+        LiveClass.updateOne(
+          { _id: liveClassId, recordingStatus: "ACTIVE" },
+          { recordingStatus: "PROCESSING", recordingError: null },
+        ),
+        BrowserRecordingUpload.updateOne(
+          { _id: upload._id, status: "ACTIVE" },
+          { error: null },
+        ),
+      ]);
+    }
     const result = await uploadDriveChunk(
       decryptSecret(upload.encryptedUploadUrl),
       body,

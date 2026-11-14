@@ -127,7 +127,9 @@ export const getLiveClasses = async (req: AuthRequest, res: Response) => {
   }
 };
 
-const recordingAccessQuery = (req: AuthRequest): Record<string, unknown> => {
+const recordingPlaybackAccessQuery = (
+  req: AuthRequest,
+): Record<string, unknown> => {
   const query: Record<string, unknown> = {
     recordingStatus: "READY",
     recordingDriveFileId: { $nin: [null, ""] },
@@ -139,27 +141,120 @@ const recordingAccessQuery = (req: AuthRequest): Record<string, unknown> => {
   return query;
 };
 
+const recordingLibraryQuery = (req: AuthRequest): Record<string, unknown> => {
+  if (req.user?.role === "STUDENT") return recordingPlaybackAccessQuery(req);
+  const query: Record<string, unknown> = {
+    recordingStatus: {
+      $in: ["STARTING", "ACTIVE", "PROCESSING", "READY", "FAILED"],
+    },
+    $or: [{ recordingStartedAt: { $ne: null } }, { recordingStatus: "READY" }],
+  };
+  if (req.user?.role === "TEACHER") query.teacher = req.user.userId;
+  return query;
+};
+
+const UPLOAD_STALE_MS = 2 * 60 * 1000;
+const PUBLISH_STALE_MS = 10 * 60 * 1000;
+
 export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
   try {
-    const recordings = await LiveClass.find(recordingAccessQuery(req))
+    const recordings = await LiveClass.find(recordingLibraryQuery(req))
       .select(
-        "title description scheduledAt duration recordingEndedAt teacher recordingVisibleToStudents",
+        "title description scheduledAt duration recordingStatus recordingStartedAt recordingEndedAt recordingError teacher recordingVisibleToStudents",
       )
       .populate("teacher", "name")
-      .sort({ recordingEndedAt: -1, scheduledAt: -1 })
+      .sort({ recordingStartedAt: -1, scheduledAt: -1 })
       .lean();
+    const canSeeProgress = req.user?.role !== "STUDENT";
+    const uploads = canSeeProgress
+      ? await BrowserRecordingUpload.find({
+          liveClass: { $in: recordings.map((recording) => recording._id) },
+          status: "ACTIVE",
+        })
+          .select("liveClass nextOffset updatedAt")
+          .lean()
+      : [];
+    const uploadByClass = new Map(
+      uploads.map((upload) => [String(upload.liveClass), upload]),
+    );
+    const now = Date.now();
+    const staleRecordings = recordings.filter((recording: any) => {
+      const upload = uploadByClass.get(String(recording._id));
+      const lastProgress = upload?.updatedAt || recording.recordingStartedAt;
+      const staleAfter =
+        recording.recordingStatus === "PROCESSING"
+          ? PUBLISH_STALE_MS
+          : UPLOAD_STALE_MS;
+      return (
+        canSeeProgress &&
+        ["STARTING", "ACTIVE", "PROCESSING"].includes(
+          recording.recordingStatus,
+        ) &&
+        lastProgress &&
+        now - new Date(lastProgress).getTime() > staleAfter
+      );
+    });
+    if (staleRecordings.length) {
+      const staleIds = staleRecordings.map((recording: any) => recording._id);
+      const interruptionMessage =
+        "Upload interrupted because no recording progress was received. The lecture was not published.";
+      await Promise.all([
+        LiveClass.updateMany(
+          {
+            _id: { $in: staleIds },
+            recordingStatus: { $in: ["STARTING", "ACTIVE", "PROCESSING"] },
+          },
+          {
+            recordingStatus: "FAILED",
+            recordingError: interruptionMessage,
+            recordingEndedAt: new Date(),
+          },
+        ),
+        BrowserRecordingUpload.updateMany(
+          { liveClass: { $in: staleIds }, status: "ACTIVE" },
+          { status: "FAILED", error: interruptionMessage },
+        ),
+      ]);
+      staleRecordings.forEach((recording: any) => {
+        recording.recordingStatus = "FAILED";
+        recording.recordingError = interruptionMessage;
+        recording.recordingEndedAt = new Date();
+      });
+    }
     res.json({
       success: true,
-      recordings: recordings.map((recording: any) => ({
-        _id: String(recording._id),
-        title: recording.title,
-        description: recording.description || "",
-        scheduledAt: recording.scheduledAt,
-        duration: recording.duration,
-        recordedAt: recording.recordingEndedAt || recording.scheduledAt,
-        teacherName: recording.teacher?.name || "SATSharks instructor",
-        visibleToStudents: recording.recordingVisibleToStudents !== false,
-      })),
+      recordings: recordings.map((recording: any) => {
+        const upload = uploadByClass.get(String(recording._id));
+        const publicationStatus =
+          recording.recordingStatus === "READY"
+            ? "PUBLISHED"
+            : recording.recordingStatus === "PROCESSING"
+              ? "PUBLISHING"
+              : recording.recordingStatus === "FAILED"
+                ? "FAILED"
+                : "UPLOADING";
+        return {
+          _id: String(recording._id),
+          title: recording.title,
+          description: recording.description || "",
+          scheduledAt: recording.scheduledAt,
+          duration: recording.duration,
+          recordedAt:
+            recording.recordingEndedAt ||
+            recording.recordingStartedAt ||
+            recording.scheduledAt,
+          teacherName: recording.teacher?.name || "SATSharks instructor",
+          visibleToStudents: recording.recordingVisibleToStudents !== false,
+          publicationStatus,
+          uploadedBytes: canSeeProgress ? upload?.nextOffset || 0 : undefined,
+          lastProgressAt: canSeeProgress
+            ? upload?.updatedAt || null
+            : undefined,
+          recordingError: canSeeProgress
+            ? recording.recordingError || null
+            : undefined,
+        };
+      }),
     });
   } catch (error) {
     sendError(res, error, "live-class.getRecordedLectures");
@@ -284,7 +379,7 @@ export const createRecordingPlaybackSession = async (
   try {
     const recording = await LiveClass.findOne({
       _id: req.params.recordingId,
-      ...recordingAccessQuery(req),
+      ...recordingPlaybackAccessQuery(req),
     }).select("_id");
     if (!recording) {
       return res

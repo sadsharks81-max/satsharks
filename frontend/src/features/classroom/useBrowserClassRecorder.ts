@@ -2,7 +2,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Track, type LocalParticipant } from "livekit-client";
 import { liveClassApi, type RecordingStatus } from "../../services/liveClassApi";
 
-const DRIVE_CHUNK_BYTES = 8 * 1024 * 1024;
+// Smaller aligned blocks update the server-side progress timestamp frequently,
+// so an interrupted laptop/network can be detected without waiting a long time.
+const DRIVE_CHUNK_BYTES = 2 * 1024 * 1024;
 const RECORDER_TIMESLICE_MS = 5_000;
 const MIME_TYPES = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"];
 

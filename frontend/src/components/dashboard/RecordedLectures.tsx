@@ -13,11 +13,54 @@ interface RecordedLecture {
   duration: number;
   teacherName: string;
   visibleToStudents: boolean;
+  publicationStatus: "UPLOADING" | "PUBLISHING" | "PUBLISHED" | "FAILED";
+  uploadedBytes?: number;
+  lastProgressAt?: string | null;
+  recordingError?: string | null;
 }
+
+const PUBLICATION_DETAILS = {
+  UPLOADING: {
+    label: "Uploading",
+    icon: "cloud_upload",
+    badge: "bg-blue-100 text-blue-800",
+    panel: "border-blue-200 bg-blue-50 text-blue-900",
+    message: "Keep the classroom open and the laptop awake while recording data uploads.",
+  },
+  PUBLISHING: {
+    label: "Publishing",
+    icon: "progress_activity",
+    badge: "bg-amber-100 text-amber-800",
+    panel: "border-amber-200 bg-amber-50 text-amber-900",
+    message: "The final part is being saved to Drive. Keep the laptop open until Published.",
+  },
+  PUBLISHED: {
+    label: "Published",
+    icon: "check_circle",
+    badge: "bg-green-100 text-green-800",
+    panel: "border-green-200 bg-green-50 text-green-900",
+    message: "Upload complete. The laptop no longer needs to remain open.",
+  },
+  FAILED: {
+    label: "Upload interrupted",
+    icon: "error",
+    badge: "bg-red-100 text-red-800",
+    panel: "border-red-200 bg-red-50 text-red-900",
+    message: "This lecture was not published. Check the connection and record again.",
+  },
+} as const;
+
+const formatUploadedSize = (bytes = 0) =>
+  bytes >= 1024 * 1024
+    ? `${(bytes / (1024 * 1024)).toFixed(1)} MB uploaded`
+    : bytes > 0
+      ? `${Math.ceil(bytes / 1024)} KB uploaded`
+      : "Preparing the first upload chunk";
 
 export function RecordedLectures() {
   const { user } = useAuth();
   const isAdmin = user?.role === "ADMIN";
+  const isTeacher = user?.role === "TEACHER";
   const [recordings, setRecordings] = useState<RecordedLecture[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -28,8 +71,8 @@ export function RecordedLectures() {
   const [actionId, setActionId] = useState<string | null>(null);
   const [bulkDeleting, setBulkDeleting] = useState(false);
 
-  const loadRecordings = useCallback(async () => {
-    setLoading(true);
+  const loadRecordings = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
     const result = await api.get("/api/live-classes/recordings");
     if (result.success) {
       setRecordings(result.recordings || []);
@@ -37,16 +80,26 @@ export function RecordedLectures() {
     } else {
       setError(result.error || "Recorded lectures could not be loaded.");
     }
-    setLoading(false);
+    if (!silent) setLoading(false);
   }, []);
 
   useEffect(() => {
     void loadRecordings();
-  }, [loadRecordings]);
+    if (!isAdmin && !isTeacher) return;
+    const interval = window.setInterval(() => void loadRecordings(true), 10_000);
+    return () => window.clearInterval(interval);
+  }, [isAdmin, isTeacher, loadRecordings]);
+
+  const selectableRecordings = useMemo(
+    () => recordings.filter((recording) => recording.publicationStatus === "PUBLISHED"),
+    [recordings],
+  );
 
   const allSelected = useMemo(
-    () => recordings.length > 0 && recordings.every((recording) => selectedIds.has(recording._id)),
-    [recordings, selectedIds],
+    () =>
+      selectableRecordings.length > 0 &&
+      selectableRecordings.every((recording) => selectedIds.has(recording._id)),
+    [selectableRecordings, selectedIds],
   );
 
   const toggleSelected = (recordingId: string) => {
@@ -59,7 +112,9 @@ export function RecordedLectures() {
   };
 
   const toggleSelectAll = () => {
-    setSelectedIds(allSelected ? new Set() : new Set(recordings.map((recording) => recording._id)));
+    setSelectedIds(
+      allSelected ? new Set() : new Set(selectableRecordings.map((recording) => recording._id)),
+    );
   };
 
   const deleteRecordings = async (recordingIds: string[]) => {
@@ -147,7 +202,9 @@ export function RecordedLectures() {
         <p className="mt-2 max-w-2xl text-sm leading-relaxed text-on-surface-variant">
           {isAdmin
             ? "Publish recordings to students, keep them private, or remove videos from the library and Google Drive."
-            : "Rewatch completed live classes directly inside your SATSharks dashboard."}
+            : isTeacher
+              ? "Track each lecture until it is fully uploaded and published. Keep your laptop open until the status says Published."
+              : "Rewatch completed live classes directly inside your SATSharks dashboard."}
         </p>
       </div>
 
@@ -164,7 +221,7 @@ export function RecordedLectures() {
             <span className="font-medium text-on-surface-variant">
               {selectedIds.size
                 ? `${selectedIds.size} selected`
-                : `${recordings.length} recordings`}
+                : `${selectableRecordings.length} published recordings`}
             </span>
           </label>
           <button
@@ -204,104 +261,147 @@ export function RecordedLectures() {
         />
       ) : (
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {recordings.map((recording) => (
-            <article
-              key={recording._id}
-              className={`overflow-hidden rounded-2xl border bg-surface shadow-sm transition-transform hover:-translate-y-0.5 ${
-                selectedIds.has(recording._id)
-                  ? "border-primary ring-2 ring-primary/15"
-                  : "border-outline-variant/40"
-              }`}
-            >
-              <div className="relative flex aspect-video items-center justify-center bg-gradient-to-br from-primary/20 via-surface-container-high to-accent/15">
-                {isAdmin && (
-                  <label className="absolute left-3 top-3 flex cursor-pointer items-center rounded-lg bg-surface/95 p-2 shadow-sm">
-                    <input
-                      type="checkbox"
-                      checked={selectedIds.has(recording._id)}
-                      onChange={() => toggleSelected(recording._id)}
-                      aria-label={`Select ${recording.title}`}
-                      className="h-4 w-4 rounded border-outline accent-primary"
+          {recordings.map((recording) => {
+            const status = PUBLICATION_DETAILS[recording.publicationStatus];
+            const isPublished = recording.publicationStatus === "PUBLISHED";
+            return (
+              <article
+                key={recording._id}
+                className={`overflow-hidden rounded-2xl border bg-surface shadow-sm transition-transform hover:-translate-y-0.5 ${
+                  selectedIds.has(recording._id)
+                    ? "border-primary ring-2 ring-primary/15"
+                    : "border-outline-variant/40"
+                }`}
+              >
+                <div className="relative flex aspect-video items-center justify-center bg-gradient-to-br from-primary/20 via-surface-container-high to-accent/15">
+                  {isAdmin && isPublished && (
+                    <label className="absolute left-3 top-3 flex cursor-pointer items-center rounded-lg bg-surface/95 p-2 shadow-sm">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.has(recording._id)}
+                        onChange={() => toggleSelected(recording._id)}
+                        aria-label={`Select ${recording.title}`}
+                        className="h-4 w-4 rounded border-outline accent-primary"
+                      />
+                    </label>
+                  )}
+                  <div className="absolute right-3 top-3 flex flex-col items-end gap-1.5">
+                    <span
+                      className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide shadow-sm ${status.badge}`}
+                    >
+                      {status.label}
+                    </span>
+                    {isPublished && (isAdmin || isTeacher) && (
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-[10px] font-bold shadow-sm ${
+                          recording.visibleToStudents
+                            ? "bg-green-100 text-green-800"
+                            : "bg-slate-800 text-white"
+                        }`}
+                      >
+                        {recording.visibleToStudents ? "Students can view" : "Private"}
+                      </span>
+                    )}
+                  </div>
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg">
+                    <Icon
+                      name={isPublished ? "play_arrow" : status.icon}
+                      className={`text-4xl ${
+                        recording.publicationStatus === "PUBLISHING" ? "animate-spin" : ""
+                      }`}
                     />
-                  </label>
-                )}
-                <span
-                  className={`absolute right-3 top-3 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide shadow-sm ${
-                    recording.visibleToStudents
-                      ? "bg-green-100 text-green-800"
-                      : "bg-slate-800 text-white"
-                  }`}
-                >
-                  {recording.visibleToStudents ? "Visible to students" : "Private"}
-                </span>
-                <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg">
-                  <Icon name="play_arrow" className="text-4xl" />
-                </span>
-              </div>
-              <div className="p-5">
-                <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold text-on-surface-variant">
-                  <span className="flex items-center gap-1">
-                    <Icon name="calendar_month" className="text-[14px]" />
-                    {new Date(recording.recordedAt).toLocaleDateString(undefined, {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Icon name="schedule" className="text-[14px]" /> {recording.duration} min
                   </span>
                 </div>
-                <h2 className="line-clamp-2 text-lg font-bold leading-snug text-on-surface">
-                  {recording.title}
-                </h2>
-                <p className="mt-1 text-xs font-semibold text-primary">{recording.teacherName}</p>
-                <p className="mt-3 line-clamp-2 min-h-10 text-xs leading-relaxed text-on-surface-variant">
-                  {recording.description || "Recorded SATSharks live class."}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => void watchRecording(recording)}
-                  disabled={openingId === recording._id}
-                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-accent disabled:opacity-60"
-                >
-                  <Icon name="play_circle" className="text-[18px]" />
-                  {openingId === recording._id ? "Opening..." : "Watch lecture"}
-                </button>
-                {isAdmin && (
-                  <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        void setStudentVisibility(recording, !recording.visibleToStudents)
-                      }
-                      disabled={actionId === recording._id}
-                      className="flex items-center justify-center gap-2 rounded-xl border border-outline-variant/50 px-3 py-2.5 text-xs font-bold text-on-surface transition-colors hover:bg-surface-container-high disabled:opacity-50"
-                    >
-                      <Icon
-                        name={recording.visibleToStudents ? "visibility_off" : "visibility"}
-                        className="text-[17px]"
-                      />
-                      {recording.visibleToStudents ? "Make private" : "Show to students"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => void deleteRecordings([recording._id])}
-                      disabled={actionId === recording._id}
-                      aria-label={`Delete ${recording.title}`}
-                      title="Delete recording"
-                      className="flex w-11 items-center justify-center rounded-xl border border-error/30 text-error transition-colors hover:bg-error/10 disabled:opacity-50"
-                    >
-                      <Icon
-                        name={actionId === recording._id ? "progress_activity" : "delete"}
-                        className={actionId === recording._id ? "animate-spin text-lg" : "text-lg"}
-                      />
-                    </button>
+                <div className="p-5">
+                  <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold text-on-surface-variant">
+                    <span className="flex items-center gap-1">
+                      <Icon name="calendar_month" className="text-[14px]" />
+                      {new Date(recording.recordedAt).toLocaleDateString(undefined, {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Icon name="schedule" className="text-[14px]" /> {recording.duration} min
+                    </span>
                   </div>
-                )}
-              </div>
-            </article>
-          ))}
+                  <h2 className="line-clamp-2 text-lg font-bold leading-snug text-on-surface">
+                    {recording.title}
+                  </h2>
+                  <p className="mt-1 text-xs font-semibold text-primary">{recording.teacherName}</p>
+                  <p className="mt-3 line-clamp-2 min-h-10 text-xs leading-relaxed text-on-surface-variant">
+                    {recording.description || "Recorded SATSharks live class."}
+                  </p>
+                  <div className={`mt-4 rounded-xl border px-3 py-2.5 text-xs ${status.panel}`}>
+                    <p className="flex items-center gap-2 font-bold">
+                      <Icon name={status.icon} className="text-base" />
+                      {status.label}
+                      {recording.publicationStatus === "UPLOADING" && (
+                        <span className="ml-auto font-medium">
+                          {formatUploadedSize(recording.uploadedBytes)}
+                        </span>
+                      )}
+                    </p>
+                    <p className="mt-1 leading-5">
+                      {recording.publicationStatus === "FAILED" && recording.recordingError
+                        ? recording.recordingError
+                        : status.message}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void watchRecording(recording)}
+                    disabled={!isPublished || openingId === recording._id}
+                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:bg-surface-container-high disabled:text-on-surface-variant disabled:opacity-70"
+                  >
+                    <Icon
+                      name={isPublished ? "play_circle" : status.icon}
+                      className="text-[18px]"
+                    />
+                    {openingId === recording._id
+                      ? "Opening..."
+                      : isPublished
+                        ? "Watch lecture"
+                        : status.label}
+                  </button>
+                  {isAdmin && isPublished && (
+                    <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          void setStudentVisibility(recording, !recording.visibleToStudents)
+                        }
+                        disabled={actionId === recording._id}
+                        className="flex items-center justify-center gap-2 rounded-xl border border-outline-variant/50 px-3 py-2.5 text-xs font-bold text-on-surface transition-colors hover:bg-surface-container-high disabled:opacity-50"
+                      >
+                        <Icon
+                          name={recording.visibleToStudents ? "visibility_off" : "visibility"}
+                          className="text-[17px]"
+                        />
+                        {recording.visibleToStudents ? "Make private" : "Show to students"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void deleteRecordings([recording._id])}
+                        disabled={actionId === recording._id}
+                        aria-label={`Delete ${recording.title}`}
+                        title="Delete recording"
+                        className="flex w-11 items-center justify-center rounded-xl border border-error/30 text-error transition-colors hover:bg-error/10 disabled:opacity-50"
+                      >
+                        <Icon
+                          name={actionId === recording._id ? "progress_activity" : "delete"}
+                          className={
+                            actionId === recording._id ? "animate-spin text-lg" : "text-lg"
+                          }
+                        />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       )}
 
