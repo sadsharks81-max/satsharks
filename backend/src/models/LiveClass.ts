@@ -19,6 +19,7 @@ export interface ILiveClass extends Document {
   recordingError?: string | null;
   recordingStartedAt?: Date | null;
   recordingEndedAt?: Date | null;
+  recordingDurationSeconds?: number | null;
   teacher: mongoose.Schema.Types.ObjectId;
   createdBy: mongoose.Schema.Types.ObjectId;
   createdAt: Date;
@@ -53,6 +54,12 @@ const LiveClassSchema: Schema = new Schema(
     recordingError: { type: String, default: null },
     recordingStartedAt: { type: Date, default: null },
     recordingEndedAt: { type: Date, default: null },
+    recordingDurationSeconds: {
+      type: Number,
+      default: null,
+      min: 1,
+      max: 43200,
+    },
     teacher: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

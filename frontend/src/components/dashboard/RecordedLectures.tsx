@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { api, getBackendUrl } from "../../services/api";
 import { Icon } from "../common/Icon";
@@ -11,6 +11,7 @@ interface RecordedLecture {
   scheduledAt: string;
   recordedAt: string;
   duration: number;
+  recordingDurationSeconds: number;
   teacherName: string;
   visibleToStudents: boolean;
   publicationStatus: "UPLOADING" | "PUBLISHING" | "PUBLISHED" | "FAILED";
@@ -57,6 +58,16 @@ const formatUploadedSize = (bytes = 0) =>
       ? `${Math.ceil(bytes / 1024)} KB uploaded`
       : "Preparing the first upload chunk";
 
+const formatPlaybackTime = (seconds: number) => {
+  const safeSeconds = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+  const remainder = safeSeconds % 60;
+  return hours
+    ? `${hours}:${String(minutes).padStart(2, "0")}:${String(remainder).padStart(2, "0")}`
+    : `${minutes}:${String(remainder).padStart(2, "0")}`;
+};
+
 export function RecordedLectures() {
   const { user } = useAuth();
   const isAdmin = user?.role === "ADMIN";
@@ -67,6 +78,12 @@ export function RecordedLectures() {
   const [openingId, setOpeningId] = useState<string | null>(null);
   const [activeRecording, setActiveRecording] = useState<RecordedLecture | null>(null);
   const [playbackUrl, setPlaybackUrl] = useState("");
+  const [currentTime, setCurrentTime] = useState(0);
+  const [playerDuration, setPlayerDuration] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<HTMLDivElement>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
   const [actionId, setActionId] = useState<string | null>(null);
   const [bulkDeleting, setBulkDeleting] = useState(false);
@@ -184,12 +201,45 @@ export function RecordedLectures() {
       return;
     }
     setActiveRecording(recording);
+    setCurrentTime(0);
+    setPlayerDuration(recording.recordingDurationSeconds);
+    setIsPlaying(false);
+    setIsMuted(false);
     setPlaybackUrl(`${getBackendUrl()}${result.playbackUrl}`);
   };
 
   const closePlayer = () => {
+    videoRef.current?.pause();
     setActiveRecording(null);
     setPlaybackUrl("");
+    setCurrentTime(0);
+    setIsPlaying(false);
+  };
+
+  const togglePlayback = async () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) await video.play().catch(() => {});
+    else video.pause();
+  };
+
+  const seekPlayback = (seconds: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextTime = Math.min(Math.max(0, seconds), playerDuration);
+    video.currentTime = nextTime;
+    setCurrentTime(nextTime);
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
+
+  const openFullscreen = () => {
+    void playerRef.current?.requestFullscreen?.().catch(() => {});
   };
 
   return (
@@ -260,105 +310,87 @@ export function RecordedLectures() {
           description="No live class has been recorded and published yet. Completed recordings will appear here automatically once they are ready."
         />
       ) : (
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
           {recordings.map((recording) => {
             const status = PUBLICATION_DETAILS[recording.publicationStatus];
             const isPublished = recording.publicationStatus === "PUBLISHED";
             return (
               <article
                 key={recording._id}
-                className={`overflow-hidden rounded-2xl border bg-surface shadow-sm transition-transform hover:-translate-y-0.5 ${
+                className={`rounded-xl border bg-surface p-4 shadow-sm ${
                   selectedIds.has(recording._id)
                     ? "border-primary ring-2 ring-primary/15"
                     : "border-outline-variant/40"
                 }`}
               >
-                <div className="relative flex aspect-video items-center justify-center bg-gradient-to-br from-primary/20 via-surface-container-high to-accent/15">
+                <div className="flex items-start gap-3">
                   {isAdmin && isPublished && (
-                    <label className="absolute left-3 top-3 flex cursor-pointer items-center rounded-lg bg-surface/95 p-2 shadow-sm">
-                      <input
-                        type="checkbox"
-                        checked={selectedIds.has(recording._id)}
-                        onChange={() => toggleSelected(recording._id)}
-                        aria-label={`Select ${recording.title}`}
-                        className="h-4 w-4 rounded border-outline accent-primary"
-                      />
-                    </label>
-                  )}
-                  <div className="absolute right-3 top-3 flex flex-col items-end gap-1.5">
-                    <span
-                      className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide shadow-sm ${status.badge}`}
-                    >
-                      {status.label}
-                    </span>
-                    {isPublished && (isAdmin || isTeacher) && (
-                      <span
-                        className={`rounded-full px-2.5 py-1 text-[10px] font-bold shadow-sm ${
-                          recording.visibleToStudents
-                            ? "bg-green-100 text-green-800"
-                            : "bg-slate-800 text-white"
-                        }`}
-                      >
-                        {recording.visibleToStudents ? "Students can view" : "Private"}
-                      </span>
-                    )}
-                  </div>
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg">
-                    <Icon
-                      name={isPublished ? "play_arrow" : status.icon}
-                      className={`text-4xl ${
-                        recording.publicationStatus === "PUBLISHING" ? "animate-spin" : ""
-                      }`}
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.has(recording._id)}
+                      onChange={() => toggleSelected(recording._id)}
+                      aria-label={`Select ${recording.title}`}
+                      className="mt-3 h-4 w-4 shrink-0 rounded border-outline accent-primary"
                     />
+                  )}
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Icon name={isPublished ? "play_circle" : status.icon} className="text-2xl" />
                   </span>
-                </div>
-                <div className="p-5">
-                  <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold text-on-surface-variant">
-                    <span className="flex items-center gap-1">
-                      <Icon name="calendar_month" className="text-[14px]" />
-                      {new Date(recording.recordedAt).toLocaleDateString(undefined, {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Icon name="schedule" className="text-[14px]" /> {recording.duration} min
-                    </span>
-                  </div>
-                  <h2 className="line-clamp-2 text-lg font-bold leading-snug text-on-surface">
-                    {recording.title}
-                  </h2>
-                  <p className="mt-1 text-xs font-semibold text-primary">{recording.teacherName}</p>
-                  <p className="mt-3 line-clamp-2 min-h-10 text-xs leading-relaxed text-on-surface-variant">
-                    {recording.description || "Recorded SATSharks live class."}
-                  </p>
-                  <div className={`mt-4 rounded-xl border px-3 py-2.5 text-xs ${status.panel}`}>
-                    <p className="flex items-center gap-2 font-bold">
-                      <Icon name={status.icon} className="text-base" />
-                      {status.label}
-                      {recording.publicationStatus === "UPLOADING" && (
-                        <span className="ml-auto font-medium">
-                          {formatUploadedSize(recording.uploadedBytes)}
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <h2 className="truncate text-base font-bold text-on-surface">
+                          {recording.title}
+                        </h2>
+                        <p className="truncate text-xs font-semibold text-primary">
+                          {recording.teacherName}
+                        </p>
+                      </div>
+                      {(isAdmin || isTeacher) && (
+                        <span
+                          className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${status.badge}`}
+                        >
+                          {status.label}
                         </span>
                       )}
-                    </p>
-                    <p className="mt-1 leading-5">
-                      {recording.publicationStatus === "FAILED" && recording.recordingError
-                        ? recording.recordingError
-                        : status.message}
-                    </p>
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] font-semibold text-on-surface-variant">
+                      <span className="flex items-center gap-1">
+                        <Icon name="calendar_month" className="text-[14px]" />
+                        {new Date(recording.recordedAt).toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Icon name="schedule" className="text-[14px]" />
+                        {formatPlaybackTime(recording.recordingDurationSeconds)}
+                      </span>
+                      {isPublished && (isAdmin || isTeacher) && (
+                        <span>{recording.visibleToStudents ? "Students can view" : "Private"}</span>
+                      )}
+                    </div>
                   </div>
+                </div>
+                {(isAdmin || isTeacher) && !isPublished && (
+                  <div className={`mt-3 rounded-lg border px-3 py-2 text-[11px] ${status.panel}`}>
+                    <span className="font-bold">{status.label}: </span>
+                    {recording.publicationStatus === "FAILED" && recording.recordingError
+                      ? recording.recordingError
+                      : recording.publicationStatus === "UPLOADING"
+                        ? `${formatUploadedSize(recording.uploadedBytes)}. Keep the classroom and laptop open.`
+                        : status.message}
+                  </div>
+                )}
+                <div className="mt-3 flex flex-wrap items-center gap-2">
                   <button
                     type="button"
                     onClick={() => void watchRecording(recording)}
                     disabled={!isPublished || openingId === recording._id}
-                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:bg-surface-container-high disabled:text-on-surface-variant disabled:opacity-70"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-bold text-on-primary transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:bg-surface-container-high disabled:text-on-surface-variant"
                   >
-                    <Icon
-                      name={isPublished ? "play_circle" : status.icon}
-                      className="text-[18px]"
-                    />
+                    <Icon name={isPublished ? "play_circle" : status.icon} className="text-base" />
                     {openingId === recording._id
                       ? "Opening..."
                       : isPublished
@@ -366,20 +398,20 @@ export function RecordedLectures() {
                         : status.label}
                   </button>
                   {isAdmin && isPublished && (
-                    <div className="mt-3 grid grid-cols-[1fr_auto] gap-2">
+                    <>
                       <button
                         type="button"
                         onClick={() =>
                           void setStudentVisibility(recording, !recording.visibleToStudents)
                         }
                         disabled={actionId === recording._id}
-                        className="flex items-center justify-center gap-2 rounded-xl border border-outline-variant/50 px-3 py-2.5 text-xs font-bold text-on-surface transition-colors hover:bg-surface-container-high disabled:opacity-50"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-outline-variant/50 px-3 py-2 text-xs font-bold text-on-surface hover:bg-surface-container-high disabled:opacity-50"
                       >
                         <Icon
                           name={recording.visibleToStudents ? "visibility_off" : "visibility"}
-                          className="text-[17px]"
+                          className="text-base"
                         />
-                        {recording.visibleToStudents ? "Make private" : "Show to students"}
+                        {recording.visibleToStudents ? "Make private" : "Show students"}
                       </button>
                       <button
                         type="button"
@@ -387,16 +419,14 @@ export function RecordedLectures() {
                         disabled={actionId === recording._id}
                         aria-label={`Delete ${recording.title}`}
                         title="Delete recording"
-                        className="flex w-11 items-center justify-center rounded-xl border border-error/30 text-error transition-colors hover:bg-error/10 disabled:opacity-50"
+                        className="inline-flex h-8 w-9 items-center justify-center rounded-lg border border-error/30 text-error hover:bg-error/10 disabled:opacity-50"
                       >
                         <Icon
                           name={actionId === recording._id ? "progress_activity" : "delete"}
-                          className={
-                            actionId === recording._id ? "animate-spin text-lg" : "text-lg"
-                          }
+                          className={actionId === recording._id ? "animate-spin" : ""}
                         />
                       </button>
-                    </div>
+                    </>
                   )}
                 </div>
               </article>
@@ -407,6 +437,7 @@ export function RecordedLectures() {
 
       {activeRecording && playbackUrl && (
         <div
+          ref={playerRef}
           className="fixed inset-0 z-50 flex flex-col bg-black/95 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
@@ -426,16 +457,82 @@ export function RecordedLectures() {
             </button>
           </div>
           <div className="flex min-h-0 flex-1 items-center justify-center p-3 sm:p-6">
-            <video
-              src={playbackUrl}
-              controls
-              autoPlay
-              playsInline
-              className="max-h-full w-full max-w-6xl rounded-xl bg-black shadow-2xl"
-              onError={() => setError("The recording could not be played. Please try again.")}
-            >
-              Your browser does not support video playback.
-            </video>
+            <div className="w-full max-w-6xl overflow-hidden rounded-xl bg-black shadow-2xl">
+              <video
+                ref={videoRef}
+                src={playbackUrl}
+                autoPlay
+                playsInline
+                className="max-h-[calc(100vh-10rem)] w-full bg-black"
+                onClick={() => void togglePlayback()}
+                onLoadedMetadata={(event) => {
+                  const nativeDuration = event.currentTarget.duration;
+                  const measuredDuration = activeRecording.recordingDurationSeconds;
+                  const nativeDurationLooksReliable =
+                    Number.isFinite(nativeDuration) &&
+                    nativeDuration > 0 &&
+                    nativeDuration >= measuredDuration * 0.8 &&
+                    nativeDuration <= measuredDuration * 1.2;
+                  setPlayerDuration(
+                    nativeDurationLooksReliable ? nativeDuration : measuredDuration,
+                  );
+                }}
+                onTimeUpdate={(event) => {
+                  const time = event.currentTarget.currentTime;
+                  setCurrentTime(time);
+                  if (time > playerDuration) setPlayerDuration(time);
+                }}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onEnded={() => setIsPlaying(false)}
+                onVolumeChange={(event) => setIsMuted(event.currentTarget.muted)}
+                onError={() => setError("The recording could not be played. Please try again.")}
+              >
+                Your browser does not support video playback.
+              </video>
+              <div className="border-t border-white/10 bg-[#080b12] px-3 py-3 text-white sm:px-4">
+                <input
+                  type="range"
+                  min="0"
+                  max={Math.max(1, playerDuration)}
+                  step="0.1"
+                  value={Math.min(currentTime, Math.max(1, playerDuration))}
+                  onChange={(event) => seekPlayback(Number(event.target.value))}
+                  aria-label="Video timeline"
+                  className="h-1.5 w-full cursor-pointer accent-primary"
+                />
+                <div className="mt-2 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => void togglePlayback()}
+                    aria-label={isPlaying ? "Pause lecture" : "Play lecture"}
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-white/20"
+                  >
+                    <Icon name={isPlaying ? "pause" : "play_arrow"} className="text-xl" />
+                  </button>
+                  <span className="min-w-[110px] text-xs font-bold tabular-nums sm:text-sm">
+                    {formatPlaybackTime(currentTime)} / {formatPlaybackTime(playerDuration)}
+                  </span>
+                  <div className="flex-1" />
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    aria-label={isMuted ? "Unmute lecture" : "Mute lecture"}
+                    className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-white/10"
+                  >
+                    <Icon name={isMuted ? "volume_off" : "volume_up"} className="text-xl" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={openFullscreen}
+                    aria-label="View lecture fullscreen"
+                    className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-white/10"
+                  >
+                    <Icon name="fullscreen" className="text-xl" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

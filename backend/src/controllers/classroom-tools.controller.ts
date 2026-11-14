@@ -455,6 +455,14 @@ export const uploadRecordingChunk = async (req: AuthRequest, res: Response) => {
         .json({ success: false, error: "Invalid recording upload offset" });
     }
     const final = req.query.final === "true";
+    const rawDurationSeconds = Number(req.query.durationSeconds);
+    const durationSeconds =
+      final &&
+      Number.isFinite(rawDurationSeconds) &&
+      rawDurationSeconds >= 1 &&
+      rawDurationSeconds <= 43_200
+        ? Math.round(rawDurationSeconds)
+        : undefined;
     if (!final && req.body.length % (256 * 1024) !== 0) {
       return res.status(400).json({
         success: false,
@@ -476,6 +484,7 @@ export const uploadRecordingChunk = async (req: AuthRequest, res: Response) => {
       body: req.body,
       offset,
       final,
+      durationSeconds,
     });
     res.json({ success: true, ...result });
   } catch (error) {

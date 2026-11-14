@@ -78,6 +78,7 @@ export const beginBrowserClassRecording = async (
   liveClass.recordingVisibleToStudents = true;
   liveClass.recordingStartedAt = new Date();
   liveClass.recordingEndedAt = null;
+  liveClass.recordingDurationSeconds = null;
   await liveClass.save();
 
   try {
@@ -114,12 +115,14 @@ export const appendBrowserRecordingChunk = async ({
   body,
   offset,
   final,
+  durationSeconds,
 }: {
   uploadId: string;
   liveClassId: string;
   body: Buffer;
   offset: number;
   final: boolean;
+  durationSeconds?: number;
 }) => {
   const upload = await BrowserRecordingUpload.findOne({
     _id: uploadId,
@@ -182,6 +185,23 @@ export const appendBrowserRecordingChunk = async ({
       upload.status = "READY";
       upload.driveFileId = result.fileId;
       await upload.save();
+      const recordingTiming = durationSeconds
+        ? null
+        : await LiveClass.findById(liveClassId)
+            .select("recordingStartedAt")
+            .lean();
+      const resolvedDurationSeconds =
+        durationSeconds ||
+        Math.max(
+          1,
+          Math.round(
+            (Date.now() -
+              new Date(
+                recordingTiming?.recordingStartedAt || Date.now(),
+              ).getTime()) /
+              1000,
+          ),
+        );
       await LiveClass.updateOne(
         { _id: liveClassId },
         {
@@ -192,6 +212,7 @@ export const appendBrowserRecordingChunk = async ({
             `https://drive.google.com/file/d/${result.fileId}/view`,
           recordingError: null,
           recordingEndedAt: new Date(),
+          recordingDurationSeconds: resolvedDurationSeconds,
         },
       );
     } else {

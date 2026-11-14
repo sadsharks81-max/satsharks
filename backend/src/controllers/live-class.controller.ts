@@ -160,7 +160,7 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
   try {
     const recordings = await LiveClass.find(recordingLibraryQuery(req))
       .select(
-        "title description scheduledAt duration recordingStatus recordingStartedAt recordingEndedAt recordingError teacher recordingVisibleToStudents",
+        "title description scheduledAt duration recordingStatus recordingStartedAt recordingEndedAt recordingDurationSeconds recordingError teacher recordingVisibleToStudents",
       )
       .populate("teacher", "name")
       .sort({ recordingStartedAt: -1, scheduledAt: -1 })
@@ -233,12 +233,27 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
               : recording.recordingStatus === "FAILED"
                 ? "FAILED"
                 : "UPLOADING";
+        const measuredDurationSeconds =
+          recording.recordingStartedAt && recording.recordingEndedAt
+            ? Math.max(
+                1,
+                Math.round(
+                  (new Date(recording.recordingEndedAt).getTime() -
+                    new Date(recording.recordingStartedAt).getTime()) /
+                    1000,
+                ),
+              )
+            : null;
         return {
           _id: String(recording._id),
           title: recording.title,
           description: recording.description || "",
           scheduledAt: recording.scheduledAt,
           duration: recording.duration,
+          recordingDurationSeconds:
+            recording.recordingDurationSeconds ||
+            measuredDurationSeconds ||
+            Math.max(1, Number(recording.duration || 1) * 60),
           recordedAt:
             recording.recordingEndedAt ||
             recording.recordingStartedAt ||
@@ -345,6 +360,7 @@ export const deleteRecordedLectures = async (
                 recordingError: null,
                 recordingStartedAt: null,
                 recordingEndedAt: null,
+                recordingDurationSeconds: null,
                 recordingVisibleToStudents: true,
               },
               $unset: { recordingEgressId: 1 },

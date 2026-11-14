@@ -143,6 +143,7 @@ export const liveClassApi = {
     chunk: Uint8Array,
     offset: number,
     final: boolean,
+    durationSeconds?: number,
   ): Promise<{
     success: boolean;
     nextOffset?: number;
@@ -151,8 +152,10 @@ export const liveClassApi = {
     error?: string;
   }> => {
     const token = getStoredToken();
+    const params = new URLSearchParams({ final: String(final) });
+    if (final && durationSeconds) params.set("durationSeconds", String(durationSeconds));
     const response = await fetch(
-      `${getBackendUrl()}/api/live-classes/${classId}/recording/uploads/${uploadId}/chunk?final=${final}`,
+      `${getBackendUrl()}/api/live-classes/${classId}/recording/uploads/${uploadId}/chunk?${params}`,
       {
         method: "PUT",
         headers: {

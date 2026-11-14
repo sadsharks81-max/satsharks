@@ -52,6 +52,8 @@ export function useBrowserClassRecorder({
   const uploadIdRef = useRef("");
   const pendingRef = useRef(new Uint8Array());
   const offsetRef = useRef(0);
+  const recordingStartedAtRef = useRef(0);
+  const recordingDurationSecondsRef = useRef(0);
   const uploadQueueRef = useRef<Promise<void>>(Promise.resolve());
   const uploadErrorRef = useRef<Error | null>(null);
   const stoppingRef = useRef(false);
@@ -72,6 +74,10 @@ export function useBrowserClassRecorder({
       const uploadId = uploadIdRef.current;
       if (!uploadId) throw new Error("Recording upload session is missing");
       const offset = offsetRef.current;
+      const durationSeconds = final
+        ? recordingDurationSecondsRef.current ||
+          Math.max(1, Math.round((Date.now() - recordingStartedAtRef.current) / 1000))
+        : undefined;
       let lastError = "Recording upload failed";
 
       for (let attempt = 1; attempt <= 3; attempt += 1) {
@@ -82,6 +88,7 @@ export function useBrowserClassRecorder({
             chunk,
             offset,
             final,
+            durationSeconds,
           );
           if (result.success) {
             offsetRef.current = result.nextOffset ?? offset + chunk.length;
@@ -141,6 +148,10 @@ export function useBrowserClassRecorder({
     stoppingRef.current = true;
     setBusy(true);
     onStatusChange("PROCESSING");
+    recordingDurationSecondsRef.current = Math.max(
+      1,
+      Math.round((Date.now() - recordingStartedAtRef.current) / 1000),
+    );
 
     try {
       const recorder = recorderRef.current;
@@ -182,6 +193,7 @@ export function useBrowserClassRecorder({
     uploadErrorRef.current = null;
     pendingRef.current = new Uint8Array();
     offsetRef.current = 0;
+    recordingDurationSecondsRef.current = 0;
     setUploadedBytes(0);
 
     try {
@@ -250,6 +262,7 @@ export function useBrowserClassRecorder({
       );
 
       recorder.start(RECORDER_TIMESLICE_MS);
+      recordingStartedAtRef.current = Date.now();
       setActive(true);
       onStatusChange("ACTIVE");
       return true;
