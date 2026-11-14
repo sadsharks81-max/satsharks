@@ -333,3 +333,21 @@ export const deleteDriveRecordingFile = async (fileId: string) => {
     if (status !== 404) throw error;
   }
 };
+
+export const getDriveVideoDurationSeconds = async (fileId: string) => {
+  const drive = google.drive({
+    version: "v3",
+    auth: await getAuthorizedGoogleClient(),
+  });
+  const response = await drive.files.get({
+    fileId,
+    supportsAllDrives: true,
+    fields: "videoMediaMetadata(durationMillis)",
+  });
+  const durationMillis = Number(
+    response.data.videoMediaMetadata?.durationMillis,
+  );
+  return Number.isFinite(durationMillis) && durationMillis > 0
+    ? Math.max(1, Math.round(durationMillis / 1000))
+    : null;
+};

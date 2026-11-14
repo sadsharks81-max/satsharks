@@ -5,6 +5,7 @@ import LiveClass from "../models/LiveClass";
 import {
   createDriveResumableUpload,
   getAuthorizedGoogleClient,
+  getDriveVideoDurationSeconds,
   GoogleDriveNotConfiguredError,
   GoogleDriveNotConnectedError,
   uploadDriveChunk,
@@ -185,23 +186,10 @@ export const appendBrowserRecordingChunk = async ({
       upload.status = "READY";
       upload.driveFileId = result.fileId;
       await upload.save();
-      const recordingTiming = durationSeconds
-        ? null
-        : await LiveClass.findById(liveClassId)
-            .select("recordingStartedAt")
-            .lean();
-      const resolvedDurationSeconds =
-        durationSeconds ||
-        Math.max(
-          1,
-          Math.round(
-            (Date.now() -
-              new Date(
-                recordingTiming?.recordingStartedAt || Date.now(),
-              ).getTime()) /
-              1000,
-          ),
-        );
+      const driveDurationSeconds = await getDriveVideoDurationSeconds(
+        result.fileId,
+      ).catch(() => null);
+      const resolvedDurationSeconds = driveDurationSeconds || durationSeconds;
       await LiveClass.updateOne(
         { _id: liveClassId },
         {
@@ -212,7 +200,7 @@ export const appendBrowserRecordingChunk = async ({
             `https://drive.google.com/file/d/${result.fileId}/view`,
           recordingError: null,
           recordingEndedAt: new Date(),
-          recordingDurationSeconds: resolvedDurationSeconds,
+          recordingDurationSeconds: resolvedDurationSeconds || null,
         },
       );
     } else {

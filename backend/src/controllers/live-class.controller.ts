@@ -30,7 +30,10 @@ import {
   ClassRecordingNotConfiguredError,
   getDriveRecordingStream,
 } from "../services/class-recording.service";
-import { deleteDriveRecordingFile } from "../services/google-drive.service";
+import {
+  deleteDriveRecordingFile,
+  getDriveVideoDurationSeconds,
+} from "../services/google-drive.service";
 
 const MIN_TOKEN_TTL_SECONDS = 30 * 60;
 const MAX_TOKEN_TTL_SECONDS = 8 * 60 * 60;
@@ -160,11 +163,30 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
   try {
     const recordings = await LiveClass.find(recordingLibraryQuery(req))
       .select(
-        "title description scheduledAt duration recordingStatus recordingStartedAt recordingEndedAt recordingDurationSeconds recordingError teacher recordingVisibleToStudents",
+        "title description scheduledAt duration recordingStatus recordingStartedAt recordingEndedAt recordingDurationSeconds recordingDriveFileId recordingError teacher recordingVisibleToStudents",
       )
       .populate("teacher", "name")
       .sort({ recordingStartedAt: -1, scheduledAt: -1 })
       .lean();
+    const recordingsMissingMediaDuration = recordings.filter(
+      (recording: any) =>
+        recording.recordingStatus === "READY" &&
+        recording.recordingDriveFileId &&
+        !recording.recordingDurationSeconds,
+    );
+    await Promise.all(
+      recordingsMissingMediaDuration.map(async (recording: any) => {
+        const mediaDurationSeconds = await getDriveVideoDurationSeconds(
+          recording.recordingDriveFileId,
+        ).catch(() => null);
+        if (!mediaDurationSeconds) return;
+        recording.recordingDurationSeconds = mediaDurationSeconds;
+        await LiveClass.updateOne(
+          { _id: recording._id },
+          { recordingDurationSeconds: mediaDurationSeconds },
+        );
+      }),
+    );
     const canSeeProgress = req.user?.role !== "STUDENT";
     const uploads = canSeeProgress
       ? await BrowserRecordingUpload.find({
@@ -233,17 +255,6 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
               : recording.recordingStatus === "FAILED"
                 ? "FAILED"
                 : "UPLOADING";
-        const measuredDurationSeconds =
-          recording.recordingStartedAt && recording.recordingEndedAt
-            ? Math.max(
-                1,
-                Math.round(
-                  (new Date(recording.recordingEndedAt).getTime() -
-                    new Date(recording.recordingStartedAt).getTime()) /
-                    1000,
-                ),
-              )
-            : null;
         return {
           _id: String(recording._id),
           title: recording.title,
@@ -251,9 +262,9 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
           scheduledAt: recording.scheduledAt,
           duration: recording.duration,
           recordingDurationSeconds:
-            recording.recordingDurationSeconds ||
-            measuredDurationSeconds ||
-            Math.max(1, Number(recording.duration || 1) * 60),
+            Number(recording.recordingDurationSeconds) > 0
+              ? Number(recording.recordingDurationSeconds)
+              : null,
           recordedAt:
             recording.recordingEndedAt ||
             recording.recordingStartedAt ||
@@ -396,11 +407,23 @@ export const createRecordingPlaybackSession = async (
     const recording = await LiveClass.findOne({
       _id: req.params.recordingId,
       ...recordingPlaybackAccessQuery(req),
-    }).select("_id");
+    }).select("_id recordingDriveFileId recordingDurationSeconds");
     if (!recording) {
       return res
         .status(404)
         .json({ success: false, error: "Recorded lecture not found" });
+    }
+    // Drive's processed media duration is authoritative. Refresh it when a
+    // lecture is opened so legacy or inaccurate cached values self-repair.
+    const driveDurationSeconds = await getDriveVideoDurationSeconds(
+      recording.recordingDriveFileId!,
+    ).catch(() => null);
+    if (
+      driveDurationSeconds &&
+      driveDurationSeconds !== recording.recordingDurationSeconds
+    ) {
+      recording.recordingDurationSeconds = driveDurationSeconds;
+      await recording.save();
     }
     const token = jwt.sign(
       {
@@ -415,6 +438,9 @@ export const createRecordingPlaybackSession = async (
     res.json({
       success: true,
       playbackUrl: `/api/live-classes/recordings/${recording._id}/stream?token=${encodeURIComponent(token)}`,
+      durationSeconds:
+        driveDurationSeconds || recording.recordingDurationSeconds || null,
+      durationVerified: Boolean(driveDurationSeconds),
     });
   } catch (error) {
     sendError(res, error, "live-class.createRecordingPlaybackSession");

@@ -76,7 +76,7 @@ export function useBrowserClassRecorder({
       const offset = offsetRef.current;
       const durationSeconds = final
         ? recordingDurationSecondsRef.current ||
-          Math.max(1, Math.round((Date.now() - recordingStartedAtRef.current) / 1000))
+          Math.max(1, Math.round((performance.now() - recordingStartedAtRef.current) / 1000))
         : undefined;
       let lastError = "Recording upload failed";
 
@@ -150,7 +150,7 @@ export function useBrowserClassRecorder({
     onStatusChange("PROCESSING");
     recordingDurationSecondsRef.current = Math.max(
       1,
-      Math.round((Date.now() - recordingStartedAtRef.current) / 1000),
+      Math.round((performance.now() - recordingStartedAtRef.current) / 1000),
     );
 
     try {
@@ -262,7 +262,7 @@ export function useBrowserClassRecorder({
       );
 
       recorder.start(RECORDER_TIMESLICE_MS);
-      recordingStartedAtRef.current = Date.now();
+      recordingStartedAtRef.current = performance.now();
       setActive(true);
       onStatusChange("ACTIVE");
       return true;

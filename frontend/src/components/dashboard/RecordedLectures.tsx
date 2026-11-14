@@ -11,7 +11,7 @@ interface RecordedLecture {
   scheduledAt: string;
   recordedAt: string;
   duration: number;
-  recordingDurationSeconds: number;
+  recordingDurationSeconds: number | null;
   teacherName: string;
   visibleToStudents: boolean;
   publicationStatus: "UPLOADING" | "PUBLISHING" | "PUBLISHED" | "FAILED";
@@ -58,8 +58,9 @@ const formatUploadedSize = (bytes = 0) =>
       ? `${Math.ceil(bytes / 1024)} KB uploaded`
       : "Preparing the first upload chunk";
 
-const formatPlaybackTime = (seconds: number) => {
-  const safeSeconds = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
+const formatPlaybackTime = (seconds: number | null | undefined) => {
+  const safeSeconds =
+    typeof seconds === "number" && Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
   const hours = Math.floor(safeSeconds / 3600);
   const minutes = Math.floor((safeSeconds % 3600) / 60);
   const remainder = safeSeconds % 60;
@@ -80,6 +81,7 @@ export function RecordedLectures() {
   const [playbackUrl, setPlaybackUrl] = useState("");
   const [currentTime, setCurrentTime] = useState(0);
   const [playerDuration, setPlayerDuration] = useState(0);
+  const [durationIsVerified, setDurationIsVerified] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -200,9 +202,22 @@ export function RecordedLectures() {
       setError(result.error || "This recording could not be opened.");
       return;
     }
-    setActiveRecording(recording);
+    const playbackDuration = Number(result.durationSeconds);
+    const resolvedDuration =
+      Number.isFinite(playbackDuration) && playbackDuration > 0
+        ? playbackDuration
+        : recording.recordingDurationSeconds;
+    const resolvedRecording = {
+      ...recording,
+      recordingDurationSeconds: resolvedDuration,
+    };
+    setRecordings((current) =>
+      current.map((item) => (item._id === recording._id ? resolvedRecording : item)),
+    );
+    setActiveRecording(resolvedRecording);
     setCurrentTime(0);
-    setPlayerDuration(recording.recordingDurationSeconds);
+    setPlayerDuration(resolvedDuration || 0);
+    setDurationIsVerified(result.durationVerified === true);
     setIsPlaying(false);
     setIsMuted(false);
     setPlaybackUrl(`${getBackendUrl()}${result.playbackUrl}`);
@@ -213,6 +228,8 @@ export function RecordedLectures() {
     setActiveRecording(null);
     setPlaybackUrl("");
     setCurrentTime(0);
+    setPlayerDuration(0);
+    setDurationIsVerified(false);
     setIsPlaying(false);
   };
 
@@ -365,7 +382,9 @@ export function RecordedLectures() {
                       </span>
                       <span className="flex items-center gap-1">
                         <Icon name="schedule" className="text-[14px]" />
-                        {formatPlaybackTime(recording.recordingDurationSeconds)}
+                        {recording.recordingDurationSeconds
+                          ? formatPlaybackTime(recording.recordingDurationSeconds)
+                          : "Duration pending"}
                       </span>
                       {isPublished && (isAdmin || isTeacher) && (
                         <span>{recording.visibleToStudents ? "Students can view" : "Private"}</span>
@@ -467,15 +486,25 @@ export function RecordedLectures() {
                 onClick={() => void togglePlayback()}
                 onLoadedMetadata={(event) => {
                   const nativeDuration = event.currentTarget.duration;
-                  const measuredDuration = activeRecording.recordingDurationSeconds;
-                  const nativeDurationLooksReliable =
+                  if (
+                    !durationIsVerified &&
                     Number.isFinite(nativeDuration) &&
-                    nativeDuration > 0 &&
-                    nativeDuration >= measuredDuration * 0.8 &&
-                    nativeDuration <= measuredDuration * 1.2;
-                  setPlayerDuration(
-                    nativeDurationLooksReliable ? nativeDuration : measuredDuration,
-                  );
+                    nativeDuration > 0
+                  ) {
+                    setPlayerDuration(nativeDuration);
+                  } else if (activeRecording.recordingDurationSeconds) {
+                    setPlayerDuration(activeRecording.recordingDurationSeconds);
+                  }
+                }}
+                onDurationChange={(event) => {
+                  const nativeDuration = event.currentTarget.duration;
+                  if (
+                    !durationIsVerified &&
+                    Number.isFinite(nativeDuration) &&
+                    nativeDuration > 0
+                  ) {
+                    setPlayerDuration(nativeDuration);
+                  }
                 }}
                 onTimeUpdate={(event) => {
                   const time = event.currentTarget.currentTime;
@@ -484,7 +513,16 @@ export function RecordedLectures() {
                 }}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
-                onEnded={() => setIsPlaying(false)}
+                onEnded={(event) => {
+                  setIsPlaying(false);
+                  const endedAt = event.currentTarget.currentTime;
+                  if (endedAt > 0) {
+                    setCurrentTime(endedAt);
+                    setPlayerDuration((duration) =>
+                      Math.abs(duration - endedAt) > 1 ? endedAt : duration,
+                    );
+                  }
+                }}
                 onVolumeChange={(event) => setIsMuted(event.currentTarget.muted)}
                 onError={() => setError("The recording could not be played. Please try again.")}
               >
