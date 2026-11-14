@@ -240,11 +240,11 @@ function PrivacyPolicy() {
       content: (
         <>
           <p>
-            If the Google Drive recording integration is enabled, the Drive owner or administrator
-            grants a dedicated service identity access to the configured recordings folder. SAT
-            Sharks uses that access only to place and manage live-class recording files in that
-            folder and make those recordings available through the SAT Sharks platform. The
-            integration does not require access to unrelated files in the owner's Drive.
+            If the Google Drive recording integration is enabled, the Drive owner authorizes SAT
+            Sharks through Google OAuth. SAT Sharks requests per-file access and uses it to create
+            and manage live-class recordings in the configured folder and make those recordings
+            available through the SAT Sharks platform. The integration is not designed to read
+            unrelated files in the owner&apos;s Drive.
           </p>
           <p>
             Information received from Google APIs is not sold, used for advertising, or transferred
@@ -255,10 +255,9 @@ function PrivacyPolicy() {
             requirements.
           </p>
           <p>
-            The Drive owner or administrator may revoke future access by removing the service
-            identity's permission from the configured folder. Revocation does not automatically
-            delete recording files or platform records already created; contact us to request
-            deletion where applicable.
+            The Drive owner may revoke future access from SAT Sharks Admin Settings or the connected
+            Google Account. Revocation does not automatically delete recording files or platform
+            records already created; contact us to request deletion where applicable.
           </p>
         </>
       ),

@@ -16,6 +16,7 @@ import { CHAT_TOPIC_MESSAGE } from "./chatTopics";
 import type { LiveClassDetails } from "./useClassStatusPoll";
 import { Icon } from "../../components/common/Icon";
 import { liveClassApi, type ClassRecording } from "../../services/liveClassApi";
+import { useBrowserClassRecorder } from "./useBrowserClassRecorder";
 
 interface ClassroomExperienceProps {
   liveClass: LiveClassDetails;
@@ -46,11 +47,19 @@ export function ClassroomExperience({
   const [whiteboardOpen, setWhiteboardOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [recording, setRecording] = useState<ClassRecording>({ status: "NONE" });
-  const [recordingBusy, setRecordingBusy] = useState(false);
   const [recordingNotice, setRecordingNotice] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { localParticipant } = useLocalParticipant();
+  const handleRecordingStatus = useCallback((status: ClassRecording["status"]) => {
+    setRecording((current) => ({ ...current, status }));
+  }, []);
+  const browserRecorder = useBrowserClassRecorder({
+    classId,
+    localParticipant,
+    onStatusChange: handleRecordingStatus,
+    onError: setRecordingNotice,
+  });
   const connectionState = useConnectionState();
   const { attributes } = useParticipantAttributes({ participant: localParticipant });
   const handRaised = attributes?.handRaised === "true";
@@ -133,21 +142,51 @@ export function ClassroomExperience({
   }, [refreshRecording]);
 
   const handleToggleRecording = useCallback(async () => {
-    if (!canModerate || recordingBusy) return;
+    if (!canModerate || browserRecorder.busy) return;
     if (recording.status === "READY" && recording.driveUrl) {
       window.open(recording.driveUrl, "_blank", "noopener,noreferrer");
       return;
     }
-    setRecordingBusy(true);
     setRecordingNotice("");
-    const result =
-      recording.status === "ACTIVE"
-        ? await liveClassApi.stopRecording(classId)
-        : await liveClassApi.startRecording(classId);
-    if (!result.success) setRecordingNotice(result.error || "Unable to update class recording.");
+    if (browserRecorder.active) {
+      await browserRecorder.stopRecording();
+    } else if (recording.status === "ACTIVE") {
+      if (!recording.uploadId) {
+        setRecordingNotice(
+          "This class is being recorded in another teacher or admin browser. Stop it from the browser that started it.",
+        );
+        return;
+      }
+      const shouldAbort = window.confirm(
+        "This recording was started in another browser. Stop and discard that unfinished recording?",
+      );
+      if (!shouldAbort) return;
+      await liveClassApi.abortRecording(
+        classId,
+        recording.uploadId,
+        "Recording was stopped from another moderator browser",
+      );
+    } else {
+      await browserRecorder.startRecording();
+    }
     await refreshRecording();
-    setRecordingBusy(false);
-  }, [canModerate, classId, recording.driveUrl, recording.status, recordingBusy, refreshRecording]);
+  }, [browserRecorder, canModerate, classId, recording, refreshRecording]);
+
+  const handleEndWithRecording = useCallback(async () => {
+    if (browserRecorder.active) {
+      const saved = await browserRecorder.stopRecording();
+      if (!saved) return;
+    }
+    await onEndClass?.();
+  }, [browserRecorder, onEndClass]);
+
+  const handleLeaveWithRecording = useCallback(async () => {
+    if (browserRecorder.active) {
+      const saved = await browserRecorder.stopRecording();
+      if (!saved) return;
+    }
+    onLeave();
+  }, [browserRecorder, onLeave]);
 
   if (
     connectionState === ConnectionState.Disconnected ||
@@ -215,8 +254,8 @@ export function ClassroomExperience({
             status={liveClass.status}
             canModerate={canModerate}
             onStartClass={onStartClass}
-            onEndClass={onEndClass}
-            onLeave={onLeave}
+            onEndClass={handleEndWithRecording}
+            onLeave={() => void handleLeaveWithRecording()}
           />
           {isScreenSharing && (
             <button
@@ -302,11 +341,11 @@ export function ClassroomExperience({
             onOpenWhiteboard={() => setWhiteboardOpen(true)}
             isFullscreen={isFullscreen}
             onToggleFullscreen={handleToggleFullscreen}
-            onLeave={onLeave}
+            onLeave={() => void handleLeaveWithRecording()}
             canModerate={canModerate}
             mediaControlsDisabled={mediaControlsDisabled}
             recordingStatus={recording.status}
-            recordingBusy={recordingBusy}
+            recordingBusy={browserRecorder.busy}
             onToggleRecording={() => void handleToggleRecording()}
           />
         </div>

@@ -4,14 +4,21 @@ import { AdminLayout } from "../../components/layout/AdminLayout";
 import { api } from "../../services/api";
 import { toast } from "sonner";
 import { Icon } from "../../components/common/Icon";
+import { GoogleDriveSettings } from "../../components/admin/GoogleDriveSettings";
 
 export const Route = createFileRoute("/admin/settings")({
   component: AdminSettings,
 });
 
 function AdminSettings() {
-  const [activeSubTab, setActiveSubTab] = useState<"stats" | "sat" | "lums" | "admission">("stats");
-  
+  const [activeSubTab, setActiveSubTab] = useState<
+    "stats" | "sat" | "lums" | "admission" | "drive"
+  >(() =>
+    typeof window !== "undefined" && new URLSearchParams(window.location.search).has("drive")
+      ? "drive"
+      : "stats",
+  );
+
   // Stats State
   const [successRate, setSuccessRate] = useState("");
   const [studentsMentored, setStudentsMentored] = useState("");
@@ -64,7 +71,8 @@ function AdminSettings() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.get("/api/homepage-stats")
+    api
+      .get("/api/homepage-stats")
       .then((res) => {
         if (res.success && res.stats) {
           const s = res.stats;
@@ -168,8 +176,8 @@ function AdminSettings() {
       } else {
         toast.error(res.message || "Failed to update settings.");
       }
-    } catch (err: any) {
-      toast.error(err.message || "An error occurred.");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "An error occurred.");
     } finally {
       setSaving(false);
     }
@@ -231,13 +239,26 @@ function AdminSettings() {
           >
             Admission Counseling Pricing
           </button>
+          <button
+            type="button"
+            onClick={() => setActiveSubTab("drive")}
+            className={`px-5 py-3 text-sm font-semibold border-b-2 transition-all cursor-pointer ${
+              activeSubTab === "drive"
+                ? "border-primary text-primary"
+                : "border-transparent text-on-surface-variant hover:text-on-surface"
+            }`}
+          >
+            Google Drive
+          </button>
         </div>
 
         {loading ? (
           <div className="py-8 text-on-surface-variant font-semibold">Loading settings...</div>
         ) : (
-          <form onSubmit={handleSave} className="space-y-8 bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 shark-shadow">
-            
+          <form
+            onSubmit={handleSave}
+            className="space-y-8 bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 shark-shadow"
+          >
             {/* SUBTAB: HOMEPAGE STATS */}
             {activeSubTab === "stats" && (
               <div className="space-y-6">
@@ -492,12 +513,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇺🇸 United States</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedUsaPk} onChange={(e) => setAdmGuidedUsaPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 4,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedUsaPk}
+                            onChange={(e) => setAdmGuidedUsaPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 4,00,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteUsaPk} onChange={(e) => setAdmCompleteUsaPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 8,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteUsaPk}
+                            onChange={(e) => setAdmCompleteUsaPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 8,00,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -507,12 +546,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇨🇦 Canada</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedCanadaPk} onChange={(e) => setAdmGuidedCanadaPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 2,50,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedCanadaPk}
+                            onChange={(e) => setAdmGuidedCanadaPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 2,50,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteCanadaPk} onChange={(e) => setAdmCompleteCanadaPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 4,50,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteCanadaPk}
+                            onChange={(e) => setAdmCompleteCanadaPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 4,50,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -522,12 +579,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇬🇧 United Kingdom</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedUkPk} onChange={(e) => setAdmGuidedUkPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 3,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedUkPk}
+                            onChange={(e) => setAdmGuidedUkPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 3,00,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteUkPk} onChange={(e) => setAdmCompleteUkPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 6,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteUkPk}
+                            onChange={(e) => setAdmCompleteUkPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 6,00,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -537,12 +612,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇹🇷 Turkey</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedTurkeyPk} onChange={(e) => setAdmGuidedTurkeyPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 2,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedTurkeyPk}
+                            onChange={(e) => setAdmGuidedTurkeyPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 2,00,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteTurkeyPk} onChange={(e) => setAdmCompleteTurkeyPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 3,50,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteTurkeyPk}
+                            onChange={(e) => setAdmCompleteTurkeyPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 3,50,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -552,12 +645,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇪🇺 Europe</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedEuropePk} onChange={(e) => setAdmGuidedEuropePk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 2,50,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedEuropePk}
+                            onChange={(e) => setAdmGuidedEuropePk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 2,50,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteEuropePk} onChange={(e) => setAdmCompleteEuropePk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 4,50,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteEuropePk}
+                            onChange={(e) => setAdmCompleteEuropePk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 4,50,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -567,12 +678,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇦🇪 Gulf Countries</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedGulfPk} onChange={(e) => setAdmGuidedGulfPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 3,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedGulfPk}
+                            onChange={(e) => setAdmGuidedGulfPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 3,00,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteGulfPk} onChange={(e) => setAdmCompleteGulfPk(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. 5,00,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteGulfPk}
+                            onChange={(e) => setAdmCompleteGulfPk(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. 5,00,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -590,12 +719,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇺🇸 United States</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedUsaIntl} onChange={(e) => setAdmGuidedUsaIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $2,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedUsaIntl}
+                            onChange={(e) => setAdmGuidedUsaIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $2,000"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteUsaIntl} onChange={(e) => setAdmCompleteUsaIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $4,500" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteUsaIntl}
+                            onChange={(e) => setAdmCompleteUsaIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $4,500"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -605,12 +752,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇨🇦 Canada</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedCanadaIntl} onChange={(e) => setAdmGuidedCanadaIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $1,500" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedCanadaIntl}
+                            onChange={(e) => setAdmGuidedCanadaIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $1,500"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteCanadaIntl} onChange={(e) => setAdmCompleteCanadaIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $3,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteCanadaIntl}
+                            onChange={(e) => setAdmCompleteCanadaIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $3,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -620,12 +785,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇬🇧 United Kingdom</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedUkIntl} onChange={(e) => setAdmGuidedUkIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $1,800" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedUkIntl}
+                            onChange={(e) => setAdmGuidedUkIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $1,800"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteUkIntl} onChange={(e) => setAdmCompleteUkIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $3,500" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteUkIntl}
+                            onChange={(e) => setAdmCompleteUkIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $3,500"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -635,12 +818,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇹🇷 Turkey</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedTurkeyIntl} onChange={(e) => setAdmGuidedTurkeyIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $1,200" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedTurkeyIntl}
+                            onChange={(e) => setAdmGuidedTurkeyIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $1,200"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteTurkeyIntl} onChange={(e) => setAdmCompleteTurkeyIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $2,500" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteTurkeyIntl}
+                            onChange={(e) => setAdmCompleteTurkeyIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $2,500"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -650,12 +851,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇪🇺 Europe</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedEuropeIntl} onChange={(e) => setAdmGuidedEuropeIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $1,500" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedEuropeIntl}
+                            onChange={(e) => setAdmGuidedEuropeIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $1,500"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteEuropeIntl} onChange={(e) => setAdmCompleteEuropeIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $3,000" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteEuropeIntl}
+                            onChange={(e) => setAdmCompleteEuropeIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $3,000"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -665,12 +884,30 @@ function AdminSettings() {
                       <h3 className="font-bold text-sm text-on-surface mb-3">🇦🇪 Gulf Countries</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Guided Support</label>
-                          <input type="text" value={admGuidedGulfIntl} onChange={(e) => setAdmGuidedGulfIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $1,800" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Guided Support
+                          </label>
+                          <input
+                            type="text"
+                            value={admGuidedGulfIntl}
+                            onChange={(e) => setAdmGuidedGulfIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $1,800"
+                            required
+                          />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">Complete Package</label>
-                          <input type="text" value={admCompleteGulfIntl} onChange={(e) => setAdmCompleteGulfIntl(e.target.value)} className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface" placeholder="e.g. $3,200" required />
+                          <label className="text-[11px] font-bold uppercase text-on-surface-variant block mb-1">
+                            Complete Package
+                          </label>
+                          <input
+                            type="text"
+                            value={admCompleteGulfIntl}
+                            onChange={(e) => setAdmCompleteGulfIntl(e.target.value)}
+                            className="w-full bg-surface-container-high border border-outline-variant/30 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary text-on-surface"
+                            placeholder="e.g. $3,200"
+                            required
+                          />
                         </div>
                       </div>
                     </div>
@@ -679,25 +916,29 @@ function AdminSettings() {
               </div>
             )}
 
-            <div className="pt-4 border-t border-outline-variant/20 flex justify-end">
-              <button
-                type="submit"
-                disabled={saving}
-                className="px-6 py-3 rounded-xl bg-primary hover:bg-accent text-on-primary font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-md"
-              >
-                {saving ? (
-                  <>
-                    <Icon name="hourglass_empty" className="animate-spin text-sm" />
-                    Saving...
-                  </>
-                ) : (
-                  <>
-                    <Icon name="save" className="text-sm" />
-                    Save Settings
-                  </>
-                )}
-              </button>
-            </div>
+            {activeSubTab === "drive" && <GoogleDriveSettings />}
+
+            {activeSubTab !== "drive" && (
+              <div className="pt-4 border-t border-outline-variant/20 flex justify-end">
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="px-6 py-3 rounded-xl bg-primary hover:bg-accent text-on-primary font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center gap-2 cursor-pointer shadow-md"
+                >
+                  {saving ? (
+                    <>
+                      <Icon name="hourglass_empty" className="animate-spin text-sm" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Icon name="save" className="text-sm" />
+                      Save Settings
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </form>
         )}
       </div>

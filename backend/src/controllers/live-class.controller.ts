@@ -28,9 +28,6 @@ import {
 import {
   ClassRecordingNotConfiguredError,
   getDriveRecordingStream,
-  startClassRecording,
-  stopClassRecording,
-  transferRecordingToDrive,
 } from "../services/class-recording.service";
 
 const MIN_TOKEN_TTL_SECONDS = 30 * 60;
@@ -41,14 +38,20 @@ const JOIN_GRACE_MINUTES = 15; // how long after scheduled end a class can still
 // room name. Accept both so legacy scheduled classes and existing links remain
 // joinable, while avoiding findById cast errors for non-ObjectId room names.
 const findLiveClassByIdentifier = (identifierParam: string | string[]) => {
-  const identifier = Array.isArray(identifierParam) ? identifierParam[0] : identifierParam;
+  const identifier = Array.isArray(identifierParam)
+    ? identifierParam[0]
+    : identifierParam;
   const identifiers: Record<string, unknown>[] = [{ roomName: identifier }];
-  if (mongoose.isValidObjectId(identifier)) identifiers.push({ _id: identifier });
+  if (mongoose.isValidObjectId(identifier))
+    identifiers.push({ _id: identifier });
   return LiveClass.findOne({ $or: identifiers });
 };
 
 const handleServiceError = (res: Response, error: any) => {
-  if (error instanceof LiveKitNotConfiguredError || error instanceof LiveKitJoinUnavailableError) {
+  if (
+    error instanceof LiveKitNotConfiguredError ||
+    error instanceof LiveKitJoinUnavailableError
+  ) {
     return res.status(503).json({ success: false, error: error.message });
   }
   return sendError(res, error, "live-class.handler");
@@ -57,10 +60,20 @@ const handleServiceError = (res: Response, error: any) => {
 // Create a new online class session
 export const createLiveClass = async (req: AuthRequest, res: Response) => {
   try {
-    const { title, description, scheduledAt, duration, teacherId, maxStudents } = req.body;
+    const {
+      title,
+      description,
+      scheduledAt,
+      duration,
+      teacherId,
+      maxStudents,
+    } = req.body;
 
     if (!title || !scheduledAt || !teacherId) {
-      return res.status(400).json({ success: false, error: "Title, scheduled time, and teacher are required" });
+      return res.status(400).json({
+        success: false,
+        error: "Title, scheduled time, and teacher are required",
+      });
     }
 
     // Pre-generate the _id so roomName (the LiveKit room identifier) can be set in the same insert.
@@ -145,14 +158,19 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const createRecordingPlaybackSession = async (req: AuthRequest, res: Response) => {
+export const createRecordingPlaybackSession = async (
+  req: AuthRequest,
+  res: Response,
+) => {
   try {
     const recording = await LiveClass.findOne({
       _id: req.params.recordingId,
       ...recordingAccessQuery(req),
     }).select("_id");
     if (!recording) {
-      return res.status(404).json({ success: false, error: "Recorded lecture not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Recorded lecture not found" });
     }
     const token = jwt.sign(
       {
@@ -172,17 +190,27 @@ export const createRecordingPlaybackSession = async (req: AuthRequest, res: Resp
   }
 };
 
-export const streamRecordedLecture = async (req: AuthRequest, res: Response) => {
+export const streamRecordedLecture = async (
+  req: AuthRequest,
+  res: Response,
+) => {
   try {
     const rawToken = typeof req.query.token === "string" ? req.query.token : "";
     let payload: { typ?: string; recordingId?: string };
     try {
       payload = jwt.verify(rawToken, env.jwtSecret) as typeof payload;
     } catch {
-      return res.status(401).json({ success: false, error: "Playback link expired" });
+      return res
+        .status(401)
+        .json({ success: false, error: "Playback link expired" });
     }
-    if (payload.typ !== "recording-playback" || payload.recordingId !== req.params.recordingId) {
-      return res.status(401).json({ success: false, error: "Invalid playback link" });
+    if (
+      payload.typ !== "recording-playback" ||
+      payload.recordingId !== req.params.recordingId
+    ) {
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid playback link" });
     }
     const recording = await LiveClass.findOne({
       _id: req.params.recordingId,
@@ -190,19 +218,26 @@ export const streamRecordedLecture = async (req: AuthRequest, res: Response) => 
       recordingDriveFileId: { $nin: [null, ""] },
     }).select("recordingDriveFileId");
     if (!recording?.recordingDriveFileId) {
-      return res.status(404).json({ success: false, error: "Recorded lecture not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Recorded lecture not found" });
     }
 
     const driveResponse = await getDriveRecordingStream(
       recording.recordingDriveFileId,
       req.headers.range,
     );
-    const sourceHeaders = driveResponse.headers as unknown as Record<string, unknown> & {
+    const sourceHeaders = driveResponse.headers as unknown as Record<
+      string,
+      unknown
+    > & {
       get?: (name: string) => string | null;
     };
     const copyHeader = (name: string, fallback?: string) => {
       const value =
-        typeof sourceHeaders.get === "function" ? sourceHeaders.get(name) : sourceHeaders[name];
+        typeof sourceHeaders.get === "function"
+          ? sourceHeaders.get(name)
+          : sourceHeaders[name];
       if (value !== undefined) res.setHeader(name, String(value));
       else if (fallback) res.setHeader(name, fallback);
     };
@@ -213,7 +248,10 @@ export const streamRecordedLecture = async (req: AuthRequest, res: Response) => 
     res.setHeader("cache-control", "private, no-store");
     res.status(driveResponse.status === 206 ? 206 : 200);
     (driveResponse.data as NodeJS.ReadableStream).on("error", (error) => {
-      console.error("[Recording] Playback stream failed", { recordingId: req.params.recordingId, error });
+      console.error("[Recording] Playback stream failed", {
+        recordingId: req.params.recordingId,
+        error,
+      });
       if (!res.headersSent) res.status(502).end();
       else res.destroy(error as Error);
     });
@@ -234,7 +272,9 @@ export const getLiveClassById = async (req: AuthRequest, res: Response) => {
       .populate("createdBy", "name email");
 
     if (!liveClass) {
-      return res.status(404).json({ success: false, error: "Class session not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     }
 
     res.status(200).json({ success: true, liveClass });
@@ -244,7 +284,10 @@ export const getLiveClassById = async (req: AuthRequest, res: Response) => {
 };
 
 // Update live class status (e.g., start class or complete class)
-export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => {
+export const updateLiveClassStatus = async (
+  req: AuthRequest,
+  res: Response,
+) => {
   try {
     const { status } = req.body;
     if (!["SCHEDULED", "LIVE", "COMPLETED", "CANCELLED"].includes(status)) {
@@ -253,12 +296,19 @@ export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => 
 
     const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
-      return res.status(404).json({ success: false, error: "Class session not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     }
 
     // Security check: only teacher or admin can modify status
-    if (req.user?.role !== "ADMIN" && String(liveClass.teacher) !== String(req.user?.userId)) {
-      return res.status(403).json({ success: false, error: "Unauthorized to update this class" });
+    if (
+      req.user?.role !== "ADMIN" &&
+      String(liveClass.teacher) !== String(req.user?.userId)
+    ) {
+      return res
+        .status(403)
+        .json({ success: false, error: "Unauthorized to update this class" });
     }
 
     // Classes created before roomName existed on the schema won't have it set yet - backfill deterministically.
@@ -272,12 +322,13 @@ export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => 
     }
 
     if (status === "COMPLETED" && liveClass.status !== "COMPLETED") {
-      if (["STARTING", "ACTIVE"].includes(liveClass.recordingStatus)) {
-        await stopClassRecording(liveClass).catch((error) => {
-          console.error("[Recording] Unable to stop recording while ending class", {
-            roomName: liveClass.roomName,
-            message: error instanceof Error ? error.message : "Unknown recording error",
-          });
+      if (
+        ["STARTING", "ACTIVE", "PROCESSING"].includes(liveClass.recordingStatus)
+      ) {
+        return res.status(409).json({
+          success: false,
+          error:
+            "Stop the browser recording and wait for it to finish saving before ending the class.",
         });
       }
       await deleteRoomIfExists(liveClass.roomName);
@@ -286,17 +337,6 @@ export const updateLiveClassStatus = async (req: AuthRequest, res: Response) => 
 
     liveClass.status = status;
     await liveClass.save();
-
-    // Record every configured class automatically. A recording-provider failure
-    // is stored on the class but must never prevent students from entering.
-    if (status === "LIVE" && !["STARTING", "ACTIVE", "PROCESSING"].includes(liveClass.recordingStatus)) {
-      await startClassRecording(liveClass).catch((error) => {
-        console.error("[Recording] Automatic recording could not start", {
-          roomName: liveClass.roomName,
-          message: error instanceof Error ? error.message : "Unknown recording error",
-        });
-      });
-    }
 
     res.status(200).json({ success: true, liveClass });
   } catch (error: any) {
@@ -309,22 +349,35 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
   try {
     const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
-      return res.status(404).json({ success: false, error: "Class session not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     }
 
     if (liveClass.status === "LIVE") {
-      return res.status(409).json({ success: false, error: "End the live class before deleting it." });
-    }
-    if (["STARTING", "ACTIVE", "PROCESSING"].includes(liveClass.recordingStatus)) {
       return res.status(409).json({
         success: false,
-        error: "Wait for the class recording to finish saving to Drive before deleting this class.",
+        error: "End the live class before deleting it.",
+      });
+    }
+    if (
+      ["STARTING", "ACTIVE", "PROCESSING"].includes(liveClass.recordingStatus)
+    ) {
+      return res.status(409).json({
+        success: false,
+        error:
+          "Wait for the class recording to finish saving to Drive before deleting this class.",
       });
     }
 
     // Only creator/teacher/admin can delete
-    if (req.user?.role !== "ADMIN" && String(liveClass.createdBy) !== String(req.user?.userId)) {
-      return res.status(403).json({ success: false, error: "Unauthorized to delete this class" });
+    if (
+      req.user?.role !== "ADMIN" &&
+      String(liveClass.createdBy) !== String(req.user?.userId)
+    ) {
+      return res
+        .status(403)
+        .json({ success: false, error: "Unauthorized to delete this class" });
     }
 
     if (env.isLiveKitConfigured) {
@@ -333,16 +386,31 @@ export const deleteLiveClass = async (req: AuthRequest, res: Response) => {
     const session = await mongoose.startSession();
     try {
       await session.withTransaction(async () => {
-        await LiveClassAttendance.deleteMany({ liveClass: liveClass._id }, { session });
-        await LiveClassChatMessage.deleteMany({ liveClass: liveClass._id }, { session });
-        await LiveClassPoll.deleteMany({ liveClass: liveClass._id }, { session });
-        await LiveClassWhiteboardStroke.deleteMany({ liveClass: liveClass._id }, { session });
+        await LiveClassAttendance.deleteMany(
+          { liveClass: liveClass._id },
+          { session },
+        );
+        await LiveClassChatMessage.deleteMany(
+          { liveClass: liveClass._id },
+          { session },
+        );
+        await LiveClassPoll.deleteMany(
+          { liveClass: liveClass._id },
+          { session },
+        );
+        await LiveClassWhiteboardStroke.deleteMany(
+          { liveClass: liveClass._id },
+          { session },
+        );
         await LiveClass.deleteOne({ _id: liveClass._id }, { session });
       });
     } finally {
       await session.endSession();
     }
-    res.status(200).json({ success: true, message: "Class and its session records deleted successfully" });
+    res.status(200).json({
+      success: true,
+      message: "Class and its session records deleted successfully",
+    });
   } catch (error) {
     sendError(res, error, "live-class.deleteLiveClass");
   }
@@ -353,7 +421,9 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
   try {
     const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
-      return res.status(404).json({ success: false, error: "Class session not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     }
     if (!liveClass.roomName) {
       liveClass.roomName = String(liveClass._id);
@@ -363,12 +433,17 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
     const role = req.user?.role;
     const userId = req.user?.userId;
     if (!role || !userId) {
-      return res.status(401).json({ success: false, error: "Unable to authenticate with classroom." });
+      return res.status(401).json({
+        success: false,
+        error: "Unable to authenticate with classroom.",
+      });
     }
     const isTeacherOfClass = String(liveClass.teacher) === String(userId);
 
     if (role === "TEACHER" && !isTeacherOfClass) {
-      return res.status(403).json({ success: false, error: "You are not assigned to this class" });
+      return res
+        .status(403)
+        .json({ success: false, error: "You are not assigned to this class" });
     }
 
     if (role === "STUDENT") {
@@ -381,45 +456,79 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
       }
 
       const now = new Date();
-      const opensAt = new Date(liveClass.scheduledAt.getTime() - JOIN_BUFFER_MINUTES * 60000);
-      const classStart = liveClass.startedAt && liveClass.startedAt > liveClass.scheduledAt
-        ? liveClass.startedAt
-        : liveClass.scheduledAt;
-      const closesAt = new Date(classStart.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000);
+      const opensAt = new Date(
+        liveClass.scheduledAt.getTime() - JOIN_BUFFER_MINUTES * 60000,
+      );
+      const classStart =
+        liveClass.startedAt && liveClass.startedAt > liveClass.scheduledAt
+          ? liveClass.startedAt
+          : liveClass.scheduledAt;
+      const closesAt = new Date(
+        classStart.getTime() +
+          (liveClass.duration + JOIN_GRACE_MINUTES) * 60000,
+      );
 
       // If the class is not yet live, enforce the opening join window.
       // If the class is already live, allow students to join even if the session has run overtime.
       if (liveClass.status !== "LIVE") {
         if (now < opensAt || now > closesAt) {
-          return res.status(403).json({ success: false, error: "This class is not within its scheduled join window." });
+          return res.status(403).json({
+            success: false,
+            error: "This class is not within its scheduled join window.",
+          });
         }
-        return res.status(409).json({ success: false, error: "Waiting for the teacher to start the class.", waiting: true });
+        return res.status(409).json({
+          success: false,
+          error: "Waiting for the teacher to start the class.",
+          waiting: true,
+        });
       }
 
       const participants = await listRoomParticipants(liveClass.roomName);
-      const isAlreadyInRoom = participants.some((p: any) => String(p.identity) === String(userId));
-      if (!isAlreadyInRoom && countStudentParticipants(participants, String(liveClass.teacher)) >= liveClass.maxStudents) {
-        return res.status(403).json({ success: false, error: "This class has reached its maximum number of students." });
+      const isAlreadyInRoom = participants.some(
+        (p: any) => String(p.identity) === String(userId),
+      );
+      if (
+        !isAlreadyInRoom &&
+        countStudentParticipants(participants, String(liveClass.teacher)) >=
+          liveClass.maxStudents
+      ) {
+        return res.status(403).json({
+          success: false,
+          error: "This class has reached its maximum number of students.",
+        });
       }
     }
 
-    if ((role === "TEACHER" || role === "ADMIN") && liveClass.status !== "LIVE" && liveClass.status !== "SCHEDULED") {
-      return res.status(409).json({ success: false, error: "This class is not currently active." });
+    if (
+      (role === "TEACHER" || role === "ADMIN") &&
+      liveClass.status !== "LIVE" &&
+      liveClass.status !== "SCHEDULED"
+    ) {
+      return res
+        .status(409)
+        .json({ success: false, error: "This class is not currently active." });
     }
 
     // Room may not exist yet if a teacher/admin is joining ahead of "Start Class" - create it defensively.
     await ensureRoomExists(liveClass.roomName, liveClass.maxStudents);
 
     const user = await User.findById(userId).select("name");
-    const classStart = liveClass.startedAt && liveClass.startedAt > liveClass.scheduledAt
-      ? liveClass.startedAt
-      : liveClass.scheduledAt;
+    const classStart =
+      liveClass.startedAt && liveClass.startedAt > liveClass.scheduledAt
+        ? liveClass.startedAt
+        : liveClass.scheduledAt;
     const ttlSeconds = Math.min(
       MAX_TOKEN_TTL_SECONDS,
       Math.max(
         MIN_TOKEN_TTL_SECONDS,
-        Math.round((classStart.getTime() + (liveClass.duration + JOIN_GRACE_MINUTES) * 60000 - Date.now()) / 1000)
-      )
+        Math.round(
+          (classStart.getTime() +
+            (liveClass.duration + JOIN_GRACE_MINUTES) * 60000 -
+            Date.now()) /
+            1000,
+        ),
+      ),
     );
 
     const token = await issueRoomToken({
@@ -453,18 +562,28 @@ export const generateJoinToken = async (req: AuthRequest, res: Response) => {
       ttlSeconds,
     });
 
-    res.status(200).json({ success: true, token, url: env.livekitUrl, roomName: liveClass.roomName });
+    res.status(200).json({
+      success: true,
+      token,
+      url: env.livekitUrl,
+      roomName: liveClass.roomName,
+    });
   } catch (error: any) {
     handleServiceError(res, error);
   }
 };
 
 // Lightweight participant count, used by dashboard cards for "Students Joined" - only meaningful once LIVE.
-export const getLiveClassParticipants = async (req: AuthRequest, res: Response) => {
+export const getLiveClassParticipants = async (
+  req: AuthRequest,
+  res: Response,
+) => {
   try {
     const liveClass = await findLiveClassByIdentifier(req.params.id);
     if (!liveClass) {
-      return res.status(404).json({ success: false, error: "Class session not found" });
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     }
     if (liveClass.status !== "LIVE") {
       return res.status(200).json({ success: true, count: 0 });
@@ -479,36 +598,65 @@ export const getLiveClassParticipants = async (req: AuthRequest, res: Response) 
   }
 };
 
-const assertModeratorAccess = async (req: AuthRequest, liveClass: InstanceType<typeof LiveClass>) => {
+const assertModeratorAccess = async (
+  req: AuthRequest,
+  liveClass: InstanceType<typeof LiveClass>,
+) => {
   const role = req.user?.role;
   if (role === "ADMIN") return true;
-  if (role === "TEACHER" && String(liveClass.teacher) === String(req.user?.userId)) return true;
+  if (
+    role === "TEACHER" &&
+    String(liveClass.teacher) === String(req.user?.userId)
+  )
+    return true;
   return false;
 };
 
 export const muteParticipant = async (req: AuthRequest, res: Response) => {
   try {
     const liveClass = await findLiveClassByIdentifier(req.params.id);
-    if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
+    if (!liveClass)
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     if (!(await assertModeratorAccess(req, liveClass))) {
-      return res.status(403).json({ success: false, error: "Only the teacher or an admin can do this" });
+      return res.status(403).json({
+        success: false,
+        error: "Only the teacher or an admin can do this",
+      });
     }
     const { muted } = req.body;
-    await muteRoomParticipant(liveClass.roomName, String(req.params.identity), Boolean(muted));
+    await muteRoomParticipant(
+      liveClass.roomName,
+      String(req.params.identity),
+      Boolean(muted),
+    );
     res.status(200).json({ success: true });
   } catch (error: any) {
     handleServiceError(res, error);
   }
 };
 
-export const removeParticipantFromClass = async (req: AuthRequest, res: Response) => {
+export const removeParticipantFromClass = async (
+  req: AuthRequest,
+  res: Response,
+) => {
   try {
     const liveClass = await findLiveClassByIdentifier(req.params.id);
-    if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
+    if (!liveClass)
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     if (!(await assertModeratorAccess(req, liveClass))) {
-      return res.status(403).json({ success: false, error: "Only the teacher or an admin can do this" });
+      return res.status(403).json({
+        success: false,
+        error: "Only the teacher or an admin can do this",
+      });
     }
-    await removeRoomParticipant(liveClass.roomName, String(req.params.identity));
+    await removeRoomParticipant(
+      liveClass.roomName,
+      String(req.params.identity),
+    );
     res.status(200).json({ success: true });
   } catch (error: any) {
     handleServiceError(res, error);
@@ -519,7 +667,9 @@ export const removeParticipantFromClass = async (req: AuthRequest, res: Response
 
 export const getChatHistory = async (req: AuthRequest, res: Response) => {
   try {
-    const messages = await LiveClassChatMessage.find({ liveClass: req.params.id })
+    const messages = await LiveClassChatMessage.find({
+      liveClass: req.params.id,
+    })
       .sort({ createdAt: 1 })
       .limit(200);
     res.status(200).json({ success: true, messages });
@@ -532,10 +682,15 @@ export const postChatMessage = async (req: AuthRequest, res: Response) => {
   try {
     const { text } = req.body;
     if (!text || !text.trim()) {
-      return res.status(400).json({ success: false, error: "Message text is required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Message text is required" });
     }
     const liveClass = await findLiveClassByIdentifier(req.params.id);
-    if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
+    if (!liveClass)
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
 
     const user = await User.findById(req.user?.userId).select("name");
     const message = await LiveClassChatMessage.create({
@@ -555,16 +710,25 @@ export const postChatMessage = async (req: AuthRequest, res: Response) => {
 export const deleteChatMessage = async (req: AuthRequest, res: Response) => {
   try {
     const liveClass = await findLiveClassByIdentifier(req.params.id);
-    if (!liveClass) return res.status(404).json({ success: false, error: "Class session not found" });
+    if (!liveClass)
+      return res
+        .status(404)
+        .json({ success: false, error: "Class session not found" });
     if (!(await assertModeratorAccess(req, liveClass))) {
-      return res.status(403).json({ success: false, error: "Only the teacher or an admin can delete messages" });
+      return res.status(403).json({
+        success: false,
+        error: "Only the teacher or an admin can delete messages",
+      });
     }
     const message = await LiveClassChatMessage.findOneAndUpdate(
       { _id: req.params.messageId, liveClass: liveClass._id },
       { deleted: true },
-      { new: true }
+      { new: true },
     );
-    if (!message) return res.status(404).json({ success: false, error: "Message not found" });
+    if (!message)
+      return res
+        .status(404)
+        .json({ success: false, error: "Message not found" });
     res.status(200).json({ success: true, message });
   } catch (error) {
     sendError(res, error, "live-class.deleteChatMessage");
@@ -591,7 +755,10 @@ export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
     if (!roomName) return res.status(200).json({ received: true });
 
     if (event.event === "room_started") {
-      await LiveClass.updateOne({ roomName, startedAt: null }, { startedAt: new Date() });
+      await LiveClass.updateOne(
+        { roomName, startedAt: null },
+        { startedAt: new Date() },
+      );
     }
 
     // A room can finish after a temporary period with no connected clients.
@@ -602,7 +769,10 @@ export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
       const liveClass = await LiveClass.findOne({ roomName });
       const identity = event.participant.identity;
       if (liveClass && mongoose.isValidObjectId(identity)) {
-        const student = await User.findOne({ _id: identity, role: "STUDENT" }).select("_id");
+        const student = await User.findOne({
+          _id: identity,
+          role: "STUDENT",
+        }).select("_id");
         if (student) {
           await LiveClassAttendance.create({
             liveClass: liveClass._id,
@@ -618,47 +788,14 @@ export const liveKitWebhook = async (req: AuthRequest, res: Response) => {
       const liveClass = await LiveClass.findOne({ roomName });
       if (liveClass) {
         await LiveClassAttendance.findOneAndUpdate(
-          { liveClass: liveClass._id, identity: event.participant.identity, leftAt: null },
-          { leftAt: new Date() },
-          { sort: { joinedAt: -1 } }
-        );
-      }
-    }
-
-    if (event.event === "egress_started" && event.egressInfo) {
-      await LiveClass.updateOne(
-        { roomName },
-        {
-          recordingStatus: "ACTIVE",
-          recordingEgressId: event.egressInfo.egressId,
-          recordingStartedAt: new Date(),
-          recordingError: null,
-        },
-      );
-    }
-
-    if (event.event === "egress_ended" && event.egressInfo) {
-      const file = event.egressInfo.fileResults[0];
-      if (event.egressInfo.error || !file) {
-        await LiveClass.updateOne(
-          { roomName },
           {
-            recordingStatus: "FAILED",
-            recordingError: (event.egressInfo.error || "Recording finished without an output file").slice(0, 500),
-            recordingEndedAt: new Date(),
+            liveClass: liveClass._id,
+            identity: event.participant.identity,
+            leftAt: null,
           },
+          { leftAt: new Date() },
+          { sort: { joinedAt: -1 } },
         );
-      } else {
-        await LiveClass.updateOne(
-          { roomName },
-          { recordingStatus: "PROCESSING", recordingEndedAt: new Date() },
-        );
-        // The file can be large, so acknowledge LiveKit's signed webhook first
-        // and let the long-running Railway process stream it to Drive.
-        void transferRecordingToDrive(roomName, {
-          filename: file.filename,
-          location: file.location,
-        });
       }
     }
 

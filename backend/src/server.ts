@@ -19,9 +19,11 @@ app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
 const productionFrontendOrigins = new Set(
-  [env.frontendUrl, "https://satsharks-frontend.vercel.app", ...env.extraCorsOrigins].map((origin) =>
-    origin.replace(/\/$/, ""),
-  ),
+  [
+    env.frontendUrl,
+    "https://satsharks-frontend.vercel.app",
+    ...env.extraCorsOrigins,
+  ].map((origin) => origin.replace(/\/$/, "")),
 );
 
 /**
@@ -56,7 +58,11 @@ app.use(
 
 // Stripe webhook must come BEFORE express.json() because it needs the raw body
 import { stripeWebhook } from "./controllers/payment.controller";
-app.post("/api/payment/webhook/stripe", express.raw({ type: "application/json" }), stripeWebhook);
+app.post(
+  "/api/payment/webhook/stripe",
+  express.raw({ type: "application/json" }),
+  stripeWebhook,
+);
 
 // LiveKit webhooks use application/webhook+json and must be parsed as raw bytes
 // before the global JSON parser. The signature covers the exact request body.
@@ -128,6 +134,7 @@ import reportRoutes from "./routes/report.routes";
 import liveClassRoutes from "./routes/live-class.routes";
 import vocabularyRoutes from "./routes/vocabulary.routes";
 import homepageStatsRoutes from "./routes/homepage-stats.routes";
+import integrationRoutes from "./routes/integration.routes";
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -152,6 +159,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/live-classes", liveClassRoutes);
 app.use("/api/vocabulary", vocabularyRoutes);
 app.use("/api/homepage-stats", homepageStatsRoutes);
+app.use("/api/integrations", integrationRoutes);
 
 /**
  * Uploaded files.
@@ -262,10 +270,14 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   if (typeof err === "object" && err !== null && "type" in err) {
     const bodyError = err as { type?: string; status?: number };
     if (bodyError.type === "entity.too.large") {
-      return res.status(413).json({ success: false, error: "Request payload is too large." });
+      return res
+        .status(413)
+        .json({ success: false, error: "Request payload is too large." });
     }
     if (bodyError.type === "entity.parse.failed") {
-      return res.status(400).json({ success: false, error: "Malformed JSON body." });
+      return res
+        .status(400)
+        .json({ success: false, error: "Malformed JSON body." });
     }
   }
 
@@ -273,7 +285,10 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   const status = (err as { status?: number })?.status ?? 500;
   res.status(status >= 400 && status < 600 ? status : 500).json({
     success: false,
-    error: status < 500 ? (err as Error)?.message || "Request failed" : "Server Error",
+    error:
+      status < 500
+        ? (err as Error)?.message || "Request failed"
+        : "Server Error",
   });
 });
 

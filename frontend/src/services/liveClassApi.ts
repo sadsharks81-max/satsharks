@@ -1,4 +1,4 @@
-import { api } from "./api";
+import { api, getBackendUrl, getStoredToken } from "./api";
 
 export interface JoinTokenResponse {
   success: boolean;
@@ -49,6 +49,8 @@ export interface ClassRecording {
   status: RecordingStatus;
   driveUrl?: string | null;
   error?: string | null;
+  uploadId?: string;
+  uploadedBytes?: number;
 }
 
 export const liveClassApi = {
@@ -127,11 +129,49 @@ export const liveClassApi = {
 
   startRecording: (
     classId: string,
-  ): Promise<{ success: boolean; recording?: ClassRecording; error?: string }> =>
-    api.post(`/api/live-classes/${classId}/recording/start`, {}),
+    mimeType: string,
+  ): Promise<{
+    success: boolean;
+    uploadId?: string;
+    recording?: ClassRecording;
+    error?: string;
+  }> => api.post(`/api/live-classes/${classId}/recording/start`, { mimeType }),
 
-  stopRecording: (
+  uploadRecordingChunk: async (
     classId: string,
-  ): Promise<{ success: boolean; recording?: ClassRecording; error?: string }> =>
-    api.post(`/api/live-classes/${classId}/recording/stop`, {}),
+    uploadId: string,
+    chunk: Uint8Array,
+    offset: number,
+    final: boolean,
+  ): Promise<{
+    success: boolean;
+    nextOffset?: number;
+    complete?: boolean;
+    expectedOffset?: number;
+    error?: string;
+  }> => {
+    const token = getStoredToken();
+    const response = await fetch(
+      `${getBackendUrl()}/api/live-classes/${classId}/recording/uploads/${uploadId}/chunk?final=${final}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/octet-stream",
+          "X-Upload-Offset": String(offset),
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: chunk as unknown as BodyInit,
+      },
+    );
+    const result = await response.json().catch(() => null);
+    return (
+      result || {
+        success: false,
+        error: `Recording upload failed with status ${response.status}`,
+      }
+    );
+  },
+
+  abortRecording: (classId: string, uploadId: string, reason: string) =>
+    api.post(`/api/live-classes/${classId}/recording/uploads/${uploadId}/abort`, { reason }),
 };

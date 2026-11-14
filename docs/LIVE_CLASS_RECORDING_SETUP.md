@@ -1,50 +1,44 @@
 # Live class recording setup
 
-The classroom now starts a LiveKit room-composite MP4 recording automatically when a class becomes `LIVE`. Teachers and admins can also start or stop it from the classroom toolbar. LiveKit writes the MP4 to a temporary Google Cloud Storage bucket; when the signed `egress_ended` webhook arrives, the backend streams the file into Google Drive and removes the staging object.
-
-## Required Google resources
-
-1. Create a Google Cloud Storage bucket for temporary recording files.
-2. Create a Google service account and grant it narrowly scoped object create/read/delete access to that bucket.
-3. Use a folder inside a **Google Shared Drive** as the final destination. Add the service-account email as a member with permission to add files.
-
-Google service accounts do not have personal Drive storage quota, so a folder in an individual's My Drive is not a reliable destination. A Shared Drive owns the uploaded recordings.
+SATSharks records the screen selected by the teacher in Chrome or Edge. The browser mixes the teacher microphone with any screen or tab audio the browser allows, then continuously uploads WebM chunks through the Railway backend into one Google Drive file. Google Cloud Storage and LiveKit Egress are not used.
 
 ## Backend environment
 
-Set these values in the backend deployment (never commit the real key):
+Set these values on the Railway backend service:
 
 ```dotenv
-GOOGLE_SERVICE_ACCOUNT_EMAIL=recordings@your-project.iam.gserviceaccount.com
-GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-RECORDING_GCP_BUCKET=your-livekit-recordings-staging-bucket
-RECORDING_DRIVE_FOLDER_ID=https://drive.google.com/drive/folders/your-folder-id
+GOOGLE_DRIVE_CLIENT_ID=your-oauth-client-id.apps.googleusercontent.com
+GOOGLE_DRIVE_CLIENT_SECRET=your-oauth-client-secret
+GOOGLE_DRIVE_FOLDER_ID=https://drive.google.com/drive/folders/your-folder-id
+GOOGLE_DRIVE_REDIRECT_URI=https://YOUR-BACKEND/api/integrations/google-drive/callback
 ```
 
-`RECORDING_DRIVE_FOLDER_ID` accepts either the folder ID or the complete Drive folder URL supplied by the client.
+The folder value can be either a folder ID or a complete Drive folder URL. Never put the client secret in frontend variables or source control.
 
-The existing LiveKit values are also required:
+In the Google OAuth web client, add `GOOGLE_DRIVE_REDIRECT_URI` as an exact authorized redirect URI and enable the Google Drive API for the project.
 
-```dotenv
-LIVEKIT_URL=wss://your-project.livekit.cloud
-LIVEKIT_API_KEY=your-livekit-api-key
-LIVEKIT_API_SECRET=your-livekit-api-secret
-```
+## One-time administrator connection
 
-## LiveKit webhook
+After deploying the backend and frontend:
 
-Configure the LiveKit project webhook to send signed events to:
+1. Sign in to SATSharks as an administrator.
+2. Open **Admin Settings > Google Drive**.
+3. Click **Connect Google Drive**.
+4. Sign in with the Google account that owns or can edit the configured folder and approve access.
 
-```text
-https://YOUR-BACKEND/api/live-classes/webhook
-```
+Only one administrator performs this connection. Both assigned teachers and administrators can then record their live classes. The refresh authorization is encrypted before it is stored in MongoDB.
 
-The same endpoint already handles attendance. Recording delivery uses `egress_started` and `egress_ended` events. A recording moves through `STARTING`, `ACTIVE`, `PROCESSING`, and `READY`; transfer errors are stored as `FAILED` and can be retried by starting another recording while the class is live.
+## Teacher workflow
+
+1. Start the live class and click **Record**.
+2. Choose **Entire screen**, a window, or a browser tab. Enable **Share system audio** or **Share tab audio** when the browser offers it.
+3. Keep the classroom tab and laptop awake while recording. Uploading happens throughout the class, so there is no separate two-hour upload at the end.
+4. Click **Stop recording** and wait until the recording reaches `READY` before ending or leaving the class.
+
+Closing the browser, shutting down the laptop, losing the network for too long, or revoking Google access can leave an unfinished session. Another teacher/admin can discard a stale session from the classroom and begin again; an incomplete Drive upload is never published to students.
 
 ## Recorded Lectures library
 
-When a recording reaches `READY`, it appears automatically in the **Recorded Lectures** tab for students and admins. Teachers see recordings for the classes assigned to them. The browser requests a short-lived playback session and streams the MP4 through the SATSharks backend with byte-range support, so viewers stay inside the SATSharks player and never receive a Google Drive page link.
+When the final chunk reaches Drive, the recording appears automatically in **Recorded Lectures**. Students and teachers play it through the SATSharks video player; the backend proxies the Drive media with byte-range support, so the viewer is not redirected to Google Drive.
 
-Until at least one recording reaches `READY`, each dashboard shows the empty state **No recorded lectures yet**.
-
-References: [LiveKit egress outputs](https://docs.livekit.io/transport/media/ingress-egress/egress/outputs/), [LiveKit room composite recording](https://docs.livekit.io/transport/media/ingress-egress/egress/room-composite/), and [Google Shared Drives](https://developers.google.com/workspace/drive/api/guides/about-shareddrives).
+References: [Google OAuth web-server flow](https://developers.google.com/identity/protocols/oauth2/web-server), [Drive resumable uploads](https://developers.google.com/workspace/drive/api/guides/manage-uploads), and [Drive API scopes](https://developers.google.com/workspace/drive/api/guides/api-specific-auth).

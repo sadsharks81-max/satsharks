@@ -7,7 +7,11 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 const nodeEnv = process.env.NODE_ENV || "development";
 const isProduction = nodeEnv === "production";
 
-const requiredInProduction = ["DATABASE_URL", "JWT_SECRET", "JWT_REFRESH_SECRET"] as const;
+const requiredInProduction = [
+  "DATABASE_URL",
+  "JWT_SECRET",
+  "JWT_REFRESH_SECRET",
+] as const;
 
 for (const key of requiredInProduction) {
   if (isProduction && !process.env[key]) {
@@ -30,15 +34,21 @@ const databaseUrl = (process.env.DATABASE_URL || "").trim();
 const livekitUrl = (process.env.LIVEKIT_URL || "").trim().replace(/\/$/, "");
 const livekitApiKey = (process.env.LIVEKIT_API_KEY || "").trim();
 const livekitApiSecret = (process.env.LIVEKIT_API_SECRET || "").trim();
-const livekitValuesPresent = [livekitUrl, livekitApiKey, livekitApiSecret].filter(Boolean).length;
-const googleServiceAccountEmail = (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || "").trim();
-const googleServiceAccountPrivateKey = (process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || "")
-  .replace(/\\n/g, "\n")
-  .trim();
-const recordingGcpBucket = (process.env.RECORDING_GCP_BUCKET || "").trim();
-const recordingDriveFolderId = (process.env.RECORDING_DRIVE_FOLDER_ID || "")
-  .trim()
-  .match(/[-\w]{20,}/)?.[0] || "";
+const livekitValuesPresent = [
+  livekitUrl,
+  livekitApiKey,
+  livekitApiSecret,
+].filter(Boolean).length;
+const googleDriveClientId = (process.env.GOOGLE_DRIVE_CLIENT_ID || "").trim();
+const googleDriveClientSecret = (
+  process.env.GOOGLE_DRIVE_CLIENT_SECRET || ""
+).trim();
+const googleDriveRedirectUri = (
+  process.env.GOOGLE_DRIVE_REDIRECT_URI || ""
+).trim();
+const googleDriveFolderId =
+  (process.env.GOOGLE_DRIVE_FOLDER_ID || "").trim().match(/[-\w]{20,}/)?.[0] ||
+  "";
 
 if (isProduction && jwtSecret === jwtRefreshSecret) {
   throw new Error("JWT_SECRET and JWT_REFRESH_SECRET must be different values");
@@ -84,7 +94,10 @@ export const env = {
   nodeEnv,
   isProduction,
   port: parsePositiveInt(process.env.PORT, 5000),
-  frontendUrl: (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/$/, ""),
+  frontendUrl: (process.env.FRONTEND_URL || "http://localhost:5173").replace(
+    /\/$/,
+    "",
+  ),
   databaseUrl,
   jwtSecret,
   jwtRefreshSecret,
@@ -111,15 +124,14 @@ export const env = {
   livekitApiKey,
   livekitApiSecret,
   isLiveKitConfigured: livekitValuesPresent === 3,
-  googleServiceAccountEmail,
-  googleServiceAccountPrivateKey,
-  recordingGcpBucket,
-  recordingDriveFolderId,
-  isClassRecordingConfigured: Boolean(
-    livekitValuesPresent === 3 &&
-      googleServiceAccountEmail &&
-      googleServiceAccountPrivateKey &&
-      recordingGcpBucket &&
-      recordingDriveFolderId,
+  googleDriveClientId,
+  googleDriveClientSecret,
+  googleDriveRedirectUri,
+  googleDriveFolderId,
+  isGoogleDriveOAuthConfigured: Boolean(
+    googleDriveClientId &&
+    googleDriveClientSecret &&
+    googleDriveRedirectUri &&
+    googleDriveFolderId,
   ),
 };
