@@ -75,6 +75,7 @@ export const beginBrowserClassRecording = async (
   liveClass.recordingError = null;
   liveClass.recordingDriveFileId = null;
   liveClass.recordingDriveUrl = null;
+  liveClass.recordingVisibleToStudents = true;
   liveClass.recordingStartedAt = new Date();
   liveClass.recordingEndedAt = null;
   await liveClass.save();

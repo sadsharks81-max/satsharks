@@ -1,11 +1,13 @@
 import express from "express";
 import { authenticate } from "../middleware/auth.middleware";
 import {
+  requireAdmin,
   requireActiveUser,
   requireAdminOrTeacher,
 } from "../middleware/role.middleware";
 import {
   createLiveClass,
+  deleteRecordedLectures,
   getLiveClasses,
   getLiveClassById,
   updateLiveClassStatus,
@@ -19,6 +21,7 @@ import {
   postChatMessage,
   createRecordingPlaybackSession,
   streamRecordedLecture,
+  updateRecordingVisibility,
   deleteChatMessage,
 } from "../controllers/live-class.controller";
 import {
@@ -47,6 +50,18 @@ router.get(
   authenticate,
   requireActiveUser(),
   getRecordedLectures,
+);
+router.post(
+  "/recordings/bulk-delete",
+  authenticate,
+  requireAdmin(),
+  deleteRecordedLectures,
+);
+router.put(
+  "/recordings/:recordingId/visibility",
+  authenticate,
+  requireAdmin(),
+  updateRecordingVisibility,
 );
 router.post(
   "/recordings/:recordingId/playback-session",

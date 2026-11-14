@@ -2,6 +2,7 @@ import { Response } from "express";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { AuthRequest } from "../middleware/auth.middleware";
+import BrowserRecordingUpload from "../models/BrowserRecordingUpload";
 import LiveClass from "../models/LiveClass";
 import LiveClassChatMessage from "../models/LiveClassChatMessage";
 import LiveClassAttendance from "../models/LiveClassAttendance";
@@ -29,6 +30,7 @@ import {
   ClassRecordingNotConfiguredError,
   getDriveRecordingStream,
 } from "../services/class-recording.service";
+import { deleteDriveRecordingFile } from "../services/google-drive.service";
 
 const MIN_TOKEN_TTL_SECONDS = 30 * 60;
 const MAX_TOKEN_TTL_SECONDS = 8 * 60 * 60;
@@ -131,13 +133,18 @@ const recordingAccessQuery = (req: AuthRequest): Record<string, unknown> => {
     recordingDriveFileId: { $nin: [null, ""] },
   };
   if (req.user?.role === "TEACHER") query.teacher = req.user.userId;
+  if (req.user?.role === "STUDENT") {
+    query.recordingVisibleToStudents = { $ne: false };
+  }
   return query;
 };
 
 export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
   try {
     const recordings = await LiveClass.find(recordingAccessQuery(req))
-      .select("title description scheduledAt duration recordingEndedAt teacher")
+      .select(
+        "title description scheduledAt duration recordingEndedAt teacher recordingVisibleToStudents",
+      )
       .populate("teacher", "name")
       .sort({ recordingEndedAt: -1, scheduledAt: -1 })
       .lean();
@@ -151,10 +158,122 @@ export const getRecordedLectures = async (req: AuthRequest, res: Response) => {
         duration: recording.duration,
         recordedAt: recording.recordingEndedAt || recording.scheduledAt,
         teacherName: recording.teacher?.name || "SATSharks instructor",
+        visibleToStudents: recording.recordingVisibleToStudents !== false,
       })),
     });
   } catch (error) {
     sendError(res, error, "live-class.getRecordedLectures");
+  }
+};
+
+export const updateRecordingVisibility = async (
+  req: AuthRequest,
+  res: Response,
+) => {
+  try {
+    if (typeof req.body?.visibleToStudents !== "boolean") {
+      return res.status(400).json({
+        success: false,
+        error: "visibleToStudents must be true or false",
+      });
+    }
+    const recording = await LiveClass.findOneAndUpdate(
+      {
+        _id: req.params.recordingId,
+        recordingStatus: "READY",
+        recordingDriveFileId: { $nin: [null, ""] },
+      },
+      { recordingVisibleToStudents: req.body.visibleToStudents },
+      { new: true },
+    ).select("_id recordingVisibleToStudents");
+    if (!recording) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Recorded lecture not found" });
+    }
+    res.json({
+      success: true,
+      recording: {
+        _id: String(recording._id),
+        visibleToStudents: recording.recordingVisibleToStudents,
+      },
+    });
+  } catch (error) {
+    sendError(res, error, "live-class.updateRecordingVisibility");
+  }
+};
+
+export const deleteRecordedLectures = async (
+  req: AuthRequest,
+  res: Response,
+) => {
+  try {
+    const requestedIds: string[] = [
+      ...new Set<string>(
+        (Array.isArray(req.body?.recordingIds) ? req.body.recordingIds : [])
+          .map((id: unknown) => String(id))
+          .filter((id: string) => mongoose.isValidObjectId(id)),
+      ),
+    ].slice(0, 100);
+    if (!requestedIds.length) {
+      return res.status(400).json({
+        success: false,
+        error: "Select at least one valid recorded lecture",
+      });
+    }
+
+    const recordings = await LiveClass.find({
+      _id: { $in: requestedIds },
+      recordingStatus: "READY",
+      recordingDriveFileId: { $nin: [null, ""] },
+    }).select("_id recordingDriveFileId");
+    const foundIds = new Set(
+      recordings.map((recording) => String(recording._id)),
+    );
+    const deletedIds: string[] = [];
+    const failed: { id: string; error: string }[] = requestedIds
+      .filter((id) => !foundIds.has(id))
+      .map((id) => ({ id, error: "Recorded lecture not found" }));
+
+    for (const recording of recordings) {
+      const id = String(recording._id);
+      try {
+        await deleteDriveRecordingFile(recording.recordingDriveFileId!);
+        await Promise.all([
+          LiveClass.updateOne(
+            { _id: recording._id },
+            {
+              $set: {
+                recordingStatus: "NONE",
+                recordingDriveFileId: null,
+                recordingDriveUrl: null,
+                recordingError: null,
+                recordingStartedAt: null,
+                recordingEndedAt: null,
+                recordingVisibleToStudents: true,
+              },
+              $unset: { recordingEgressId: 1 },
+            },
+          ),
+          BrowserRecordingUpload.deleteMany({ liveClass: recording._id }),
+        ]);
+        deletedIds.push(id);
+      } catch (error) {
+        console.error("[Recording] Unable to delete Drive recording", {
+          recordingId: id,
+          message:
+            error instanceof Error ? error.message : "Unknown Drive error",
+        });
+        failed.push({
+          id,
+          error: "Unable to delete this video from Google Drive",
+        });
+      }
+    }
+
+    res.json({ success: true, deletedIds, failed });
+  } catch (error) {
+    sendError(res, error, "live-class.deleteRecordedLectures");
   }
 };
 
@@ -177,6 +296,7 @@ export const createRecordingPlaybackSession = async (
         typ: "recording-playback",
         recordingId: String(recording._id),
         userId: req.user?.userId,
+        role: req.user?.role,
       },
       env.jwtSecret,
       { expiresIn: "30m" },
@@ -196,7 +316,12 @@ export const streamRecordedLecture = async (
 ) => {
   try {
     const rawToken = typeof req.query.token === "string" ? req.query.token : "";
-    let payload: { typ?: string; recordingId?: string };
+    let payload: {
+      typ?: string;
+      recordingId?: string;
+      userId?: string;
+      role?: "ADMIN" | "TEACHER" | "STUDENT";
+    };
     try {
       payload = jwt.verify(rawToken, env.jwtSecret) as typeof payload;
     } catch {
@@ -212,11 +337,23 @@ export const streamRecordedLecture = async (
         .status(401)
         .json({ success: false, error: "Invalid playback link" });
     }
-    const recording = await LiveClass.findOne({
+    const recordingQuery: Record<string, unknown> = {
       _id: req.params.recordingId,
       recordingStatus: "READY",
       recordingDriveFileId: { $nin: [null, ""] },
-    }).select("recordingDriveFileId");
+    };
+    if (payload.role === "STUDENT") {
+      recordingQuery.recordingVisibleToStudents = { $ne: false };
+    } else if (payload.role === "TEACHER") {
+      recordingQuery.teacher = payload.userId;
+    } else if (payload.role !== "ADMIN") {
+      return res
+        .status(401)
+        .json({ success: false, error: "Invalid playback link" });
+    }
+    const recording = await LiveClass.findOne(recordingQuery).select(
+      "recordingDriveFileId",
+    );
     if (!recording?.recordingDriveFileId) {
       return res
         .status(404)

@@ -316,3 +316,20 @@ export const uploadDriveChunk = async (
 };
 
 export const googleDriveClientForPlayback = getAuthorizedGoogleClient;
+
+export const deleteDriveRecordingFile = async (fileId: string) => {
+  const drive = google.drive({
+    version: "v3",
+    auth: await getAuthorizedGoogleClient(),
+  });
+  try {
+    await drive.files.delete({ fileId, supportsAllDrives: true });
+  } catch (error) {
+    const status =
+      (error as { code?: number; response?: { status?: number } }).code ||
+      (error as { response?: { status?: number } }).response?.status;
+    // If somebody already removed the file in Drive, SATSharks should still
+    // be able to clear its stale recording entry.
+    if (status !== 404) throw error;
+  }
+};

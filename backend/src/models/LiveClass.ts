@@ -10,10 +10,12 @@ export interface ILiveClass extends Document {
   maxStudents: number;
   startedAt?: Date | null;
   endedAt?: Date | null;
-  recordingStatus: "NONE" | "STARTING" | "ACTIVE" | "PROCESSING" | "READY" | "FAILED";
+  recordingStatus:
+    "NONE" | "STARTING" | "ACTIVE" | "PROCESSING" | "READY" | "FAILED";
   recordingEgressId?: string | null;
   recordingDriveFileId?: string | null;
   recordingDriveUrl?: string | null;
+  recordingVisibleToStudents: boolean;
   recordingError?: string | null;
   recordingStartedAt?: Date | null;
   recordingEndedAt?: Date | null;
@@ -47,13 +49,22 @@ const LiveClassSchema: Schema = new Schema(
     recordingEgressId: { type: String, default: null },
     recordingDriveFileId: { type: String, default: null },
     recordingDriveUrl: { type: String, default: null },
+    recordingVisibleToStudents: { type: Boolean, default: true },
     recordingError: { type: String, default: null },
     recordingStartedAt: { type: Date, default: null },
     recordingEndedAt: { type: Date, default: null },
-    teacher: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    teacher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model<ILiveClass>("LiveClass", LiveClassSchema);
