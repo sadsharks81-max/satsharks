@@ -15,8 +15,10 @@ import { Route as ConsultingRouteImport } from './routes/consulting'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CounselingAbroadRouteImport } from './routes/counseling-abroad'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SatRouteImport } from './routes/sat'
 import { Route as SuccessStoriesRouteImport } from './routes/success-stories'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as UniversityMatcherRouteImport } from './routes/university-matcher'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminClassesRouteImport } from './routes/admin/classes'
@@ -99,6 +101,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SatRoute = SatRouteImport.update({
   id: '/sat',
   path: '/sat',
@@ -107,6 +114,11 @@ const SatRoute = SatRouteImport.update({
 const SuccessStoriesRoute = SuccessStoriesRouteImport.update({
   id: '/success-stories',
   path: '/success-stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UniversityMatcherRoute = UniversityMatcherRouteImport.update({
@@ -377,8 +389,10 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/counseling-abroad': typeof CounselingAbroadRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/privacy': typeof PrivacyRoute
   '/sat': typeof SatRoute
   '/success-stories': typeof SuccessStoriesRoute
+  '/terms': typeof TermsRoute
   '/university-matcher': typeof UniversityMatcherRoute
   '/admin/classes': typeof AdminClassesRoute
   '/admin/consulting': typeof AdminConsultingRoute
@@ -437,8 +451,10 @@ export interface FileRoutesByTo {
   '/consulting': typeof ConsultingRoute
   '/contact': typeof ContactRoute
   '/counseling-abroad': typeof CounselingAbroadRoute
+  '/privacy': typeof PrivacyRoute
   '/sat': typeof SatRoute
   '/success-stories': typeof SuccessStoriesRoute
+  '/terms': typeof TermsRoute
   '/university-matcher': typeof UniversityMatcherRoute
   '/admin/classes': typeof AdminClassesRoute
   '/admin/consulting': typeof AdminConsultingRoute
@@ -498,8 +514,10 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/counseling-abroad': typeof CounselingAbroadRoute
   '/dashboard': typeof DashboardRouteWithChildren
+  '/privacy': typeof PrivacyRoute
   '/sat': typeof SatRoute
   '/success-stories': typeof SuccessStoriesRoute
+  '/terms': typeof TermsRoute
   '/university-matcher': typeof UniversityMatcherRoute
   '/admin/classes': typeof AdminClassesRoute
   '/admin/consulting': typeof AdminConsultingRoute
@@ -561,8 +579,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/counseling-abroad'
     | '/dashboard'
+    | '/privacy'
     | '/sat'
     | '/success-stories'
+    | '/terms'
     | '/university-matcher'
     | '/admin/classes'
     | '/admin/consulting'
@@ -621,8 +641,10 @@ export interface FileRouteTypes {
     | '/consulting'
     | '/contact'
     | '/counseling-abroad'
+    | '/privacy'
     | '/sat'
     | '/success-stories'
+    | '/terms'
     | '/university-matcher'
     | '/admin/classes'
     | '/admin/consulting'
@@ -681,8 +703,10 @@ export interface FileRouteTypes {
     | '/contact'
     | '/counseling-abroad'
     | '/dashboard'
+    | '/privacy'
     | '/sat'
     | '/success-stories'
+    | '/terms'
     | '/university-matcher'
     | '/admin/classes'
     | '/admin/consulting'
@@ -743,8 +767,10 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CounselingAbroadRoute: typeof CounselingAbroadRoute
   DashboardRoute: typeof DashboardRouteWithChildren
+  PrivacyRoute: typeof PrivacyRoute
   SatRoute: typeof SatRoute
   SuccessStoriesRoute: typeof SuccessStoriesRoute
+  TermsRoute: typeof TermsRoute
   UniversityMatcherRoute: typeof UniversityMatcherRoute
   AdminClassesRoute: typeof AdminClassesRoute
   AdminConsultingRoute: typeof AdminConsultingRoute
@@ -827,6 +853,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sat': {
       id: '/sat'
       path: '/sat'
@@ -839,6 +872,13 @@ declare module '@tanstack/react-router' {
       path: '/success-stories'
       fullPath: '/success-stories'
       preLoaderRoute: typeof SuccessStoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/university-matcher': {
@@ -1258,8 +1298,10 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CounselingAbroadRoute: CounselingAbroadRoute,
   DashboardRoute: DashboardRouteWithChildren,
+  PrivacyRoute: PrivacyRoute,
   SatRoute: SatRoute,
   SuccessStoriesRoute: SuccessStoriesRoute,
+  TermsRoute: TermsRoute,
   UniversityMatcherRoute: UniversityMatcherRoute,
   AdminClassesRoute: AdminClassesRoute,
   AdminConsultingRoute: AdminConsultingRoute,

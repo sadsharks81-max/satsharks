@@ -18,9 +18,12 @@ export function Footer() {
               />
             </Link>
             <p className="font-body text-[14.5px] leading-relaxed text-white max-w-sm">
-              From SAT to the Ivy League 🦈<br/>
-              Elite Admissions Strategy Experts<br/>
-              SAT Mastery | Personal Statements + ECs<br/>
+              From SAT to the Ivy League 🦈
+              <br />
+              Elite Admissions Strategy Experts
+              <br />
+              SAT Mastery | Personal Statements + ECs
+              <br />
               Ivy League | Bachelors + Masters
             </p>
           </div>
@@ -32,17 +35,27 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5 font-body text-sm font-medium">
               <li>
-                <Link to="/dashboard/sat-tests" className="hover:text-accent transition-colors duration-300">
+                <Link
+                  to="/dashboard/sat-tests"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   Diagnostic Tests
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard/practice" className="hover:text-accent transition-colors duration-300">
+                <Link
+                  to="/dashboard/practice"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   Practice Questions
                 </Link>
               </li>
               <li>
-                <Link to="/sat" hash="pricing" className="hover:text-accent transition-colors duration-300">
+                <Link
+                  to="/sat"
+                  hash="pricing"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   Pricing & Plans
                 </Link>
               </li>
@@ -56,17 +69,30 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5 font-body text-sm font-medium">
               <li>
-                <Link to="/sat" search={{ tab: "lums" }} hash="pricing" className="hover:text-accent transition-colors duration-300">
+                <Link
+                  to="/sat"
+                  search={{ tab: "lums" }}
+                  hash="pricing"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   LUMS Counseling
                 </Link>
               </li>
               <li>
-                <Link to="/sat" search={{ tab: "admission" }} hash="pricing" className="hover:text-accent transition-colors duration-300">
+                <Link
+                  to="/sat"
+                  search={{ tab: "admission" }}
+                  hash="pricing"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   Admission Counseling
                 </Link>
               </li>
               <li>
-                <Link to="/success-stories" className="hover:text-accent transition-colors duration-300">
+                <Link
+                  to="/success-stories"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   Success Stories
                 </Link>
               </li>
@@ -85,12 +111,18 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-2.5 font-body text-sm font-medium">
               <li>
-                <a href="mailto:satsharks@gmail.com" className="hover:text-accent transition-colors duration-300">
+                <a
+                  href="mailto:satsharks@gmail.com"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   satsharks@gmail.com
                 </a>
               </li>
               <li>
-                <a href="tel:+923164514334" className="hover:text-accent transition-colors duration-300">
+                <a
+                  href="tel:+923164514334"
+                  className="hover:text-accent transition-colors duration-300"
+                >
                   +92 316 4514334
                 </a>
               </li>
@@ -107,18 +139,19 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-6 pt-8 md:flex-row text-center md:text-left">
           <div className="flex flex-col gap-1.5">
             <p className="font-body text-[10px] font-medium tracking-wider text-white">
-              © {new Date().getFullYear()} SAT Sharks. All rights reserved. Admissions Consulting & SAT Prep Excellence.
+              © {new Date().getFullYear()} SAT Sharks. All rights reserved. Admissions Consulting &
+              SAT Prep Excellence.
             </p>
           </div>
-          
+
           <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-body text-[10px] font-bold uppercase tracking-[0.1em] text-white">
             <li>
-              <Link to="/" className="hover:text-accent transition-colors duration-300">
+              <Link to="/privacy" className="hover:text-accent transition-colors duration-300">
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/" className="hover:text-accent transition-colors duration-300">
+              <Link to="/terms" className="hover:text-accent transition-colors duration-300">
                 Terms of Service
               </Link>
             </li>
